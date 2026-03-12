@@ -3,14 +3,13 @@ const THEMES = [
     { id: 'dark',    label: 'Quantum', icon: '🌌', dark: true, avatar: 'avatar_1.png' },
     { id: 'carbon',  label: 'Carbon',  icon: '🔥', dark: true, avatar: 'avatar_2.png' },
     { id: 'crimson', label: 'Crimson', icon: '🌹', dark: true, avatar: 'avatar_1.png' },
-    { id: 'obsidian',label: 'Obsidian',icon: '🌿', dark: true, avatar: 'avatar_2.png' },
-    { id: 'dusk',    label: 'Dusk',    icon: '🌇', dark: true, avatar: 'avatar_1.png' },
-    { id: 'volt',    label: 'Volt',    icon: '⚡', dark: true, avatar: 'avatar_2.png' },
+    { id: 'dusk',    label: 'Dusk',    icon: '🌇', dark: true, avatar: 'avatar_2.png' },
+    { id: 'volt',    label: 'Volt',    icon: '⚡',  dark: true, avatar: 'avatar_1.png' },
 ];
 
 const AVATAR_GROUP_MAP = {
-    'avatar_1.png': ['dark', 'crimson', 'dusk'],
-    'avatar_2.png': ['carbon', 'obsidian', 'volt'],
+    'avatar_1.png': ['dark', 'crimson', 'volt'],
+    'avatar_2.png': ['carbon', 'dusk'],
 };
 
 const avatarPool = ['avatar_1.png', 'avatar_2.png'];

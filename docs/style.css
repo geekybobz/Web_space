@@ -1543,27 +1543,27 @@ footer {
     --mobile-nav-bg: rgba(17, 24, 39, 0.98);
 }
 
-/* ========== THEME: CRIMSON (deep charcoal + blood red) ========== */
+/* ========== THEME: CRIMSON (rose → violet → amber blend) ========== */
 [data-theme="crimson"] {
-    --bg-main: #1A1215;
-    --bg-secondary: #221518;
-    --text-main: #FAF0F2;
-    --text-muted: #B08088;
-    --accent-1: #FF2452;
-    --accent-2: #FF6B8A;
-    --accent-3: #FF9F40;
-    --glass-bg: rgba(40, 18, 22, 0.55);
-    --glass-border: rgba(255, 36, 82, 0.2);
-    --glass-highlight: rgba(255, 36, 82, 0.1);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
-    --grid-color: rgba(255, 36, 82, 0.045);
-    --vignette: rgba(18, 10, 13, 0.82);
-    --footer-bg: #120C0E;
-    --scrolled-nav-bg: rgba(26, 18, 21, 0.92);
-    --mobile-nav-bg: rgba(26, 18, 21, 0.99);
+    --bg-main: #13101A;           /* very dark, purple-tinted */
+    --bg-secondary: #1C1526;
+    --text-main: #F5EEF8;
+    --text-muted: #A090B8;
+    --accent-1: #E8315A;          /* rose-crimson */
+    --accent-2: #9B5DE5;          /* violet */
+    --accent-3: #F9A828;          /* warm amber */
+    --glass-bg: rgba(28, 18, 42, 0.55);
+    --glass-border: rgba(155, 93, 229, 0.22);  /* violet-tinted border */
+    --glass-highlight: rgba(232, 49, 90, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.48);
+    --grid-color: rgba(155, 93, 229, 0.04);
+    --vignette: rgba(12, 8, 20, 0.84);
+    --footer-bg: #0D0A14;
+    --scrolled-nav-bg: rgba(19, 16, 26, 0.94);
+    --mobile-nav-bg: rgba(19, 16, 26, 0.99);
 }
-[data-theme="crimson"] .shape-1 { background: radial-gradient(circle, #FF2452 0%, rgba(0,0,0,0) 60%); }
-[data-theme="crimson"] .shape-2 { background: radial-gradient(circle, #FF6B8A 0%, rgba(0,0,0,0) 60%); }
+[data-theme="crimson"] .shape-1 { background: radial-gradient(circle, #E8315A 0%, rgba(0,0,0,0) 60%); }
+[data-theme="crimson"] .shape-2 { background: radial-gradient(circle, #9B5DE5 0%, rgba(0,0,0,0) 60%); }
 [data-theme="crimson"] .navbar.scrolled { background: var(--scrolled-nav-bg); }
 
 /* ========== THEME: VOLT (near-black + electric lime) ========== */
@@ -1605,7 +1605,6 @@ body {
 [data-theme="dusk"] body::before,
 [data-theme="carbon"] body::before,
 [data-theme="crimson"] body::before,
-[data-theme="obsidian"] body::before,
 [data-theme="volt"] body::before {
     background: radial-gradient(circle at 50% 50%, transparent 20%, var(--vignette) 100%);
 }
@@ -1646,28 +1645,6 @@ body {
 [data-theme="carbon"] .shape-2 { background: radial-gradient(circle, #FF9500 0%, rgba(0,0,0,0) 60%); }
 [data-theme="carbon"] .navbar.scrolled { background: var(--scrolled-nav-bg); }
 
-/* ========== THEME 6: OBSIDIAN GREEN (Lighter) ========== */
-[data-theme="obsidian"] {
-    --bg-main: #111A15;
-    --bg-secondary: #182219;
-    --text-main: #DEFFF3;
-    --text-muted: #6EE7B7;
-    --accent-1: #39FF14;
-    --accent-2: #00E676;
-    --accent-3: #1DE9B6;
-    --glass-bg: rgba(26, 40, 30, 0.55);
-    --glass-border: rgba(57, 255, 20, 0.15);
-    --glass-highlight: rgba(57, 255, 20, 0.1);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
-    --grid-color: rgba(57, 255, 20, 0.045);
-    --vignette: rgba(10, 18, 13, 0.8);
-    --footer-bg: #0B1410;
-    --scrolled-nav-bg: rgba(17, 26, 21, 0.9);
-    --mobile-nav-bg: rgba(17, 26, 21, 0.99);
-}
-[data-theme="obsidian"] .shape-1 { background: radial-gradient(circle, #00E676 0%, rgba(0,0,0,0) 60%); }
-[data-theme="obsidian"] .shape-2 { background: radial-gradient(circle, #39FF14 0%, rgba(0,0,0,0) 60%); }
-[data-theme="obsidian"] .navbar.scrolled { background: var(--scrolled-nav-bg); }
 
 /* ========== THEME 7: DUSK (twilight purple-blue, medium dark) ========== */
 [data-theme="dusk"] {

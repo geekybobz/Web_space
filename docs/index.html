@@ -1,335 +1,407 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Portfolio of Mohammed Bilal P S, PhD candidate in Quantum Control, Theoretical Physics, and AI.">
-    <title>Mohammed Bilal P S | Quantum Control & Physics</title>
+    <title>Mohammed Bilal P S | Quantum Control &amp; Physics</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=3">
+    <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
     <!-- Background Elements -->
     <div class="bg-shape shape-1"></div>
     <div class="bg-shape shape-2"></div>
     <div class="bg-shape shape-3"></div>
-    
+
     <!-- Custom Cursor -->
     <div class="cursor-dot"></div>
     <div class="cursor-outline"></div>
 
     <nav class="navbar">
         <div class="nav-content">
-            <a href="#" class="brand">MBPS.</a>
+            <a href="#" class="brand" data-page-link="0">MBPS.</a>
             <div class="nav-links">
-                <a href="#about" class="nav-link"><i class="fa-solid fa-terminal" style="margin-right:4px;"></i> About</a>
-                <a href="#experience" class="nav-link"><i class="fa-solid fa-code-branch" style="margin-right:4px;"></i> Experience</a>
-                <a href="#education" class="nav-link"><i class="fa-solid fa-graduation-cap" style="margin-right:4px;"></i> Education</a>
-                <a href="#research" class="nav-link"><i class="fa-solid fa-microchip" style="margin-right:4px;"></i> Research</a>
-                <a href="#contact" class="nav-link btn-contact"><i class="fa-solid fa-paper-plane" style="margin-right:4px;"></i> Contact</a>
+                <a href="#about"       class="nav-link" data-page-link="1"><i class="fa-solid fa-terminal"       style="margin-right:4px;"></i> About</a>
+                <a href="#philosophy"  class="nav-link" data-page-link="2"><i class="fa-solid fa-lightbulb"      style="margin-right:4px;"></i> Philosophy</a>
+                <a href="#experience"  class="nav-link" data-page-link="3"><i class="fa-solid fa-code-branch"    style="margin-right:4px;"></i> Experience</a>
+                <a href="#education"   class="nav-link" data-page-link="4"><i class="fa-solid fa-graduation-cap" style="margin-right:4px;"></i> Education</a>
+                <a href="#research"    class="nav-link" data-page-link="5"><i class="fa-solid fa-microchip"      style="margin-right:4px;"></i> Research</a>
+                <a href="#contact"     class="nav-link btn-contact" data-page-link="7"><i class="fa-solid fa-paper-plane" style="margin-right:4px;"></i> Contact</a>
             </div>
-            <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
+            <div class="nav-right">
+                <button class="theme-toggle" id="theme-toggle" title="Switch Theme">
+                    <span class="theme-icon">🌌</span>
+                    <span class="theme-label">Quantum</span>
+                    <i class="fa-solid fa-chevron-down theme-caret"></i>
+                </button>
+                <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
+            </div>
         </div>
     </nav>
 
-    <main class="container">
-        <!-- Hero Section -->
-        <section class="hero reveal">
-            <div class="hero-content panel">
-                <div class="badge">PhD Candidate @ ICB</div>
-                <div class="hero-avatar">
-                    <img src="avatar_1.png" alt="Mohammed Bilal P S Profile Picture" class="profile-pic">
-                </div>
-                <h1 class="hero-title">Mohammed Bilal P S</h1>
-                <h2 class="hero-subtitle">Optimal Control <span>&middot;</span> Machine Learning <span>&middot;</span> Quantum Technology</h2>
-                <div class="hero-desc-container">
-                    <p class="hero-desc">
-                        I spend a lot of time teaching quantum systems to behave, mostly by yelling at them in the Pontryagin language. But they&apos;re often naughty, so I call the robust principal to make them listen, even when they really don&apos;t want to. XD
-                    </p>
-                </div>
-                <div class="hero-actions">
-                    <a href="#research" class="btn btn-primary">View Research</a>
-                    <a href="/profile.pdf" target="_blank" class="btn btn-outline">Download CV</a>
-                </div>
-            </div>
-        </section>
+    <!-- Side dot navigator — injected by JS -->
+    <nav class="page-dots" aria-label="Page navigation"></nav>
 
-        <!-- Quantum Policy Training Banner (temporarily commented out) -->
-        <!--
-        <section class="quantum-banner">
-            <div class="hero-visual panel">
-                <div class="bloch-simulation">
-                    
-                    <!- - Neural Network (Actor-Critic) - ->
-                    <div class="neural-network">
-                        <div class="nn-layer" id="input-layer">
-                            <div class="node"></div>
-                            <div class="node"></div>
-                            <div class="node"></div>
-                        </div>
-                        <div class="nn-layer" id="hidden-layer">
-                            <div class="node"></div>
-                            <div class="node"></div>
-                            <div class="node"></div>
-                            <div class="node"></div>
-                        </div>
-                        <div class="nn-layer" id="output-layer">
-                            <div class="node out-node"></div>
-                            <div class="node out-node"></div>
-                        </div>
-                        <svg class="nn-connections"></svg>
-                        <svg class="dynamic-sine-pulse" viewBox="0 0 200 40" preserveAspectRatio="none">
-                            <path id="sine-wave-path" d="M 0 20 L 200 20" fill="none" stroke="var(--accent-1)" stroke-width="2" />
-                            <filter id="sineGlow">
-                                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                                <feMerge>
-                                    <feMergeNode in="coloredBlur"/>
-                                    <feMergeNode in="SourceGraphic"/>
-                                </feMerge>
-                            </filter>
-                        </svg>
-                        <button id="fire-pulse-btn" class="pulse-btn">step_></button>
+    <!-- Page prev/next arrows — injected by JS -->
+    <div class="page-arrows">
+        <button class="page-arrow page-arrow--prev" id="page-prev" aria-label="Previous page">
+            <i class="fa-solid fa-chevron-up"></i>
+        </button>
+        <button class="page-arrow page-arrow--next" id="page-next" aria-label="Next page">
+            <i class="fa-solid fa-chevron-down"></i>
+        </button>
+    </div>
+
+    <!-- ========== PAGE ENGINE ========== -->
+    <div id="page-engine">
+
+        <!-- PAGE 0 — Hero -->
+        <section class="page hero-page" id="page-hero" data-page="0" data-label="Home">
+            <div class="page-inner page-center">
+                <div class="hero-content panel">
+                    <div class="badge">PhD Candidate @ ICB</div>
+                    <div class="hero-avatar">
+                        <img src="avatar_1.png" alt="Mohammed Bilal P S Profile Picture" class="profile-pic">
                     </div>
-
-                    <div class="bloch-sphere">
-                        <div class="equator"></div>
-                        <div class="meridian m1"></div>
-                        <div class="meridian m2"></div>
-                        <div class="state-vector" id="state-vector">
-                            <div class="arrow-head"></div>
-                        </div>
-                        <div class="pole target-pole">|0⟩</div>
-                        <div class="pole start-pole">|1⟩</div>
-                    </div>
-
-                    <div class="visual-data-overlay terminal-readout right-aligned">
-                        <p class="typewriter">> SYS: ACTOR_CRITIC_POLICY <span class="status-ok">[ACT]</span></p>
-                        <p class="typewriter">> OPT: STATE_TRAJECTORY Update</p>
-                        <p class="typewriter">> CTRL_PULSE: <span id="pulse-strength">1.44</span> GHz</p>
-                        <p class="typewriter">> FIDELITY: <span id="fidelity-score" class="highlight">0.9994</span></p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        -->
-
-        <!-- About & Skills Section -->
-        <section id="about" class="section reveal">
-            <div class="panel">
-                <div class="section-label">Profile</div>
-                <h2 class="section-title">About Me</h2>
-                <p class="text-muted">
-                    I am a PhD candidate at the Université de Bourgogne (ICB Dijon), working under Dominique Sugny and Camille on quantum control theory.
-                </p>
-                <p class="text-muted">
-                    My research focuses on Pontryagin-based optimal control methods, numerical and gradient-based optimization techniques for solving quantum control problems, with particular emphasis on robustness under realistic constraints and noise. I'm especially interested in integrating machine learning approaches to enhance control strategies and improve scalability for practical quantum technologies.
-                </p>
-                <p class="text-muted">
-                    Alongside theory, I build numerical tools and simulations. For me, understanding a system often means first making it run.
-                </p>
-                <p class="text-muted">
-                    I am actively expanding into quantum error correction, fault-tolerant architectures, and quantum simulation, areas where control theory meets the engineering constraints of near-term devices.
-                </p>
-            </div>
-            
-            <div class="panel">
-                <div class="section-label">Expertise</div>
-                <h2 class="section-title">Top Skills</h2>
-                <div class="skills-container">
-                    <span class="skill-tag">Quantum Control</span>
-                    <span class="skill-tag">Quantum Information</span>
-                    <span class="skill-tag">Condensed Matter Physics</span>
-                    <span class="skill-tag">Machine Learning</span>
-                    <span class="skill-tag">AI in Physics</span>
-                    <span class="skill-tag">Reinforcement Learning</span>
-                    <span class="skill-tag">Numerical Methods</span>
-                    <span class="skill-tag">Data Science</span>
-                </div>
-                
-                <div class="mt-4">
-                    <h3 class="subsection-title">Core Systems</h3>
-                    <ul class="clean-list text-muted">
-                        <li>Theoretical and Mathematical Physics</li>
-                        <li>Pontryagin-based Optimal Control</li>
-                        <li>Robustness Analysis under Noise</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Experience Section -->
-        <section id="experience" class="section reveal">
-            <div class="section-header">
-                <div class="section-label">Timeline</div>
-                <h2 class="section-title">Experience</h2>
-            </div>
-            
-            <div class="timeline">
-                <div class="timeline-item panel">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">May 2023 &mdash; May 2024</div>
-                        <h3 class="timeline-title">MS Thesis Researcher</h3>
-                        <div class="timeline-company">IISER Berhampur, India</div>
-                        <p class="timeline-desc text-muted">
-                            Worked on "optimal charging protocol for multi-qubit quantum battery" under Dr. Victor Mukherjee and Paolo Andrea Erdman.
+                    <h1 class="hero-title">Mohammed Bilal P S</h1>
+                    <h2 class="hero-subtitle">Optimal Control <span>&middot;</span> Machine Learning <span>&middot;</span> Quantum Technology</h2>
+                    <div class="hero-desc-container">
+                        <p class="hero-desc">
+                            I spend a lot of time teaching quantum systems to behave, mostly by yelling at them in the Pontryagin language. But they're often naughty, so I use robust control principles to make them listen, even when they really don't want to. XD
                         </p>
                     </div>
-                </div>
-
-                <div class="timeline-item panel">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">June 2020 &mdash; May 2024</div>
-                        <h3 class="timeline-title">Math Teacher</h3>
-                        <div class="timeline-company">revamp24, Bangalore</div>
-                        <p class="timeline-desc text-muted">
-                            Instructed and mentored students in advanced mathematics and problem-solving techniques.
-                        </p>
+                    <div class="hero-actions">
+                        <a href="#research" class="btn btn-primary" data-page-link="5">Works</a>
+                        <a href="#current-research" class="btn btn-outline" data-page-link="6">Current Research</a>
+                        <a href="profile.pdf" class="btn btn-outline btn-cv" download>Download CV</a>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <div class="timeline-item panel">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-date">2019 &mdash; 2021</div>
-                        <h3 class="timeline-title">Mathematics Specialist</h3>
-                        <div class="timeline-company">Six Red Marbles, Chennai, India</div>
-                        <p class="timeline-desc text-muted">
-                            Served as a Subject Matter Expert in math and calculus, developing curriculum and instructional materials.
+        <!-- PAGE 1 — About -->
+        <section class="page section" id="about" data-page="1" data-label="About">
+            <div class="page-inner">
+                <div class="page-cols">
+                    <div class="panel">
+                        <div class="section-label">Profile</div>
+                        <h2 class="section-title">About Me</h2>
+                        <p class="text-muted">
+                            I am a PhD candidate at the Université de Bourgogne (ICB Dijon), working under Dominique Sugny and Camille on quantum control theory.
+                        </p>
+                        <p class="text-muted">
+                            My research focuses on Pontryagin-based optimal control methods, numerical and gradient-based optimization techniques for solving quantum control problems, with particular emphasis on robustness under realistic constraints and noise. I'm especially interested in integrating machine learning approaches to enhance control strategies and improve scalability for practical quantum technologies.
+                        </p>
+                        <p class="text-muted">
+                            Alongside theory, I build numerical tools and simulations. For me, understanding a system often means first making it run.
+                        </p>
+                        <p class="text-muted">
+                            I am actively expanding into quantum error correction, fault-tolerant architectures, and quantum simulation, areas where control theory meets the engineering constraints of near-term devices.
+                        </p>
+                    </div>
+
+                    <div class="panel">
+                        <div class="section-label">Expertise</div>
+                        <h2 class="section-title">Top Skills</h2>
+                        <div class="skills-container">
+                            <span class="skill-tag">Quantum Control</span>
+                            <span class="skill-tag">Quantum Information</span>
+                            <span class="skill-tag">Condensed Matter Physics</span>
+                            <span class="skill-tag">Machine Learning</span>
+                            <span class="skill-tag">AI in Physics</span>
+                            <span class="skill-tag">Reinforcement Learning</span>
+                            <span class="skill-tag">Numerical Methods</span>
+                            <span class="skill-tag">Data Science</span>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="subsection-title">Core Systems</h3>
+                            <ul class="clean-list text-muted">
+                                <li>Theoretical and Mathematical Physics</li>
+                                <li>Pontryagin-based Optimal Control</li>
+                                <li>Robustness Analysis under Noise</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 2 — Philosophy -->
+        <section class="page section" id="philosophy" data-page="2" data-label="Philosophy">
+            <div class="page-inner">
+                <div class="section-header">
+                    <div class="section-label">Mindset</div>
+                    <h2 class="section-title">My Philosophy</h2>
+                </div>
+
+                <div class="philosophy-grid">
+                    <div class="philosophy-card panel">
+                        <div class="philosophy-icon"><i class="fa-solid fa-atom"></i></div>
+                        <h3 class="philosophy-title">First Principle Thinking</h3>
+                        <p class="philosophy-body text-muted">
+                            Placeholder — edit this to describe your first principle thinking philosophy.
+                            What does it mean to you to reason from the ground up, stripping away assumptions?
+                        </p>
+                    </div>
+
+                    <div class="philosophy-card panel">
+                        <div class="philosophy-icon"><i class="fa-solid fa-infinity"></i></div>
+                        <h3 class="philosophy-title">Curiosity as a Method</h3>
+                        <p class="philosophy-body text-muted">
+                            Placeholder — edit this to describe how curiosity drives your work.
+                            How do you let open questions guide research and exploration?
+                        </p>
+                    </div>
+
+                    <div class="philosophy-card panel">
+                        <div class="philosophy-icon"><i class="fa-solid fa-code"></i></div>
+                        <h3 class="philosophy-title">Understanding Through Building</h3>
+                        <p class="philosophy-body text-muted">
+                            Placeholder — edit this to describe your belief that true understanding
+                            comes from making things run. Theory meets implementation.
                         </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Education Section -->
-        <section id="education" class="section reveal">
-            <div class="section-header">
-                <div class="section-label">Academic Journey</div>
-                <h2 class="section-title">Education</h2>
-            </div>
-            
-            <div class="grid-2">
-                <div class="card panel">
-                    <div class="card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-                    <div class="card-date">Nov 2024 &mdash; Nov 2027</div>
-                    <h3 class="card-title">Doctor of Philosophy (PhD)</h3>
-                    <div class="card-subtitle">Theoretical and Mathematical Physics</div>
-                    <div class="card-institution">Université de Bourgogne, France</div>
+        <!-- PAGE 3 — Experience -->
+        <section class="page section" id="experience" data-page="3" data-label="Experience">
+            <div class="page-inner">
+                <div class="section-header">
+                    <div class="section-label">Timeline</div>
+                    <h2 class="section-title">Experience</h2>
                 </div>
 
-                <div class="card panel">
-                    <div class="card-icon"><i class="fa-solid fa-university"></i></div>
-                    <div class="card-date">Sep 2021 &mdash; Sep 2026</div>
-                    <h3 class="card-title">Bachelor of Science (BS)</h3>
-                    <div class="card-subtitle">Data Science</div>
-                    <div class="card-institution">Indian Institute of Technology, Madras</div>
-                </div>
+                <div class="exp-grid">
+                    <!-- Column 1: Academic & Research -->
+                    <div class="exp-col">
+                        <div class="exp-col-header">
+                            <span class="exp-col-icon"><i class="fa-solid fa-flask-vial"></i></span>
+                            <span class="exp-col-label">Academic &amp; Research</span>
+                        </div>
+                        <div class="timeline">
+                            <div class="timeline-item panel">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-date">May 2023 &mdash; May 2024</div>
+                                    <h3 class="timeline-title">MS Thesis Researcher</h3>
+                                    <div class="timeline-company">IISER Berhampur, India</div>
+                                    <p class="timeline-desc text-muted">
+                                        Worked on "optimal charging protocol for multi-qubit quantum battery" under Dr. Victor Mukherjee and Paolo Andrea Erdman.
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Add more academic entries here -->
+                        </div>
+                    </div>
 
-                <div class="card panel">
-                    <div class="card-icon"><i class="fa-solid fa-flask"></i></div>
-                    <div class="card-date">2019 &mdash; 2024</div>
-                    <h3 class="card-title">BS-MS Integrated</h3>
-                    <div class="card-subtitle">Physics</div>
-                    <div class="card-institution">IISER Berhampur</div>
-                </div>
+                    <!-- Column 2: Other Experience -->
+                    <div class="exp-col exp-col--other">
+                        <div class="exp-col-header">
+                            <span class="exp-col-icon"><i class="fa-solid fa-briefcase"></i></span>
+                            <span class="exp-col-label">Other Experience</span>
+                        </div>
+                        <div class="timeline">
+                            <div class="timeline-item panel">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-date">June 2020 &mdash; May 2024</div>
+                                    <h3 class="timeline-title">Math Teacher</h3>
+                                    <div class="timeline-company">revamp24, Bangalore</div>
+                                    <p class="timeline-desc text-muted">
+                                        Instructed and mentored students in advanced mathematics and problem-solving techniques.
+                                    </p>
+                                </div>
+                            </div>
 
-                <div class="card panel">
-                    <div class="card-icon"><i class="fa-solid fa-school"></i></div>
-                    <div class="card-date">Completed</div>
-                    <h3 class="card-title">Higher Secondary Education</h3>
-                    <div class="card-subtitle">Computer-Math</div>
-                    <div class="card-institution">National Huda Central School</div>
+                            <div class="timeline-item panel">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-date">2019 &mdash; 2021</div>
+                                    <h3 class="timeline-title">Mathematics Specialist</h3>
+                                    <div class="timeline-company">Six Red Marbles, Chennai, India</div>
+                                    <p class="timeline-desc text-muted">
+                                        Served as a Subject Matter Expert in math and calculus, developing curriculum and instructional materials.
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Add more other entries here -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Research / Works Section -->
-        <section id="research" class="section reveal">
-            <div class="section-header">
-                <div class="section-label">Portfolio</div>
-                <h2 class="section-title">Selected Works</h2>
-            </div>
-            
-            <div class="grid-2">
-                <article class="project-card panel">
-                    <div class="project-content">
-                        <div class="project-meta">
-                            <span class="project-tag">Chanakya Fellowship</span>
-                            <span class="project-tag">Masters Work</span>
-                        </div>
-                        <h3 class="project-title">Quantum Battery Charging</h3>
-                        <p class="project-desc text-muted">
-                            Developed an optimal charging protocol using Reinforcement Learning for spin chain models. This work explores energetic efficiency in quantum systems using advanced AI algorithms.
-                        </p>
-                        <a href="#" class="project-link">Read Details <i class="fa-solid fa-arrow-right"></i></a>
-                    </div>
-                </article>
+        <!-- PAGE 4 — Education -->
+        <section class="page section" id="education" data-page="4" data-label="Education">
+            <div class="page-inner">
+                <div class="section-header">
+                    <div class="section-label">Academic Journey</div>
+                    <h2 class="section-title">Education</h2>
+                </div>
 
-                <article class="project-card panel">
-                    <div class="project-content">
+                <div class="grid-2">
+                    <div class="card panel">
+                        <div class="card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                        <div class="card-date">Nov 2024 &mdash; Nov 2027</div>
+                        <h3 class="card-title">Doctor of Philosophy (PhD)</h3>
+                        <div class="card-subtitle">Theoretical and Mathematical Physics</div>
+                        <div class="card-institution">Université de Bourgogne, France</div>
+                    </div>
+
+                    <div class="card panel">
+                        <div class="card-icon"><i class="fa-solid fa-university"></i></div>
+                        <div class="card-date">Sep 2021 &mdash; Sep 2026</div>
+                        <h3 class="card-title">Bachelor of Science (BS)</h3>
+                        <div class="card-subtitle">Data Science</div>
+                        <div class="card-institution">Indian Institute of Technology, Madras</div>
+                    </div>
+
+                    <div class="card panel">
+                        <div class="card-icon"><i class="fa-solid fa-flask"></i></div>
+                        <div class="card-date">2019 &mdash; 2024</div>
+                        <h3 class="card-title">BS-MS Integrated</h3>
+                        <div class="card-subtitle">Physics</div>
+                        <div class="card-institution">IISER Berhampur</div>
+                    </div>
+
+                    <div class="card panel">
+                        <div class="card-icon"><i class="fa-solid fa-school"></i></div>
+                        <div class="card-date">Completed</div>
+                        <h3 class="card-title">Higher Secondary Education</h3>
+                        <div class="card-subtitle">Computer-Math</div>
+                        <div class="card-institution">National Huda Central School</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 5 — Research / Selected Works -->
+        <section class="page section" id="research" data-page="5" data-label="Research">
+            <div class="page-inner">
+                <div class="section-header">
+                    <div class="section-label">Portfolio</div>
+                    <h2 class="section-title">Selected Works</h2>
+                </div>
+
+                <div class="grid-2">
+                    <article class="project-card panel">
+                        <div class="project-content">
+                            <div class="project-meta">
+                                <span class="project-tag">Chanakya Fellowship</span>
+                                <span class="project-tag">Masters Work</span>
+                            </div>
+                            <h3 class="project-title">Quantum Battery Charging</h3>
+                            <p class="project-desc text-muted">
+                                Developed an optimal charging protocol using Reinforcement Learning for spin chain models. This work explores energetic efficiency in quantum systems using advanced AI algorithms.
+                            </p>
+                            <a href="#" class="project-link">Read Details <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="project-card panel">
+                        <div class="project-content">
+                            <div class="project-meta">
+                                <span class="project-tag">Theoretical Physics</span>
+                                <span class="project-tag">Control Theory</span>
+                            </div>
+                            <h3 class="project-title">Optimal Control Under Constraints</h3>
+                            <p class="project-desc text-muted">
+                                Studying control strategies that remain effective under realistic constraints, numerical limitations, and experimentally relevant conditions in quantum systems.
+                            </p>
+                            <a href="#" class="project-link">Read Details <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="project-card panel draft-card">
+                        <div class="project-content">
+                            <div class="project-icon-placeholder">
+                                <i class="fa-solid fa-terminal"></i>
+                            </div>
+                            <h3 class="project-title">Awaiting Data...</h3>
+                            <p class="project-desc text-muted">
+                                Additional simulations, preprints, and numerical repositories will initialize here when public.
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 6 — Current Research -->
+        <section class="page section" id="current-research" data-page="6" data-label="Current Research">
+            <div class="page-inner">
+                <div class="section-header">
+                    <div class="section-label">In Progress</div>
+                    <h2 class="section-title">Current Research</h2>
+                </div>
+
+                <div class="page-cols">
+                    <div class="panel">
+                        <div class="section-label">Current Direction</div>
+                        <h3 class="subsection-title">What I am working on now</h3>
+                        <p class="text-muted">
+                            My current work is centered on robust quantum control, with an emphasis on numerical optimization, realistic constraints, and control strategies that remain useful in noisy settings.
+                        </p>
+                        <p class="text-muted">
+                            I am especially interested in problems where theoretical structure, computation, and implementation constraints all have to be handled together rather than in isolation.
+                        </p>
+                    </div>
+
+                    <div class="panel">
                         <div class="project-meta">
                             <span class="project-tag">Active Research</span>
-                            <span class="project-tag">Theoretical Physics</span>
+                            <span class="project-tag">PhD Work</span>
                         </div>
                         <h3 class="project-title">Robust Quantum Control</h3>
                         <p class="project-desc text-muted">
                             Investigating Pontryagin-based optimal control methods and gradient-based optimization techniques for enhancing robustness under realistic constraints and noise.
                         </p>
-                        <a href="#" class="project-link">Read Details <i class="fa-solid fa-arrow-right"></i></a>
-                    </div>
-                </article>
-                
-                <article class="project-card panel draft-card">
-                    <div class="project-content">
-                        <div class="project-icon-placeholder">
-                            <i class="fa-solid fa-terminal"></i>
+                        <div class="mt-4">
+                            <h3 class="subsection-title">Current Themes</h3>
+                            <ul class="clean-list text-muted">
+                                <li>Robust control design under noise and uncertainty</li>
+                                <li>Numerical optimization for constrained quantum dynamics</li>
+                                <li>Machine-learning-assisted control strategies</li>
+                            </ul>
                         </div>
-                        <h3 class="project-title">Awaiting Data...</h3>
-                        <p class="project-desc text-muted">
-                            Additional simulations, preprints, and numerical repositories will initialize here when public.
-                        </p>
                     </div>
-                </article>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="section reveal">
-            <div class="panel contact-panel text-center">
-                <div class="section-label mb-2">Get In Touch</div>
-                <h2 class="section-title mb-4">Let's Discuss Quantum Control &amp; Computation</h2>
-                <p class="text-muted mb-6 max-w-lg mx-auto">
-                    I'm always open to discussing quantum control, machine learning applications in physics, or potential collaborations.
-                </p>
-                <div class="contact-links">
-                    <a href="mailto:billabobz.official@gmail.com" class="contact-btn">
-                        <i class="fa-regular fa-envelope"></i> billabobz.official@gmail.com
-                    </a>
-                    <a href="https://www.linkedin.com/in/mohammedbilalps" target="_blank" class="contact-btn">
-                        <i class="fa-brands fa-linkedin"></i> LinkedIn
-                    </a>
                 </div>
             </div>
         </section>
-    </main>
 
-    <footer>
-        <div class="container footer-content">
-            <div class="brand">MBPS.</div>
-            <div class="footer-meta">
-                <p class="text-muted text-sm">&copy; 2026 Mohammed Bilal P S. All rights reserved.</p>
-                <p class="footer-updated text-sm">
-                    Last updated: <time datetime="2026-03-12">March 12, 2026</time>
-                </p>
+        <!-- PAGE 7 — Contact -->
+        <section class="page section" id="contact" data-page="7" data-label="Contact">
+            <div class="page-inner page-center">
+                <div class="panel contact-panel text-center">
+                    <div class="section-label mb-2">Get In Touch</div>
+                    <h2 class="section-title mb-4">Let's Discuss Quantum Control &amp; Computation</h2>
+                    <p class="text-muted mb-6 max-w-lg mx-auto">
+                        I'm always open to discussing quantum control, machine learning applications in physics, or potential collaborations.
+                    </p>
+                    <div class="contact-links">
+                        <a href="mailto:billabobz.official@gmail.com" class="contact-btn">
+                            <i class="fa-regular fa-envelope"></i> billabobz.official@gmail.com
+                        </a>
+                        <a href="https://www.linkedin.com/in/mohammedbilalps" target="_blank" class="contact-btn">
+                            <i class="fa-brands fa-linkedin"></i> LinkedIn
+                        </a>
+                    </div>
+                    <div class="contact-footer-note">
+                        <p class="text-muted text-sm">&copy; 2026 Mohammed Bilal P S. All rights reserved.</p>
+                        <p class="text-muted text-sm">Last updated: <time datetime="2026-03-12">March 12, 2026</time></p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </footer>
+        </section>
 
-    <script src="script.js?v=3"></script>
+    </div><!-- /#page-engine -->
+
+    <script src="script.js?v=14"></script>
 </body>
 </html>

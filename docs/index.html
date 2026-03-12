@@ -62,11 +62,60 @@
         <!-- PAGE 0 — Hero -->
         <section class="page hero-page" id="page-hero" data-page="0" data-label="Home">
             <div class="page-inner page-center">
+
+                <!-- Single unified hero card -->
                 <div class="hero-content panel">
                     <div class="badge">PhD Candidate @ ICB</div>
-                    <div class="hero-avatar">
-                        <img src="avatar_1.png" alt="Mohammed Bilal P S Profile Picture" class="profile-pic">
-                    </div>
+
+                    <!-- Visual row: atom | avatar | terminal -->
+                    <div class="hero-visual-row">
+
+                        <!-- Atom -->
+                        <div class="hero-viz atom-viz" aria-hidden="true">
+
+                            <div class="atom-scene">
+                                <div class="atom-nucleus"></div>
+                                <div class="atom-orbit orbit-1">
+                                    <div class="atom-electron e1"></div>
+                                </div>
+                                <div class="atom-orbit orbit-2">
+                                    <div class="atom-electron e2"></div>
+                                </div>
+                                <div class="atom-orbit orbit-3">
+                                    <div class="atom-electron e3"></div>
+                                </div>
+                            </div>
+                            <div class="atom-footer">
+                                <span class="atom-stat" id="atom-state">|ψ⟩ = α|0⟩ + β|1⟩</span>
+                            </div>
+                        </div>
+
+                        <!-- Avatar -->
+                        <div class="hero-avatar">
+                            <img src="avatar_1.png" alt="Mohammed Bilal P S Profile Picture" class="profile-pic">
+                        </div>
+
+                        <!-- Holo Terminal -->
+                        <div class="hero-viz terminal-viz" aria-hidden="true">
+                            <div class="holo-terminal">
+                                <div class="holo-corner tl"></div>
+                                <div class="holo-corner tr"></div>
+                                <div class="holo-corner bl"></div>
+                                <div class="holo-corner br"></div>
+                                <div class="holo-header">
+                                    <span class="holo-dot"></span>
+                                    <span class="holo-title">sys.log</span>
+                                </div>
+                                <div class="crt-scanlines"></div>
+                                <div class="crt-log" id="crt-log"></div>
+                                <div class="crt-cursor-blink"></div>
+                            </div>
+                        </div>
+
+
+                    </div><!-- /.hero-visual-row -->
+
+                    <!-- Text content below -->
                     <h1 class="hero-title">Mohammed Bilal P S</h1>
                     <h2 class="hero-subtitle">Optimal Control <span>&middot;</span> Machine Learning <span>&middot;</span> Quantum Technology</h2>
                     <div class="hero-desc-container">
@@ -79,7 +128,8 @@
                         <a href="#current-research" class="btn btn-outline" data-page-link="6">Current Research</a>
                         <a href="profile.pdf" class="btn btn-outline btn-cv" download>Download CV</a>
                     </div>
-                </div>
+                </div><!-- /.hero-content -->
+
             </div>
         </section>
 
@@ -140,29 +190,26 @@
 
                 <div class="philosophy-grid">
                     <div class="philosophy-card panel">
-                        <div class="philosophy-icon"><i class="fa-solid fa-atom"></i></div>
+                        <div class="philosophy-icon" aria-hidden="true">🧠</div>
                         <h3 class="philosophy-title">First Principle Thinking</h3>
                         <p class="philosophy-body text-muted">
-                            Placeholder — edit this to describe your first principle thinking philosophy.
-                            What does it mean to you to reason from the ground up, stripping away assumptions?
+                            I am most drawn to questions that force me to ask why before how. For me, theory is not something separate from computation; it is the structure that tells us what a system can do, what assumptions matter, and what kind of control is actually meaningful.
                         </p>
                     </div>
 
                     <div class="philosophy-card panel">
-                        <div class="philosophy-icon"><i class="fa-solid fa-infinity"></i></div>
-                        <h3 class="philosophy-title">Curiosity as a Method</h3>
+                        <div class="philosophy-icon" aria-hidden="true">🌐</div>
+                        <h3 class="philosophy-title">Curiosity Without Borders</h3>
                         <p class="philosophy-body text-muted">
-                            Placeholder — edit this to describe how curiosity drives your work.
-                            How do you let open questions guide research and exploration?
+                            I do not like staying rigidly inside one box. Physics, numerics, coding, optimization, and machine learning all sharpen different parts of how I think, and I enjoy exploring across them when it helps me grow or solve a problem better.
                         </p>
                     </div>
 
                     <div class="philosophy-card panel">
-                        <div class="philosophy-icon"><i class="fa-solid fa-code"></i></div>
+                        <div class="philosophy-icon" aria-hidden="true">🛠️</div>
                         <h3 class="philosophy-title">Understanding Through Building</h3>
                         <p class="philosophy-body text-muted">
-                            Placeholder — edit this to describe your belief that true understanding
-                            comes from making things run. Theory meets implementation.
+                            I learn best by building things for myself, whether that means simulations, small tools, or full numerical workflows. That is also why I admire industry: it asks the useful question of how theory can become something practical, usable, and genuinely valuable.
                         </p>
                     </div>
                 </div>

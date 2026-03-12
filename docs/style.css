@@ -2071,17 +2071,21 @@ body {
 
 /* Log text — uses --accent-3 which is green across all themes */
 .crt-log {
-    padding: 6px 8px;
+    padding: 4px 8px;
     font-family: 'Courier New', monospace;
     font-size: 0.57rem;
     line-height: 1.55;
     color: var(--accent-3);
     text-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
     position: absolute;
-    bottom: 14px;
+    top: 30px;      /* clears the holo-header */
+    bottom: 14px;   /* leaves room for cursor */
     left: 0; right: 0;
     z-index: 5;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* lines stack from bottom up */
 }
 
 .crt-log .log-line { display: block; opacity: 0; animation: log-fade-in 0.3s ease forwards; }

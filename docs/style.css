@@ -1622,15 +1622,15 @@ body {
 }
 
 
-/* ========== THEME 5: CARBON (Lighter) ========== */
+/* ========== THEME 5: CARBON (fire without saffron) ========== */
 [data-theme="carbon"] {
     --bg-main: #1E1F22;
     --bg-secondary: #292A2E;
     --text-main: #F8F9FA;
     --text-muted: #A8A9B0;
-    --accent-1: #FF6B2B;
-    --accent-2: #FF9500;
-    --accent-3: #FFD166;
+    --accent-1: #FF6B2B;   /* orange */
+    --accent-2: #FF4500;   /* orange-red */
+    --accent-3: #E85D04;   /* deep ember-red — no yellow */
     --glass-bg: rgba(42, 43, 48, 0.55);
     --glass-border: rgba(255, 107, 43, 0.2);
     --glass-highlight: rgba(255, 107, 43, 0.1);
@@ -1642,8 +1642,9 @@ body {
     --mobile-nav-bg: rgba(30, 31, 34, 0.99);
 }
 [data-theme="carbon"] .shape-1 { background: radial-gradient(circle, #FF6B2B 0%, rgba(0,0,0,0) 60%); }
-[data-theme="carbon"] .shape-2 { background: radial-gradient(circle, #FF9500 0%, rgba(0,0,0,0) 60%); }
+[data-theme="carbon"] .shape-2 { background: radial-gradient(circle, #FF4500 0%, rgba(0,0,0,0) 60%); }
 [data-theme="carbon"] .navbar.scrolled { background: var(--scrolled-nav-bg); }
+
 
 
 /* ========== THEME 7: DUSK (twilight purple-blue, medium dark) ========== */

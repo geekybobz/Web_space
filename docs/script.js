@@ -1,16 +1,16 @@
 // ========== THEME SWITCHER ==========
 const THEMES = [
-    { id: 'dark',    label: 'Quantum', icon: '🌌', dark: true,  avatar: 'avatar_1.png' },
-    { id: 'light',   label: 'Arctic',  icon: '❄️',  dark: false, avatar: 'avatar_2.png' },
-    { id: 'solar',   label: 'Solar',   icon: '☀️',  dark: false, avatar: 'avatar_2.png' },
-    { id: 'carbon',  label: 'Carbon',  icon: '🔥',  dark: true,  avatar: 'avatar_1.png' },
-    { id: 'obsidian',label: 'Obsidian',icon: '🌿',  dark: true,  avatar: 'avatar_1.png' },
-    { id: 'dusk',    label: 'Dusk',    icon: '🌇',  dark: true,  avatar: 'avatar_1.png' },
+    { id: 'dark',    label: 'Quantum', icon: '🌌', dark: true, avatar: 'avatar_1.png' },
+    { id: 'carbon',  label: 'Carbon',  icon: '🔥', dark: true, avatar: 'avatar_2.png' },
+    { id: 'crimson', label: 'Crimson', icon: '🌹', dark: true, avatar: 'avatar_1.png' },
+    { id: 'obsidian',label: 'Obsidian',icon: '🌿', dark: true, avatar: 'avatar_2.png' },
+    { id: 'dusk',    label: 'Dusk',    icon: '🌇', dark: true, avatar: 'avatar_1.png' },
+    { id: 'volt',    label: 'Volt',    icon: '⚡', dark: true, avatar: 'avatar_2.png' },
 ];
 
 const AVATAR_GROUP_MAP = {
-    'avatar_1.png': ['dark', 'carbon', 'obsidian', 'dusk'],
-    'avatar_2.png': ['light', 'solar'],
+    'avatar_1.png': ['dark', 'crimson', 'dusk'],
+    'avatar_2.png': ['carbon', 'obsidian', 'volt'],
 };
 
 const avatarPool = ['avatar_1.png', 'avatar_2.png'];

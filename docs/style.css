@@ -438,7 +438,7 @@ a {
 }
 
 .hero-desc-container {
-    max-width: 800px;
+    max-width: 100%;
 }
 
 .hero-desc {
@@ -462,8 +462,8 @@ a {
 
 /* ========== HERO AVATAR & VISUALS ========== */
 .hero-avatar {
-    width: clamp(200px, 22vw, 260px);
-    height: clamp(200px, 22vw, 260px);
+    width: clamp(140px, 18vw, 200px);
+    height: clamp(140px, 18vw, 200px);
     border-radius: 50%;
     margin-bottom: 1.5rem;
     position: relative;
@@ -1873,6 +1873,36 @@ body {
     max-width: 1300px;
     padding: 0 1rem;
 }
+
+/* Center card fills its column, content centered */
+.hero-three-col .hero-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-three-col .hero-subtitle {
+    justify-content: center;
+}
+
+.hero-three-col .hero-desc {
+    border-left: none;
+    border-top: 2px solid rgba(176, 38, 255, 0.3);
+    padding-left: 0;
+    padding-top: 0.75rem;
+    text-align: center;
+}
+
+.hero-three-col .hero-actions {
+    justify-content: center;
+}
+
+.hero-three-col .btn-cv {
+    margin-left: 0;
+}
+
 
 /* ========== SIDE PANEL BASE ========== */
 .hero-side-panel {

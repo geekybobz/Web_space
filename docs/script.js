@@ -317,3 +317,64 @@ const PageEngine = (() => {
     init();
     return { goTo, next, prev };
 })();
+
+// ========== CRT TERMINAL LOG CYCLING ==========
+(function initCRTTerminal() {
+    const log = document.getElementById('crt-log');
+    if (!log) return;
+
+    const messages = [
+        { text: '> BOOT sequence init...', cls: '' },
+        { text: '> Kernel: QCtrl-v2.7', cls: 'log-dim' },
+        { text: '> Pontryagin module: OK', cls: 'log-ok' },
+        { text: '> Loading Bloch solver...', cls: '' },
+        { text: '> GRAPE optimizer: READY', cls: 'log-ok' },
+        { text: '> Qubit registers: 4', cls: 'log-dim' },
+        { text: '> Noise floor: 0.03 ±ε', cls: 'log-warn' },
+        { text: '> Calibrating pulses...', cls: '' },
+        { text: '> Fidelity target: 0.999', cls: 'log-dim' },
+        { text: '> Hamiltonian loaded', cls: 'log-ok' },
+        { text: '> Solving ODE [RK4]...', cls: '' },
+        { text: '> Convergence: 1.4e-8', cls: 'log-ok' },
+        { text: '> ML model: standby', cls: 'log-dim' },
+        { text: '> Control pulse: stored', cls: 'log-ok' },
+        { text: '> Robustness check: PASS', cls: 'log-ok' },
+        { text: '> ψ(t) evolution: done', cls: '' },
+        { text: '> Awaiting next run...', cls: 'log-warn' },
+    ];
+
+    const MAX_LINES = 8;
+    let msgIdx = 0;
+    let lines = [];
+
+    function addLine() {
+        const msg = messages[msgIdx % messages.length];
+        msgIdx++;
+
+        const span = document.createElement('span');
+        span.className = 'log-line' + (msg.cls ? ' ' + msg.cls : '');
+        span.textContent = msg.text;
+        log.appendChild(span);
+        lines.push(span);
+
+        // Keep only MAX_LINES visible
+        if (lines.length > MAX_LINES) {
+            const old = lines.shift();
+            old.style.transition = 'opacity 0.3s';
+            old.style.opacity = '0';
+            setTimeout(() => old.remove(), 320);
+        }
+    }
+
+    // Boot: add first 4 lines quickly
+    let bootCount = 0;
+    const bootInterval = setInterval(() => {
+        addLine();
+        bootCount++;
+        if (bootCount >= 4) {
+            clearInterval(bootInterval);
+            // Then cycle normally
+            setInterval(addLine, 1800);
+        }
+    }, 350);
+})();

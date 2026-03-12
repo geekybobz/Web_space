@@ -323,23 +323,18 @@ const PageEngine = (() => {
     if (!log) return;
 
     const messages = [
-        { text: '> BOOT sequence init...', cls: '' },
-        { text: '> Kernel: QCtrl-v2.7', cls: 'log-dim' },
-        { text: '> Pontryagin module: OK', cls: 'log-ok' },
-        { text: '> Loading Bloch solver...', cls: '' },
-        { text: '> GRAPE optimizer: READY', cls: 'log-ok' },
-        { text: '> Qubit registers: 4', cls: 'log-dim' },
-        { text: '> Noise floor: 0.03 ±ε', cls: 'log-warn' },
-        { text: '> Calibrating pulses...', cls: '' },
-        { text: '> Fidelity target: 0.999', cls: 'log-dim' },
-        { text: '> Hamiltonian loaded', cls: 'log-ok' },
-        { text: '> Solving ODE [RK4]...', cls: '' },
-        { text: '> Convergence: 1.4e-8', cls: 'log-ok' },
-        { text: '> ML model: standby', cls: 'log-dim' },
-        { text: '> Control pulse: stored', cls: 'log-ok' },
-        { text: '> Robustness check: PASS', cls: 'log-ok' },
-        { text: '> ψ(t) evolution: done', cls: '' },
-        { text: '> Awaiting next run...', cls: 'log-warn' },
+        { text: '> buildH(): drift + controls assembled', cls: '' },
+        { text: '> forwardprop(): state cache updated', cls: 'log-dim' },
+        { text: '> backwardprop(): adjoint trajectory ready', cls: 'log-ok' },
+        { text: '> corrections(): dux, duy, duz computed', cls: '' },
+        { text: '> optimizer: Adam(step0=0.05)', cls: 'log-dim' },
+        { text: '> target_metric: fidelity', cls: 'log-dim' },
+        { text: '> terminal_overlap: 0.9984', cls: 'log-ok' },
+        { text: '> bound_function: fixed_norm_bound', cls: '' },
+        { text: '> alpha-perturbation sweep: active', cls: 'log-warn' },
+        { text: '> robustness check: PASS', cls: 'log-ok' },
+        { text: '> U_T stored', cls: 'log-ok' },
+        { text: '> awaiting next optimization run...', cls: 'log-warn' },
     ];
 
     const MAX_LINES = 8;

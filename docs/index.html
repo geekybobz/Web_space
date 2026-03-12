@@ -62,66 +62,73 @@
         <!-- PAGE 0 — Hero -->
         <section class="page hero-page" id="page-hero" data-page="0" data-label="Home">
             <div class="page-inner page-center">
-                <div class="hero-three-col">
 
-                    <!-- LEFT: 3D Atom Panel -->
-                    <div class="hero-side-panel atom-panel" aria-hidden="true">
-                        <div class="atom-label">⟨ψ| System</div>
-                        <div class="atom-scene">
-                            <div class="atom-nucleus"></div>
-                            <div class="atom-orbit orbit-1">
-                                <div class="atom-electron e1"></div>
+                <!-- Single unified hero card -->
+                <div class="hero-content panel">
+                    <div class="badge">PhD Candidate @ ICB</div>
+
+                    <!-- Visual row: atom | avatar | terminal -->
+                    <div class="hero-visual-row">
+
+                        <!-- Atom -->
+                        <div class="hero-viz atom-viz" aria-hidden="true">
+                            <div class="atom-label">⟨ψ| System</div>
+                            <div class="atom-scene">
+                                <div class="atom-nucleus"></div>
+                                <div class="atom-orbit orbit-1">
+                                    <div class="atom-electron e1"></div>
+                                </div>
+                                <div class="atom-orbit orbit-2">
+                                    <div class="atom-electron e2"></div>
+                                </div>
+                                <div class="atom-orbit orbit-3">
+                                    <div class="atom-electron e3"></div>
+                                </div>
                             </div>
-                            <div class="atom-orbit orbit-2">
-                                <div class="atom-electron e2"></div>
-                            </div>
-                            <div class="atom-orbit orbit-3">
-                                <div class="atom-electron e3"></div>
+                            <div class="atom-footer">
+                                <span class="atom-stat" id="atom-state">|0⟩ + |1⟩</span>
                             </div>
                         </div>
-                        <div class="atom-footer">
-                            <span class="atom-stat" id="atom-state">|0⟩ + |1⟩</span>
-                        </div>
-                    </div>
 
-                    <!-- CENTER: Hero Card -->
-                    <div class="hero-content panel">
-                        <div class="badge">PhD Candidate @ ICB</div>
+                        <!-- Avatar -->
                         <div class="hero-avatar">
                             <img src="avatar_1.png" alt="Mohammed Bilal P S Profile Picture" class="profile-pic">
                         </div>
-                        <h1 class="hero-title">Mohammed Bilal P S</h1>
-                        <h2 class="hero-subtitle">Optimal Control <span>&middot;</span> Machine Learning <span>&middot;</span> Quantum Technology</h2>
-                        <div class="hero-desc-container">
-                            <p class="hero-desc">
-                                I spend a lot of time teaching quantum systems to behave, mostly by yelling at them in the Pontryagin language. But they're often naughty, so I use robust control principles to make them listen, even when they really don't want to. XD
-                            </p>
-                        </div>
-                        <div class="hero-actions">
-                            <a href="#research" class="btn btn-primary" data-page-link="5">Works</a>
-                            <a href="#current-research" class="btn btn-outline" data-page-link="6">Current Research</a>
-                            <a href="profile.pdf" class="btn btn-outline btn-cv" download>Download CV</a>
-                        </div>
-                    </div>
 
-                    <!-- RIGHT: Retro CRT Terminal Panel -->
-                    <div class="hero-side-panel terminal-panel" aria-hidden="true">
-                        <div class="crt-monitor">
-                            <div class="crt-bezel">
-                                <div class="crt-screen">
-                                    <div class="crt-scanlines"></div>
-                                    <div class="crt-log" id="crt-log"></div>
-                                    <div class="crt-cursor-blink"></div>
+                        <!-- CRT Terminal -->
+                        <div class="hero-viz terminal-viz" aria-hidden="true">
+                            <div class="crt-monitor">
+                                <div class="crt-bezel">
+                                    <div class="crt-screen">
+                                        <div class="crt-scanlines"></div>
+                                        <div class="crt-log" id="crt-log"></div>
+                                        <div class="crt-cursor-blink"></div>
+                                    </div>
+                                </div>
+                                <div class="crt-stand">
+                                    <div class="crt-stand-neck"></div>
+                                    <div class="crt-stand-base"></div>
                                 </div>
                             </div>
-                            <div class="crt-stand">
-                                <div class="crt-stand-neck"></div>
-                                <div class="crt-stand-base"></div>
-                            </div>
                         </div>
-                    </div>
 
-                </div><!-- /.hero-three-col -->
+                    </div><!-- /.hero-visual-row -->
+
+                    <!-- Text content below -->
+                    <h1 class="hero-title">Mohammed Bilal P S</h1>
+                    <h2 class="hero-subtitle">Optimal Control <span>&middot;</span> Machine Learning <span>&middot;</span> Quantum Technology</h2>
+                    <div class="hero-desc-container">
+                        <p class="hero-desc">
+                            I spend a lot of time teaching quantum systems to behave, mostly by yelling at them in the Pontryagin language. But they're often naughty, so I use robust control principles to make them listen, even when they really don't want to. XD
+                        </p>
+                    </div>
+                    <div class="hero-actions">
+                        <a href="#research" class="btn btn-primary" data-page-link="5">Works</a>
+                        <a href="#current-research" class="btn btn-outline" data-page-link="6">Current Research</a>
+                        <a href="profile.pdf" class="btn btn-outline btn-cv" download>Download CV</a>
+                    </div>
+                </div><!-- /.hero-content -->
+
             </div>
         </section>
 

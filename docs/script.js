@@ -407,6 +407,17 @@ const PageEngine = (() => {
 (function initPageAvatars() {
     const pageAvatars = document.querySelectorAll('.page-avatar');
 
+    // Per-page themed avatar images
+    const PAGE_AVATAR_MAP = {
+        '1': 'avatar_about.png',
+        '2': 'avatar_philosophy.png',
+        '3': 'avatar_experience.png',
+        '4': 'avatar_education.png',
+        '5': 'avatar_research.png',
+        '6': 'avatar_current_research.png',
+        '7': 'avatar_contact.png',
+    };
+
     pageAvatars.forEach(container => {
         const img     = container.querySelector('.page-avatar-img');
         const section = container.closest('.page');
@@ -415,6 +426,12 @@ const PageEngine = (() => {
         if (section) {
             const label = section.dataset.label || '';
             container.setAttribute('data-tooltip', label);
+        }
+
+        // --- Apply per-page themed avatar image ---
+        const pageNum = container.dataset.pageAvatar;
+        if (img && PAGE_AVATAR_MAP[pageNum]) {
+            img.src = PAGE_AVATAR_MAP[pageNum];
         }
 
         // --- Click: go back to Home (page 0) ---

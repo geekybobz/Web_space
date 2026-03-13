@@ -2317,15 +2317,15 @@ body {
     top: 80px;           /* just below the fixed navbar */
     left: clamp(1rem, 2.5vw, 2rem);
     z-index: 50;
-    width: 68px;
-    height: 68px;
+    width: 120px;
+    height: 120px;
     cursor: pointer;
 }
 
 /* --- Spinning conic ring ----------------------------- */
 .page-avatar-ring {
     position: absolute;
-    inset: -4px;
+    inset: -5px;
     border-radius: 50%;
     background: conic-gradient(
         var(--accent-1) 0%,
@@ -2341,7 +2341,7 @@ body {
 .page-avatar-ring::after {
     content: '';
     position: absolute;
-    inset: 3px;
+    inset: 4px;
     border-radius: 50%;
     background: var(--bg-main);
 }
@@ -2359,8 +2359,8 @@ body {
 .page-avatar-img {
     position: relative;
     z-index: 1;
-    width: 68px;
-    height: 68px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
     object-position: top center;
@@ -2427,13 +2427,13 @@ body {
 /* --- Mobile: slightly smaller ----------------------- */
 @media (max-width: 640px) {
     .page-avatar {
-        width: 52px;
-        height: 52px;
+        width: 88px;
+        height: 88px;
         top: 72px;
     }
     .page-avatar-img {
-        width: 52px;
-        height: 52px;
+        width: 88px;
+        height: 88px;
     }
 }
 

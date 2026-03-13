@@ -400,3 +400,67 @@ const PageEngine = (() => {
 
     if (closeBtn) closeBtn.addEventListener('click', dismiss);
 })();
+
+// =====================================================
+// PAGE AVATAR — tilt, ripple, tooltip, click-to-home
+// =====================================================
+(function initPageAvatars() {
+    const pageAvatars = document.querySelectorAll('.page-avatar');
+
+    pageAvatars.forEach(container => {
+        const img     = container.querySelector('.page-avatar-img');
+        const section = container.closest('.page');
+
+        // --- Set tooltip label from parent page's data-label ---
+        if (section) {
+            const label = section.dataset.label || '';
+            container.setAttribute('data-tooltip', label);
+        }
+
+        // --- Click: go back to Home (page 0) ---
+        container.addEventListener('click', () => {
+            if (typeof PageEngine !== 'undefined') PageEngine.goTo(0);
+        });
+
+        // --- 3-D tilt on mousemove ---
+        if (img) {
+            container.addEventListener('mouseenter', () => {
+                img.style.transition = 'transform 0.1s ease-out, box-shadow 0.2s ease';
+            });
+            container.addEventListener('mousemove', (e) => {
+                const r    = container.getBoundingClientRect();
+                const xRot =  10 * ((e.clientY - r.top  - r.height / 2) / r.height);
+                const yRot = -10 * ((e.clientX - r.left - r.width  / 2) / r.width);
+                img.style.transform = `perspective(350px) rotateX(${xRot}deg) rotateY(${yRot}deg) scale(1.1)`;
+            });
+            container.addEventListener('mouseleave', () => {
+                img.style.transition = 'transform 0.35s ease-out, box-shadow 0.2s ease';
+                img.style.transform  = '';
+            });
+        }
+    });
+
+    // --- Ripple when a page becomes active ---
+    // Hook into page transitions via a MutationObserver on each page section
+    document.querySelectorAll('.page.section').forEach(pageEl => {
+        const avatar = pageEl.querySelector('.page-avatar');
+        if (!avatar) return;
+
+        const observer = new MutationObserver(mutations => {
+            mutations.forEach(m => {
+                if (m.type === 'attributes' && m.attributeName === 'class') {
+                    if (pageEl.classList.contains('active')) {
+                        // Remove class first (so re-entering same page re-triggers)
+                        avatar.classList.remove('pa-ripple');
+                        void avatar.offsetWidth; // reflow
+                        avatar.classList.add('pa-ripple');
+                        setTimeout(() => avatar.classList.remove('pa-ripple'), 750);
+                    }
+                }
+            });
+        });
+
+        observer.observe(pageEl, { attributes: true });
+    });
+})();
+

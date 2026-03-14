@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Page under construction — Mohammed Bilal P S is busy optimizing quantum systems.">
+    <title>🚧 Under Construction | MBPS.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ========== ROOT ========== */
+        :root {
+            --bg-main:        #0B0E14;
+            --bg-secondary:   #121822;
+            --text-main:      #F3F4F6;
+            --text-muted:     #9CA3AF;
+            --accent-1:       #00F0FF;
+            --accent-2:       #B026FF;
+            --accent-3:       #10B981;
+            --glass-bg:       rgba(18, 24, 34, 0.55);
+            --glass-border:   rgba(255, 255, 255, 0.07);
+            --glass-shadow:   0 8px 40px 0 rgba(0, 0, 0, 0.5);
+            --font-sans:      'Inter', sans-serif;
+            --font-heading:   'Outfit', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { font-size: 62.5%; scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--text-main);
+            background-color: var(--bg-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            /* Deep-space grid */
+            background-image:
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Vignette */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, transparent 20%, rgba(11,14,20,0.85) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ========== BACKGROUND BLOBS ========== */
+        .bg-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.28;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .blob-1 {
+            width: 55vw; height: 55vw;
+            top: -15%; left: -15%;
+            background: radial-gradient(circle, var(--accent-2), transparent 65%);
+            animation: floatBlob 22s ease-in-out infinite alternate;
+        }
+        .blob-2 {
+            width: 45vw; height: 45vw;
+            bottom: -10%; right: -10%;
+            background: radial-gradient(circle, var(--accent-1), transparent 65%);
+            animation: floatBlob 28s ease-in-out infinite alternate-reverse;
+        }
+        .blob-3 {
+            width: 35vw; height: 35vw;
+            top: 50%; left: 30%;
+            transform: translateY(-50%);
+            background: radial-gradient(circle, rgba(16,185,129,0.2), transparent 65%);
+            animation: floatBlob 35s ease-in-out infinite alternate;
+        }
+        @keyframes floatBlob {
+            0%   { transform: translateY(0) scale(1) rotate(0deg); }
+            50%  { transform: translateY(-40px) scale(1.08) rotate(8deg); }
+            100% { transform: translateY(15px) scale(0.93) rotate(-5deg); }
+        }
+
+        /* ========== CAUTION TAPE ========== */
+        .tape-top, .tape-bottom {
+            position: fixed;
+            left: 0; right: 0;
+            height: 36px;
+            z-index: 50;
+            background: repeating-linear-gradient(
+                -45deg,
+                #F59E0B,
+                #F59E0B 20px,
+                #1a1a1a 20px,
+                #1a1a1a 40px
+            );
+            opacity: 0.85;
+        }
+        .tape-top { top: 0; }
+        .tape-bottom { bottom: 0; }
+
+        /* ========== MAIN CARD ========== */
+        .uc-card {
+            position: relative;
+            z-index: 10;
+            max-width: 780px;
+            width: 92%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: var(--glass-shadow), inset 0 0 30px rgba(255,255,255,0.01);
+            padding: clamp(2.4rem, 5vw, 4.8rem) clamp(2rem, 6vw, 5.6rem);
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Top shimmer line */
+        .uc-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+        }
+
+        /* ========== STATUS BADGE ========== */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.5rem 1.4rem;
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            color: #F59E0B;
+            border-radius: 4px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-family: monospace;
+            margin-bottom: 2.4rem;
+        }
+        .status-badge .dot {
+            width: 7px; height: 7px;
+            background: #F59E0B;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #F59E0B;
+            animation: blink 1.2s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 0.4; transform: scale(0.8); }
+            50%       { opacity: 1;   transform: scale(1.3); }
+        }
+
+        /* ========== CARTOON IMAGE ========== */
+        .cartoon-wrap {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2.8rem;
+        }
+        .cartoon-img {
+            width: clamp(200px, 35vw, 320px);
+            height: auto;
+            border-radius: 16px;
+            border: 2px solid rgba(176, 38, 255, 0.35);
+            box-shadow:
+                0 0 30px rgba(176, 38, 255, 0.25),
+                0 0 60px rgba(0, 240, 255, 0.1),
+                0 20px 60px rgba(0, 0, 0, 0.6);
+            animation: imgFloat 4s ease-in-out infinite;
+            display: block;
+        }
+        @keyframes imgFloat {
+            0%, 100% { transform: translateY(0px) rotate(-1deg); }
+            50%       { transform: translateY(-12px) rotate(1deg); }
+        }
+
+        /* Glow ring around image */
+        .cartoon-wrap::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--accent-2), transparent, var(--accent-1));
+            z-index: -1;
+            opacity: 0.4;
+            filter: blur(8px);
+            animation: rotateGlow 5s linear infinite;
+        }
+        @keyframes rotateGlow {
+            0%   { filter: blur(8px) hue-rotate(0deg); }
+            100% { filter: blur(8px) hue-rotate(360deg); }
+        }
+
+        /* ========== TEXT ========== */
+        .uc-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2.8rem, 5vw, 4.4rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--text-main) 0%, var(--accent-1) 50%, var(--accent-2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .uc-subtitle {
+            font-size: clamp(1.4rem, 2vw, 1.8rem);
+            color: var(--text-muted);
+            margin-bottom: 2.8rem;
+            line-height: 1.6;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .uc-subtitle strong {
+            color: var(--accent-1);
+            font-weight: 600;
+        }
+
+        /* ========== PROGRESS BAR ========== */
+        .progress-section {
+            margin-bottom: 3.2rem;
+        }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            font-family: monospace;
+            font-size: 1.2rem;
+        }
+        .progress-label .label-text { color: var(--text-muted); }
+        .progress-label .label-pct  { color: var(--accent-1); font-weight: 700; }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 100px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.04);
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 100px;
+            background: linear-gradient(90deg, var(--accent-2), var(--accent-1));
+            box-shadow: 0 0 12px var(--accent-1);
+            transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ========== QUIRKY STATUS ITEMS ========== */
+        .status-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin-bottom: 3.2rem;
+            text-align: left;
+        }
+        .status-list li {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 1.2rem 1.4rem;
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .status-list li:hover {
+            border-color: rgba(0, 240, 255, 0.2);
+            background: rgba(0, 240, 255, 0.03);
+        }
+        .status-list .icon-ok   { color: var(--accent-3); }
+        .status-list .icon-spin { color: var(--accent-1); animation: iconSpin 2s linear infinite; }
+        .status-list .icon-warn { color: #F59E0B; animation: blink 1.5s infinite; }
+        @keyframes iconSpin {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+
+        /* ========== CTA BUTTON ========== */
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1.2rem 2.8rem;
+            border: 1px solid var(--accent-1);
+            color: var(--accent-1);
+            background: transparent;
+            border-radius: 6px;
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15), inset 0 0 15px rgba(0, 240, 255, 0.08);
+            margin-bottom: 2.8rem;
+        }
+        .btn-home:hover {
+            background: var(--accent-1);
+            color: var(--bg-main);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+            transform: translateY(-3px);
+        }
+
+        /* ========== FLOATING EQUATIONS ========== */
+        .eq {
+            position: fixed;
+            font-family: monospace;
+            font-size: clamp(1.2rem, 1.5vw, 1.6rem);
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+            animation: floatEq 18s linear infinite;
+        }
+        .eq:nth-child(1)  { left: 3%;  top: 15%; color: rgba(0,240,255,0.25);  animation-delay: 0s;   animation-duration: 16s; }
+        .eq:nth-child(2)  { left: 5%;  top: 55%; color: rgba(176,38,255,0.2);  animation-delay: 3s;   animation-duration: 20s; }
+        .eq:nth-child(3)  { right: 4%; top: 20%; color: rgba(0,240,255,0.2);   animation-delay: 6s;   animation-duration: 14s; }
+        .eq:nth-child(4)  { right: 3%; top: 60%; color: rgba(176,38,255,0.25); animation-delay: 9s;   animation-duration: 22s; }
+        .eq:nth-child(5)  { left: 8%;  top: 80%; color: rgba(16,185,129,0.2);  animation-delay: 1.5s; animation-duration: 18s; }
+        .eq:nth-child(6)  { right: 7%; top: 80%; color: rgba(16,185,129,0.2);  animation-delay: 4s;   animation-duration: 15s; }
+        @keyframes floatEq {
+            0%   { opacity: 0;    transform: translateY(30px) rotate(-5deg); }
+            10%  { opacity: 1; }
+            85%  { opacity: 1; }
+            100% { opacity: 0;    transform: translateY(-80px) rotate(5deg); }
+        }
+
+        /* ========== FOOTER ========== */
+        .uc-footer {
+            font-size: 1.1rem;
+            color: rgba(156, 163, 175, 0.6);
+            font-family: monospace;
+        }
+        .uc-footer a {
+            color: rgba(0, 240, 255, 0.6);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .uc-footer a:hover { color: var(--accent-1); }
+
+        /* ========== CUSTOM CURSOR ========== */
+        .cursor-dot {
+            width: 6px; height: 6px;
+            background: var(--accent-1);
+            border-radius: 50%;
+            position: fixed; top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 10px var(--accent-1);
+            transition: width 0.2s, height 0.2s;
+        }
+        .cursor-outline {
+            width: 36px; height: 36px;
+            border: 1px solid rgba(0,240,255,0.4);
+            border-radius: 50%;
+            position: fixed; top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 600px) {
+            .status-list {
+                grid-template-columns: 1fr;
+            }
+            .tape-top, .tape-bottom {
+                height: 24px;
+            }
+            .eq { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background blobs -->
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    <div class="bg-blob blob-3"></div>
+
+    <!-- Caution tapes -->
+    <div class="tape-top"  role="presentation"></div>
+    <div class="tape-bottom" role="presentation"></div>
+
+    <!-- Floating equations -->
+    <div class="eq">iℏ ∂ψ/∂t = Ĥψ</div>
+    <div class="eq">H = -L + λᵀf</div>
+    <div class="eq">δJ/δu = 0</div>
+    <div class="eq">|ψ⟩ = α|0⟩ + β|1⟩</div>
+    <div class="eq">∇²ψ + k²ψ = 0</div>
+    <div class="eq">R(s,a) → Q*(s,a)</div>
+
+    <!-- Custom cursor -->
+    <div class="cursor-dot"     id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <!-- ========== MAIN CARD ========== -->
+    <main class="uc-card" role="main">
+
+        <!-- Blinking badge -->
+        <div class="status-badge">
+            <span class="dot"></span>
+            Compiling Reality...
+        </div>
+
+        <!-- Floating cartoon illustration -->
+        <div class="cartoon-wrap">
+            <img
+                src="under_construction.png"
+                alt="Cartoon of Mohammed Bilal looking overwhelmed in a construction hard hat with quantum physics equations floating around him"
+                class="cartoon-img"
+                draggable="false"
+            >
+        </div>
+
+        <!-- Heading -->
+        <h1 class="uc-title">Page Under Construction</h1>
+
+        <p class="uc-subtitle">
+            Still optimizing this page, much like I optimize quantum control pulses —
+            takes <strong>time, coffee, and at least three failed gradient descents</strong>
+            before it converges. 🍵
+        </p>
+
+        <!-- Progress bar -->
+        <div class="progress-section">
+            <div class="progress-label">
+                <span class="label-text">// build_progress.quantum()</span>
+                <span class="label-pct" id="pct-display">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Status items -->
+        <ul class="status-list" aria-label="Current build status">
+            <li>
+                <i class="fa-solid fa-circle-check icon-ok"></i>
+                Schrödinger eq. — solved ✔
+            </li>
+            <li>
+                <i class="fa-solid fa-gear icon-spin"></i>
+                Pontryagin principle — running…
+            </li>
+            <li>
+                <i class="fa-solid fa-coffee icon-ok"></i>
+                Coffee intake — optimal ✔
+            </li>
+            <li>
+                <i class="fa-solid fa-triangle-exclamation icon-warn"></i>
+                PhD thesis — due soon 😅
+            </li>
+            <li>
+                <i class="fa-solid fa-robot icon-ok"></i>
+                ML model trained ✔
+            </li>
+            <li>
+                <i class="fa-solid fa-hourglass-half icon-spin"></i>
+                Page content — 42% done…
+            </li>
+        </ul>
+
+        <!-- CTA -->
+        <a href="index.html" class="btn-home">
+            <i class="fa-solid fa-rocket"></i>
+            Back to Mission Control
+        </a>
+
+        <!-- Footer note -->
+        <p class="uc-footer">
+            &copy; 2026 <a href="index.html">Mohammed Bilal P S</a> &mdash;
+            Quantum Controller &amp; Accidental Page Builder
+        </p>
+
+    </main>
+
+    <script>
+        // ── Custom cursor ──────────────────────────────────────
+        const dot     = document.getElementById('cursor-dot');
+        const outline = document.getElementById('cursor-outline');
+        let mx = -100, my = -100, ox = -100, oy = -100;
+        window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+        (function animCursor() {
+            ox += (mx - ox) * 0.15;
+            oy += (my - oy) * 0.15;
+            dot.style.left     = mx + 'px';
+            dot.style.top      = my + 'px';
+            outline.style.left = ox + 'px';
+            outline.style.top  = oy + 'px';
+            requestAnimationFrame(animCursor);
+        })();
+
+        // ── Animated progress bar ──────────────────────────────
+        const fill   = document.getElementById('progress-fill');
+        const pctTxt = document.getElementById('pct-display');
+        const target = 42; // 42% — because the answer to life, universe, and everything.
+        let current  = 0;
+        const step   = () => {
+            if (current < target) {
+                current = Math.min(current + 0.6, target);
+                fill.style.width      = current + '%';
+                pctTxt.textContent    = Math.round(current) + '%';
+                requestAnimationFrame(step);
+            }
+        };
+        // Start after a short delay
+        setTimeout(step, 600);
+
+        // ── Subtle card entrance ───────────────────────────────
+        const card = document.querySelector('.uc-card');
+        card.style.opacity   = '0';
+        card.style.transform = 'translateY(28px)';
+        card.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            card.style.opacity   = '1';
+            card.style.transform = 'translateY(0)';
+        }));
+    </script>
+
+</body>
+</html>

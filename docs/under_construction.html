@@ -110,19 +110,37 @@
         .tape-top { top: 0; }
         .tape-bottom { bottom: 0; }
 
+        /* ========== BACK LINK ========== */
+        .back-link {
+            position: fixed;
+            top: 48px;
+            left: 2.4rem;
+            z-index: 60;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: monospace;
+            font-size: 1.15rem;
+            color: rgba(0, 240, 255, 0.55);
+            text-decoration: none;
+            letter-spacing: 0.06em;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--accent-1); }
+
         /* ========== MAIN CARD ========== */
         .uc-card {
             position: relative;
             z-index: 10;
-            max-width: 780px;
-            width: 92%;
+            max-width: 620px;
+            width: 90%;
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
+            border-radius: 16px;
             box-shadow: var(--glass-shadow), inset 0 0 30px rgba(255,255,255,0.01);
-            padding: clamp(2.4rem, 5vw, 4.8rem) clamp(2rem, 6vw, 5.6rem);
+            padding: clamp(1.6rem, 3vw, 2.8rem) clamp(1.6rem, 4vw, 3.2rem);
             text-align: center;
             overflow: hidden;
         }
@@ -150,7 +168,7 @@
             letter-spacing: 0.12em;
             text-transform: uppercase;
             font-family: monospace;
-            margin-bottom: 2.4rem;
+            margin-bottom: 1.4rem;
         }
         .status-badge .dot {
             width: 7px; height: 7px;
@@ -168,10 +186,10 @@
         .cartoon-wrap {
             position: relative;
             display: inline-block;
-            margin-bottom: 2.8rem;
+            margin-bottom: 1.6rem;
         }
         .cartoon-img {
-            width: clamp(200px, 35vw, 320px);
+            width: clamp(140px, 22vw, 200px);
             height: auto;
             border-radius: 16px;
             border: 2px solid rgba(176, 38, 255, 0.35);
@@ -207,10 +225,10 @@
         /* ========== TEXT ========== */
         .uc-title {
             font-family: var(--font-heading);
-            font-size: clamp(2.8rem, 5vw, 4.4rem);
+            font-size: clamp(2rem, 3.5vw, 3rem);
             font-weight: 800;
             line-height: 1.15;
-            margin-bottom: 1.2rem;
+            margin-bottom: 0.8rem;
             letter-spacing: -0.02em;
             background: linear-gradient(135deg, var(--text-main) 0%, var(--accent-1) 50%, var(--accent-2) 100%);
             -webkit-background-clip: text;
@@ -219,11 +237,11 @@
         }
 
         .uc-subtitle {
-            font-size: clamp(1.4rem, 2vw, 1.8rem);
+            font-size: clamp(1.2rem, 1.5vw, 1.45rem);
             color: var(--text-muted);
-            margin-bottom: 2.8rem;
+            margin-bottom: 1.8rem;
             line-height: 1.6;
-            max-width: 560px;
+            max-width: 480px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -234,7 +252,7 @@
 
         /* ========== PROGRESS BAR ========== */
         .progress-section {
-            margin-bottom: 3.2rem;
+            margin-bottom: 1.8rem;
         }
         .progress-label {
             display: flex;
@@ -269,16 +287,16 @@
             list-style: none;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.2rem;
-            margin-bottom: 3.2rem;
+            gap: 0.8rem;
+            margin-bottom: 1.8rem;
             text-align: left;
         }
         .status-list li {
             background: rgba(0,0,0,0.2);
             border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 10px;
-            padding: 1.2rem 1.4rem;
-            font-size: 1.2rem;
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            font-size: 1.1rem;
             color: var(--text-muted);
             display: flex;
             align-items: center;
@@ -301,14 +319,14 @@
         .btn-home {
             display: inline-flex;
             align-items: center;
-            gap: 0.8rem;
-            padding: 1.2rem 2.8rem;
+            gap: 0.6rem;
+            padding: 0.9rem 2rem;
             border: 1px solid var(--accent-1);
             color: var(--accent-1);
             background: transparent;
             border-radius: 6px;
             font-family: var(--font-heading);
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 700;
             letter-spacing: 0.1em;
             text-transform: uppercase;
@@ -316,7 +334,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             box-shadow: 0 0 15px rgba(0, 240, 255, 0.15), inset 0 0 15px rgba(0, 240, 255, 0.08);
-            margin-bottom: 2.8rem;
+            margin-bottom: 1.6rem;
         }
         .btn-home:hover {
             background: var(--accent-1);
@@ -417,6 +435,11 @@
     <!-- Custom cursor -->
     <div class="cursor-dot"     id="cursor-dot"></div>
     <div class="cursor-outline" id="cursor-outline"></div>
+
+    <!-- Back to home -->
+    <a href="index.html" class="back-link" aria-label="Back to home">
+        <i class="fa-solid fa-arrow-left"></i> MBPS. Home
+    </a>
 
     <!-- ========== MAIN CARD ========== -->
     <main class="uc-card" role="main">

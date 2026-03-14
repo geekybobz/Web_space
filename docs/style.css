@@ -188,6 +188,19 @@ a {
     transition: var(--transition-fast);
 }
 
+.inline-link {
+    color: var(--accent-1);
+    text-decoration: underline;
+    text-decoration-color: rgba(0, 240, 255, 0.45);
+    text-underline-offset: 0.18em;
+    font-weight: 600;
+}
+
+.inline-link:hover {
+    color: var(--text-main);
+    text-decoration-color: var(--accent-2);
+}
+
 .container {
     max-width: 1400px;
     width: 100%;
@@ -2431,5 +2444,4 @@ body {
     .page-avatar-icon { font-size: 0.95rem; }
     .page-avatar-ring { inset: -3px; border-radius: 13px; }
 }
-
 

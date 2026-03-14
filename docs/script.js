@@ -1,74 +1,47 @@
 // ========== THEME SWITCHER ==========
+// All themes available for all avatars — no grouping.
 const THEMES = [
-    { id: 'dark',    label: 'Quantum', icon: '🌌', dark: true, avatar: 'avatar_1.png' },
-    { id: 'carbon',  label: 'Carbon',  icon: '🔥', dark: true, avatar: 'avatar_2.png' },
-    { id: 'crimson', label: 'Crimson', icon: '🌹', dark: true, avatar: 'avatar_1.png' },
-    { id: 'dusk',    label: 'Dusk',    icon: '🌇', dark: true, avatar: 'avatar_2.png' },
-    { id: 'volt',    label: 'Volt',    icon: '⚡',  dark: true, avatar: 'avatar_1.png' },
+    { id: 'crimson', label: 'Crimson', icon: '🌹' },
+    { id: 'dark',    label: 'Quantum', icon: '🌌' },
+    { id: 'carbon',  label: 'Carbon',  icon: '🔥' },
+    { id: 'dusk',    label: 'Dusk',    icon: '🌇' },
+    { id: 'volt',    label: 'Volt',    icon: '⚡'  },
 ];
-
-const AVATAR_GROUP_MAP = {
-    'avatar_1.png': ['dark', 'crimson', 'volt'],
-    'avatar_2.png': ['carbon', 'dusk'],
-};
 
 const avatarPool = ['avatar_1.png', 'avatar_2.png'];
 
-const htmlEl   = document.documentElement;
-const themeBtn = document.getElementById('theme-toggle');
-const themeIconEl  = themeBtn?.querySelector('.theme-icon');
-const themeLabelEl = themeBtn?.querySelector('.theme-label');
+const htmlEl = document.documentElement;
 
-let activeThemes = THEMES;
-
-function applyTheme(themeId, animate = false) {
-    const theme = activeThemes.find(t => t.id === themeId)
-                || THEMES.find(t => t.id === themeId)
-                || activeThemes[0];
-    if (animate) {
-        htmlEl.style.transition = 'background-color 0.3s ease, color 0.3s ease';
-        setTimeout(() => { htmlEl.style.transition = ''; }, 400);
-    }
+function applyTheme(themeId) {
+    const theme = THEMES.find(t => t.id === themeId) || THEMES[0]; // fallback → crimson
     htmlEl.setAttribute('data-theme', theme.id);
-    if (themeIconEl)  themeIconEl.textContent  = theme.icon;
-    if (themeLabelEl) themeLabelEl.textContent = theme.label;
     localStorage.setItem('selectedTheme', theme.id);
-
-    const avatarEl = document.querySelector('.profile-pic');
-    if (avatarEl && theme.avatar) avatarEl.src = theme.avatar;
 }
 
-if (themeBtn) {
-    themeBtn.addEventListener('click', () => {
-        const current = htmlEl.getAttribute('data-theme') || activeThemes[0].id;
-        const idx  = activeThemes.findIndex(t => t.id === current);
-        const next = activeThemes[(idx + 1) % activeThemes.length];
-        applyTheme(next.id, true);
-    });
-}
+// ========== AVATAR + THEME SELECTION ==========
+// On every fresh page load: randomly alternate avatar, then randomly assign a theme.
+const avatarImg = document.querySelector('.profile-pic');
 
-// ========== AVATAR SELECTION ==========
-const avatarContainer = document.querySelector('.hero-avatar');
-const avatarImg       = document.querySelector('.profile-pic');
-
-if (avatarImg) {
+(function initAvatarAndTheme() {
+    // --- Pick avatar (alternate from last session) ---
     const lastAvatar = localStorage.getItem('selectedAvatar');
-    let nextAvatar   = avatarPool[Math.floor(Math.random() * avatarPool.length)];
-    if (nextAvatar === lastAvatar) {
+    let chosenAvatar = avatarPool[Math.floor(Math.random() * avatarPool.length)];
+    if (chosenAvatar === lastAvatar) {
         const others = avatarPool.filter(a => a !== lastAvatar);
-        nextAvatar   = others[Math.floor(Math.random() * others.length)] || nextAvatar;
+        chosenAvatar = others[Math.floor(Math.random() * others.length)] || chosenAvatar;
     }
-    localStorage.setItem('selectedAvatar', nextAvatar);
+    localStorage.setItem('selectedAvatar', chosenAvatar);
 
-    const allowedIds = AVATAR_GROUP_MAP[nextAvatar] || ['dark'];
-    activeThemes = THEMES.filter(t => allowedIds.includes(t.id));
+    // Apply avatar to hero image
+    if (avatarImg) avatarImg.src = chosenAvatar;
 
-    const savedTheme = localStorage.getItem('selectedTheme') || activeThemes[0].id;
-    const isAllowed  = activeThemes.some(t => t.id === savedTheme);
-    applyTheme(isAllowed ? savedTheme : activeThemes[0].id, false);
-}
+    // --- Pick theme randomly from all themes (crimson is default if nothing stored) ---
+    const randomTheme = THEMES[Math.floor(Math.random() * THEMES.length)];
+    applyTheme(randomTheme.id);
+})();
 
 // ========== AVATAR TILT ==========
+const avatarContainer = document.querySelector('.hero-avatar');
 if (avatarContainer && avatarImg) {
     avatarContainer.addEventListener('mousemove', (e) => {
         const rect = avatarContainer.getBoundingClientRect();
@@ -196,6 +169,8 @@ const PageEngine = (() => {
 
     // --- Core transition ---
     function goTo(idx, direction = null) {
+        // Pages 5 (Selected Works) & 6 (Current Research) are under construction
+        if (idx === 5 || idx === 6) { window.location.href = 'under_construction.html'; return; }
         if (isAnimating || idx === current || idx < 0 || idx >= pages.length) return;
         isAnimating = true;
 
@@ -372,3 +347,101 @@ const PageEngine = (() => {
         }
     }, 350);
 })();
+
+// =========================================================
+// ANALYTICS TOAST — shows once per browser, then remembers
+// =========================================================
+(function () {
+    const STORAGE_KEY = 'gc_noticed';
+    const toast  = document.getElementById('gc-toast');
+    const closeBtn = document.getElementById('gc-toast-close');
+    if (!toast || localStorage.getItem(STORAGE_KEY)) return;
+
+    function dismiss() {
+        toast.classList.add('gc-hiding');
+        toast.classList.remove('gc-visible');
+        localStorage.setItem(STORAGE_KEY, '1');
+    }
+
+    // Slide in after 2.5 s so it doesn't interrupt page load
+    setTimeout(function () {
+        toast.classList.add('gc-visible');
+    }, 2500);
+
+    // Auto-dismiss after 10 s (non-intrusive)
+    setTimeout(function () {
+        if (toast.classList.contains('gc-visible')) dismiss();
+    }, 12500);
+
+    if (closeBtn) closeBtn.addEventListener('click', dismiss);
+})();
+
+// =====================================================
+// PAGE ICON BADGE — inject icon + color, ripple, tooltip, click-to-home
+// =====================================================
+(function initPageAvatars() {
+    const pageAvatars = document.querySelectorAll('.page-avatar');
+
+    // Map data-color attribute to the resolved CSS variable value
+    function resolveColor(colorKey) {
+        // Read computed CSS variable from the root
+        return getComputedStyle(document.documentElement)
+            .getPropertyValue(`--${colorKey}`).trim();
+    }
+
+    pageAvatars.forEach(container => {
+        const section = container.closest('.page');
+
+        // --- Tooltip from page label ---
+        if (section) {
+            container.setAttribute('data-tooltip', section.dataset.label || '');
+        }
+
+        // --- Inject icon element ---
+        const iconClass = container.dataset.icon || 'fa-circle';
+        const icon = document.createElement('i');
+        icon.className = `fa-solid ${iconClass} page-avatar-icon`;
+        container.appendChild(icon);
+
+        // --- Set per-page badge color via CSS custom property ---
+        const colorKey = container.dataset.color || 'accent-1';
+        const colorVal = resolveColor(colorKey);
+        if (colorVal) container.style.setProperty('--page-badge-color', colorVal);
+
+        // --- Click: go back to Home ---
+        container.addEventListener('click', () => {
+            if (typeof PageEngine !== 'undefined') PageEngine.goTo(0);
+        });
+    });
+
+    // --- Re-resolve colors whenever theme changes (font-size or theme attr changes) ---
+    const htmlEl = document.documentElement;
+    const themeObserver = new MutationObserver(() => {
+        pageAvatars.forEach(container => {
+            const colorKey = container.dataset.color || 'accent-1';
+            const colorVal = getComputedStyle(htmlEl).getPropertyValue(`--${colorKey}`).trim();
+            if (colorVal) container.style.setProperty('--page-badge-color', colorVal);
+        });
+    });
+    themeObserver.observe(htmlEl, { attributes: true, attributeFilter: ['data-theme'] });
+
+    // --- Ripple when page becomes active ---
+    document.querySelectorAll('.page.section').forEach(pageEl => {
+        const avatar = pageEl.querySelector('.page-avatar');
+        if (!avatar) return;
+
+        new MutationObserver(mutations => {
+            mutations.forEach(m => {
+                if (m.type === 'attributes' && m.attributeName === 'class') {
+                    if (pageEl.classList.contains('active')) {
+                        avatar.classList.remove('pa-ripple');
+                        void avatar.offsetWidth;
+                        avatar.classList.add('pa-ripple');
+                        setTimeout(() => avatar.classList.remove('pa-ripple'), 750);
+                    }
+                }
+            });
+        }).observe(pageEl, { attributes: true });
+    });
+})();
+

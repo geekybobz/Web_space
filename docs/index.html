@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=7">
+    <link rel="stylesheet" href="style.css?v=16">
 </head>
 <body>
     <!-- Background Elements -->
@@ -29,15 +29,10 @@
                 <a href="#philosophy"  class="nav-link" data-page-link="2"><i class="fa-solid fa-lightbulb"      style="margin-right:4px;"></i> Philosophy</a>
                 <a href="#experience"  class="nav-link" data-page-link="3"><i class="fa-solid fa-code-branch"    style="margin-right:4px;"></i> Experience</a>
                 <a href="#education"   class="nav-link" data-page-link="4"><i class="fa-solid fa-graduation-cap" style="margin-right:4px;"></i> Education</a>
-                <a href="#research"    class="nav-link" data-page-link="5"><i class="fa-solid fa-microchip"      style="margin-right:4px;"></i> Research</a>
+                <a href="under_construction.html" class="nav-link"><i class="fa-solid fa-microchip"      style="margin-right:4px;"></i> Research</a>
                 <a href="#contact"     class="nav-link btn-contact" data-page-link="7"><i class="fa-solid fa-paper-plane" style="margin-right:4px;"></i> Contact</a>
             </div>
             <div class="nav-right">
-                <button class="theme-toggle" id="theme-toggle" title="Switch Theme">
-                    <span class="theme-icon">🌌</span>
-                    <span class="theme-label">Quantum</span>
-                    <i class="fa-solid fa-chevron-down theme-caret"></i>
-                </button>
                 <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
             </div>
         </div>
@@ -124,8 +119,8 @@
                         </p>
                     </div>
                     <div class="hero-actions">
-                        <a href="#research" class="btn btn-primary" data-page-link="5">Works</a>
-                        <a href="#current-research" class="btn btn-outline" data-page-link="6">Current Research</a>
+                        <a href="under_construction.html" class="btn btn-primary">Works</a>
+                        <a href="under_construction.html" class="btn btn-outline">Current Research</a>
                         <a href="profile.pdf" class="btn btn-outline btn-cv" download>Download CV</a>
                     </div>
                 </div><!-- /.hero-content -->
@@ -135,6 +130,10 @@
 
         <!-- PAGE 1 — About -->
         <section class="page section" id="about" data-page="1" data-label="About">
+            <!-- Page Avatar -->
+            <div class="page-avatar" data-page-avatar="1" data-icon="fa-terminal" data-color="accent-1" aria-hidden="true">
+                <div class="page-avatar-ring"></div>
+            </div>
             <div class="page-inner">
                 <div class="page-cols">
                     <div class="panel">
@@ -182,6 +181,10 @@
 
         <!-- PAGE 2 — Philosophy -->
         <section class="page section" id="philosophy" data-page="2" data-label="Philosophy">
+            <!-- Page Avatar -->
+            <div class="page-avatar" data-page-avatar="2" data-icon="fa-lightbulb" data-color="accent-2" aria-hidden="true">
+                <div class="page-avatar-ring"></div>
+            </div>
             <div class="page-inner">
                 <div class="section-header">
                     <div class="section-label">Mindset</div>
@@ -218,6 +221,10 @@
 
         <!-- PAGE 3 — Experience -->
         <section class="page section" id="experience" data-page="3" data-label="Experience">
+            <!-- Page Avatar -->
+            <div class="page-avatar" data-page-avatar="3" data-icon="fa-code-branch" data-color="accent-3" aria-hidden="true">
+                <div class="page-avatar-ring"></div>
+            </div>
             <div class="page-inner">
                 <div class="section-header">
                     <div class="section-label">Timeline</div>
@@ -286,6 +293,10 @@
 
         <!-- PAGE 4 — Education -->
         <section class="page section" id="education" data-page="4" data-label="Education">
+            <!-- Page Avatar -->
+            <div class="page-avatar" data-page-avatar="4" data-icon="fa-graduation-cap" data-color="accent-1" aria-hidden="true">
+                <div class="page-avatar-ring"></div>
+            </div>
             <div class="page-inner">
                 <div class="section-header">
                     <div class="section-label">Academic Journey</div>
@@ -330,6 +341,10 @@
 
         <!-- PAGE 5 — Research / Selected Works -->
         <section class="page section" id="research" data-page="5" data-label="Research">
+            <!-- Page Avatar -->
+            <div class="page-avatar" data-page-avatar="5" data-icon="fa-microchip" data-color="accent-2" aria-hidden="true">
+                <div class="page-avatar-ring"></div>
+            </div>
             <div class="page-inner">
                 <div class="section-header">
                     <div class="section-label">Portfolio</div>
@@ -382,6 +397,10 @@
 
         <!-- PAGE 6 — Current Research -->
         <section class="page section" id="current-research" data-page="6" data-label="Current Research">
+            <!-- Page Avatar -->
+            <div class="page-avatar" data-page-avatar="6" data-icon="fa-atom" data-color="accent-3" aria-hidden="true">
+                <div class="page-avatar-ring"></div>
+            </div>
             <div class="page-inner">
                 <div class="section-header">
                     <div class="section-label">In Progress</div>
@@ -424,6 +443,10 @@
 
         <!-- PAGE 7 — Contact -->
         <section class="page section" id="contact" data-page="7" data-label="Contact">
+            <!-- Page Avatar -->
+            <div class="page-avatar" data-page-avatar="7" data-icon="fa-paper-plane" data-color="accent-1" aria-hidden="true">
+                <div class="page-avatar-ring"></div>
+            </div>
             <div class="page-inner page-center">
                 <div class="panel contact-panel text-center">
                     <div class="section-label mb-2">Get In Touch</div>
@@ -449,6 +472,26 @@
 
     </div><!-- /#page-engine -->
 
-    <script src="script.js?v=14"></script>
+    <script src="script.js?v=18"></script>
+
+    <!-- =========================================================
+         ANALYTICS — GoatCounter (privacy-first, no cookies)
+         SETUP: replace YOUR_CODE with your goatcounter.com site code
+    ========================================================== -->
+    <script
+        data-goatcounter="https://billabobz.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js">
+    </script>
+
+    <!-- Quirky first-visit analytics notice -->
+    <div id="gc-toast" role="status" aria-live="polite">
+        <div class="gc-toast-icon">🔬</div>
+        <div class="gc-toast-text">
+            <strong>Psst —</strong> this site quietly counts heads.<br>
+            <span class="gc-toast-sub">No cookies, no creepy tracking. Bilal just wants to know you exist 👋</span>
+        </div>
+        <button class="gc-toast-close" id="gc-toast-close" aria-label="Dismiss">Got it ✓</button>
+    </div>
+
 </body>
 </html>

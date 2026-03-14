@@ -191,8 +191,9 @@ a {
 .inline-link {
     color: var(--accent-1);
     text-decoration: underline;
-    text-decoration-color: rgba(0, 240, 255, 0.45);
-    text-underline-offset: 0.18em;
+    text-decoration-color: var(--accent-1);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.22em;
     font-weight: 600;
 }
 
@@ -2444,4 +2445,3 @@ body {
     .page-avatar-icon { font-size: 0.95rem; }
     .page-avatar-ring { inset: -3px; border-radius: 13px; }
 }
-

@@ -169,6 +169,8 @@ const PageEngine = (() => {
 
     // --- Core transition ---
     function goTo(idx, direction = null) {
+        // Pages 5 (Selected Works) & 6 (Current Research) are under construction
+        if (idx === 5 || idx === 6) { window.location.href = 'under_construction.html'; return; }
         if (isAnimating || idx === current || idx < 0 || idx >= pages.length) return;
         isAnimating = true;
 

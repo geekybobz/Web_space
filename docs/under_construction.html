@@ -464,15 +464,13 @@
         <h1 class="uc-title">Page Under Construction</h1>
 
         <p class="uc-subtitle">
-            Still optimizing this page, much like I optimize quantum control pulses —
-            takes <strong>time, coffee, and at least three failed gradient descents</strong>
-            before it converges. 🍵
+            Takes <strong>time, coffee, and at least three quantum leaps and one eureka moment</strong> before it converges. 🍵
         </p>
 
         <!-- Progress bar -->
         <div class="progress-section">
             <div class="progress-label">
-                <span class="label-text">// build_progress.quantum()</span>
+                <span class="label-text">webspace.build() <span style="opacity:0.5">// might take a while, it's a one-man lab 😅</span></span>
                 <span class="label-pct" id="pct-display">0%</span>
             </div>
             <div class="progress-bar">
@@ -516,8 +514,7 @@
 
         <!-- Footer note -->
         <p class="uc-footer">
-            &copy; 2026 <a href="index.html">Mohammed Bilal P S</a> &mdash;
-            Quantum Controller &amp; Accidental Page Builder
+            &copy; 2026 <a href="index.html">Mohammed Bilal P S</a> | PhD Candidate &middot; Quantum Control &amp; AI/ML
         </p>
 
     </main>
@@ -538,21 +535,28 @@
             requestAnimationFrame(animCursor);
         })();
 
-        // ── Animated progress bar ──────────────────────────────
+        // ── Animated progress bar (random drift) ──────────────
         const fill   = document.getElementById('progress-fill');
         const pctTxt = document.getElementById('pct-display');
-        const target = 42; // 42% — because the answer to life, universe, and everything.
         let current  = 0;
-        const step   = () => {
-            if (current < target) {
-                current = Math.min(current + 0.6, target);
-                fill.style.width      = current + '%';
-                pctTxt.textContent    = Math.round(current) + '%';
-                requestAnimationFrame(step);
+        const MIN = 12, MAX = 78;
+
+        (function rampUp() {
+            if (current < 40) {
+                current = Math.min(current + 1.2, 40);
+                fill.style.width   = current + '%';
+                pctTxt.textContent = Math.round(current) + '%';
+                requestAnimationFrame(rampUp);
+            } else {
+                setInterval(() => {
+                    // -6 to +8: slight optimism bias 😄
+                    const step = (Math.random() * 14) - 6;
+                    current = Math.min(MAX, Math.max(MIN, current + step));
+                    fill.style.width   = current.toFixed(1) + '%';
+                    pctTxt.textContent = Math.round(current) + '%';
+                }, 900);
             }
-        };
-        // Start after a short delay
-        setTimeout(step, 600);
+        })();
 
         // ── Subtle card entrance ───────────────────────────────
         const card = document.querySelector('.uc-card');

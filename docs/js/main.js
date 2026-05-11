@@ -134,6 +134,24 @@ const PageEngine = (() => {
     let current        = 0;
     let isAnimating    = false;
 
+    function hashPageIndex() {
+        const hash = window.location.hash;
+        if (!hash) return 0;
+        const match = pages.findIndex((page) => `#${page.id}` === hash);
+        return match >= 0 ? match : 0;
+    }
+
+    function syncHash(idx) {
+        const target = pages[idx];
+        if (!target) return;
+        const url = idx === 0 ? window.location.pathname + window.location.search : `#${target.id}`;
+        if (window.history?.replaceState) {
+            window.history.replaceState(null, '', url);
+        } else {
+            window.location.hash = idx === 0 ? '' : target.id;
+        }
+    }
+
     // --- Build side dots ---
     pages.forEach((page, i) => {
         const label = page.dataset.label || `Page ${i + 1}`;
@@ -200,6 +218,7 @@ const PageEngine = (() => {
         current = idx;
         updateChrome(current);
         inPage.scrollTop = 0;
+        syncHash(current);
 
         setTimeout(() => {
             outPage.classList.remove('exit-up', 'exit-down');
@@ -216,13 +235,14 @@ const PageEngine = (() => {
             p.classList.remove('active', 'exit-up', 'exit-down', 'from-above');
             // Ensure all pages start hidden via their base .page class styles
         });
-        // Activate first page instantly (suppress transition)
-        pages[0].style.transition = 'none';
-        pages[0].classList.add('active');
-        void pages[0].offsetHeight;
-        pages[0].style.transition = '';
+        const initial = hashPageIndex();
+        pages[initial].style.transition = 'none';
+        pages[initial].classList.add('active');
+        void pages[initial].offsetHeight;
+        pages[initial].style.transition = '';
 
-        updateChrome(0);
+        current = initial;
+        updateChrome(initial);
     }
 
     // --- Listeners ---
@@ -287,6 +307,11 @@ const PageEngine = (() => {
         if (dy > 60  && atBottom) next();
         if (dy < -60 && atTop)   prev();
     }, { passive: true });
+
+    window.addEventListener('hashchange', () => {
+        const idx = hashPageIndex();
+        if (idx !== current) goTo(idx);
+    });
 
     init();
     return { goTo, next, prev };

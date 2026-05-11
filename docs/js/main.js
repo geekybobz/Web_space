@@ -8,7 +8,7 @@ const THEMES = [
     { id: 'volt',    label: 'Volt',    icon: '⚡'  },
 ];
 
-const avatarPool = ['avatar_1.png', 'avatar_2.png'];
+const avatarPool = ['assets/images/avatar_1.png', 'assets/images/avatar_2.png'];
 
 const htmlEl = document.documentElement;
 
@@ -444,4 +444,3 @@ const PageEngine = (() => {
         }).observe(pageEl, { attributes: true });
     });
 })();
-

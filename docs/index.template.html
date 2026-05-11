@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css?v=16">
+    <link rel="stylesheet" href="css/style.css?v=25">
 </head>
 <body>
     <!-- Background Elements -->
@@ -33,6 +33,17 @@
                 <a href="#contact" class="nav-link btn-contact" data-page-link="7"><i class="fa-solid fa-paper-plane" style="margin-right:4px;"></i> Contact</a>
             </div>
             <div class="nav-right">
+                <div class="mode-toggle" aria-label="Theme mode toggle" role="group">
+                    <button class="mode-toggle-btn" data-theme-mode="dark" aria-label="Select |0> state">
+                        <span class="mode-state">|0&gt;</span>
+                    </button>
+                    <button class="mode-toggle-btn" data-theme-mode="mid" aria-label="Select superposition mode 1 over root 2 of |0> plus |1>">
+                        <span class="mode-state">|0&gt;+|1&gt;</span>
+                    </button>
+                    <button class="mode-toggle-btn" data-theme-mode="light" aria-label="Select |1> state">
+                        <span class="mode-state">|1&gt;</span>
+                    </button>
+                </div>
                 <a href="https://scholar.google.com/citations?user=Yo9U7rIAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" class="nav-scholar">
                     <i class="fa-solid fa-graduation-cap"></i> Google Scholar
                 </a>
@@ -78,6 +89,6 @@
         <button class="gc-toast-close" id="gc-toast-close" aria-label="Dismiss">Got it ✓</button>
     </div>
 
-    <script src="js/main.js?v=19"></script>
+    <script src="js/main.js?v=22"></script>
 </body>
 </html>

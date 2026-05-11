@@ -6,11 +6,21 @@ const THEMES = [
     { id: 'carbon',  label: 'Carbon',  icon: '🔥' },
     { id: 'dusk',    label: 'Dusk',    icon: '🌇' },
     { id: 'volt',    label: 'Volt',    icon: '⚡'  },
+    { id: 'light-editorial', label: 'Light Editorial', icon: '1' },
+    { id: 'mid-atmosphere', label: 'Mid Atmosphere', icon: '2' },
 ];
 
 const avatarPool = ['assets/images/avatar_1.png', 'assets/images/avatar_2.png'];
+const THEME_MODES = {
+    dark: ['dark', 'crimson', 'carbon', 'dusk', 'volt'],
+    light: ['light-editorial'],
+    mid: ['mid-atmosphere'],
+};
+const MODE_STORAGE_KEY = 'selectedThemeMode';
+const DARK_INDEX_STORAGE_KEY = 'darkThemeIndex';
 
 const htmlEl = document.documentElement;
+const modeButtons = Array.from(document.querySelectorAll('[data-theme-mode]'));
 
 function applyTheme(themeId) {
     const theme = THEMES.find(t => t.id === themeId) || THEMES[0]; // fallback → crimson
@@ -18,8 +28,46 @@ function applyTheme(themeId) {
     localStorage.setItem('selectedTheme', theme.id);
 }
 
+function syncModeButtons(modeId) {
+    modeButtons.forEach((button) => {
+        button.classList.toggle('active', button.dataset.themeMode === modeId);
+    });
+}
+
+function inferModeFromTheme(themeId) {
+    if (THEME_MODES.light.includes(themeId)) return 'light';
+    if (THEME_MODES.mid.includes(themeId)) return 'mid';
+    return 'dark';
+}
+
+function applyThemeMode(modeId, { advanceDark = false } = {}) {
+    const mode = THEME_MODES[modeId] ? modeId : 'dark';
+    let themeId = THEME_MODES[mode][0];
+
+    if (mode === 'dark') {
+        const darkThemes = THEME_MODES.dark;
+        const storedIndex = parseInt(localStorage.getItem(DARK_INDEX_STORAGE_KEY) || '-1', 10);
+        const nextIndex = advanceDark
+            ? ((Number.isNaN(storedIndex) ? -1 : storedIndex) + 1 + darkThemes.length) % darkThemes.length
+            : Math.max(0, Number.isNaN(storedIndex) ? 0 : Math.min(storedIndex, darkThemes.length - 1));
+        themeId = darkThemes[nextIndex];
+        localStorage.setItem(DARK_INDEX_STORAGE_KEY, String(nextIndex));
+    }
+
+    applyTheme(themeId);
+    localStorage.setItem(MODE_STORAGE_KEY, mode);
+    syncModeButtons(mode);
+}
+
+function initialThemeMode() {
+    const storedMode = localStorage.getItem(MODE_STORAGE_KEY);
+    if (storedMode && THEME_MODES[storedMode]) return storedMode;
+    const storedTheme = localStorage.getItem('selectedTheme');
+    return inferModeFromTheme(storedTheme);
+}
+
 // ========== AVATAR + THEME SELECTION ==========
-// On every fresh page load: randomly alternate avatar, then randomly assign a theme.
+// On every fresh page load: randomly alternate avatar, then select from the active mode family.
 const avatarImg = document.querySelector('.profile-pic');
 
 (function initAvatarAndTheme() {
@@ -35,10 +83,15 @@ const avatarImg = document.querySelector('.profile-pic');
     // Apply avatar to hero image
     if (avatarImg) avatarImg.src = chosenAvatar;
 
-    // --- Pick theme randomly from all themes (crimson is default if nothing stored) ---
-    const randomTheme = THEMES[Math.floor(Math.random() * THEMES.length)];
-    applyTheme(randomTheme.id);
+    const mode = initialThemeMode();
+    applyThemeMode(mode, { advanceDark: mode === 'dark' });
 })();
+
+modeButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+        applyThemeMode(button.dataset.themeMode, { advanceDark: false });
+    });
+});
 
 // ========== AVATAR TILT ==========
 const avatarContainer = document.querySelector('.hero-avatar');

@@ -179,6 +179,8 @@ const PageEngine = (() => {
             a.classList.toggle('active', parseInt(a.dataset.pageLink) === idx);
         });
 
+        document.body.classList.toggle('viewing-contact', idx === 7);
+
         // Close mobile menu
         navLinksEl?.classList.remove('active');
         const icon = mobileToggle?.querySelector('i');

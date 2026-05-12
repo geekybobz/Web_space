@@ -65,6 +65,7 @@ function initialThemeMode() {
     const storedTheme = localStorage.getItem('selectedTheme');
     return storedTheme ? inferModeFromTheme(storedTheme) : 'mid';
 }
+
 // ========== AVATAR + THEME SELECTION ==========
 // On every fresh page load: randomly alternate avatar, then select from the active mode family.
 const avatarImg = document.querySelector('.profile-pic');
@@ -216,6 +217,19 @@ const PageEngine = (() => {
     });
 
     const dots = Array.from(dotsNav?.querySelectorAll('.page-dot') || []);
+    let pageTagTimer = null;
+
+    function pulsePageTag(idx) {
+        const dot = dots[idx];
+        if (!dot) return;
+        if (pageTagTimer) clearTimeout(pageTagTimer);
+        dots.forEach((d) => d.classList.remove('show-label'));
+        dot.classList.add('show-label');
+        pageTagTimer = setTimeout(() => {
+            dot.classList.remove('show-label');
+            pageTagTimer = null;
+        }, 1100);
+    }
 
     // --- Update UI chrome ---
     function updateChrome(idx) {
@@ -230,6 +244,8 @@ const PageEngine = (() => {
         document.querySelectorAll('[data-page-link]').forEach(a => {
             a.classList.toggle('active', parseInt(a.dataset.pageLink) === idx);
         });
+
+        document.body.classList.toggle('viewing-contact', idx === 7);
 
         // Close mobile menu
         navLinksEl?.classList.remove('active');
@@ -269,6 +285,7 @@ const PageEngine = (() => {
 
         current = idx;
         updateChrome(current);
+        pulsePageTag(current);
         inPage.scrollTop = 0;
         syncHash(current);
 

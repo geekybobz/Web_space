@@ -328,20 +328,77 @@ const PageEngine = (() => {
         if (e.key === 'ArrowUp'   || e.key === 'PageUp'  ) { e.preventDefault(); prev(); }
     });
 
-    // Wheel navigation (debounced, only when page is not scrollable)
+    // Wheel navigation: require sustained edge-scroll intent before page change.
     let wheelTimer = null;
+    let wheelIntent = 0;
+    let wheelIntentDirection = 0;
+    let wheelIntentResetTimer = null;
+    const WHEEL_EDGE_THRESHOLD = 220;
+    const WHEEL_EVENT_THRESHOLD = 24;
+    const WHEEL_RESET_MS = 180;
+
+    function resetWheelIntent() {
+        wheelIntent = 0;
+        wheelIntentDirection = 0;
+        if (wheelIntentResetTimer) {
+            clearTimeout(wheelIntentResetTimer);
+            wheelIntentResetTimer = null;
+        }
+    }
+
+    function scheduleWheelIntentReset() {
+        if (wheelIntentResetTimer) clearTimeout(wheelIntentResetTimer);
+        wheelIntentResetTimer = setTimeout(() => {
+            resetWheelIntent();
+        }, WHEEL_RESET_MS);
+    }
+
     document.addEventListener('wheel', (e) => {
         const activePage = pages[current];
         const atTop     = activePage.scrollTop <= 0;
         const atBottom  = activePage.scrollTop + activePage.clientHeight >= activePage.scrollHeight - 2;
 
-        // Only hijack wheel when page is at edge of its own scroll
-        if ((e.deltaY > 30  && atBottom) || (e.deltaY < -30 && atTop)) {
-            e.preventDefault();
-            if (wheelTimer) return;
-            wheelTimer = setTimeout(() => { wheelTimer = null; }, 700);
-            if (e.deltaY > 0) next(); else prev();
+        if ((!atTop && e.deltaY < 0) || (!atBottom && e.deltaY > 0)) {
+            resetWheelIntent();
+            return;
         }
+
+        const direction = Math.sign(e.deltaY);
+        if (direction === 0) return;
+
+        // Only hijack wheel when page is at the edge of its own scroll.
+        if ((direction > 0 && atBottom) || (direction < 0 && atTop)) {
+            e.preventDefault();
+
+            if (Math.abs(e.deltaY) < WHEEL_EVENT_THRESHOLD) {
+                scheduleWheelIntentReset();
+                return;
+            }
+
+            if (wheelTimer) {
+                scheduleWheelIntentReset();
+                return;
+            }
+
+            if (wheelIntentDirection !== direction) {
+                wheelIntent = 0;
+                wheelIntentDirection = direction;
+            }
+
+            wheelIntent += Math.abs(e.deltaY);
+            scheduleWheelIntentReset();
+
+            if (wheelIntent < WHEEL_EDGE_THRESHOLD) return;
+
+            wheelTimer = setTimeout(() => {
+                wheelTimer = null;
+            }, 700);
+            resetWheelIntent();
+            if (direction > 0) next(); else prev();
+            return;
+        }
+
+        resetWheelIntent();
     }, { passive: false });
 
     // Touch / swipe navigation

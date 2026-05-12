@@ -63,7 +63,7 @@ function initialThemeMode() {
     const storedMode = localStorage.getItem(MODE_STORAGE_KEY);
     if (storedMode && THEME_MODES[storedMode]) return storedMode;
     const storedTheme = localStorage.getItem('selectedTheme');
-    return inferModeFromTheme(storedTheme);
+    return storedTheme ? inferModeFromTheme(storedTheme) : 'mid';
 }
 
 // ========== AVATAR + THEME SELECTION ==========

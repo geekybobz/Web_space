@@ -217,6 +217,19 @@ const PageEngine = (() => {
     });
 
     const dots = Array.from(dotsNav?.querySelectorAll('.page-dot') || []);
+    let pageTagTimer = null;
+
+    function pulsePageTag(idx) {
+        const dot = dots[idx];
+        if (!dot) return;
+        if (pageTagTimer) clearTimeout(pageTagTimer);
+        dots.forEach((d) => d.classList.remove('show-label'));
+        dot.classList.add('show-label');
+        pageTagTimer = setTimeout(() => {
+            dot.classList.remove('show-label');
+            pageTagTimer = null;
+        }, 1100);
+    }
 
     // --- Update UI chrome ---
     function updateChrome(idx) {
@@ -272,6 +285,7 @@ const PageEngine = (() => {
 
         current = idx;
         updateChrome(current);
+        pulsePageTag(current);
         inPage.scrollTop = 0;
         syncHash(current);
 

@@ -336,9 +336,28 @@ const PageEngine = (() => {
     let wheelIntent = 0;
     let wheelIntentDirection = 0;
     let wheelIntentResetTimer = null;
+    let edgeCueTimer = null;
     const WHEEL_EDGE_THRESHOLD = 220;
     const WHEEL_EVENT_THRESHOLD = 24;
     const WHEEL_RESET_MS = 180;
+
+    function clearEdgeCue(page = pages[current]) {
+        page?.classList.remove('show-edge-cue-top', 'show-edge-cue-bottom');
+        if (edgeCueTimer) {
+            clearTimeout(edgeCueTimer);
+            edgeCueTimer = null;
+        }
+    }
+
+    function showEdgeCue(direction) {
+        const page = pages[current];
+        if (!page) return;
+        clearEdgeCue(page);
+        page.classList.add(direction > 0 ? 'show-edge-cue-bottom' : 'show-edge-cue-top');
+        edgeCueTimer = setTimeout(() => {
+            clearEdgeCue(page);
+        }, 760);
+    }
 
     function resetWheelIntent() {
         wheelIntent = 0;
@@ -347,6 +366,7 @@ const PageEngine = (() => {
             clearTimeout(wheelIntentResetTimer);
             wheelIntentResetTimer = null;
         }
+        clearEdgeCue();
     }
 
     function scheduleWheelIntentReset() {
@@ -374,11 +394,13 @@ const PageEngine = (() => {
             e.preventDefault();
 
             if (Math.abs(e.deltaY) < WHEEL_EVENT_THRESHOLD) {
+                showEdgeCue(direction);
                 scheduleWheelIntentReset();
                 return;
             }
 
             if (wheelTimer) {
+                showEdgeCue(direction);
                 scheduleWheelIntentReset();
                 return;
             }
@@ -389,6 +411,7 @@ const PageEngine = (() => {
             }
 
             wheelIntent += Math.abs(e.deltaY);
+            showEdgeCue(direction);
             scheduleWheelIntentReset();
 
             if (wheelIntent < WHEEL_EDGE_THRESHOLD) return;

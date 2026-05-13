@@ -91,9 +91,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: clamp(10rem, 16vh, 12rem) 1.6rem clamp(3rem, 8vh, 5rem);
             /* Deep-space grid */
             background-image:
                 linear-gradient(var(--grid-color) 1px, transparent 1px),
@@ -185,8 +187,8 @@
         .uc-card {
             position: relative;
             z-index: 10;
-            max-width: 620px;
-            width: 90%;
+            max-width: min(620px, calc(100vw - 3.2rem));
+            width: min(100%, 72vw);
             background: var(--glass-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -196,6 +198,7 @@
             padding: clamp(1.6rem, 3vw, 2.8rem) clamp(1.6rem, 4vw, 3.2rem);
             text-align: center;
             overflow: hidden;
+            margin: 0 auto;
         }
 
         /* Top shimmer line */
@@ -339,8 +342,8 @@
         .status-list {
             list-style: none;
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.8rem;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+            gap: clamp(0.7rem, 1.4vw, 0.9rem);
             margin-bottom: 1.8rem;
             text-align: left;
         }
@@ -513,6 +516,14 @@
 
         /* ========== RESPONSIVE ========== */
         @media (max-width: 600px) {
+            body {
+                padding-top: 9rem;
+            }
+
+            .uc-card {
+                width: 100%;
+            }
+
             .status-list {
                 grid-template-columns: 1fr;
             }
@@ -532,6 +543,26 @@
                 padding: 0.45rem 0.68rem;
             }
             .mode-state { font-size: 0.66rem; }
+        }
+
+        @media (max-height: 760px) {
+            body {
+                padding-top: calc(86px + 2.5rem);
+                padding-bottom: 2.5rem;
+            }
+
+            .uc-card {
+                width: min(100%, 640px);
+                padding: 1.5rem 1.5rem 1.8rem;
+            }
+
+            .status-list {
+                grid-template-columns: 1fr;
+            }
+
+            .eq {
+                opacity: 0.45;
+            }
         }
     </style>
 </head>

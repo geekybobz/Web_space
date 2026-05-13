@@ -1015,8 +1015,12 @@ a {
 
 .grid-2 {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
-    gap: clamp(0.75rem, 1.2vw, 1rem);
+    --grid-min: 18rem;
+    --grid-max: 26rem;
+    --grid-gap: clamp(0.75rem, 1.2vw, 1rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min)), min(100%, var(--grid-max))));
+    justify-content: center;
+    gap: var(--grid-gap);
     align-items: start;
 }
 
@@ -1192,8 +1196,12 @@ a {
 /* ========== EXPERIENCE GRID (SPLIT COLUMNS) ========== */
 .exp-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
-    gap: clamp(1.25rem, 1.8vw, 2rem);
+    --grid-min: 22rem;
+    --grid-max: 32rem;
+    --grid-gap: clamp(1rem, 1.8vw, 1.5rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min)), min(100%, var(--grid-max))));
+    justify-content: center;
+    gap: var(--grid-gap);
     align-items: start;
 }
 
@@ -1286,6 +1294,7 @@ a {
     flex-direction: column;
     border-radius: 8px;
     height: auto;
+    min-height: clamp(13rem, 24vh, 16rem);
 }
 
 .card-icon {
@@ -1340,6 +1349,7 @@ a {
     flex-direction: column;
     padding: 0;
     border-radius: 12px;
+    min-height: clamp(16rem, 28vh, 21rem);
 }
 
 .project-content {
@@ -1444,8 +1454,12 @@ a {
 /* ========== PHILOSOPHY SECTION ========== */
 .philosophy-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
-    gap: clamp(0.75rem, 1.5vw, 1.25rem);
+    --grid-min: 16rem;
+    --grid-max: 22rem;
+    --grid-gap: clamp(0.75rem, 1.5vw, 1.25rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min)), min(100%, var(--grid-max))));
+    justify-content: center;
+    gap: var(--grid-gap);
     align-items: start;
 }
 
@@ -2108,9 +2122,46 @@ body {
    ===================================================== */
 
 #page-engine {
+    --edge-cue-top: calc(var(--nav-height, 70px) + 0.75rem);
+    --edge-cue-bottom: 1.25rem;
     position: fixed;
     inset: 0;
     overflow: hidden;
+}
+
+#page-engine::before,
+#page-engine::after {
+    content: '';
+    position: fixed;
+    left: clamp(1rem, 3vw, 2rem);
+    right: clamp(1rem, 3vw, 2rem);
+    height: 10px;
+    border-radius: 999px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 260;
+}
+
+#page-engine::before {
+    top: var(--edge-cue-top);
+}
+
+#page-engine::after {
+    bottom: var(--edge-cue-bottom);
+}
+
+#page-engine.show-edge-cue-top::before,
+#page-engine.show-edge-cue-bottom::after {
+    animation: edge-cue-wave 0.75s ease-out forwards;
+    background:
+        radial-gradient(circle at 10% 50%, rgba(255, 120, 87, 0.88), transparent 22%),
+        radial-gradient(circle at 30% 50%, rgba(255, 86, 86, 0.82), transparent 20%),
+        radial-gradient(circle at 50% 50%, rgba(255, 153, 102, 0.85), transparent 24%),
+        radial-gradient(circle at 70% 50%, rgba(255, 86, 86, 0.82), transparent 20%),
+        radial-gradient(circle at 90% 50%, rgba(255, 120, 87, 0.88), transparent 22%);
+    box-shadow:
+        0 0 18px rgba(255, 92, 92, 0.18),
+        0 0 36px rgba(255, 140, 92, 0.1);
 }
 
 .page {
@@ -2127,41 +2178,6 @@ body {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
     scrollbar-color: var(--surface-border) transparent;
-}
-
-.page::before,
-.page::after {
-    content: '';
-    position: absolute;
-    left: clamp(1rem, 3vw, 2rem);
-    right: clamp(1rem, 3vw, 2rem);
-    height: 10px;
-    border-radius: 999px;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 4;
-}
-
-.page::before {
-    top: calc(var(--nav-height, 70px) + 0.75rem);
-}
-
-.page::after {
-    bottom: 1.25rem;
-}
-
-.page.show-edge-cue-top::before,
-.page.show-edge-cue-bottom::after {
-    animation: edge-cue-wave 0.75s ease-out forwards;
-    background:
-        radial-gradient(circle at 10% 50%, rgba(255, 120, 87, 0.88), transparent 22%),
-        radial-gradient(circle at 30% 50%, rgba(255, 86, 86, 0.82), transparent 20%),
-        radial-gradient(circle at 50% 50%, rgba(255, 153, 102, 0.85), transparent 24%),
-        radial-gradient(circle at 70% 50%, rgba(255, 86, 86, 0.82), transparent 20%),
-        radial-gradient(circle at 90% 50%, rgba(255, 120, 87, 0.88), transparent 22%);
-    box-shadow:
-        0 0 18px rgba(255, 92, 92, 0.18),
-        0 0 36px rgba(255, 140, 92, 0.1);
 }
 
 @keyframes edge-cue-wave {
@@ -2213,8 +2229,10 @@ body {
 
 /* --- Page inner layout -------------------------------- */
 .page-inner {
+    --page-safe-top: clamp(108px, 15vh, 135px);
+    --page-safe-bottom: clamp(3.75rem, 7vh, 5.5rem);
     min-height: 100%;
-    padding: calc(var(--nav-height, 70px) + 0.5rem) clamp(1rem, 2vw, 1.5rem) clamp(3.75rem, 7vh, 5.5rem);
+    padding: calc(var(--nav-height, 70px) + 0.5rem) clamp(1rem, 2vw, 1.5rem) var(--page-safe-bottom);
     max-width: 1200px;
     margin: 0 auto;
     width: 100%;
@@ -2231,8 +2249,12 @@ body {
 
 .page-cols {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
-    gap: clamp(1rem, 1.8vw, 1.5rem);
+    --grid-min: 20rem;
+    --grid-max: 30rem;
+    --grid-gap: clamp(1rem, 1.8vw, 1.5rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min)), min(100%, var(--grid-max))));
+    justify-content: center;
+    gap: var(--grid-gap);
     align-items: start;
 }
 
@@ -2246,7 +2268,7 @@ body {
 /* Section pages: push content below the top-right icon badge
    Badge is at top:72px, height 48px → ends at 120px. Start at 135px. */
 .page.section .page-inner {
-    padding-top: clamp(108px, 15vh, 135px);
+    padding-top: var(--page-safe-top);
 }
 
 
@@ -2858,6 +2880,13 @@ body {
     /* Stack visual row on mobile, hide side widgets */
     .hero-visual-row { gap: 1rem; }
     .hero-viz { display: none; }
+
+    .page-cols,
+    .grid-2,
+    .exp-grid,
+    .philosophy-grid {
+        --grid-max: 100%;
+    }
 }
 
 @media (max-width: 768px) {
@@ -2868,9 +2897,17 @@ body {
 }
 
 @media (max-height: 760px) {
+    #page-engine {
+        --edge-cue-top: calc(var(--nav-height, 70px) + 0.4rem);
+        --edge-cue-bottom: 0.8rem;
+    }
+
+    .page-inner {
+        --page-safe-bottom: 5rem;
+    }
+
     .page.section .page-inner {
-        padding-top: calc(var(--nav-height, 70px) + 2.5rem);
-        padding-bottom: 5rem;
+        --page-safe-top: calc(var(--nav-height, 70px) + 2.5rem);
     }
 
     .section-header {
@@ -2881,7 +2918,16 @@ body {
     .grid-2,
     .exp-grid,
     .philosophy-grid {
-        gap: 1rem;
+        --grid-gap: 1rem;
+    }
+
+    .panel {
+        padding: clamp(0.9rem, 1.2vw, 1.15rem);
+    }
+
+    .card,
+    .project-card {
+        min-height: 0;
     }
 }
 
@@ -2957,7 +3003,7 @@ body {
    ===================================================== */
 
 .page-avatar {
-    position: absolute;
+    position: fixed;
     top: 72px;
     right: clamp(1rem, 2.5vw, 2.5rem);
     left: auto;
@@ -2975,6 +3021,15 @@ body {
     border: 1px solid var(--glass-border);
     box-shadow: var(--glass-shadow);
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.page.active .page-avatar {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 /* Icon inside the badge — color injected by JS via CSS var */

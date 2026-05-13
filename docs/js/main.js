@@ -179,6 +179,7 @@ if (mobileToggle && navLinksEl) {
 // =====================================================
 const PageEngine = (() => {
     const pages       = Array.from(document.querySelectorAll('.page'));
+    const pageEngine  = document.getElementById('page-engine');
     const dotsNav     = document.querySelector('.page-dots');
     const prevBtn     = document.getElementById('page-prev');
     const nextBtn     = document.getElementById('page-next');
@@ -355,8 +356,8 @@ const PageEngine = (() => {
     const WHEEL_EVENT_THRESHOLD = 24;
     const WHEEL_RESET_MS = 180;
 
-    function clearEdgeCue(page = pages[current]) {
-        page?.classList.remove('show-edge-cue-top', 'show-edge-cue-bottom');
+    function clearEdgeCue() {
+        pageEngine?.classList.remove('show-edge-cue-top', 'show-edge-cue-bottom');
         if (edgeCueTimer) {
             clearTimeout(edgeCueTimer);
             edgeCueTimer = null;
@@ -364,12 +365,11 @@ const PageEngine = (() => {
     }
 
     function showEdgeCue(direction) {
-        const page = pages[current];
-        if (!page) return;
-        clearEdgeCue(page);
-        page.classList.add(direction > 0 ? 'show-edge-cue-bottom' : 'show-edge-cue-top');
+        if (!pageEngine) return;
+        clearEdgeCue();
+        pageEngine.classList.add(direction > 0 ? 'show-edge-cue-bottom' : 'show-edge-cue-top');
         edgeCueTimer = setTimeout(() => {
-            clearEdgeCue(page);
+            clearEdgeCue();
         }, 760);
     }
 

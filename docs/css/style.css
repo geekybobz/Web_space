@@ -474,6 +474,7 @@ a {
     cursor: pointer;
     transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
     white-space: nowrap;
+    animation: control-flicker 3.6s steps(2, end) infinite;
 }
 
 .mode-toggle-btn.active {
@@ -485,6 +486,7 @@ a {
         0 0 18px color-mix(in srgb, var(--accent-1) 32%, transparent),
         0 0 34px color-mix(in srgb, var(--accent-2) 16%, transparent);
     transform: translateY(-1px) scale(1.03);
+    animation-duration: 2.4s;
 }
 
 .mode-toggle-btn:hover {
@@ -1669,6 +1671,11 @@ footer {
         font-size: 0.72rem;
     }
 
+    .local-preview-exit {
+        padding: 0.45rem 0.72rem;
+        font-size: 0.66rem;
+    }
+
     .mode-toggle {
         gap: 0.3rem;
         padding: 0.28rem 0.32rem;
@@ -1725,6 +1732,33 @@ footer {
     display: flex;
     align-items: center;
     gap: 1rem;
+}
+
+.local-preview-exit {
+    display: none;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.52rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid rgba(248, 113, 113, 0.28);
+    background: rgba(248, 113, 113, 0.08);
+    color: #f87171;
+    font-family: monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease, border-color 0.2s ease;
+}
+
+.local-preview-exit:hover {
+    transform: translateY(-1px);
+    border-color: rgba(248, 113, 113, 0.45);
+}
+
+body.local-preview .local-preview-exit {
+    display: inline-flex;
 }
 
 body.viewing-contact .nav-scholar {
@@ -2123,7 +2157,11 @@ body {
 
 #page-engine {
     --edge-cue-top: calc(var(--nav-height, 70px) + 0.75rem);
-    --edge-cue-bottom: 1.25rem;
+    --edge-cue-bottom: 3rem;
+    --scroll-cue-progress: 0;
+    --scroll-cue-opacity: 0;
+    --scroll-cue-origin: 0%;
+    --scroll-cue-x: clamp(1.8rem, 3.2vw, 2.7rem);
     position: fixed;
     inset: 0;
     overflow: hidden;
@@ -2133,35 +2171,36 @@ body {
 #page-engine::after {
     content: '';
     position: fixed;
-    left: clamp(1rem, 3vw, 2rem);
-    right: clamp(1rem, 3vw, 2rem);
-    height: 10px;
+    left: var(--scroll-cue-x);
+    top: 50%;
+    height: clamp(5.5rem, 14vh, 7.4rem);
+    width: 3px;
     border-radius: 999px;
-    opacity: 0;
     pointer-events: none;
     z-index: 260;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.18s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 #page-engine::before {
-    top: var(--edge-cue-top);
+    background: color-mix(in srgb, var(--surface-border) 70%, transparent);
+    box-shadow: 0 0 10px color-mix(in srgb, var(--surface-border) 22%, transparent);
+    opacity: calc(var(--scroll-cue-opacity) * 0.28);
 }
 
 #page-engine::after {
-    bottom: var(--edge-cue-bottom);
+    transform-origin: center var(--scroll-cue-origin);
+    transform: translate(-50%, -50%) scaleY(var(--scroll-cue-progress));
+    background: linear-gradient(180deg, var(--accent-1), var(--accent-2));
+    box-shadow: 0 0 14px color-mix(in srgb, var(--accent-1) 34%, transparent);
+    opacity: var(--scroll-cue-opacity);
 }
 
-#page-engine.show-edge-cue-top::before,
+#page-engine.show-edge-cue-top::after,
 #page-engine.show-edge-cue-bottom::after {
-    animation: edge-cue-wave 0.75s ease-out forwards;
-    background:
-        radial-gradient(circle at 10% 50%, rgba(255, 120, 87, 0.88), transparent 22%),
-        radial-gradient(circle at 30% 50%, rgba(255, 86, 86, 0.82), transparent 20%),
-        radial-gradient(circle at 50% 50%, rgba(255, 153, 102, 0.85), transparent 24%),
-        radial-gradient(circle at 70% 50%, rgba(255, 86, 86, 0.82), transparent 20%),
-        radial-gradient(circle at 90% 50%, rgba(255, 120, 87, 0.88), transparent 22%);
     box-shadow:
-        0 0 18px rgba(255, 92, 92, 0.18),
-        0 0 36px rgba(255, 140, 92, 0.1);
+        0 0 20px color-mix(in srgb, var(--accent-1) 50%, transparent),
+        0 0 30px color-mix(in srgb, var(--accent-2) 30%, transparent);
 }
 
 .page {
@@ -2171,34 +2210,13 @@ body {
     overflow-x: hidden;
     opacity: 0;
     pointer-events: none;
-    transform: translateY(40px);
+    transform: translateY(18px);
     transition:
-        opacity  0.55s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+        opacity  0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
+        transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
     scrollbar-color: var(--surface-border) transparent;
-}
-
-@keyframes edge-cue-wave {
-    0% {
-        opacity: 0;
-        transform: scaleX(0.92) translateY(0);
-        filter: blur(1px);
-    }
-    20% {
-        opacity: 0.92;
-        transform: scaleX(1) translateY(0);
-        filter: blur(0);
-    }
-    70% {
-        opacity: 0.7;
-        transform: scaleX(1.02) translateY(0);
-    }
-    100% {
-        opacity: 0;
-        transform: scaleX(1.04) translateY(0);
-    }
 }
 
 .page.active {
@@ -2210,19 +2228,19 @@ body {
 .page.exit-up {
     opacity: 0;
     pointer-events: none;
-    transform: translateY(-40px);
+    transform: translateY(-18px);
 }
 
 .page.exit-down {
     opacity: 0;
     pointer-events: none;
-    transform: translateY(40px);
+    transform: translateY(18px);
 }
 
 /* Snap an incoming page to "above" so backward nav enters from above.
    Must have no transition so the snap is instantaneous. */
 .page.from-above {
-    transform: translateY(-40px) !important;
+    transform: translateY(-18px) !important;
     opacity: 0 !important;
     transition: none !important;
 }
@@ -2835,10 +2853,10 @@ body {
 /* --- Prev / Next arrows ------------------------------- */
 .page-arrows {
     position: fixed;
-    bottom: 1.75rem;
-    left: 50%;
-    transform: translateX(-50%);
+    right: 1rem;
+    bottom: 1rem;
     display: flex;
+    flex-direction: column;
     gap: 0.65rem;
     z-index: 200;
 }
@@ -2857,6 +2875,7 @@ body {
     font-size: 0.8rem;
     transition: all 0.2s ease;
     backdrop-filter: blur(8px);
+    animation: control-flicker 2.8s steps(2, end) infinite;
 }
 
 .page-arrow:hover {
@@ -2871,6 +2890,33 @@ body {
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
+    animation: none;
+}
+
+.page-arrow--next {
+    animation-delay: 0.55s;
+}
+
+@keyframes control-flicker {
+    0%, 100% {
+        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+        border-color: var(--surface-border);
+    }
+    20% {
+        box-shadow: 0 0 10px color-mix(in srgb, var(--accent-1) 18%, transparent);
+        border-color: color-mix(in srgb, var(--accent-1) 18%, var(--surface-border));
+    }
+    24% {
+        box-shadow: 0 0 4px color-mix(in srgb, var(--accent-2) 10%, transparent);
+        border-color: color-mix(in srgb, var(--accent-2) 12%, var(--surface-border));
+    }
+    52% {
+        box-shadow: 0 0 12px color-mix(in srgb, var(--accent-1) 22%, transparent);
+        border-color: color-mix(in srgb, var(--accent-1) 22%, var(--surface-border));
+    }
+    56% {
+        box-shadow: 0 0 3px color-mix(in srgb, var(--accent-1) 8%, transparent);
+    }
 }
 
 /* --- Responsive ---------------------------------------- */
@@ -2893,13 +2939,17 @@ body {
     .page-inner {
         padding: calc(var(--nav-height, 70px) + 0.75rem) 1.25rem 4rem;
     }
-    .page-arrows { bottom: 0.75rem; }
+    .page-arrows {
+        right: 0.75rem;
+        bottom: 0.75rem;
+    }
 }
 
 @media (max-height: 760px) {
     #page-engine {
         --edge-cue-top: calc(var(--nav-height, 70px) + 0.4rem);
         --edge-cue-bottom: 0.8rem;
+        --scroll-cue-x: 1.2rem;
     }
 
     .page-inner {
@@ -3110,6 +3160,32 @@ body {
     animation: pa-ripple 0.7s ease-out forwards;
     pointer-events: none;
     z-index: 2;
+}
+
+.page-avatar.edge-pulse::before {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    border-radius: 17px;
+    border: 2px solid color-mix(in srgb, var(--page-badge-color, var(--accent-1)) 70%, white 30%);
+    pointer-events: none;
+    z-index: 2;
+    animation: pa-boundary-pulse 240ms ease-out forwards;
+}
+
+@keyframes pa-boundary-pulse {
+    0% {
+        opacity: 0.2;
+        transform: scale(0.96);
+    }
+    65% {
+        opacity: 0.9;
+        transform: scale(1.08);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.14);
+    }
 }
 
 /* Mobile */

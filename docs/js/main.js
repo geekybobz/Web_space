@@ -18,6 +18,7 @@ const THEME_MODES = {
 };
 const MODE_STORAGE_KEY = 'selectedThemeMode';
 const DARK_INDEX_STORAGE_KEY = 'darkThemeIndex';
+const LOCAL_PREVIEW_STORAGE_KEY = 'localPreviewEnabled';
 
 const htmlEl = document.documentElement;
 const modeButtons = Array.from(document.querySelectorAll('[data-theme-mode]'));
@@ -66,6 +67,53 @@ function initialThemeMode() {
     return storedTheme ? inferModeFromTheme(storedTheme) : 'mid';
 }
 
+function isLocalPreview() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('localPreview') === '1') {
+        sessionStorage.setItem(LOCAL_PREVIEW_STORAGE_KEY, '1');
+    }
+    return sessionStorage.getItem(LOCAL_PREVIEW_STORAGE_KEY) === '1';
+}
+
+function attemptWindowClose() {
+    window.open('', '_self');
+    window.close();
+}
+
+function initLocalPreviewControls() {
+    if (!isLocalPreview()) return;
+    document.body.classList.add('local-preview');
+
+    const button = document.getElementById('local-preview-exit');
+    if (!button) return;
+
+    button.addEventListener('click', async () => {
+        if (button.disabled) return;
+        if (!window.confirm('Exit local preview and stop the local server?')) return;
+
+        button.disabled = true;
+        button.textContent = 'Exiting...';
+
+        fetch('/__exit_preview__', {
+            method: 'POST',
+            keepalive: true,
+        }).catch(() => {});
+
+        window.setTimeout(() => {
+            attemptWindowClose();
+        }, 120);
+
+        window.setTimeout(() => {
+            if (!window.closed) {
+                window.location.replace('about:blank');
+                window.setTimeout(() => {
+                    attemptWindowClose();
+                }, 60);
+            }
+        }, 320);
+    });
+}
+
 // ========== AVATAR + THEME SELECTION ==========
 // On every fresh page load: randomly alternate avatar, then select from the active mode family.
 const avatarImg = document.querySelector('.profile-pic');
@@ -92,6 +140,8 @@ modeButtons.forEach((button) => {
         applyThemeMode(button.dataset.themeMode, { advanceDark: false });
     });
 });
+
+initLocalPreviewControls();
 
 // ========== AVATAR TILT ==========
 const avatarContainer = document.querySelector('.hero-avatar');
@@ -183,10 +233,14 @@ const PageEngine = (() => {
     const dotsNav     = document.querySelector('.page-dots');
     const prevBtn     = document.getElementById('page-prev');
     const nextBtn     = document.getElementById('page-next');
-    const DURATION_MS = 600; // matches CSS transition
+    const DURATION_MS = 280; // matches CSS transition
 
     let current        = 0;
     let isAnimating    = false;
+    let edgePulseTimer = null;
+    let wheelState = 'idle';
+    let wheelStateTimer = null;
+    let boundaryDirection = 0;
 
     function hashPageIndex() {
         const hash = window.location.hash;
@@ -230,6 +284,83 @@ const PageEngine = (() => {
             dot.classList.remove('show-label');
             pageTagTimer = null;
         }, 1100);
+    }
+
+    let scrollCueTimer = null;
+
+    function clearScrollCueTimer() {
+        if (scrollCueTimer) {
+            clearTimeout(scrollCueTimer);
+            scrollCueTimer = null;
+        }
+    }
+
+    function setDirectionalCue(direction = 0, strength = 0) {
+        if (!pageEngine) return;
+        if (direction === 0 || strength <= 0) {
+            pageEngine.style.setProperty('--scroll-cue-progress', '0');
+            pageEngine.style.setProperty('--scroll-cue-opacity', '0');
+            return;
+        }
+
+        pageEngine.style.setProperty('--scroll-cue-origin', direction > 0 ? '0%' : '100%');
+        pageEngine.style.setProperty('--scroll-cue-progress', String(Math.min(Math.max(strength, 0), 1)));
+        pageEngine.style.setProperty('--scroll-cue-opacity', '0.96');
+    }
+
+    function flashDirectionalCue(direction, strength = 0.54, duration = 180) {
+        if (!pageEngine || direction === 0) return;
+        clearScrollCueTimer();
+        setDirectionalCue(direction, strength);
+        scrollCueTimer = setTimeout(() => {
+            setDirectionalCue(0, 0);
+            scrollCueTimer = null;
+        }, duration);
+    }
+
+    function updateScrollFeedback(page = pages[current]) {
+        if (!pageEngine || !page) return;
+        const maxScroll = Math.max(page.scrollHeight - page.clientHeight, 0);
+        const hasOverflow = maxScroll > 0;
+        pageEngine.style.setProperty('--scroll-cue-opacity', hasOverflow ? '0.18' : '0');
+        pageEngine.style.setProperty('--scroll-cue-progress', hasOverflow ? '0.22' : '0');
+        pageEngine.style.setProperty('--scroll-cue-origin', '0%');
+    }
+
+    function pulsePageBadge() {
+        const avatar = pages[current]?.querySelector('.page-avatar');
+        if (!avatar) return;
+        if (edgePulseTimer) clearTimeout(edgePulseTimer);
+        avatar.classList.remove('edge-pulse');
+        void avatar.offsetWidth;
+        avatar.classList.add('edge-pulse');
+        edgePulseTimer = setTimeout(() => {
+            avatar.classList.remove('edge-pulse');
+            edgePulseTimer = null;
+        }, 260);
+    }
+
+    function clearWheelStateTimer() {
+        if (wheelStateTimer) {
+            clearTimeout(wheelStateTimer);
+            wheelStateTimer = null;
+        }
+    }
+
+    function resetWheelState() {
+        wheelState = 'idle';
+        boundaryDirection = 0;
+        clearWheelStateTimer();
+    }
+
+    function armWheelState(direction) {
+        boundaryDirection = direction;
+        wheelState = 'edge-reached';
+        clearWheelStateTimer();
+        wheelStateTimer = setTimeout(() => {
+            wheelState = 'armed-after-pause';
+            wheelStateTimer = null;
+        }, 260);
     }
 
     // --- Update UI chrome ---
@@ -288,6 +419,7 @@ const PageEngine = (() => {
         updateChrome(current);
         pulsePageTag(current);
         inPage.scrollTop = 0;
+        updateScrollFeedback(inPage);
         syncHash(current);
 
         setTimeout(() => {
@@ -313,6 +445,7 @@ const PageEngine = (() => {
 
         current = initial;
         updateChrome(initial);
+        updateScrollFeedback(pages[initial]);
     }
 
     // --- Listeners ---
@@ -339,6 +472,12 @@ const PageEngine = (() => {
         }
     });
 
+    pages.forEach((page) => {
+        page.addEventListener('scroll', () => {
+            if (page === pages[current]) updateScrollFeedback(page);
+        }, { passive: true });
+    });
+
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
@@ -346,15 +485,10 @@ const PageEngine = (() => {
         if (e.key === 'ArrowUp'   || e.key === 'PageUp'  ) { e.preventDefault(); prev(); }
     });
 
-    // Wheel navigation: require sustained edge-scroll intent before page change.
+    // Wheel navigation: allow natural page scroll and only transition on deliberate edge intent.
     let wheelTimer = null;
-    let wheelIntent = 0;
-    let wheelIntentDirection = 0;
-    let wheelIntentResetTimer = null;
     let edgeCueTimer = null;
-    const WHEEL_EDGE_THRESHOLD = 220;
-    const WHEEL_EVENT_THRESHOLD = 24;
-    const WHEEL_RESET_MS = 180;
+    const WHEEL_EVENT_THRESHOLD = 18;
 
     function clearEdgeCue() {
         pageEngine?.classList.remove('show-edge-cue-top', 'show-edge-cue-bottom');
@@ -362,83 +496,89 @@ const PageEngine = (() => {
             clearTimeout(edgeCueTimer);
             edgeCueTimer = null;
         }
+        clearScrollCueTimer();
+        updateScrollFeedback(pages[current]);
     }
 
     function showEdgeCue(direction) {
         if (!pageEngine) return;
         clearEdgeCue();
         pageEngine.classList.add(direction > 0 ? 'show-edge-cue-bottom' : 'show-edge-cue-top');
+        setDirectionalCue(direction, 1);
+        pulsePageBadge();
         edgeCueTimer = setTimeout(() => {
             clearEdgeCue();
         }, 760);
-    }
-
-    function resetWheelIntent() {
-        wheelIntent = 0;
-        wheelIntentDirection = 0;
-        if (wheelIntentResetTimer) {
-            clearTimeout(wheelIntentResetTimer);
-            wheelIntentResetTimer = null;
-        }
-        clearEdgeCue();
-    }
-
-    function scheduleWheelIntentReset() {
-        if (wheelIntentResetTimer) clearTimeout(wheelIntentResetTimer);
-        wheelIntentResetTimer = setTimeout(() => {
-            resetWheelIntent();
-        }, WHEEL_RESET_MS);
     }
 
     document.addEventListener('wheel', (e) => {
         const activePage = pages[current];
         const atTop     = activePage.scrollTop <= 0;
         const atBottom  = activePage.scrollTop + activePage.clientHeight >= activePage.scrollHeight - 2;
+        const direction = Math.sign(e.deltaY);
+
+        if (direction !== 0) {
+            flashDirectionalCue(direction, 0.48, 170);
+        }
 
         if ((!atTop && e.deltaY < 0) || (!atBottom && e.deltaY > 0)) {
-            resetWheelIntent();
+            resetWheelState();
+            clearEdgeCue();
             return;
         }
 
-        const direction = Math.sign(e.deltaY);
         if (direction === 0) return;
+        const maxScroll = Math.max(activePage.scrollHeight - activePage.clientHeight, 0);
 
         // Only hijack wheel when page is at the edge of its own scroll.
         if ((direction > 0 && atBottom) || (direction < 0 && atTop)) {
             e.preventDefault();
 
             if (Math.abs(e.deltaY) < WHEEL_EVENT_THRESHOLD) {
+                return;
+            }
+
+            if (boundaryDirection !== 0 && boundaryDirection !== direction) {
+                resetWheelState();
+            }
+
+            if (wheelState === 'idle') {
                 showEdgeCue(direction);
-                scheduleWheelIntentReset();
+                armWheelState(direction);
+                return;
+            }
+
+            if (wheelState === 'edge-reached') {
+                showEdgeCue(direction);
+                armWheelState(direction);
                 return;
             }
 
             if (wheelTimer) {
                 showEdgeCue(direction);
-                scheduleWheelIntentReset();
                 return;
             }
 
-            if (wheelIntentDirection !== direction) {
-                wheelIntent = 0;
-                wheelIntentDirection = direction;
-            }
+            if (wheelState !== 'armed-after-pause') return;
 
-            wheelIntent += Math.abs(e.deltaY);
             showEdgeCue(direction);
-            scheduleWheelIntentReset();
-
-            if (wheelIntent < WHEEL_EDGE_THRESHOLD) return;
-
             wheelTimer = setTimeout(() => {
                 wheelTimer = null;
-            }, 700);
-            resetWheelIntent();
+            }, 460);
+            resetWheelState();
+            clearEdgeCue();
             if (direction > 0) next(); else prev();
             return;
         }
 
-        resetWheelIntent();
+        if (maxScroll <= 0) {
+            resetWheelState();
+            clearEdgeCue();
+            return;
+        }
+
+        resetWheelState();
+        clearEdgeCue();
     }, { passive: false });
 
     // Touch / swipe navigation

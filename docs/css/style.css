@@ -66,6 +66,57 @@ body {
     background-position: center center;
 }
 
+.unsupported-device {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    padding: 2.4rem;
+    background:
+        radial-gradient(circle at top, rgba(0, 240, 255, 0.18), transparent 38%),
+        linear-gradient(180deg, rgba(4, 8, 14, 0.98), rgba(11, 14, 20, 0.995));
+}
+
+.unsupported-device__panel {
+    width: min(100%, 46rem);
+    padding: 2.4rem 2rem;
+    text-align: center;
+    border-radius: 2rem;
+    background: rgba(12, 18, 28, 0.92);
+    border: 1px solid rgba(0, 240, 255, 0.18);
+    box-shadow:
+        0 2rem 4rem rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.unsupported-device__eyebrow {
+    margin-bottom: 1.2rem;
+    color: var(--accent-1);
+    font-family: monospace;
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.unsupported-device__title {
+    margin-bottom: 1rem;
+    font-size: clamp(2.6rem, 7vw, 4.2rem);
+    line-height: 1.08;
+}
+
+.unsupported-device__text {
+    max-width: 30rem;
+    margin: 0 auto;
+    color: var(--text-muted);
+    font-size: 1.55rem;
+    line-height: 1.7;
+}
+
 /* Glow Effect Overlay */
 body::before {
     content: '';
@@ -2921,6 +2972,25 @@ body {
 
 /* --- Responsive ---------------------------------------- */
 @media (max-width: 900px) {
+    body.mobile-device-blocked {
+        overflow: hidden;
+    }
+
+    body.mobile-device-blocked .unsupported-device {
+        display: flex;
+    }
+
+    body.mobile-device-blocked .navbar,
+    body.mobile-device-blocked #page-engine,
+    body.mobile-device-blocked .page-dots,
+    body.mobile-device-blocked .page-arrows,
+    body.mobile-device-blocked .cursor-dot,
+    body.mobile-device-blocked .cursor-outline,
+    body.mobile-device-blocked .bg-shape,
+    body.mobile-device-blocked #gc-toast {
+        display: none !important;
+    }
+
     .page-dots { right: 0.5rem; }
     .page-dot::after { display: none; }
     /* Stack visual row on mobile, hide side widgets */

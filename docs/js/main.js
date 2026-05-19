@@ -19,9 +19,31 @@ const THEME_MODES = {
 const MODE_STORAGE_KEY = 'selectedThemeMode';
 const DARK_INDEX_STORAGE_KEY = 'darkThemeIndex';
 const LOCAL_PREVIEW_STORAGE_KEY = 'localPreviewEnabled';
+const MOBILE_BLOCK_BREAKPOINT = 900;
 
 const htmlEl = document.documentElement;
+const bodyEl = document.body;
 const modeButtons = Array.from(document.querySelectorAll('[data-theme-mode]'));
+let mobileBlockedState = null;
+
+function isMobileBlockedViewport() {
+    return window.innerWidth <= MOBILE_BLOCK_BREAKPOINT;
+}
+
+function syncMobileDeviceBlock() {
+    const blocked = isMobileBlockedViewport();
+    bodyEl?.classList.toggle('mobile-device-blocked', blocked);
+    bodyEl?.setAttribute('data-device-blocked', blocked ? 'true' : 'false');
+    if (mobileBlockedState !== null && mobileBlockedState !== blocked) {
+        window.location.reload();
+    }
+    mobileBlockedState = blocked;
+    return blocked;
+}
+
+syncMobileDeviceBlock();
+window.addEventListener('resize', syncMobileDeviceBlock);
+window.addEventListener('orientationchange', syncMobileDeviceBlock);
 
 function applyTheme(themeId) {
     const theme = THEMES.find(t => t.id === themeId) || THEMES[0]; // fallback → crimson
@@ -214,6 +236,7 @@ const navLinksEl   = document.querySelector('.nav-links');
 
 if (mobileToggle && navLinksEl) {
     mobileToggle.addEventListener('click', () => {
+        if (isMobileBlockedViewport()) return;
         navLinksEl.classList.toggle('active');
         const icon = mobileToggle.querySelector('i');
         if (navLinksEl.classList.contains('active')) {
@@ -228,6 +251,14 @@ if (mobileToggle && navLinksEl) {
 // PAGE ENGINE
 // =====================================================
 const PageEngine = (() => {
+    if (isMobileBlockedViewport()) {
+        return {
+            goTo() {},
+            next() {},
+            prev() {},
+        };
+    }
+
     const pages       = Array.from(document.querySelectorAll('.page'));
     const pageEngine  = document.getElementById('page-engine');
     const dotsNav     = document.querySelector('.page-dots');
@@ -584,10 +615,12 @@ const PageEngine = (() => {
     // Touch / swipe navigation
     let touchStartY = 0;
     document.addEventListener('touchstart', (e) => {
+        if (isMobileBlockedViewport()) return;
         touchStartY = e.touches[0].clientY;
     }, { passive: true });
 
     document.addEventListener('touchend', (e) => {
+        if (isMobileBlockedViewport()) return;
         const dy = touchStartY - e.changedTouches[0].clientY;
         const activePage = pages[current];
         const atTop     = activePage.scrollTop <= 0;

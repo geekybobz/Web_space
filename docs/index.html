@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css?v=1779186362">
+    <link rel="stylesheet" href="css/style.css?v=1779303487">
 </head>
 <body>
     <div class="unsupported-device" id="unsupported-device" aria-live="polite">
@@ -21,6 +21,19 @@
             </p>
         </div>
     </div>
+
+    <!-- Quantum Intro Loader -->
+    <div id="q-loader" aria-hidden="true">
+        <div class="q-loader-inner">
+            <div class="q-loader-eq">|ψ⟩ = α|0⟩ + β|1⟩</div>
+            <div class="q-loader-status" id="q-loader-status">projecting onto basis...</div>
+            <div class="q-loader-bar-wrap">
+                <div class="q-loader-bar" id="q-loader-bar"></div>
+            </div>
+            <div class="q-loader-pct" id="q-loader-pct">0%</div>
+        </div>
+    </div>
+    <noscript><style>#q-loader{display:none!important}.intro-fade{opacity:1!important}</style></noscript>
 
     <!-- Background Elements -->
     <div class="bg-shape shape-1"></div>
@@ -86,11 +99,11 @@
 
                 <div class="hero-content panel">
 
-                    <div class="badge">PhD Candidate @ ICB</div>
+                    <div class="badge intro-fade" data-delay="0.1">PhD Candidate @ ICB</div>
 
 
 
-                    <div class="hero-visual-row">
+                    <div class="hero-visual-row intro-fade" data-delay="0.25">
 
                         <div class="hero-viz atom-viz" aria-hidden="true">
 
@@ -170,11 +183,15 @@
 
 
 
-                    <h1 class="hero-title">Mohammed Bilal P S</h1>
+                    <h1 class="hero-title intro-fade" data-delay="0.45">Mohammed Bilal P S</h1>
 
-                    <h2 class="hero-subtitle">Optimal Control <span>&middot;</span> Machine Learning <span>&middot;</span> Quantum Technology</h2>
+                    <h2 class="hero-subtitle intro-fade" data-delay="0.6">
 
-                    <div class="hero-desc-container">
+                        <span id="hero-typewriter"></span><span class="hero-tw-cursor" aria-hidden="true"></span>
+
+                    </h2>
+
+                    <div class="hero-desc-container intro-fade" data-delay="0.75">
 
                         <p class="hero-desc">
 
@@ -184,7 +201,7 @@
 
                     </div>
 
-                    <div class="hero-actions">
+                    <div class="hero-actions intro-fade" data-delay="0.9">
 
                         <a href="under_construction.html" class="btn btn-primary">Works</a>
 
@@ -193,6 +210,22 @@
                         <a href="profile.pdf" class="btn btn-outline btn-cv" download>Download CV</a>
 
                     </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Scrolling keyword ticker -->
+
+            <div class="hero-ticker" aria-hidden="true">
+
+                <div class="hero-ticker-track">
+
+                    <span class="hero-ticker-item">CONTROL THEORY <span class="t-sep">⟡</span> QUANTUM TECHNOLOGY <span class="t-sep">⟡</span> QUANTUM ALGORITHM <span class="t-sep">⟡</span> QUANTUM ERROR CORRECTION <span class="t-sep">⟡</span> MACHINE LEARNING <span class="t-sep">⟡</span> OPEN QUANTUM SYSTEMS <span class="t-sep">⟡</span></span>
+
+                    <span class="hero-ticker-item">CONTROL THEORY <span class="t-sep">⟡</span> QUANTUM TECHNOLOGY <span class="t-sep">⟡</span> QUANTUM ALGORITHM <span class="t-sep">⟡</span> QUANTUM ERROR CORRECTION <span class="t-sep">⟡</span> MACHINE LEARNING <span class="t-sep">⟡</span> OPEN QUANTUM SYSTEMS <span class="t-sep">⟡</span></span>
 
                 </div>
 
@@ -944,6 +977,7 @@
         <button class="gc-toast-close" id="gc-toast-close" aria-label="Dismiss">Got it ✓</button>
     </div>
 
-    <script src="js/main.js?v=1779186362"></script>
+    <script src="js/main.js?v=1779303487"></script>
 </body>
 </html>
+

@@ -1,3 +1,118 @@
+// =====================================================
+// QUANTUM INTRO LOADER
+// =====================================================
+(function initLoader() {
+    const loader  = document.getElementById('q-loader');
+    const bar     = document.getElementById('q-loader-bar');
+    const pct     = document.getElementById('q-loader-pct');
+    const status  = document.getElementById('q-loader-status');
+    const html    = document.documentElement;
+
+    if (!loader) { triggerHeroFadeIn(); return; }
+
+    // Status lines
+    const statuses = [
+        'projecting onto basis...',
+        'applying optimal pulses...',
+        'suppressing decoherence...',
+        'collapsing wavefunction...',
+    ];
+    let sIdx = 0;
+    const statusInterval = setInterval(() => {
+        sIdx = (sIdx + 1) % statuses.length;
+        if (status) {
+            status.style.opacity = '0';
+            setTimeout(() => { status.textContent = statuses[sIdx]; status.style.opacity = '1'; }, 160);
+        }
+    }, 900);
+
+    // Theme cycling — soft collapse through dark variants, lands on stored theme
+    const darkCycle = ['crimson', 'dark', 'carbon', 'dusk', 'volt'];
+    let cycleIdx = 0;
+    let cycleTimeoutId = null;
+    let p = 0;
+
+    function scheduleCycle(delay) {
+        cycleTimeoutId = setTimeout(() => {
+            cycleIdx = (cycleIdx + 1) % darkCycle.length;
+            html.setAttribute('data-theme', darkCycle[cycleIdx]);
+            let next;
+            if      (p > 85) next = 2400;
+            else if (p > 65) next = 1400;
+            else if (p > 40) next = 950;
+            else             next = 620;
+            scheduleCycle(next);
+        }, delay);
+    }
+    scheduleCycle(620);
+
+    // Progress counter — stall-based: fast → stall → snap
+    const counter = setInterval(() => {
+        let inc;
+        if      (p < 40) inc = Math.random() * 8 + 4;      // fast
+        else if (p < 85) inc = Math.random() * 1.5 + 0.4;  // stall
+        else             inc = Math.random() * 4 + 2;       // final snap
+        p = Math.min(p + inc, 100);
+        const floored = Math.floor(p);
+        if (bar) bar.style.width = floored + '%';
+        if (pct) pct.textContent = floored + '%';
+        if (p >= 100) {
+            clearInterval(counter);
+            clearInterval(statusInterval);
+            clearTimeout(cycleTimeoutId);
+            if (status) {
+                status.style.opacity = '0';
+                setTimeout(() => { status.textContent = 'measurement complete.'; status.style.opacity = '1'; }, 160);
+            }
+            // Restore stored theme before loader fades
+            setTimeout(() => {
+                const stored = localStorage.getItem('selectedTheme') || 'dark';
+                html.setAttribute('data-theme', stored);
+            }, 200);
+            setTimeout(() => {
+                loader.classList.add('q-loader--hidden');
+                triggerHeroFadeIn();
+            }, 650);
+        }
+    }, 90);
+})();
+
+function triggerHeroFadeIn() {
+    document.querySelectorAll('.intro-fade').forEach(el => {
+        const delay = el.dataset.delay ? parseFloat(el.dataset.delay) : 0;
+        el.style.animationDelay = delay + 's';
+        el.classList.add('intro-visible');
+    });
+    setTimeout(startTypewriter, 720);
+}
+
+function startTypewriter() {
+    const el = document.getElementById('hero-typewriter');
+    if (!el) return;
+    const phrases = [
+        'Physicist by obsession',
+        'Control engineer by necessity',
+        'ML researcher by curiosity',
+        'Quantum babysitter by reputation',
+    ];
+    let pIdx = 0, cIdx = 0, deleting = false;
+    function tick() {
+        const phrase = phrases[pIdx];
+        if (!deleting) {
+            cIdx++;
+            el.textContent = phrase.slice(0, cIdx);
+            if (cIdx === phrase.length) { deleting = true; setTimeout(tick, 2200); return; }
+            setTimeout(tick, 68);
+        } else {
+            cIdx--;
+            el.textContent = phrase.slice(0, cIdx);
+            if (cIdx === 0) { deleting = false; pIdx = (pIdx + 1) % phrases.length; setTimeout(tick, 320); return; }
+            setTimeout(tick, 36);
+        }
+    }
+    tick();
+}
+
 // ========== THEME SWITCHER ==========
 // All themes available for all avatars — no grouping.
 const THEMES = [
@@ -713,7 +828,7 @@ const PageEngine = (() => {
     // Slide in after 2.5 s so it doesn't interrupt page load
     setTimeout(function () {
         toast.classList.add('gc-visible');
-    }, 2500);
+    }, 5500);
 
     // Auto-dismiss after 10 s (non-intrusive)
     setTimeout(function () {

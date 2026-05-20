@@ -3270,3 +3270,139 @@ body {
     .page-avatar-icon { font-size: 0.95rem; }
     .page-avatar-ring { inset: -3px; border-radius: 13px; }
 }
+
+/* ========================================
+   QUANTUM INTRO LOADER
+   ======================================== */
+#q-loader {
+    position: fixed; inset: 0; z-index: 10000;
+    background: var(--bg-main);
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+#q-loader.q-loader--hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+.q-loader-inner {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 1.4rem; text-align: center;
+}
+.q-loader-eq {
+    font-family: 'Outfit', 'Inter', sans-serif;
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--accent-1);
+    text-shadow: 0 0 40px color-mix(in srgb, var(--accent-1) 35%, transparent);
+    animation: q-eq-pulse 2.2s ease-in-out infinite alternate;
+}
+@keyframes q-eq-pulse {
+    0%   { opacity: 0.65; text-shadow: 0 0 18px color-mix(in srgb, var(--accent-1) 20%, transparent); }
+    100% { opacity: 1;    text-shadow: 0 0 64px color-mix(in srgb, var(--accent-1) 55%, transparent); }
+}
+.q-loader-status {
+    font-family: 'Inter', monospace;
+    font-size: clamp(0.62rem, 1.4vw, 0.78rem);
+    color: var(--text-muted);
+    letter-spacing: 0.22em;
+    text-transform: lowercase;
+    min-height: 1.2em;
+    transition: opacity 0.3s ease;
+}
+.q-loader-bar-wrap {
+    width: clamp(200px, 28vw, 360px);
+    height: 1px;
+    background: var(--glass-border);
+    border-radius: 2px;
+    overflow: hidden;
+}
+.q-loader-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+    border-radius: 2px;
+    box-shadow: 0 0 10px color-mix(in srgb, var(--accent-1) 50%, transparent);
+    transition: width 0.07s linear;
+}
+.q-loader-pct {
+    font-family: 'Inter', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+    opacity: 0.5;
+}
+
+/* ========================================
+   HERO INTRO FADE-UP STAGGER
+   ======================================== */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.intro-fade {
+    opacity: 0;
+}
+.intro-fade.intro-visible {
+    animation: fadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ========================================
+   TYPEWRITER CURSOR
+   ======================================== */
+.hero-tw-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 0.85em;
+    background: var(--accent-1);
+    margin-left: 3px;
+    vertical-align: text-bottom;
+    border-radius: 1px;
+    animation: tw-blink 1s step-end infinite;
+}
+@keyframes tw-blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
+
+/* ========================================
+   HERO TICKER
+   ======================================== */
+.hero-ticker {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    overflow: hidden;
+    padding: 0.65rem 0;
+    border-top: 1px solid var(--glass-border);
+    white-space: nowrap;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);
+}
+.hero-ticker-track {
+    display: inline-flex;
+    animation: ticker-scroll 36s linear infinite;
+}
+.hero-ticker-item {
+    font-family: 'Inter', monospace;
+    font-size: clamp(0.5rem, 0.9vw, 0.62rem);
+    color: var(--text-muted);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 0 1.5rem;
+    opacity: 0.7;
+}
+.t-sep {
+    color: var(--accent-1);
+    opacity: 0.55;
+    margin: 0 0.4rem;
+}
+@keyframes ticker-scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* hero-page needs relative positioning for the ticker */
+.hero-page {
+    position: relative;
+}

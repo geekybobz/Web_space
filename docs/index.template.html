@@ -22,15 +22,24 @@
         </div>
     </div>
 
-    <!-- Quantum Intro Loader -->
+    <!-- Intro Loader -->
     <div id="q-loader" aria-hidden="true">
-        <div class="q-loader-inner">
-            <div class="q-loader-eq">|ψ⟩ = α|0⟩ + β|1⟩</div>
-            <div class="q-loader-status" id="q-loader-status">projecting onto basis...</div>
+        <svg class="q-wave-svg" id="q-wave-svg" aria-hidden="true">
+            <path class="q-wave-smooth" id="q-wave-sine"/>
+            <path class="q-wave-step"   id="q-wave-step"/>
+        </svg>
+        <div class="q-drift-field" id="q-drift-field" aria-hidden="true"></div>
+        <div class="q-loader-zone1">
+            <div class="q-loader-name-display" id="q-name-display"></div>
+        </div>
+        <div class="q-loader-zone2">
+            <div class="q-expr">
+                <span class="q-expr-l">min⟨ψ|</span><span class="q-expr-m">H</span><span class="q-expr-r">|ψ⟩</span>
+            </div>
+            <div class="q-loader-status" id="q-loader-status"></div>
             <div class="q-loader-bar-wrap">
                 <div class="q-loader-bar" id="q-loader-bar"></div>
             </div>
-            <div class="q-loader-pct" id="q-loader-pct">0%</div>
         </div>
     </div>
     <noscript><style>#q-loader{display:none!important}.intro-fade{opacity:1!important}</style></noscript>

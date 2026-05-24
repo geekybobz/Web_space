@@ -481,7 +481,7 @@ const PageEngine = (() => {
         dot.dataset.label = label;
         dot.setAttribute('aria-label', `Go to ${label}`);
         dot.addEventListener('click', () => {
-            if (i === 5 || i === 6) { window.location.href = 'under_construction.html'; return; }
+            if (i === 5) { window.location.href = 'under_construction.html'; return; }
             goTo(i);
         });
         dotsNav?.appendChild(dot);
@@ -593,7 +593,7 @@ const PageEngine = (() => {
             a.classList.toggle('active', parseInt(a.dataset.pageLink) === idx);
         });
 
-        document.body.classList.toggle('viewing-contact', idx === 7);
+        document.body.classList.toggle('viewing-contact', idx === 6);
 
         // Close mobile menu
         navLinksEl?.classList.remove('active');
@@ -603,10 +603,10 @@ const PageEngine = (() => {
 
     // --- Core transition ---
     function goTo(idx, direction = null) {
-        // Pages 5 & 6 are under construction — skip in scroll/keyboard nav; dot click redirects
-        if (idx === 5 || idx === 6) {
+        // Page 5 is under construction — skip in scroll/keyboard nav; dot click redirects
+        if (idx === 5) {
             const skipDir = direction ?? (idx > current ? 'forward' : 'backward');
-            goTo(skipDir === 'forward' ? 7 : 4, skipDir);
+            goTo(skipDir === 'forward' ? 6 : 4, skipDir);
             return;
         }
         if (isAnimating || idx === current || idx < 0 || idx >= pages.length) return;

@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css?v=1779656024">
+    <link rel="stylesheet" href="css/style.css?v=20260525c">
 </head>
 <body>
     <div class="unsupported-device" id="unsupported-device" aria-live="polite">
@@ -60,9 +60,8 @@
                 <a href="#about" class="nav-link" data-page-link="1"><i class="fa-solid fa-terminal" style="margin-right:4px;"></i> About</a>
                 <a href="#philosophy" class="nav-link" data-page-link="2"><i class="fa-solid fa-lightbulb" style="margin-right:4px;"></i> Philosophy</a>
                 <a href="#experience" class="nav-link" data-page-link="3"><i class="fa-solid fa-code-branch" style="margin-right:4px;"></i> Experience</a>
-                <a href="#education" class="nav-link" data-page-link="4"><i class="fa-solid fa-graduation-cap" style="margin-right:4px;"></i> Education</a>
-                <a href="under_construction.html" class="nav-link"><i class="fa-solid fa-microchip" style="margin-right:4px;"></i> Research</a>
-                <a href="#contact" class="nav-link btn-contact" data-page-link="7"><i class="fa-solid fa-paper-plane" style="margin-right:4px;"></i> Contact</a>
+                <a href="#research" class="nav-link" data-page-link="4"><i class="fa-solid fa-microchip" style="margin-right:4px;"></i> Research</a>
+                <a href="#contact" class="nav-link btn-contact" data-page-link="6"><i class="fa-solid fa-paper-plane" style="margin-right:4px;"></i> Contact</a>
             </div>
             <div class="nav-right">
                 <button class="local-preview-exit" id="local-preview-exit" type="button">Exit Preview</button>
@@ -544,17 +543,87 @@
 
                                 <div class="timeline-content">
 
-                                    <div class="timeline-date">May 2023 &mdash; May 2024</div>
+                                    <div class="timeline-meta">
 
-                                    <h3 class="timeline-title">MS Thesis Researcher</h3>
+                                        <div class="timeline-date">Nov 2024 &mdash; Present</div>
 
-                                    <div class="timeline-company">IISER Berhampur, India</div>
+                                        <h3 class="timeline-title">PhD Candidate</h3>
 
-                                    <p class="timeline-desc text-muted">
+                                        <div class="timeline-degree text-muted">Doctor of Philosophy &middot; Theoretical and Mathematical Physics</div>
 
-                                        Worked on "optimal charging protocol for multi-qubit quantum battery" under Dr. Victor Mukherjee and Paolo Andrea Erdman.
+                                        <div class="timeline-company">ICB Dijon, Université de Bourgogne, France</div>
 
-                                    </p>
+                                    </div>
+
+                                    <div class="timeline-body">
+
+                                        <p class="timeline-desc text-muted">
+
+                                            The research focuses on fundamental questions in quantum control: how cheap, fast, and robust can a quantum operation be made? Working with both analytical tools, particularly the Pontryagin Maximum Principle, and numerical methods such as GRAPE, the work tackles thermodynamic costs, work fluctuations, and timing constraints in quantum gate design. A second thread extends this to open quantum systems, where noise and dissipation from the environment make the problem harder and the answers more relevant.
+
+                                        </p>
+
+                                        <div class="timeline-tags">
+
+                                            <span class="project-tag">Quantum Control</span>
+
+                                            <span class="project-tag">Quantum Thermodynamics</span>
+
+                                            <span class="project-tag">Open Quantum Systems</span>
+
+                                            <span class="project-tag">GRAPE</span>
+
+                                            <span class="project-tag">Pontryagin Maximum Principle</span>
+
+                                        </div>
+
+                                        <a href="#research" data-page-link="4" class="timeline-project-link">Project Page <i class="fa-solid fa-arrow-right"></i></a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="timeline-item panel">
+
+                                <div class="timeline-dot"></div>
+
+                                <div class="timeline-content">
+
+                                    <div class="timeline-meta">
+
+                                        <div class="timeline-date">2019 &mdash; 2024</div>
+
+                                        <h3 class="timeline-title">MS Thesis Researcher</h3>
+
+                                        <div class="timeline-degree text-muted">BS-MS Integrated &middot; Physics</div>
+
+                                        <div class="timeline-company">IISER Berhampur, India</div>
+
+                                    </div>
+
+                                    <div class="timeline-body">
+
+                                        <p class="timeline-desc text-muted">
+
+                                            Developed reinforcement learning based optimal control protocols for quantum batteries, targeting maximum ergotropy in spin-1/2 chain systems. Starting from a single-qubit system validated against known results, the work extended to multi-qubit configurations (2 to 5 qubits) under both ordered and disordered dynamics, demonstrating that RL-guided control outperforms greedy protocols for many-body quantum battery charging.
+
+                                        </p>
+
+                                        <div class="timeline-tags">
+
+                                            <span class="project-tag">Reinforcement Learning</span>
+
+                                            <span class="project-tag">Quantum Batteries</span>
+
+                                            <span class="project-tag">Optimal Control</span>
+
+                                        </div>
+
+                                        <a href="#research" data-page-link="4" class="timeline-project-link">Project Page <i class="fa-solid fa-arrow-right"></i></a>
+
+                                    </div>
 
                                 </div>
 
@@ -566,63 +635,33 @@
 
 
 
-                    <div class="exp-col exp-col--other">
+                </div>
 
-                        <div class="exp-col-header">
 
-                            <span class="exp-col-icon"><i class="fa-solid fa-briefcase"></i></span>
 
-                            <span class="exp-col-label">Other Experience</span>
+                <div class="exp-other-strip">
+
+                    <div class="exp-other-label">Other</div>
+
+                    <div class="exp-other-items">
+
+                        <div class="exp-other-item">
+
+                            <div class="exp-other-item-role">Math Teacher</div>
+
+                            <div class="exp-other-item-company">revamp24, Bangalore</div>
+
+                            <div class="exp-other-item-date">2020 &ndash; 2024</div>
 
                         </div>
 
-                        <div class="timeline">
+                        <div class="exp-other-item">
 
-                            <div class="timeline-item panel">
+                            <div class="exp-other-item-role">Mathematics Specialist</div>
 
-                                <div class="timeline-dot"></div>
+                            <div class="exp-other-item-company">Six Red Marbles, Chennai</div>
 
-                                <div class="timeline-content">
-
-                                    <div class="timeline-date">June 2020 &mdash; May 2024</div>
-
-                                    <h3 class="timeline-title">Math Teacher</h3>
-
-                                    <div class="timeline-company">revamp24, Bangalore</div>
-
-                                    <p class="timeline-desc text-muted">
-
-                                        Instructed and mentored students in advanced mathematics and problem-solving techniques.
-
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-
-
-                            <div class="timeline-item panel">
-
-                                <div class="timeline-dot"></div>
-
-                                <div class="timeline-content">
-
-                                    <div class="timeline-date">2019 &mdash; 2021</div>
-
-                                    <h3 class="timeline-title">Mathematics Specialist</h3>
-
-                                    <div class="timeline-company">Six Red Marbles, Chennai, India</div>
-
-                                    <p class="timeline-desc text-muted">
-
-                                        Served as a Subject Matter Expert in math and calculus, developing curriculum and instructional materials.
-
-                                    </p>
-
-                                </div>
-
-                            </div>
+                            <div class="exp-other-item-date">2019 &ndash; 2021</div>
 
                         </div>
 
@@ -634,87 +673,11 @@
 
         </section>
 
-        <!-- PAGE 4 — Education -->
+        <!-- PAGE 4 — Research / Selected Works -->
 
-        <section class="page section" id="education" data-page="4" data-label="Education">
+        <section class="page section" id="research" data-page="4" data-label="Research">
 
-            <div class="page-avatar" data-page-avatar="4" data-icon="fa-graduation-cap" data-color="accent-1" aria-hidden="true">
-
-                <div class="page-avatar-ring"></div>
-
-            </div>
-
-            <div class="page-inner">
-
-                <div class="section-header">
-
-                    <div class="section-label">Academic Journey</div>
-
-                    <h2 class="section-title">Education</h2>
-
-                </div>
-
-
-
-                <div class="grid-2">
-
-                    <div class="card panel">
-
-                        <div class="card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-
-                        <div class="card-date">Nov 2024 &mdash; Nov 2027</div>
-
-                        <h3 class="card-title">Doctor of Philosophy (PhD)</h3>
-
-                        <div class="card-subtitle">Theoretical and Mathematical Physics</div>
-
-                        <div class="card-institution">Université de Bourgogne, France</div>
-
-                    </div>
-
-
-
-                    <div class="card panel">
-
-                        <div class="card-icon"><i class="fa-solid fa-flask"></i></div>
-
-                        <div class="card-date">2019 &mdash; 2024</div>
-
-                        <h3 class="card-title">BS-MS Integrated</h3>
-
-                        <div class="card-subtitle">Physics</div>
-
-                        <div class="card-institution">IISER Berhampur</div>
-
-                    </div>
-
-
-
-                    <div class="card panel">
-
-                        <div class="card-icon"><i class="fa-solid fa-school"></i></div>
-
-                        <div class="card-date">Completed</div>
-
-                        <h3 class="card-title">Higher Secondary Education</h3>
-
-                        <div class="card-subtitle">Computer-Math</div>
-
-                        <div class="card-institution">National Huda Central School</div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- PAGE 5 — Research / Selected Works -->
-
-        <section class="page section" id="research" data-page="5" data-label="Research">
-
-            <div class="page-avatar" data-page-avatar="5" data-icon="fa-microchip" data-color="accent-2" aria-hidden="true">
+            <div class="page-avatar" data-page-avatar="4" data-icon="fa-microchip" data-color="accent-2" aria-hidden="true">
 
                 <div class="page-avatar-ring"></div>
 
@@ -732,29 +695,37 @@
 
 
 
-                <div class="grid-2">
+                <div class="research-cards">
 
-                    <article class="project-card panel">
+                    <article class="research-card panel">
 
-                        <div class="project-content">
+                        <div class="rc-num">01</div>
 
-                            <div class="project-meta">
+                        <div class="rc-body">
 
-                                <span class="project-tag">Chanakya Fellowship</span>
+                            <h3 class="rc-title">Quantum Battery Charging</h3>
 
-                                <span class="project-tag">Masters Work</span>
+                            <p class="rc-desc">
 
-                            </div>
-
-                            <h3 class="project-title">Quantum Battery Charging</h3>
-
-                            <p class="project-desc text-muted">
-
-                                Developed an optimal charging protocol using Reinforcement Learning for spin chain models. This work explores energetic efficiency in quantum systems using advanced AI algorithms.
+                                Developed RL-based optimal control protocols for quantum batteries, targeting maximum ergotropy in spin-1/2 chain systems. Validated on a single-qubit system and extended to multi-qubit configurations (2 to 5 qubits) under both ordered and disordered dynamics, showing RL-guided control outperforms greedy protocols.
 
                             </p>
 
-                            <a href="#" class="project-link">Read Details <i class="fa-solid fa-arrow-right"></i></a>
+                            <div class="rc-footer">
+
+                                <div class="rc-tags">
+
+                                    <span class="project-tag">Chanakya Fellowship</span>
+
+                                    <span class="project-tag">Masters Work</span>
+
+                                    <span class="project-tag">Reinforcement Learning</span>
+
+                                </div>
+
+                                <a href="under_construction.html" class="project-link">Abstract &amp; Details <i class="fa-solid fa-arrow-right"></i></a>
+
+                            </div>
 
                         </div>
 
@@ -762,27 +733,37 @@
 
 
 
-                    <article class="project-card panel">
+                    <article class="research-card panel">
 
-                        <div class="project-content">
+                        <div class="rc-num">02</div>
 
-                            <div class="project-meta">
+                        <div class="rc-body">
 
-                                <span class="project-tag">Theoretical Physics</span>
+                            <h3 class="rc-title">Quantum Control and Open Dynamics</h3>
 
-                                <span class="project-tag">Control Theory</span>
+                            <p class="rc-desc">
 
-                            </div>
-
-                            <h3 class="project-title">Optimal Control Under Constraints</h3>
-
-                            <p class="project-desc text-muted">
-
-                                Studying control strategies that remain effective under realistic constraints, numerical limitations, and experimentally relevant conditions in quantum systems.
+                                Using analytical tools, particularly the Pontryagin Maximum Principle, and numerical methods such as GRAPE to design control protocols that minimize thermodynamic costs, work fluctuations, and control time. A second thread addresses open quantum systems where noise and dissipation make robust, energetically efficient control both harder and more relevant.
 
                             </p>
 
-                            <a href="#" class="project-link">Read Details <i class="fa-solid fa-arrow-right"></i></a>
+                            <div class="rc-footer">
+
+                                <div class="rc-tags">
+
+                                    <span class="project-tag">PhD Work</span>
+
+                                    <span class="project-tag">Ongoing</span>
+
+                                    <span class="project-tag">GRAPE</span>
+
+                                    <span class="project-tag">Pontryagin Maximum Principle</span>
+
+                                </div>
+
+                                <a href="under_construction.html" class="project-link">Abstract &amp; Details <i class="fa-solid fa-arrow-right"></i></a>
+
+                            </div>
 
                         </div>
 
@@ -790,19 +771,15 @@
 
 
 
-                    <article class="project-card panel draft-card">
+                    <article class="research-card panel draft-card">
 
-                        <div class="project-content">
+                        <div class="rc-num"><i class="fa-solid fa-terminal" style="font-size:0.85rem;"></i></div>
 
-                            <div class="project-icon-placeholder">
+                        <div class="rc-body">
 
-                                <i class="fa-solid fa-terminal"></i>
+                            <h3 class="rc-title">Awaiting Data...</h3>
 
-                            </div>
-
-                            <h3 class="project-title">Awaiting Data...</h3>
-
-                            <p class="project-desc text-muted">
+                            <p class="rc-desc">
 
                                 Additional simulations, preprints, and numerical repositories will initialize here when public.
 
@@ -818,11 +795,11 @@
 
         </section>
 
-        <!-- PAGE 6 — Current Research -->
+        <!-- PAGE 5 — Current Research -->
 
-        <section class="page section" id="current-research" data-page="6" data-label="Current Research">
+        <section class="page section" id="current-research" data-page="5" data-label="Current Research">
 
-            <div class="page-avatar" data-page-avatar="6" data-icon="fa-atom" data-color="accent-3" aria-hidden="true">
+            <div class="page-avatar" data-page-avatar="5" data-icon="fa-atom" data-color="accent-3" aria-hidden="true">
 
                 <div class="page-avatar-ring"></div>
 
@@ -906,11 +883,11 @@
 
         </section>
 
-        <!-- PAGE 7 — Contact -->
+        <!-- PAGE 6 — Contact -->
 
-        <section class="page section" id="contact" data-page="7" data-label="Contact">
+        <section class="page section" id="contact" data-page="6" data-label="Contact">
 
-            <div class="page-avatar" data-page-avatar="7" data-icon="fa-paper-plane" data-color="accent-1" aria-hidden="true">
+            <div class="page-avatar" data-page-avatar="6" data-icon="fa-paper-plane" data-color="accent-1" aria-hidden="true">
 
                 <div class="page-avatar-ring"></div>
 
@@ -986,7 +963,7 @@
         <button class="gc-toast-close" id="gc-toast-close" aria-label="Dismiss">Got it ✓</button>
     </div>
 
-    <script src="js/main.js?v=1779656024"></script>
+    <script src="js/main.js?v=20260525c"></script>
 </body>
 </html>
 

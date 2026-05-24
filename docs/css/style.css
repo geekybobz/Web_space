@@ -1788,96 +1788,216 @@ a {
 }
 
 /* ========== PHILOSOPHY SECTION ========== */
-.philosophy-grid {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(0.6rem, 0.9vw, 0.85rem);
-    width: min(100%, 1020px);
-    margin: 0 auto;
-}
-
-.philosophy-card {
+.philosophy-layout {
     display: grid;
-    grid-template-columns: 5.2rem minmax(0, 1fr);
-    grid-template-areas:
-        "icon title"
-        "icon body";
-    column-gap: clamp(1rem, 1.6vw, 1.35rem);
-    row-gap: 0.5rem;
-    align-items: start;
-    padding: clamp(1rem, 1.45vw, 1.25rem) clamp(1.05rem, 1.55vw, 1.35rem);
-    position: relative;
-    overflow: hidden;
-    border-radius: 12px;
-    transition: var(--transition-medium);
+    gap: clamp(1rem, 1.8vw, 1.5rem);
+    margin-bottom: clamp(1rem, 1.8vw, 1.5rem);
 }
 
-.philosophy-card::before {
+.philosophy-feature {
+    padding: clamp(1.2rem, 1.8vw, 1.6rem);
+}
+
+.philosophy-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-bottom: 1.1rem;
+    color: var(--accent-2);
+    font-family: monospace;
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.philosophy-kicker::before {
     content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 3px;
-    background: linear-gradient(90deg, var(--accent-2), var(--accent-1));
-    opacity: 0;
+    width: 1.6rem;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent-1), transparent);
+}
+
+.philosophy-lead {
+    font-size: clamp(1.22rem, 1.75vw, 1.48rem);
+    line-height: 1.7;
+    color: var(--text-main);
+    max-width: 34ch;
+}
+
+.philosophy-feature-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(1rem, 1.8vw, 1.5rem);
+    align-items: start;
+}
+
+.philosophy-feature-copy p + p {
+    margin-top: 0.95rem;
+}
+
+.philosophy-rail {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(0.8rem, 1.2vw, 1rem);
+}
+
+.philosophy-note {
+    padding: clamp(1rem, 1.45vw, 1.2rem);
+    border-left: 2px solid rgba(0, 240, 255, 0.16);
     transition: var(--transition-medium);
 }
 
-.philosophy-card:hover::before {
-    opacity: 1;
+.philosophy-note:hover {
+    transform: translateY(-3px);
+    border-left-color: rgba(0, 240, 255, 0.42);
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 240, 255, 0.08);
 }
 
-.philosophy-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(0, 240, 255, 0.15);
+.philosophy-note-title {
+    font-size: 1.18rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 0.7rem;
+    color: var(--text-main);
 }
 
-.philosophy-icon {
-    grid-area: icon;
-    width: 4rem;
-    height: 4rem;
-    border-radius: 12px;
-    background: rgba(0, 240, 255, 0.06);
-    border: 1px solid rgba(0, 240, 255, 0.15);
-    display: flex;
+.philosophy-note-body {
+    font-size: 1.03rem;
+    line-height: 1.72;
+}
+
+.philosophy-bridge {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: clamp(1rem, 1.5vw, 1.25rem);
+    align-items: start;
+    padding: clamp(1.15rem, 1.7vw, 1.4rem);
+}
+
+.philosophy-bridge-icon {
+    width: 3.4rem;
+    height: 3.4rem;
+    border-radius: 14px;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
+    font-size: 1.35rem;
+    background: rgba(0, 240, 255, 0.07);
+    border: 1px solid rgba(0, 240, 255, 0.18);
     color: var(--accent-1);
-    margin-bottom: 0;
-    transition: var(--transition-fast);
+    box-shadow: inset 0 0 24px rgba(0, 240, 255, 0.04);
 }
 
-.philosophy-card:hover .philosophy-icon {
-    background: rgba(176, 38, 255, 0.1);
-    border-color: var(--accent-2);
-    color: var(--accent-2);
-    box-shadow: 0 0 20px rgba(176, 38, 255, 0.25);
+.philosophy-bridge-copy p + p {
+    margin-top: 0.95rem;
 }
 
-.philosophy-title {
-    grid-area: title;
-    font-size: 1.55rem;
-    font-weight: 700;
+.philosophy-closing {
+    font-size: 1.06rem;
+    line-height: 1.72;
     color: var(--text-main);
-    margin-bottom: 0;
-    line-height: 1.3;
 }
 
-.philosophy-body {
-    grid-area: body;
-    font-size: 1.12rem;
-    line-height: 1.75;
-    min-width: 0;
+#philosophy.philosophy-polish-aura .philosophy-feature {
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+        0 24px 40px rgba(0, 0, 0, 0.18),
+        0 0 0 1px rgba(0, 240, 255, 0.08);
+}
+
+#philosophy.philosophy-polish-aura .philosophy-feature::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 14% 22%, rgba(0, 240, 255, 0.1), transparent 32%),
+        radial-gradient(circle at 85% 18%, rgba(176, 38, 255, 0.09), transparent 30%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.02), transparent 58%);
+    pointer-events: none;
+}
+
+#philosophy.philosophy-polish-aura .philosophy-kicker {
+    color: color-mix(in srgb, var(--accent-2) 72%, white 28%);
+    letter-spacing: 0.16em;
+}
+
+#philosophy.philosophy-polish-varied .philosophy-note:nth-child(1) {
+    border-left-color: rgba(0, 240, 255, 0.34);
+    box-shadow: inset 0 0 0 1px rgba(0, 240, 255, 0.03);
+}
+
+#philosophy.philosophy-polish-varied .philosophy-note:nth-child(2) {
+    border-left-color: rgba(176, 38, 255, 0.26);
+    box-shadow: inset 0 0 0 1px rgba(176, 38, 255, 0.035);
+}
+
+#philosophy.philosophy-polish-varied .philosophy-note:nth-child(3) {
+    border-left-color: rgba(116, 151, 255, 0.28);
+    box-shadow: inset 0 0 0 1px rgba(116, 151, 255, 0.035);
+}
+
+#philosophy.philosophy-polish-varied .philosophy-note:nth-child(1):hover {
+    border-left-color: rgba(0, 240, 255, 0.52);
+}
+
+#philosophy.philosophy-polish-varied .philosophy-note:nth-child(2):hover {
+    border-left-color: rgba(176, 38, 255, 0.46);
+}
+
+#philosophy.philosophy-polish-varied .philosophy-note:nth-child(3):hover {
+    border-left-color: rgba(116, 151, 255, 0.46);
+}
+
+#philosophy.philosophy-polish-tactile .philosophy-bridge {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent),
+        repeating-linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.015) 0,
+            rgba(255, 255, 255, 0.015) 1px,
+            transparent 1px,
+            transparent 18px
+        ),
+        rgba(7, 11, 18, 0.38);
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+#philosophy.philosophy-polish-tactile .philosophy-bridge-icon {
+    background:
+        linear-gradient(145deg, rgba(0, 240, 255, 0.12), rgba(176, 38, 255, 0.08)),
+        rgba(255, 255, 255, 0.02);
+    box-shadow:
+        inset 0 0 20px rgba(255, 255, 255, 0.04),
+        0 10px 20px rgba(0, 0, 0, 0.18);
+}
+
+#philosophy.philosophy-polish-tactile .philosophy-closing {
+    color: color-mix(in srgb, var(--text-main) 88%, var(--accent-1) 12%);
+}
+
+@media (max-width: 900px) {
+    .philosophy-feature-grid,
+    .philosophy-rail {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 640px) {
-    .philosophy-card {
+    .philosophy-feature,
+    .philosophy-note,
+    .philosophy-bridge {
+        padding: 1rem;
+    }
+
+    .philosophy-bridge {
         grid-template-columns: 1fr;
-        grid-template-areas:
-            "icon"
-            "title"
-            "body";
-        row-gap: 0.85rem;
+    }
+
+    .philosophy-bridge-icon {
+        width: 3rem;
+        height: 3rem;
     }
 }
 

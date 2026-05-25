@@ -1,54 +1,178 @@
-<!-- PAGE 5 — Research / Selected Works -->
-<section class="page section" id="research" data-page="5" data-label="Research">
-    <div class="page-avatar" data-page-avatar="5" data-icon="fa-microchip" data-color="accent-2" aria-hidden="true">
+<!-- PAGE 4 — Works -->
+<section class="page section" id="research" data-page="4" data-label="Works">
+    <div class="page-avatar" data-page-avatar="4" data-icon="fa-microchip" data-color="accent-2" aria-hidden="true">
         <div class="page-avatar-ring"></div>
     </div>
     <div class="page-inner">
+
         <div class="section-header">
             <div class="section-label">Portfolio</div>
-            <h2 class="section-title">Selected Works</h2>
+            <h2 class="section-title">Works</h2>
         </div>
 
-        <div class="grid-2">
-            <article class="project-card panel">
-                <div class="project-content">
-                    <div class="project-meta">
-                        <span class="project-tag">Chanakya Fellowship</span>
-                        <span class="project-tag">Masters Work</span>
+        <!-- A: Projects -->
+        <div class="works-block-label">Projects</div>
+
+        <div class="research-cards">
+
+            <article class="research-card panel research-card--toggleable">
+                <div class="rc-num">01</div>
+                <div class="rc-body">
+                    <div class="rc-summary">
+                        <div class="rc-summary-main">
+                            <h3 class="rc-title">Energy Shortcut of N-Level Quantum Protocols by Optimal Control</h3>
+                            <span class="rc-status-tag rc-status-tag--prl">PRL ⏳</span>
+                            <div class="rc-meta-line">C. L. Latune, M. B. Puthuveedu Shebeek, D. Sugny, S. Guérin &middot; arXiv:2503.20130 &middot; 2025</div>
+                            <div class="rc-tags">
+                                <span class="project-tag">Optimal Control</span>
+                                <span class="project-tag">Energy Efficiency</span>
+                                <span class="project-tag">Shortcut to Adiabaticity</span>
+                                <span class="project-tag">GRAPE</span>
+                                <span class="project-tag">N-level Systems</span>
+                            </div>
+                        </div>
+                        <button class="project-toggle" type="button" aria-expanded="false" aria-controls="project-detail-1">
+                            View Abstract
+                        </button>
                     </div>
-                    <h3 class="project-title">Quantum Battery Charging</h3>
-                    <p class="project-desc text-muted">
-                        Developed an optimal charging protocol using Reinforcement Learning for spin chain models. This work explores energetic efficiency in quantum systems using advanced AI algorithms.
-                    </p>
-                    <a href="#" class="project-link">Read Details <i class="fa-solid fa-arrow-right"></i></a>
+                    <div class="rc-detail" id="project-detail-1" hidden>
+                        <p class="rc-desc">
+                            This work introduces QOSTE (Quantum-Optimal-Shortcut-To-Energetics), a framework for designing quantum control protocols that achieve the same state transformations as Shortcut-To-Adiabaticity methods but at the lowest possible energy cost. The central result is that the minimal energy cost is governed by the length of a geodesic in the rotating frame defined by the original protocol, giving the method a clean geometric interpretation.
+                        </p>
+                        <p class="rc-desc">
+                            The framework is developed for general N-level quantum systems using geometric and optimal control techniques. For extended control durations, energy cost ratios are shown to scale quadratically with time. The approach was tested against standard protocols including Landau-Zener and STIRAP, demonstrating substantial energy reductions in both cases.
+                        </p>
+                        <p class="rc-desc">
+                            Optimization further reveals a quantifiable trade-off between energy efficiency and robustness. QOSTE designs are shown to outperform conventional methods on both fronts simultaneously, establishing a practical path toward energy-aware quantum gate design.
+                        </p>
+                        <div class="rc-footer rc-footer--detail">
+                            <a href="https://arxiv.org/abs/2503.20130" class="project-link" target="_blank" rel="noopener noreferrer">arXiv:2503.20130 <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
                 </div>
             </article>
 
-            <article class="project-card panel">
-                <div class="project-content">
-                    <div class="project-meta">
-                        <span class="project-tag">Theoretical Physics</span>
-                        <span class="project-tag">Control Theory</span>
+            <article class="research-card panel research-card--toggleable">
+                <div class="rc-num">02</div>
+                <div class="rc-body">
+                    <div class="rc-summary">
+                        <div class="rc-summary-main">
+                            <h3 class="rc-title">Quantum Battery Charging via Reinforcement Learning</h3>
+                            <div class="rc-meta-line">M. B. Puthuveedu Shebeek, V. Mukherjee, P. A. Erdman &middot; MS Thesis &middot; 2024</div>
+                            <div class="rc-tags">
+                                <span class="project-tag">Reinforcement Learning</span>
+                                <span class="project-tag">Quantum Batteries</span>
+                                <span class="project-tag">Optimal Control</span>
+                                <span class="project-tag">Soft Actor-Critic</span>
+                                <span class="project-tag">Disordered Systems</span>
+                            </div>
+                        </div>
+                        <button class="project-toggle" type="button" aria-expanded="false" aria-controls="project-detail-2">
+                            View Abstract
+                        </button>
                     </div>
-                    <h3 class="project-title">Optimal Control Under Constraints</h3>
-                    <p class="project-desc text-muted">
-                        Studying control strategies that remain effective under realistic constraints, numerical limitations, and experimentally relevant conditions in quantum systems.
-                    </p>
-                    <a href="#" class="project-link">Read Details <i class="fa-solid fa-arrow-right"></i></a>
+                    <div class="rc-detail" id="project-detail-2" hidden>
+                        <p class="rc-desc">
+                            This project studies how to design efficient charging protocols for quantum batteries, where the goal is to maximize the useful work extractable from the system. The figure of merit is ergotropy, and the control problem is defined over spin-chain quantum batteries driven by an external modulation.
+                        </p>
+                        <p class="rc-desc">
+                            Battery charging was reformulated as an optimal-control problem and solved using the Soft Actor-Critic framework. The study covered spin-chain systems with 2 to 5 qubits, comparing learned protocols against greedy strategies, and extended to disordered systems to test robustness under less structured dynamics.
+                        </p>
+                        <p class="rc-desc">
+                            Results show that learned protocols outperform greedy approaches in relevant regimes and demonstrate how reinforcement learning can serve as a practical tool for quantum control when direct intuition-driven design becomes intractable.
+                        </p>
+                        <div class="rc-footer rc-footer--detail">
+                            <a href="assets/pdfs/quantum-battery-rl-thesis.pdf" class="project-link" target="_blank" rel="noopener noreferrer">Read Thesis PDF <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
                 </div>
             </article>
 
-            <article class="project-card panel draft-card">
-                <div class="project-content">
-                    <div class="project-icon-placeholder">
-                        <i class="fa-solid fa-terminal"></i>
+        </div>
+
+        <!-- B: In Progress -->
+        <div class="works-block-label">
+            <span class="works-active-dot" aria-hidden="true"></span>
+            In Progress
+        </div>
+
+        <div class="research-cards">
+            <article class="research-card panel rc-inprogress">
+                <div class="rc-num"><i class="fa-solid fa-atom" style="font-size:0.85rem;"></i></div>
+                <div class="rc-body">
+                    <div class="rc-summary">
+                        <div class="rc-summary-main">
+                            <h3 class="rc-title">Universally Robust Quantum Control for State-to-State Transfer and Gate Synthesis</h3>
+                            <div class="rc-tags">
+                                <span class="project-tag">PhD Work</span>
+                                <span class="project-tag">PMP</span>
+                                <span class="project-tag">GRAPE</span>
+                                <span class="project-tag">Robust Control</span>
+                                <span class="project-tag">Open Quantum Systems</span>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="project-title">Awaiting Data...</h3>
-                    <p class="project-desc text-muted">
-                        Additional simulations, preprints, and numerical repositories will initialize here when public.
+                    <p class="rc-desc">
+                        Developing universally robust control strategies for state-to-state transfer and quantum gate synthesis, combining Pontryagin Maximum Principle based analytical design with GRAPE numerical optimization.
                     </p>
+                    <ul class="clean-list rc-desc">
+                        <li>PMP-based design targeting 2nd and 4th order robustness conditions</li>
+                        <li>GRAPE-assisted refinement for constrained quantum dynamics</li>
+                        <li>Machine-learning-assisted control strategies</li>
+                    </ul>
                 </div>
             </article>
         </div>
+
+        <!-- C: Posters & Abstracts -->
+        <div class="works-block-label">Posters &amp; Abstracts</div>
+
+        <div class="research-cards">
+            <article class="research-card panel research-card--toggleable">
+                <div class="rc-num rc-num--poster">
+                    <span class="rc-num-conf">JED</span>
+                    <span class="rc-num-year">2025</span>
+                </div>
+                <div class="rc-body">
+                    <div class="rc-summary">
+                        <div class="rc-summary-main">
+                            <h3 class="rc-title">Robust and Energy-Efficient Controls for a Two-Level System</h3>
+                            <div class="rc-meta-line">Mohammed Bilal, C. L. Latune, D. Sugny &middot; ICB Dijon</div>
+                            <div class="rc-tags">
+                                <span class="project-tag">Poster</span>
+                                <span class="project-tag">Optimal Control</span>
+                                <span class="project-tag">Robust Control</span>
+                                <span class="project-tag">Energy Efficiency</span>
+                                <span class="project-tag">PMP</span>
+                            </div>
+                        </div>
+                        <button class="project-toggle" type="button" aria-expanded="false" aria-controls="poster-detail-1">
+                            View Abstract
+                        </button>
+                    </div>
+                    <div class="rc-detail" id="poster-detail-1" hidden>
+                        <p class="rc-desc">
+                            We consider a two-level quantum system governed by a Landau-Zener Hamiltonian, with the goal of designing control protocols that transfer the system between states within a fixed time. The objectives are to minimize the energy cost of the control field while maintaining high fidelity, and to ensure robustness against realistic parameter uncertainties such as calibration errors in the control amplitude.
+                        </p>
+                        <p class="rc-desc">
+                            The optimal energy-minimizing solution is derived analytically using the Pontryagin Maximum Principle. Robustness is incorporated through a gradient-ascent algorithm that optimizes an ensemble-averaged figure of merit over uncertain system parameters, yielding a trade-off curve between energy cost and robustness. The controls outperform Shortcut-to-Adiabaticity on both metrics simultaneously.
+                        </p>
+                        <p class="rc-desc rc-desc--ref">
+                            This poster presents work now submitted to PRL.
+                            See <a class="inline-link" href="https://arxiv.org/abs/2503.20130" target="_blank" rel="noopener noreferrer">arXiv:2503.20130</a> for the full paper.
+                        </p>
+                        <div class="rc-footer rc-footer--detail">
+                            <button class="poster-toggle" type="button" aria-expanded="false" aria-controls="poster-view-1">
+                                View Poster <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                        <div class="poster-embed" id="poster-view-1" hidden>
+                            <iframe src="assets/pdfs/Bilal_poster_JED.pdf" title="JED 2025 Poster" loading="lazy"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+
     </div>
 </section>

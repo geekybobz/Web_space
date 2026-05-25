@@ -28,6 +28,7 @@ If you are new to this repo, inspect these files first:
 - [docs/js/main.js](/Users/billabobz/Web_space/docs/js/main.js): page engine, theme switching, avatar rotation, cursor effects, navigation, toast behavior, and section transitions.
 - [docs/css/style.css](/Users/billabobz/Web_space/docs/css/style.css): the main styling file for the site. This file is large and central.
 - [docs/under_construction.html](/Users/billabobz/Web_space/docs/under_construction.html): standalone fallback page for unfinished areas.
+- [docs/posters.html](/Users/billabobz/Web_space/docs/posters.html): standalone poster-detail page for abstract-first research presentation content.
 - [docs/assets/images](/Users/billabobz/Web_space/docs/assets/images): image assets used by the site.
 - [tools/build_index.py](/Users/billabobz/Web_space/tools/build_index.py): simple builder that concatenates section partials into `docs/index.html`.
 - [local_run.sh](/Users/billabobz/Web_space/local_run.sh): local preview helper that rebuilds then serves the site on port `2026`.
@@ -92,6 +93,8 @@ This means there are two different concepts present at once:
 - The runtime intentionally blocks direct navigation to those pages and sends users to the under-construction page instead.
 
 Future work should decide whether to keep that redirect or expose the sections directly.
+
+Poster-style research pages can live as standalone documents under `docs/` when they need more vertical reading space than the section engine provides.
 
 ## Build And Preview
 

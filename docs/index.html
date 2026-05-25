@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css?v=1779303487">
+    <link rel="stylesheet" href="css/style.css?v=1779741977">
 </head>
 <body>
     <div class="unsupported-device" id="unsupported-device" aria-live="polite">
@@ -22,15 +22,24 @@
         </div>
     </div>
 
-    <!-- Quantum Intro Loader -->
+    <!-- Intro Loader -->
     <div id="q-loader" aria-hidden="true">
-        <div class="q-loader-inner">
-            <div class="q-loader-eq">|ψ⟩ = α|0⟩ + β|1⟩</div>
-            <div class="q-loader-status" id="q-loader-status">projecting onto basis...</div>
+        <svg class="q-wave-svg" id="q-wave-svg" aria-hidden="true">
+            <path class="q-wave-smooth" id="q-wave-sine"/>
+            <path class="q-wave-step"   id="q-wave-step"/>
+        </svg>
+        <div class="q-drift-field" id="q-drift-field" aria-hidden="true"></div>
+        <div class="q-loader-zone1">
+            <div class="q-loader-name-display" id="q-name-display"></div>
+        </div>
+        <div class="q-loader-zone2">
+            <div class="q-expr">
+                <span class="q-expr-l">min⟨ψ|</span><span class="q-expr-m">H</span><span class="q-expr-r">|ψ⟩</span>
+            </div>
+            <div class="q-loader-status" id="q-loader-status"></div>
             <div class="q-loader-bar-wrap">
                 <div class="q-loader-bar" id="q-loader-bar"></div>
             </div>
-            <div class="q-loader-pct" id="q-loader-pct">0%</div>
         </div>
     </div>
     <noscript><style>#q-loader{display:none!important}.intro-fade{opacity:1!important}</style></noscript>
@@ -51,9 +60,8 @@
                 <a href="#about" class="nav-link" data-page-link="1"><i class="fa-solid fa-terminal" style="margin-right:4px;"></i> About</a>
                 <a href="#philosophy" class="nav-link" data-page-link="2"><i class="fa-solid fa-lightbulb" style="margin-right:4px;"></i> Philosophy</a>
                 <a href="#experience" class="nav-link" data-page-link="3"><i class="fa-solid fa-code-branch" style="margin-right:4px;"></i> Experience</a>
-                <a href="#education" class="nav-link" data-page-link="4"><i class="fa-solid fa-graduation-cap" style="margin-right:4px;"></i> Education</a>
-                <a href="under_construction.html" class="nav-link"><i class="fa-solid fa-microchip" style="margin-right:4px;"></i> Research</a>
-                <a href="#contact" class="nav-link btn-contact" data-page-link="7"><i class="fa-solid fa-paper-plane" style="margin-right:4px;"></i> Contact</a>
+                <a href="#research" class="nav-link" data-page-link="4"><i class="fa-solid fa-microchip" style="margin-right:4px;"></i> Works</a>
+                <a href="#contact" class="nav-link btn-contact" data-page-link="5"><i class="fa-solid fa-paper-plane" style="margin-right:4px;"></i> Contact</a>
             </div>
             <div class="nav-right">
                 <button class="local-preview-exit" id="local-preview-exit" type="button">Exit Preview</button>
@@ -195,7 +203,7 @@
 
                         <p class="hero-desc">
 
-                            A good part of my research is quantum babysitting. I use optimal control to make microscopic systems behave, and robust control to deal with the moments when they absolutely refuse.
+                            A good part of my research is, in essence, quantum babysitting: using optimal control to gently steer quantum systems, and robust control to keep things on track when they become predictably uncooperative.
 
                         </p>
 
@@ -203,11 +211,9 @@
 
                     <div class="hero-actions intro-fade" data-delay="0.9">
 
-                        <a href="under_construction.html" class="btn btn-primary">Works</a>
+                        <a href="#research" data-page-link="4" class="btn btn-primary">Works</a>
 
-                        <a href="under_construction.html" class="btn btn-outline">Current Research</a>
-
-                        <a href="profile.pdf" class="btn btn-outline btn-cv" download>Download CV</a>
+                        <a href="under_construction.html" class="btn btn-outline btn-cv">CV</a>
 
                     </div>
 
@@ -237,189 +243,155 @@
 
         <section class="page section" id="about" data-page="1" data-label="About">
 
+
+
             <div class="page-avatar" data-page-avatar="1" data-icon="fa-terminal" data-color="accent-1" aria-hidden="true">
 
                 <div class="page-avatar-ring"></div>
 
             </div>
 
+
+
             <div class="page-inner">
 
-                <div class="page-cols">
 
-                    <div class="panel">
 
-                        <div class="section-label">Past &amp; Present</div>
+                <div class="section-header">
 
-                        <h2 class="section-title">How I Got Here</h2>
+                    <div class="section-label">Profile</div>
 
-                        <p class="text-muted">
-
-                            I began with a BS-MS in Physics at IISER Berhampur, where I built my foundation in theoretical physics and developed a lasting interest in quantum systems and mathematical structure.
-
-                        </p>
-
-                        <p class="text-muted">
-
-                            During my master&apos;s thesis, I worked under
-
-                            <a class="inline-link" href="https://scholar.google.com/citations?hl=en&amp;user=Dzl9Z64AAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener noreferrer">Victor Mukherjee</a>
-
-                            and
-
-                            <a class="inline-link" href="https://scholar.google.com/citations?user=lvShgyQAAAAJ&amp;hl=it" target="_blank" rel="noopener noreferrer">Paolo Andrea Erdman</a>,
-
-                            where I explored quantum battery problems and learned to think more seriously about control, optimization, and physically meaningful performance measures.
-
-                        </p>
-
-                        <p class="text-muted">
-
-                            I now work at ICB Dijon as a PhD candidate under
-
-                            <a class="inline-link" href="https://scholar.google.com/citations?hl=en&amp;user=38DyMEIAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener noreferrer">Dominique Sugny</a>
-
-                            and
-
-                            <a class="inline-link" href="https://scholar.google.com/citations?hl=en&amp;user=edRgNRMAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener noreferrer">Camille</a>,
-
-                            with a current focus on optimal control, robust control strategies, Pontryagin-based formulations, and the numerical methods needed to make these ideas useful in realistic quantum settings.
-
-                        </p>
-
-                    </div>
-
-
-
-                    <div class="panel">
-
-                        <div class="section-label">Future Directions</div>
-
-                        <h2 class="section-title">Where I Want To Go</h2>
-
-                        <p class="text-muted">
-
-                            I want to keep pushing deeper into robust and numerically efficient quantum control, but I am equally interested in the broader space around it: open quantum systems, simulation-heavy workflows, machine-learning-assisted control, and theory that can survive contact with implementation.
-
-                        </p>
-
-                        <p class="text-muted">
-
-                            I am also interested in problems where abstract physics can be translated into methods, software, or workflows that are genuinely useful beyond a single paper. This includes learning from adjacent areas and building the technical range needed to move between theory, numerics, and practical research tools.
-
-                        </p>
-
-                        <p class="text-muted">
-
-                            This section is still evolving, but the long-term direction is clear: develop stronger control methods, stronger computational tools, and stronger intuition for how deep theory becomes practical value.
-
-                        </p>
-
-                    </div>
-
-
-
-                    <div class="panel">
-
-                        <div class="section-label">Technical Side</div>
-
-                        <h2 class="section-title">What I Build With</h2>
-
-                        <div class="skills-container">
-
-                            <span class="skill-tag">Quantum Control</span>
-
-                            <span class="skill-tag">Optimal Control</span>
-
-                            <span class="skill-tag">Numerical Methods</span>
-
-                            <span class="skill-tag">Scientific Computing</span>
-
-                            <span class="skill-tag">Machine Learning</span>
-
-                            <span class="skill-tag">AI in Physics</span>
-
-                            <span class="skill-tag">Reinforcement Learning</span>
-
-                            <span class="skill-tag">Data Science</span>
-
-                            <span class="skill-tag">Simulation Workflows</span>
-
-                        </div>
-
-                        <div class="mt-4">
-
-                            <h3 class="subsection-title">Sample Focus</h3>
-
-                            <ul class="clean-list text-muted">
-
-                                <li>Pontryagin-based optimal control and constrained optimization</li>
-
-                                <li>Simulation-first problem solving for quantum systems</li>
-
-                                <li>Machine-learning tools when they add real computational value</li>
-
-                            </ul>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="panel">
-
-                        <div class="section-label">Academic Side</div>
-
-                        <h2 class="section-title">What Shapes My Thinking</h2>
-
-                        <div class="skills-container">
-
-                            <span class="skill-tag">Theoretical Physics</span>
-
-                            <span class="skill-tag">Mathematical Physics</span>
-
-                            <span class="skill-tag">Quantum Information</span>
-
-                            <span class="skill-tag">Quantum Technologies</span>
-
-                            <span class="skill-tag">Robust Control</span>
-
-                            <span class="skill-tag">Research Writing</span>
-
-                            <span class="skill-tag">Cross-disciplinary Learning</span>
-
-                            <span class="skill-tag">Problem Solving</span>
-
-                        </div>
-
-                        <div class="mt-4">
-
-                            <h3 class="subsection-title">Sample Focus</h3>
-
-                            <ul class="clean-list text-muted">
-
-                                <li>Understanding why a control strategy works before trusting its output</li>
-
-                                <li>Connecting theory, numerics, and implementation constraints</li>
-
-                                <li>Exploring adjacent fields to improve both depth and flexibility</li>
-
-                            </ul>
-
-                        </div>
-
-                    </div>
+                    <h2 class="section-title">About</h2>
 
                 </div>
 
+
+
+                <div class="about-rows">
+
+
+
+                    <div class="panel about-card">
+
+                        <div class="about-card-inner">
+
+                            <div class="about-card-meta">
+
+                                <div class="section-label">Background</div>
+
+                                <h3 class="about-card-title">Who I Am</h3>
+
+                            </div>
+
+                            <div class="about-card-body">
+
+                                <p class="text-muted" style="margin-bottom: 1.1em;">
+
+                                    I completed my BS-MS in Physics at IISER Berhampur, supported by the Chanakya Fellowship. My master's thesis, supervised by
+
+                                    <a class="inline-link" href="https://scholar.google.com/citations?hl=en&user=Dzl9Z64AAAAJ&view_op=list_works&sortby=pubdate" target="_blank" rel="noopener noreferrer">Victor Mukherjee</a>
+
+                                    and
+
+                                    <a class="inline-link" href="https://scholar.google.com/citations?user=lvShgyQAAAAJ&hl=it" target="_blank" rel="noopener noreferrer">Paolo Andrea Erdman</a>,
+
+                                    focused on quantum batteries via reinforcement learning — which drew me toward control, optimization, and the deeper questions around how algorithms learn and generalize.
+
+                                </p>
+
+                                <p class="text-muted">
+
+                                    I am now a PhD candidate at ICB Dijon, working with
+
+                                    <a class="inline-link" href="https://scholar.google.com/citations?hl=en&user=38DyMEIAAAAJ&view_op=list_works&sortby=pubdate" target="_blank" rel="noopener noreferrer">Dominique Sugny</a>
+
+                                    and
+
+                                    <a class="inline-link" href="https://scholar.google.com/citations?hl=en&user=edRgNRMAAAAJ&view_op=list_works&sortby=pubdate" target="_blank" rel="noopener noreferrer">Camille</a>
+
+                                    on optimal and robust quantum control. The long-term aim is control methods and computational tools that hold up under noise, realistic constraints, and contact with implementation.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="panel about-card">
+
+                        <div class="about-card-inner">
+
+                            <div class="about-card-meta">
+
+                                <div class="section-label">Toolkit</div>
+
+                                <h3 class="about-card-title">What I Work With</h3>
+
+                            </div>
+
+                            <div class="about-card-body">
+
+                                <div class="skills-container">
+
+                                    <span class="skill-tag">Quantum Control</span>
+
+                                    <span class="skill-tag">Robust Control</span>
+
+                                    <span class="skill-tag">GRAPE</span>
+
+                                    <span class="skill-tag">Pontryagin Maximum Principle</span>
+
+                                    <span class="skill-tag">Reinforcement Learning</span>
+
+                                    <span class="skill-tag">Open Quantum Systems</span>
+
+                                    <span class="skill-tag">Python</span>
+
+                                    <span class="skill-tag">QuTiP</span>
+
+                                    <span class="skill-tag">PyTorch</span>
+
+                                </div>
+
+                                <div class="mt-4">
+
+                                    <h3 class="subsection-title">Focus</h3>
+
+                                    <ul class="clean-list text-muted">
+
+                                        <li>Pontryagin and gradient-based methods for robust, energy-efficient quantum control</li>
+
+                                        <li>RL and physics-informed neural networks (PINNs) as control tools for quantum systems</li>
+
+                                    </ul>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+
+
             </div>
+
+
 
         </section>
 
         <!-- PAGE 2 — Philosophy -->
 
-        <section class="page section" id="philosophy" data-page="2" data-label="Philosophy">
+        <section class="page section philosophy-polish-aura philosophy-polish-varied philosophy-polish-tactile" id="philosophy" data-page="2" data-label="Philosophy">
 
             <div class="page-avatar" data-page-avatar="2" data-icon="fa-lightbulb" data-color="accent-2" aria-hidden="true">
 
@@ -439,55 +411,113 @@
 
 
 
-                <div class="philosophy-grid">
+                <div class="philosophy-layout">
 
-                    <div class="philosophy-card panel">
+                    <article class="panel philosophy-feature">
 
-                        <div class="philosophy-icon" aria-hidden="true">🧠</div>
+                        <div class="philosophy-kicker">Where My Curiosity Begins</div>
 
-                        <h3 class="philosophy-title">First Principle Thinking</h3>
+                        <div class="philosophy-feature-grid">
 
-                        <p class="philosophy-body text-muted">
+                            <p class="philosophy-lead">
 
-                            I am most drawn to questions that force me to ask why before how. For me, theory is not something separate from computation; it is the structure that tells us what a system can do, what assumptions matter, and what kind of control is actually meaningful.
+                                What has stayed with me across different problems is a certain kind of curiosity: the wish to understand why something works before deciding how to work with it.
 
-                        </p>
+                            </p>
 
-                    </div>
+                            <div class="philosophy-feature-copy">
 
+                                <p class="text-muted">
 
+                                    That is part of what draws me to quantum control. I like problems where physical intuition, mathematical structure, and constructive method have to stay in conversation with each other: not only to find a solution, but to understand what kind of solution is even meaningful.
 
-                    <div class="philosophy-card panel">
+                                </p>
 
-                        <div class="philosophy-icon" aria-hidden="true">🌐</div>
+                            </div>
 
-                        <h3 class="philosophy-title">Curiosity Without Borders</h3>
+                        </div>
 
-                        <p class="philosophy-body text-muted">
-
-                            I do not like staying rigidly inside one box. Physics, numerics, coding, optimization, and machine learning all sharpen different parts of how I think, and I enjoy exploring across them when it helps me grow or solve a problem better.
-
-                        </p>
-
-                    </div>
+                    </article>
 
 
 
-                    <div class="philosophy-card panel">
+                    <div class="philosophy-rail">
 
-                        <div class="philosophy-icon" aria-hidden="true">🛠️</div>
+                        <article class="panel philosophy-note">
 
-                        <h3 class="philosophy-title">Understanding Through Building</h3>
+                            <div class="philosophy-note-symbol">{H, ·}</div>
 
-                        <p class="philosophy-body text-muted">
+                            <h3 class="philosophy-note-title">Starting from Structure</h3>
 
-                            I learn best by building things for myself, whether that means simulations, small tools, or full numerical workflows. That is also why I admire industry: it asks the useful question of how theory can become something practical, usable, and genuinely valuable.
+                            <p class="philosophy-note-body text-muted">
 
-                        </p>
+                                Before reaching for a technique, I want to understand the structure of the problem: what is constrained, what is preserved, and what solutions are actually possible. A method chosen too early can work in a limited setting and still miss the deeper logic.
+
+                            </p>
+
+                        </article>
+
+
+
+                        <article class="panel philosophy-note">
+
+                            <div class="philosophy-note-symbol">∇L</div>
+
+                            <h3 class="philosophy-note-title">Why Learning Interests Me</h3>
+
+                            <p class="philosophy-note-body text-muted">
+
+                                Machine learning interests me beyond the toolkit it provides. The deeper question is how a system exposed to examples begins to extract structure it was never shown. What gets represented, what gets compressed, what generalizes. That feels genuinely open.
+
+                            </p>
+
+                        </article>
+
+
+
+                        <article class="panel philosophy-note">
+
+                            <div class="philosophy-note-symbol">≅</div>
+
+                            <h3 class="philosophy-note-title">Following Ideas Across Fields</h3>
+
+                            <p class="philosophy-note-body text-muted">
+
+                                The same pattern tends to reappear across fields: a variational argument, a notion of robustness, a constrained optimization picture. When an idea resurfaces in a different language, I take it seriously. It usually points to something deeper underneath.
+
+                            </p>
+
+                        </article>
 
                     </div>
 
                 </div>
+
+
+
+                <article class="panel philosophy-bridge">
+
+                    <div class="philosophy-bridge-icon" aria-hidden="true">💻</div>
+
+                    <div class="philosophy-bridge-copy">
+
+                        <h3 class="philosophy-note-title">Programming and Clarity</h3>
+
+                        <p class="text-muted">
+
+                            I tend to trust an idea more after I have built it. Programming exposes vague understanding quickly. It forces assumptions into the open and makes it hard to hide behind elegant language.
+
+                        </p>
+
+                        <p class="philosophy-closing">
+
+                            Moving across ideas, for me, is not a way of leaving a field behind, but a way of seeing it more clearly.
+
+                        </p>
+
+                    </div>
+
+                </article>
 
             </div>
 
@@ -535,39 +565,47 @@
 
                                 <div class="timeline-content">
 
-                                    <div class="timeline-date">May 2023 &mdash; May 2024</div>
+                                    <div class="timeline-meta">
 
-                                    <h3 class="timeline-title">MS Thesis Researcher</h3>
+                                        <div class="timeline-date">Nov 2024 &mdash; Present</div>
 
-                                    <div class="timeline-company">IISER Berhampur, India</div>
+                                        <h3 class="timeline-title">PhD Candidate</h3>
 
-                                    <p class="timeline-desc text-muted">
+                                        <div class="timeline-degree text-muted">Doctor of Philosophy &middot; Theoretical Physics</div>
 
-                                        Worked on "optimal charging protocol for multi-qubit quantum battery" under Dr. Victor Mukherjee and Paolo Andrea Erdman.
+                                        <div class="timeline-company">ICB Dijon, Université de Bourgogne, France</div>
 
-                                    </p>
+                                    </div>
+
+                                    <div class="timeline-body">
+
+                                        <p class="timeline-desc text-muted">
+
+                                            The research focuses on fundamental questions in quantum control: how cheap, fast, and robust can a quantum operation be made? Working with both analytical tools, particularly the Pontryagin Maximum Principle, and numerical methods such as GRAPE, the work tackles thermodynamic costs, work fluctuations, and timing constraints in quantum gate design. A second thread extends this to open quantum systems, where noise and dissipation from the environment make the problem harder and the answers more relevant.
+
+                                        </p>
+
+                                        <div class="timeline-tags">
+
+                                            <span class="project-tag">Quantum Control</span>
+
+                                            <span class="project-tag">Quantum Thermodynamics</span>
+
+                                            <span class="project-tag">Open Quantum Systems</span>
+
+                                            <span class="project-tag">GRAPE</span>
+
+                                            <span class="project-tag">Pontryagin Maximum Principle</span>
+
+                                        </div>
+
+                                        <a href="#research" data-page-link="4" class="timeline-project-link">Project Page <i class="fa-solid fa-arrow-right"></i></a>
+
+                                    </div>
 
                                 </div>
 
                             </div>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="exp-col exp-col--other">
-
-                        <div class="exp-col-header">
-
-                            <span class="exp-col-icon"><i class="fa-solid fa-briefcase"></i></span>
-
-                            <span class="exp-col-label">Other Experience</span>
-
-                        </div>
-
-                        <div class="timeline">
 
                             <div class="timeline-item panel">
 
@@ -575,41 +613,39 @@
 
                                 <div class="timeline-content">
 
-                                    <div class="timeline-date">June 2020 &mdash; May 2024</div>
+                                    <div class="timeline-meta">
 
-                                    <h3 class="timeline-title">Math Teacher</h3>
+                                        <div class="timeline-date">2019 &mdash; 2024</div>
 
-                                    <div class="timeline-company">revamp24, Bangalore</div>
+                                        <h3 class="timeline-title">MS Thesis Researcher</h3>
 
-                                    <p class="timeline-desc text-muted">
+                                        <div class="timeline-degree text-muted">BS-MS Integrated &middot; Physics</div>
 
-                                        Instructed and mentored students in advanced mathematics and problem-solving techniques.
+                                        <div class="timeline-company">IISER Berhampur, India</div>
 
-                                    </p>
+                                    </div>
 
-                                </div>
+                                    <div class="timeline-body">
 
-                            </div>
+                                        <p class="timeline-desc text-muted">
 
+                                            Developed reinforcement learning based optimal control protocols for quantum batteries, targeting maximum ergotropy in spin-1/2 chain systems. Starting from a single-qubit system validated against known results, the work extended to multi-qubit configurations (2 to 5 qubits) under both ordered and disordered dynamics, demonstrating that RL-guided control outperforms greedy protocols for many-body quantum battery charging.
 
+                                        </p>
 
-                            <div class="timeline-item panel">
+                                        <div class="timeline-tags">
 
-                                <div class="timeline-dot"></div>
+                                            <span class="project-tag">Reinforcement Learning</span>
 
-                                <div class="timeline-content">
+                                            <span class="project-tag">Quantum Batteries</span>
 
-                                    <div class="timeline-date">2019 &mdash; 2021</div>
+                                            <span class="project-tag">Optimal Control</span>
 
-                                    <h3 class="timeline-title">Mathematics Specialist</h3>
+                                        </div>
 
-                                    <div class="timeline-company">Six Red Marbles, Chennai, India</div>
+                                        <a href="#research" data-page-link="4" class="timeline-project-link">Project Page <i class="fa-solid fa-arrow-right"></i></a>
 
-                                    <p class="timeline-desc text-muted">
-
-                                        Served as a Subject Matter Expert in math and calculus, developing curriculum and instructional materials.
-
-                                    </p>
+                                    </div>
 
                                 </div>
 
@@ -619,17 +655,53 @@
 
                     </div>
 
+
+
                 </div>
+
+
+
+                <div class="exp-other-strip">
+
+                    <div class="exp-other-label">Other</div>
+
+                    <div class="exp-other-items">
+
+                        <div class="exp-other-item">
+
+                            <div class="exp-other-item-role">Math Teacher</div>
+
+                            <div class="exp-other-item-company">revamp24, Bangalore</div>
+
+                            <div class="exp-other-item-date">2020 &ndash; 2024</div>
+
+                        </div>
+
+                        <div class="exp-other-item">
+
+                            <div class="exp-other-item-role">Mathematics Specialist</div>
+
+                            <div class="exp-other-item-company">Six Red Marbles, Chennai</div>
+
+                            <div class="exp-other-item-date">2019 &ndash; 2021</div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
 
             </div>
 
         </section>
 
-        <!-- PAGE 4 — Education -->
+        <!-- PAGE 4 — Works -->
 
-        <section class="page section" id="education" data-page="4" data-label="Education">
+        <section class="page section" id="research" data-page="4" data-label="Works">
 
-            <div class="page-avatar" data-page-avatar="4" data-icon="fa-graduation-cap" data-color="accent-1" aria-hidden="true">
+            <div class="page-avatar" data-page-avatar="4" data-icon="fa-microchip" data-color="accent-2" aria-hidden="true">
 
                 <div class="page-avatar-ring"></div>
 
@@ -637,115 +709,95 @@
 
             <div class="page-inner">
 
-                <div class="section-header">
 
-                    <div class="section-label">Academic Journey</div>
-
-                    <h2 class="section-title">Education</h2>
-
-                </div>
-
-
-
-                <div class="grid-2">
-
-                    <div class="card panel">
-
-                        <div class="card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-
-                        <div class="card-date">Nov 2024 &mdash; Nov 2027</div>
-
-                        <h3 class="card-title">Doctor of Philosophy (PhD)</h3>
-
-                        <div class="card-subtitle">Theoretical and Mathematical Physics</div>
-
-                        <div class="card-institution">Université de Bourgogne, France</div>
-
-                    </div>
-
-
-
-                    <div class="card panel">
-
-                        <div class="card-icon"><i class="fa-solid fa-flask"></i></div>
-
-                        <div class="card-date">2019 &mdash; 2024</div>
-
-                        <h3 class="card-title">BS-MS Integrated</h3>
-
-                        <div class="card-subtitle">Physics</div>
-
-                        <div class="card-institution">IISER Berhampur</div>
-
-                    </div>
-
-
-
-                    <div class="card panel">
-
-                        <div class="card-icon"><i class="fa-solid fa-school"></i></div>
-
-                        <div class="card-date">Completed</div>
-
-                        <h3 class="card-title">Higher Secondary Education</h3>
-
-                        <div class="card-subtitle">Computer-Math</div>
-
-                        <div class="card-institution">National Huda Central School</div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- PAGE 5 — Research / Selected Works -->
-
-        <section class="page section" id="research" data-page="5" data-label="Research">
-
-            <div class="page-avatar" data-page-avatar="5" data-icon="fa-microchip" data-color="accent-2" aria-hidden="true">
-
-                <div class="page-avatar-ring"></div>
-
-            </div>
-
-            <div class="page-inner">
 
                 <div class="section-header">
 
                     <div class="section-label">Portfolio</div>
 
-                    <h2 class="section-title">Selected Works</h2>
+                    <h2 class="section-title">Works</h2>
 
                 </div>
 
 
 
-                <div class="grid-2">
+                <!-- A: Projects -->
 
-                    <article class="project-card panel">
+                <div class="works-block-label">Projects</div>
 
-                        <div class="project-content">
 
-                            <div class="project-meta">
 
-                                <span class="project-tag">Chanakya Fellowship</span>
+                <div class="research-cards">
 
-                                <span class="project-tag">Masters Work</span>
+
+
+                    <article class="research-card panel research-card--toggleable">
+
+                        <div class="rc-num">01</div>
+
+                        <div class="rc-body">
+
+                            <div class="rc-summary">
+
+                                <div class="rc-summary-main">
+
+                                    <h3 class="rc-title">Energy Shortcut of N-Level Quantum Protocols by Optimal Control</h3>
+
+                                    <span class="rc-status-tag rc-status-tag--prl">PRL ⏳</span>
+
+                                    <div class="rc-meta-line">C. L. Latune, M. B. Puthuveedu Shebeek, D. Sugny, S. Guérin &middot; arXiv:2503.20130 &middot; 2025</div>
+
+                                    <div class="rc-tags">
+
+                                        <span class="project-tag">Optimal Control</span>
+
+                                        <span class="project-tag">Energy Efficiency</span>
+
+                                        <span class="project-tag">Shortcut to Adiabaticity</span>
+
+                                        <span class="project-tag">GRAPE</span>
+
+                                        <span class="project-tag">N-level Systems</span>
+
+                                    </div>
+
+                                </div>
+
+                                <button class="project-toggle" type="button" aria-expanded="false" aria-controls="project-detail-1">
+
+                                    View Abstract
+
+                                </button>
 
                             </div>
 
-                            <h3 class="project-title">Quantum Battery Charging</h3>
+                            <div class="rc-detail" id="project-detail-1" hidden>
 
-                            <p class="project-desc text-muted">
+                                <p class="rc-desc">
 
-                                Developed an optimal charging protocol using Reinforcement Learning for spin chain models. This work explores energetic efficiency in quantum systems using advanced AI algorithms.
+                                    This work introduces QOSTE (Quantum-Optimal-Shortcut-To-Energetics), a framework for designing quantum control protocols that achieve the same state transformations as Shortcut-To-Adiabaticity methods but at the lowest possible energy cost. The central result is that the minimal energy cost is governed by the length of a geodesic in the rotating frame defined by the original protocol, giving the method a clean geometric interpretation.
 
-                            </p>
+                                </p>
 
-                            <a href="#" class="project-link">Read Details <i class="fa-solid fa-arrow-right"></i></a>
+                                <p class="rc-desc">
+
+                                    The framework is developed for general N-level quantum systems using geometric and optimal control techniques. For extended control durations, energy cost ratios are shown to scale quadratically with time. The approach was tested against standard protocols including Landau-Zener and STIRAP, demonstrating substantial energy reductions in both cases.
+
+                                </p>
+
+                                <p class="rc-desc">
+
+                                    Optimization further reveals a quantifiable trade-off between energy efficiency and robustness. QOSTE designs are shown to outperform conventional methods on both fronts simultaneously, establishing a practical path toward energy-aware quantum gate design.
+
+                                </p>
+
+                                <div class="rc-footer rc-footer--detail">
+
+                                    <a href="https://arxiv.org/abs/2503.20130" class="project-link" target="_blank" rel="noopener noreferrer">arXiv:2503.20130 <i class="fa-solid fa-arrow-right"></i></a>
+
+                                </div>
+
+                            </div>
 
                         </div>
 
@@ -753,27 +805,71 @@
 
 
 
-                    <article class="project-card panel">
+                    <article class="research-card panel research-card--toggleable">
 
-                        <div class="project-content">
+                        <div class="rc-num">02</div>
 
-                            <div class="project-meta">
+                        <div class="rc-body">
 
-                                <span class="project-tag">Theoretical Physics</span>
+                            <div class="rc-summary">
 
-                                <span class="project-tag">Control Theory</span>
+                                <div class="rc-summary-main">
+
+                                    <h3 class="rc-title">Quantum Battery Charging via Reinforcement Learning</h3>
+
+                                    <div class="rc-meta-line">M. B. Puthuveedu Shebeek, V. Mukherjee, P. A. Erdman &middot; MS Thesis &middot; 2024</div>
+
+                                    <div class="rc-tags">
+
+                                        <span class="project-tag">Reinforcement Learning</span>
+
+                                        <span class="project-tag">Quantum Batteries</span>
+
+                                        <span class="project-tag">Optimal Control</span>
+
+                                        <span class="project-tag">Soft Actor-Critic</span>
+
+                                        <span class="project-tag">Disordered Systems</span>
+
+                                    </div>
+
+                                </div>
+
+                                <button class="project-toggle" type="button" aria-expanded="false" aria-controls="project-detail-2">
+
+                                    View Abstract
+
+                                </button>
 
                             </div>
 
-                            <h3 class="project-title">Optimal Control Under Constraints</h3>
+                            <div class="rc-detail" id="project-detail-2" hidden>
 
-                            <p class="project-desc text-muted">
+                                <p class="rc-desc">
 
-                                Studying control strategies that remain effective under realistic constraints, numerical limitations, and experimentally relevant conditions in quantum systems.
+                                    This project studies how to design efficient charging protocols for quantum batteries, where the goal is to maximize the useful work extractable from the system. The figure of merit is ergotropy, and the control problem is defined over spin-chain quantum batteries driven by an external modulation.
 
-                            </p>
+                                </p>
 
-                            <a href="#" class="project-link">Read Details <i class="fa-solid fa-arrow-right"></i></a>
+                                <p class="rc-desc">
+
+                                    Battery charging was reformulated as an optimal-control problem and solved using the Soft Actor-Critic framework. The study covered spin-chain systems with 2 to 5 qubits, comparing learned protocols against greedy strategies, and extended to disordered systems to test robustness under less structured dynamics.
+
+                                </p>
+
+                                <p class="rc-desc">
+
+                                    Results show that learned protocols outperform greedy approaches in relevant regimes and demonstrate how reinforcement learning can serve as a practical tool for quantum control when direct intuition-driven design becomes intractable.
+
+                                </p>
+
+                                <div class="rc-footer rc-footer--detail">
+
+                                    <a href="assets/pdfs/quantum-battery-rl-thesis.pdf" class="project-link" target="_blank" rel="noopener noreferrer">Read Thesis PDF <i class="fa-solid fa-arrow-right"></i></a>
+
+                                </div>
+
+                            </div>
 
                         </div>
 
@@ -781,107 +877,65 @@
 
 
 
-                    <article class="project-card panel draft-card">
+                </div>
 
-                        <div class="project-content">
 
-                            <div class="project-icon-placeholder">
 
-                                <i class="fa-solid fa-terminal"></i>
+                <!-- B: In Progress -->
+
+                <div class="works-block-label">
+
+                    <span class="works-active-dot" aria-hidden="true"></span>
+
+                    In Progress
+
+                </div>
+
+
+
+                <div class="research-cards">
+
+                    <article class="research-card panel rc-inprogress">
+
+                        <div class="rc-num"><i class="fa-solid fa-atom" style="font-size:0.85rem;"></i></div>
+
+                        <div class="rc-body">
+
+                            <div class="rc-summary">
+
+                                <div class="rc-summary-main">
+
+                                    <h3 class="rc-title">Universally Robust Quantum Control for State-to-State Transfer and Gate Synthesis</h3>
+
+                                    <div class="rc-tags">
+
+                                        <span class="project-tag">PhD Work</span>
+
+                                        <span class="project-tag">PMP</span>
+
+                                        <span class="project-tag">GRAPE</span>
+
+                                        <span class="project-tag">Robust Control</span>
+
+                                        <span class="project-tag">Open Quantum Systems</span>
+
+                                    </div>
+
+                                </div>
 
                             </div>
 
-                            <h3 class="project-title">Awaiting Data...</h3>
+                            <p class="rc-desc">
 
-                            <p class="project-desc text-muted">
-
-                                Additional simulations, preprints, and numerical repositories will initialize here when public.
+                                Developing universally robust control strategies for state-to-state transfer and quantum gate synthesis, combining Pontryagin Maximum Principle based analytical design with GRAPE numerical optimization.
 
                             </p>
 
-                        </div>
+                            <ul class="clean-list rc-desc">
 
-                    </article>
+                                <li>PMP-based design targeting 2nd and 4th order robustness conditions</li>
 
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- PAGE 6 — Current Research -->
-
-        <section class="page section" id="current-research" data-page="6" data-label="Current Research">
-
-            <div class="page-avatar" data-page-avatar="6" data-icon="fa-atom" data-color="accent-3" aria-hidden="true">
-
-                <div class="page-avatar-ring"></div>
-
-            </div>
-
-            <div class="page-inner">
-
-                <div class="section-header">
-
-                    <div class="section-label">In Progress</div>
-
-                    <h2 class="section-title">Current Research</h2>
-
-                </div>
-
-
-
-                <div class="page-cols">
-
-                    <div class="panel">
-
-                        <div class="section-label">Current Direction</div>
-
-                        <h3 class="subsection-title">What I am working on now</h3>
-
-                        <p class="text-muted">
-
-                            My current work is centered on robust quantum control, with an emphasis on numerical optimization, realistic constraints, and control strategies that remain useful in noisy settings.
-
-                        </p>
-
-                        <p class="text-muted">
-
-                            I am especially interested in problems where theoretical structure, computation, and implementation constraints all have to be handled together rather than in isolation.
-
-                        </p>
-
-                    </div>
-
-
-
-                    <div class="panel">
-
-                        <div class="project-meta">
-
-                            <span class="project-tag">Active Research</span>
-
-                            <span class="project-tag">PhD Work</span>
-
-                        </div>
-
-                        <h3 class="project-title">Robust Quantum Control</h3>
-
-                        <p class="project-desc text-muted">
-
-                            Investigating Pontryagin-based optimal control methods and gradient-based optimization techniques for enhancing robustness under realistic constraints and noise.
-
-                        </p>
-
-                        <div class="mt-4">
-
-                            <h3 class="subsection-title">Current Themes</h3>
-
-                            <ul class="clean-list text-muted">
-
-                                <li>Robust control design under noise and uncertainty</li>
-
-                                <li>Numerical optimization for constrained quantum dynamics</li>
+                                <li>GRAPE-assisted refinement for constrained quantum dynamics</li>
 
                                 <li>Machine-learning-assisted control strategies</li>
 
@@ -889,19 +943,121 @@
 
                         </div>
 
-                    </div>
+                    </article>
 
                 </div>
+
+
+
+                <!-- C: Posters & Abstracts -->
+
+                <div class="works-block-label">Posters &amp; Abstracts</div>
+
+
+
+                <div class="research-cards">
+
+                    <article class="research-card panel research-card--toggleable">
+
+                        <div class="rc-num rc-num--poster">
+
+                            <span class="rc-num-conf">JED</span>
+
+                            <span class="rc-num-year">2025</span>
+
+                        </div>
+
+                        <div class="rc-body">
+
+                            <div class="rc-summary">
+
+                                <div class="rc-summary-main">
+
+                                    <h3 class="rc-title">Robust and Energy-Efficient Controls for a Two-Level System</h3>
+
+                                    <div class="rc-meta-line">Mohammed Bilal, C. L. Latune, D. Sugny &middot; ICB Dijon</div>
+
+                                    <div class="rc-tags">
+
+                                        <span class="project-tag">Poster</span>
+
+                                        <span class="project-tag">Optimal Control</span>
+
+                                        <span class="project-tag">Robust Control</span>
+
+                                        <span class="project-tag">Energy Efficiency</span>
+
+                                        <span class="project-tag">PMP</span>
+
+                                    </div>
+
+                                </div>
+
+                                <button class="project-toggle" type="button" aria-expanded="false" aria-controls="poster-detail-1">
+
+                                    View Abstract
+
+                                </button>
+
+                            </div>
+
+                            <div class="rc-detail" id="poster-detail-1" hidden>
+
+                                <p class="rc-desc">
+
+                                    We consider a two-level quantum system governed by a Landau-Zener Hamiltonian, with the goal of designing control protocols that transfer the system between states within a fixed time. The objectives are to minimize the energy cost of the control field while maintaining high fidelity, and to ensure robustness against realistic parameter uncertainties such as calibration errors in the control amplitude.
+
+                                </p>
+
+                                <p class="rc-desc">
+
+                                    The optimal energy-minimizing solution is derived analytically using the Pontryagin Maximum Principle. Robustness is incorporated through a gradient-ascent algorithm that optimizes an ensemble-averaged figure of merit over uncertain system parameters, yielding a trade-off curve between energy cost and robustness. The controls outperform Shortcut-to-Adiabaticity on both metrics simultaneously.
+
+                                </p>
+
+                                <p class="rc-desc rc-desc--ref">
+
+                                    This poster presents work now submitted to PRL.
+
+                                    See <a class="inline-link" href="https://arxiv.org/abs/2503.20130" target="_blank" rel="noopener noreferrer">arXiv:2503.20130</a> for the full paper.
+
+                                </p>
+
+                                <div class="rc-footer rc-footer--detail">
+
+                                    <button class="poster-toggle" type="button" aria-expanded="false" aria-controls="poster-view-1">
+
+                                        View Poster <i class="fa-solid fa-arrow-right"></i>
+
+                                    </button>
+
+                                </div>
+
+                                <div class="poster-embed" id="poster-view-1" hidden>
+
+                                    <iframe src="assets/pdfs/Bilal_poster_JED.pdf" title="JED 2025 Poster" loading="lazy"></iframe>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
 
             </div>
 
         </section>
 
-        <!-- PAGE 7 — Contact -->
+        <!-- PAGE 5 — Contact -->
 
-        <section class="page section" id="contact" data-page="7" data-label="Contact">
+        <section class="page section" id="contact" data-page="5" data-label="Contact">
 
-            <div class="page-avatar" data-page-avatar="7" data-icon="fa-paper-plane" data-color="accent-1" aria-hidden="true">
+            <div class="page-avatar" data-page-avatar="5" data-icon="fa-paper-plane" data-color="accent-1" aria-hidden="true">
 
                 <div class="page-avatar-ring"></div>
 
@@ -947,7 +1103,7 @@
 
                         <p class="text-muted text-sm">&copy; 2026 Mohammed Bilal P S. All rights reserved.</p>
 
-                        <p class="text-muted text-sm">Last updated: <time datetime="2026-03-12">March 12, 2026</time></p>
+                        <p class="text-muted text-sm">Last updated: <time datetime="2026-05-25">May 25, 2026</time></p>
 
                     </div>
 
@@ -977,7 +1133,7 @@
         <button class="gc-toast-close" id="gc-toast-close" aria-label="Dismiss">Got it ✓</button>
     </div>
 
-    <script src="js/main.js?v=1779303487"></script>
+    <script src="js/main.js?v=1779741977"></script>
 </body>
 </html>
 

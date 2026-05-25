@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css?v=1779730785">
+    <link rel="stylesheet" href="css/style.css?v=1779738587">
 </head>
 <body>
     <div class="unsupported-device" id="unsupported-device" aria-live="polite">
@@ -211,11 +211,9 @@
 
                     <div class="hero-actions intro-fade" data-delay="0.9">
 
-                        <a href="under_construction.html" class="btn btn-primary">Works</a>
+                        <a href="#research" data-page-link="4" class="btn btn-primary">Works</a>
 
-                        <a href="under_construction.html" class="btn btn-outline">Current Research</a>
-
-                        <a href="profile.pdf" class="btn btn-outline btn-cv" download>Download CV</a>
+                        <a href="under_construction.html" class="btn btn-outline btn-cv">CV</a>
 
                     </div>
 
@@ -245,13 +243,19 @@
 
         <section class="page section" id="about" data-page="1" data-label="About">
 
+
+
             <div class="page-avatar" data-page-avatar="1" data-icon="fa-terminal" data-color="accent-1" aria-hidden="true">
 
                 <div class="page-avatar-ring"></div>
 
             </div>
 
+
+
             <div class="page-inner">
+
+
 
                 <div class="section-header">
 
@@ -265,51 +269,47 @@
 
                 <div class="about-rows">
 
+
+
                     <div class="panel about-card">
 
                         <div class="about-card-inner">
 
                             <div class="about-card-meta">
 
-                                <div class="section-label">Past &amp; Present</div>
+                                <div class="section-label">Background</div>
 
-                                <h3 class="about-card-title">How I Got Here</h3>
+                                <h3 class="about-card-title">Who I Am</h3>
 
                             </div>
 
                             <div class="about-card-body">
 
-                                <p class="text-muted">
+                                <p class="text-muted" style="margin-bottom: 1.1em;">
 
-                                    I completed my BS-MS in Physics at IISER Berhampur, where I developed a strong foundation in physics and a sustained interest in quantum mechanics and quantum information. During this period, I was awarded the Chanakya Fellowship, which supported my master&apos;s research and allowed me to engage more deeply with these areas.
+                                    I completed my BS-MS in Physics at IISER Berhampur, supported by the Chanakya Fellowship. My master's thesis, supervised by
+
+                                    <a class="inline-link" href="https://scholar.google.com/citations?hl=en&user=Dzl9Z64AAAAJ&view_op=list_works&sortby=pubdate" target="_blank" rel="noopener noreferrer">Victor Mukherjee</a>
+
+                                    and
+
+                                    <a class="inline-link" href="https://scholar.google.com/citations?user=lvShgyQAAAAJ&hl=it" target="_blank" rel="noopener noreferrer">Paolo Andrea Erdman</a>,
+
+                                    focused on quantum batteries via reinforcement learning — which drew me toward control, optimization, and the deeper questions around how algorithms learn and generalize.
 
                                 </p>
 
                                 <p class="text-muted">
 
-                                    For my master&apos;s thesis, I worked under the guidance of
+                                    I am now a PhD candidate at ICB Dijon, working with
 
-                                    <a class="inline-link" href="https://scholar.google.com/citations?hl=en&amp;user=Dzl9Z64AAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener noreferrer">Victor Mukherjee</a>
-
-                                    and
-
-                                    <a class="inline-link" href="https://scholar.google.com/citations?user=lvShgyQAAAAJ&amp;hl=it" target="_blank" rel="noopener noreferrer">Paolo Andrea Erdman</a>,
-
-                                    on problems related to quantum batteries. This work led me toward broader questions in control, optimization, and the identification of physically meaningful performance measures. Over time, I also developed a growing interest in machine learning and reinforcement learning, not only for their practical utility, but for the deeper questions they raise about how algorithms learn, generalize, and make predictions.
-
-                                </p>
-
-                                <p class="text-muted">
-
-                                    I am currently a PhD candidate at ICB Dijon, working under the supervision of
-
-                                    <a class="inline-link" href="https://scholar.google.com/citations?hl=en&amp;user=38DyMEIAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener noreferrer">Dominique Sugny</a>
+                                    <a class="inline-link" href="https://scholar.google.com/citations?hl=en&user=38DyMEIAAAAJ&view_op=list_works&sortby=pubdate" target="_blank" rel="noopener noreferrer">Dominique Sugny</a>
 
                                     and
 
-                                    <a class="inline-link" href="https://scholar.google.com/citations?hl=en&amp;user=edRgNRMAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener noreferrer">Camille</a>,
+                                    <a class="inline-link" href="https://scholar.google.com/citations?hl=en&user=edRgNRMAAAAJ&view_op=list_works&sortby=pubdate" target="_blank" rel="noopener noreferrer">Camille</a>
 
-                                    with current research focused on optimal and robust quantum control. In particular, I am interested in control strategies that remain effective under realistic constraints, noise, and uncertainty, as well as in the numerical methods required to make such approaches practically relevant.
+                                    on optimal and robust quantum control. The long-term aim is control methods and computational tools that hold up under noise, realistic constraints, and contact with implementation.
 
                                 </p>
 
@@ -327,49 +327,9 @@
 
                             <div class="about-card-meta">
 
-                                <div class="section-label">Future Directions</div>
+                                <div class="section-label">Toolkit</div>
 
-                                <h3 class="about-card-title">Where I Want To Go</h3>
-
-                            </div>
-
-                            <div class="about-card-body">
-
-                                <p class="text-muted">
-
-                                    I want to keep pushing deeper into robust and numerically efficient quantum control, but I am equally interested in the broader space around it: open quantum systems, simulation-heavy workflows, machine-learning-assisted control, and theory that can survive contact with implementation.
-
-                                </p>
-
-                                <p class="text-muted">
-
-                                    I am also interested in problems where abstract physics can be translated into methods, software, or workflows that are genuinely useful beyond a single paper. This includes learning from adjacent areas and building the technical range needed to move between theory, numerics, and practical research tools.
-
-                                </p>
-
-                                <p class="text-muted">
-
-                                    This section is still evolving, but the long-term direction is clear: develop stronger control methods, stronger computational tools, and stronger intuition for how deep theory becomes practical value.
-
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="panel about-card">
-
-                        <div class="about-card-inner">
-
-                            <div class="about-card-meta">
-
-                                <div class="section-label">Technical Side</div>
-
-                                <h3 class="about-card-title">What I Build With</h3>
+                                <h3 class="about-card-title">What I Work With</h3>
 
                             </div>
 
@@ -379,35 +339,33 @@
 
                                     <span class="skill-tag">Quantum Control</span>
 
-                                    <span class="skill-tag">Optimal Control</span>
+                                    <span class="skill-tag">Robust Control</span>
 
-                                    <span class="skill-tag">Numerical Methods</span>
+                                    <span class="skill-tag">GRAPE</span>
 
-                                    <span class="skill-tag">Scientific Computing</span>
-
-                                    <span class="skill-tag">Machine Learning</span>
-
-                                    <span class="skill-tag">AI in Physics</span>
+                                    <span class="skill-tag">Pontryagin Maximum Principle</span>
 
                                     <span class="skill-tag">Reinforcement Learning</span>
 
-                                    <span class="skill-tag">Data Science</span>
+                                    <span class="skill-tag">Open Quantum Systems</span>
 
-                                    <span class="skill-tag">Simulation Workflows</span>
+                                    <span class="skill-tag">Python</span>
+
+                                    <span class="skill-tag">QuTiP</span>
+
+                                    <span class="skill-tag">PyTorch</span>
 
                                 </div>
 
                                 <div class="mt-4">
 
-                                    <h3 class="subsection-title">Sample Focus</h3>
+                                    <h3 class="subsection-title">Focus</h3>
 
                                     <ul class="clean-list text-muted">
 
-                                        <li>Pontryagin-based optimal control and constrained optimization</li>
+                                        <li>Pontryagin and gradient-based methods for robust, energy-efficient quantum control</li>
 
-                                        <li>Simulation-first problem solving for quantum systems</li>
-
-                                        <li>Machine-learning tools when they add real computational value</li>
+                                        <li>RL and physics-informed neural networks (PINNs) as control tools for quantum systems</li>
 
                                     </ul>
 
@@ -420,66 +378,14 @@
                     </div>
 
 
-
-                    <div class="panel about-card">
-
-                        <div class="about-card-inner">
-
-                            <div class="about-card-meta">
-
-                                <div class="section-label">Academic Side</div>
-
-                                <h3 class="about-card-title">What Shapes My Thinking</h3>
-
-                            </div>
-
-                            <div class="about-card-body">
-
-                                <div class="skills-container">
-
-                                    <span class="skill-tag">Theoretical Physics</span>
-
-                                    <span class="skill-tag">Mathematical Physics</span>
-
-                                    <span class="skill-tag">Quantum Information</span>
-
-                                    <span class="skill-tag">Quantum Technologies</span>
-
-                                    <span class="skill-tag">Robust Control</span>
-
-                                    <span class="skill-tag">Research Writing</span>
-
-                                    <span class="skill-tag">Cross-disciplinary Learning</span>
-
-                                    <span class="skill-tag">Problem Solving</span>
-
-                                </div>
-
-                                <div class="mt-4">
-
-                                    <h3 class="subsection-title">Sample Focus</h3>
-
-                                    <ul class="clean-list text-muted">
-
-                                        <li>Understanding why a control strategy works before trusting its output</li>
-
-                                        <li>Connecting theory, numerics, and implementation constraints</li>
-
-                                        <li>Exploring adjacent fields to improve both depth and flexibility</li>
-
-                                    </ul>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
 
                 </div>
 
+
+
             </div>
+
+
 
         </section>
 
@@ -1091,7 +997,7 @@
         <button class="gc-toast-close" id="gc-toast-close" aria-label="Dismiss">Got it ✓</button>
     </div>
 
-    <script src="js/main.js?v=1779730785"></script>
+    <script src="js/main.js?v=1779738587"></script>
 </body>
 </html>
 

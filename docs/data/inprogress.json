@@ -1,0 +1,13 @@
+[
+  {
+    "id": "robust-phd",
+    "title": "Universally Robust Quantum Control for State-to-State Transfer and Gate Synthesis",
+    "tags": ["PhD Work", "PMP", "GRAPE", "Robust Control", "Open Quantum Systems"],
+    "desc": "Developing universally robust control strategies for state-to-state transfer and quantum gate synthesis, combining Pontryagin Maximum Principle based analytical design with GRAPE numerical optimization.",
+    "bullets": [
+      "PMP-based design targeting 2nd and 4th order robustness conditions",
+      "GRAPE-assisted refinement for constrained quantum dynamics",
+      "Machine-learning-assisted control strategies"
+    ]
+  }
+]

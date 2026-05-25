@@ -1,0 +1,27 @@
+[
+  {
+    "id": "qoste",
+    "title": "Energy Shortcut of N-Level Quantum Protocols by Optimal Control",
+    "status_tag": {"label": "PRL ⏳", "cls": "rc-status-tag--prl"},
+    "meta": "C. L. Latune, M. B. Puthuveedu Shebeek, D. Sugny, S. Guérin &middot; arXiv:2503.20130 &middot; 2025",
+    "tags": ["Optimal Control", "Energy Efficiency", "Shortcut to Adiabaticity", "GRAPE", "N-level Systems"],
+    "abstract": [
+      "This work introduces QOSTE (Quantum-Optimal-Shortcut-To-Energetics), a framework for designing quantum control protocols that achieve the same state transformations as Shortcut-To-Adiabaticity methods but at the lowest possible energy cost. The central result is that the minimal energy cost is governed by the length of a geodesic in the rotating frame defined by the original protocol, giving the method a clean geometric interpretation.",
+      "The framework is developed for general N-level quantum systems using geometric and optimal control techniques. For extended control durations, energy cost ratios are shown to scale quadratically with time. The approach was tested against standard protocols including Landau-Zener and STIRAP, demonstrating substantial energy reductions in both cases.",
+      "Optimization further reveals a quantifiable trade-off between energy efficiency and robustness. QOSTE designs are shown to outperform conventional methods on both fronts simultaneously, establishing a practical path toward energy-aware quantum gate design."
+    ],
+    "link": {"href": "https://arxiv.org/abs/2503.20130", "label": "arXiv:2503.20130"}
+  },
+  {
+    "id": "qb-rl",
+    "title": "Quantum Battery Charging via Reinforcement Learning",
+    "meta": "M. B. Puthuveedu Shebeek, V. Mukherjee, P. A. Erdman &middot; MS Thesis &middot; 2024",
+    "tags": ["Reinforcement Learning", "Quantum Batteries", "Optimal Control", "Soft Actor-Critic", "Disordered Systems"],
+    "abstract": [
+      "This project studies how to design efficient charging protocols for quantum batteries, where the goal is to maximize the useful work extractable from the system. The figure of merit is ergotropy, and the control problem is defined over spin-chain quantum batteries driven by an external modulation.",
+      "Battery charging was reformulated as an optimal-control problem and solved using the Soft Actor-Critic framework. The study covered spin-chain systems with 2 to 5 qubits, comparing learned protocols against greedy strategies, and extended to disordered systems to test robustness under less structured dynamics.",
+      "Results show that learned protocols outperform greedy approaches in relevant regimes and demonstrate how reinforcement learning can serve as a practical tool for quantum control when direct intuition-driven design becomes intractable."
+    ],
+    "link": {"href": "assets/pdfs/quantum-battery-rl-thesis.pdf", "label": "Read Thesis PDF"}
+  }
+]

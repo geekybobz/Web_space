@@ -135,6 +135,7 @@
             if (barWrap) barWrap.style.opacity = '0';
             setTimeout(() => {
                 waveActive = false;
+                if (driftEl) driftEl.innerHTML = '';
                 html.setAttribute('data-theme', localStorage.getItem('selectedTheme') || 'dark');
                 loader.classList.add('q-loader--hidden');
                 triggerHeroFadeIn();
@@ -153,9 +154,14 @@ function triggerHeroFadeIn() {
     setTimeout(startTypewriter, 720);
 }
 
+let _twTimeoutId = null;
+let _twRunning = false;
+
 function startTypewriter() {
+    if (_twRunning) return;
     const el = document.getElementById('hero-typewriter');
     if (!el) return;
+    _twRunning = true;
     const phrases = [
         'Physicist by obsession',
         'Control engineer by necessity',
@@ -164,20 +170,30 @@ function startTypewriter() {
     ];
     let pIdx = 0, cIdx = 0, deleting = false;
     function tick() {
+        if (!_twRunning) return;
         const phrase = phrases[pIdx];
+        let delay;
         if (!deleting) {
             cIdx++;
             el.textContent = phrase.slice(0, cIdx);
-            if (cIdx === phrase.length) { deleting = true; setTimeout(tick, 2200); return; }
-            setTimeout(tick, 68);
+            if (cIdx === phrase.length) { deleting = true; delay = 2200; }
+            else delay = 68;
         } else {
             cIdx--;
             el.textContent = phrase.slice(0, cIdx);
-            if (cIdx === 0) { deleting = false; pIdx = (pIdx + 1) % phrases.length; setTimeout(tick, 320); return; }
-            setTimeout(tick, 36);
+            if (cIdx === 0) { deleting = false; pIdx = (pIdx + 1) % phrases.length; delay = 320; }
+            else delay = 36;
         }
+        _twTimeoutId = setTimeout(tick, delay);
     }
     tick();
+}
+
+function stopTypewriter() {
+    _twRunning = false;
+    if (_twTimeoutId) { clearTimeout(_twTimeoutId); _twTimeoutId = null; }
+    const el = document.getElementById('hero-typewriter');
+    if (el) el.textContent = '';
 }
 
 // ========== THEME SWITCHER ==========
@@ -405,6 +421,10 @@ if (posterToggleButtons.length) {
             } else {
                 button.childNodes[0].textContent = 'Hide Poster ';
                 if (icon) { icon.className = 'fa-solid fa-arrow-up'; }
+                const iframe = embed.querySelector('iframe[data-src]');
+                if (iframe && !iframe.hasAttribute('src')) {
+                    iframe.setAttribute('src', iframe.dataset.src);
+                }
             }
         });
     });
@@ -438,20 +458,30 @@ if (cursorDot && cursorOutline) {
     let mouseX = 0, mouseY = 0;
     let outlineX = 0, outlineY = 0;
 
+    let _cursorRafId = null;
+    function _startCursorRaf() {
+        if (_cursorRafId) return;
+        function step() {
+            outlineX += (mouseX - outlineX) * 0.15;
+            outlineY += (mouseY - outlineY) * 0.15;
+            cursorOutline.style.left = outlineX + 'px';
+            cursorOutline.style.top  = outlineY + 'px';
+            if (Math.abs(mouseX - outlineX) + Math.abs(mouseY - outlineY) < 0.3) {
+                _cursorRafId = null;
+                return;
+            }
+            _cursorRafId = requestAnimationFrame(step);
+        }
+        _cursorRafId = requestAnimationFrame(step);
+    }
+
     document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
         cursorDot.style.left = mouseX + 'px';
         cursorDot.style.top  = mouseY + 'px';
+        _startCursorRaf();
     });
-
-    (function animateOutline() {
-        outlineX += (mouseX - outlineX) * 0.15;
-        outlineY += (mouseY - outlineY) * 0.15;
-        cursorOutline.style.left = outlineX + 'px';
-        cursorOutline.style.top  = outlineY + 'px';
-        requestAnimationFrame(animateOutline);
-    })();
 
     const interactables = document.querySelectorAll('a, button, .skill-tag, .project-card, .philosophy-card, .page-dot');
     interactables.forEach(item => {
@@ -668,6 +698,7 @@ const PageEngine = (() => {
         if (isAnimating || idx === current || idx < 0 || idx >= pages.length) return;
         isAnimating = true;
 
+        const prevPageIdx = current;
         const outPage = pages[current];
         const inPage  = pages[idx];
         const dir     = direction ?? (idx > current ? 'forward' : 'backward');
@@ -697,6 +728,7 @@ const PageEngine = (() => {
         inPage.scrollTop = 0;
         updateScrollFeedback(inPage);
         syncHash(current);
+        _onPageChange(current, prevPageIdx);
 
         setTimeout(() => {
             outPage.classList.remove('exit-up', 'exit-down');
@@ -885,6 +917,9 @@ const PageEngine = (() => {
 })();
 
 // ========== CRT TERMINAL LOG CYCLING ==========
+let _crtPause = null;
+let _crtResume = null;
+
 (function initCRTTerminal() {
     const log = document.getElementById('crt-log');
     if (!log) return;
@@ -907,6 +942,15 @@ const PageEngine = (() => {
     const MAX_LINES = 8;
     let msgIdx = 0;
     let lines = [];
+    let _crtIntervalId = null;
+
+    _crtPause = function() {
+        if (_crtIntervalId) { clearInterval(_crtIntervalId); _crtIntervalId = null; }
+    };
+    _crtResume = function() {
+        if (_crtIntervalId) return;
+        _crtIntervalId = setInterval(addLine, 1800);
+    };
 
     function addLine() {
         const msg = messages[msgIdx % messages.length];
@@ -934,8 +978,7 @@ const PageEngine = (() => {
         bootCount++;
         if (bootCount >= 4) {
             clearInterval(bootInterval);
-            // Then cycle normally
-            setInterval(addLine, 1800);
+            _crtResume();
         }
     }, 350);
 })();
@@ -1036,3 +1079,29 @@ const PageEngine = (() => {
         }).observe(pageEl, { attributes: true });
     });
 })();
+
+// =====================================================
+// HERO LIFECYCLE — gate effects to active hero page
+// =====================================================
+let _lifecyclePage = 0;
+
+function _onPageChange(newIdx, oldIdx) {
+    _lifecyclePage = newIdx;
+    if (newIdx === 0 && oldIdx !== 0) {
+        startTypewriter();
+        if (typeof _crtResume === 'function') _crtResume();
+    } else if (newIdx !== 0 && oldIdx === 0) {
+        stopTypewriter();
+        if (typeof _crtPause === 'function') _crtPause();
+    }
+}
+
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        stopTypewriter();
+        if (typeof _crtPause === 'function') _crtPause();
+    } else if (_lifecyclePage === 0) {
+        startTypewriter();
+        if (typeof _crtResume === 'function') _crtResume();
+    }
+});

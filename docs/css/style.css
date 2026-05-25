@@ -1515,6 +1515,81 @@ a {
     background: color-mix(in srgb, var(--surface-bg) 88%, transparent);
 }
 
+.group-strip {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--surface-border);
+    width: min(100%, 1020px);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.group-strip-header {
+    margin-bottom: 0.9rem;
+}
+
+.group-strip-row {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.group-cluster {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+    min-width: 18rem;
+}
+
+.group-cluster-label {
+    font-family: monospace;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+}
+
+.group-photos {
+    display: flex;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.group-photo-slot {
+    width: 7.5rem;
+    height: 5.5rem;
+    border-radius: 10px;
+    border: 1px dashed color-mix(in srgb, var(--surface-border) 90%, transparent);
+    background: color-mix(in srgb, var(--surface-bg) 60%, transparent);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    opacity: 0.55;
+    transition: var(--transition-medium);
+    overflow: hidden;
+}
+
+.group-photo-slot i {
+    font-size: 1.1rem;
+}
+
+.group-photo-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 9px;
+}
+
+.group-photo-slot img ~ i,
+.group-photo-slot img ~ span {
+    display: none;
+}
+
 #experience .section-header {
     display: block;
     width: min(100%, 1020px);
@@ -1728,6 +1803,9 @@ a {
     display: flex;
     flex-direction: column;
     gap: clamp(0.5rem, 0.8vw, 0.75rem);
+    width: min(100%, 1020px);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .research-card {
@@ -1877,6 +1955,157 @@ a {
     opacity: 0.15;
 }
 
+/* ========== WORKS PAGE — block labels, in-progress, posters ========== */
+
+.works-block-label {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: monospace;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+    margin-top: 1.6rem;
+    width: min(100%, 1020px);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.works-block-label:first-of-type {
+    margin-top: 0;
+}
+
+.works-active-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent-1);
+    box-shadow: 0 0 6px var(--accent-1);
+    animation: pulse-dot 1.8s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.45; transform: scale(0.75); }
+}
+
+.rc-inprogress {
+    border-style: dashed;
+    border-color: color-mix(in srgb, #F59E0B 28%, var(--surface-border));
+}
+
+.rc-inprogress .rc-num {
+    color: #F59E0B;
+    opacity: 0.7;
+    border-right-color: color-mix(in srgb, #F59E0B 20%, var(--surface-border));
+}
+
+.works-active-dot {
+    background: #F59E0B;
+    box-shadow: 0 0 6px #F59E0B;
+}
+
+.rc-num--poster {
+    color: var(--accent-2);
+    border-right-color: color-mix(in srgb, var(--accent-2) 20%, var(--surface-border));
+}
+
+.rc-status-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.18rem 0.55rem;
+    border-radius: 4px;
+    line-height: 1.4;
+}
+
+.rc-status-tag--prl {
+    align-self: flex-start;
+    background: color-mix(in srgb, #F59E0B 10%, transparent);
+    border: 1px solid color-mix(in srgb, #F59E0B 40%, transparent);
+    color: #F59E0B;
+    font-size: 0.65rem;
+    padding: 0.12rem 0.45rem;
+    animation: prl-flicker 3s ease-in-out infinite;
+}
+
+@keyframes prl-flicker {
+    0%, 100% { opacity: 1;   box-shadow: 0 0 4px color-mix(in srgb, #F59E0B 35%, transparent); }
+    45%       { opacity: 0.4; box-shadow: none; }
+    55%       { opacity: 0.4; box-shadow: none; }
+    70%       { opacity: 1;   box-shadow: 0 0 6px color-mix(in srgb, #F59E0B 50%, transparent); }
+}
+
+.rc-inprogress .clean-list {
+    margin-top: 0.65rem;
+    padding-left: 0;
+}
+
+/* Posters grid */
+.rc-meta-line {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.1rem;
+}
+
+.rc-num--poster {
+    flex-direction: column;
+    gap: 0.1rem;
+    font-size: 0.65rem;
+    opacity: 0.45;
+    line-height: 1.2;
+}
+
+.rc-num-conf {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.rc-num-year {
+    font-size: 0.65rem;
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+.poster-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--accent-1);
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    font-family: inherit;
+}
+
+.poster-toggle:hover {
+    opacity: 0.75;
+}
+
+.poster-embed {
+    margin-top: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--surface-border);
+}
+
+.poster-embed iframe {
+    display: block;
+    width: 100%;
+    height: 72vh;
+    border: none;
+}
+
 /* ========== PHILOSOPHY SECTION ========== */
 .philosophy-layout {
     display: grid;
@@ -1942,6 +2171,17 @@ a {
     transform: translateY(-3px);
     border-left-color: rgba(0, 240, 255, 0.42);
     box-shadow: 0 16px 30px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 240, 255, 0.08);
+}
+
+.philosophy-note-symbol {
+    display: block;
+    font-family: 'Inter', monospace;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--accent-1);
+    opacity: 0.7;
+    margin-bottom: 0.55rem;
+    letter-spacing: 0.04em;
 }
 
 .philosophy-note-title {

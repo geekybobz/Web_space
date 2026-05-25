@@ -16,7 +16,6 @@ ORDER = [
     "philosophy.html",
     "experience.html",
     "research.html",
-    "current-research.html",
     "contact.html",
 ]
 

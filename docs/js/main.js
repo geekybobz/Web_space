@@ -387,6 +387,29 @@ if (projectToggleButtons.length) {
     });
 }
 
+// ========== POSTER TOGGLES ==========
+const posterToggleButtons = Array.from(document.querySelectorAll('.poster-toggle'));
+if (posterToggleButtons.length) {
+    posterToggleButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const targetId = button.getAttribute('aria-controls');
+            const embed = targetId ? document.getElementById(targetId) : null;
+            if (!embed) return;
+            const expanded = button.getAttribute('aria-expanded') === 'true';
+            embed.hidden = expanded;
+            button.setAttribute('aria-expanded', String(!expanded));
+            const icon = button.querySelector('i');
+            if (expanded) {
+                button.childNodes[0].textContent = 'View Poster ';
+                if (icon) { icon.className = 'fa-solid fa-arrow-right'; }
+            } else {
+                button.childNodes[0].textContent = 'Hide Poster ';
+                if (icon) { icon.className = 'fa-solid fa-arrow-up'; }
+            }
+        });
+    });
+}
+
 // ========== AVATAR TILT ==========
 const avatarContainer = document.querySelector('.hero-avatar');
 if (avatarContainer && avatarImg) {
@@ -521,7 +544,6 @@ const PageEngine = (() => {
         dot.dataset.label = label;
         dot.setAttribute('aria-label', `Go to ${label}`);
         dot.addEventListener('click', () => {
-            if (i === 5) { window.location.href = 'under_construction.html'; return; }
             goTo(i);
         });
         dotsNav?.appendChild(dot);
@@ -633,7 +655,7 @@ const PageEngine = (() => {
             a.classList.toggle('active', parseInt(a.dataset.pageLink) === idx);
         });
 
-        document.body.classList.toggle('viewing-contact', idx === 6);
+        document.body.classList.toggle('viewing-contact', idx === 5);
 
         // Close mobile menu
         navLinksEl?.classList.remove('active');
@@ -643,12 +665,6 @@ const PageEngine = (() => {
 
     // --- Core transition ---
     function goTo(idx, direction = null) {
-        // Page 5 is under construction — skip in scroll/keyboard nav; dot click redirects
-        if (idx === 5) {
-            const skipDir = direction ?? (idx > current ? 'forward' : 'backward');
-            goTo(skipDir === 'forward' ? 6 : 4, skipDir);
-            return;
-        }
         if (isAnimating || idx === current || idx < 0 || idx >= pages.length) return;
         isAnimating = true;
 

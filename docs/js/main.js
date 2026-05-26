@@ -540,13 +540,15 @@ const PageEngine = (() => {
     const prevBtn     = document.getElementById('page-prev');
     const nextBtn     = document.getElementById('page-next');
     const DURATION_MS = 280; // matches CSS transition
+    const EDGE_INTENT_THRESHOLD = 18;
+    const EDGE_INTENT_WINDOW_MS = 850;
 
     let current        = 0;
     let isAnimating    = false;
     let edgePulseTimer = null;
-    let wheelState = 'idle';
-    let wheelStateTimer = null;
-    let boundaryDirection = 0;
+    let edgeCueTimer   = null;
+    let edgeReleaseTimer = null;
+    let edgePrimedDirection = 0;
 
     function hashPageIndex() {
         const hash = window.location.hash;
@@ -648,27 +650,45 @@ const PageEngine = (() => {
         }, 260);
     }
 
-    function clearWheelStateTimer() {
-        if (wheelStateTimer) {
-            clearTimeout(wheelStateTimer);
-            wheelStateTimer = null;
+    function getArrowForDirection(direction) {
+        return direction > 0 ? nextBtn : prevBtn;
+    }
+
+    function clearEdgeReleaseTimer() {
+        if (edgeReleaseTimer) {
+            clearTimeout(edgeReleaseTimer);
+            edgeReleaseTimer = null;
         }
     }
 
-    function resetWheelState() {
-        wheelState = 'idle';
-        boundaryDirection = 0;
-        clearWheelStateTimer();
+    function clearArrowAttract() {
+        [prevBtn, nextBtn].forEach((button) => {
+            if (!button) return;
+            button.classList.remove('edge-attract');
+            button.removeAttribute('data-edge-label');
+        });
     }
 
-    function armWheelState(direction) {
-        boundaryDirection = direction;
-        wheelState = 'edge-reached';
-        clearWheelStateTimer();
-        wheelStateTimer = setTimeout(() => {
-            wheelState = 'armed-after-pause';
-            wheelStateTimer = null;
-        }, 260);
+    function clearEdgeState({ keepCue = false } = {}) {
+        clearEdgeReleaseTimer();
+        edgePrimedDirection = 0;
+        clearArrowAttract();
+        if (!keepCue) clearEdgeCue();
+    }
+
+    function applyArrowAttract(direction) {
+        clearArrowAttract();
+        const button = getArrowForDirection(direction);
+        if (!button || button.disabled) return;
+        button.classList.add('edge-attract');
+        button.setAttribute('data-edge-label', direction > 0 ? 'Scroll again for next' : 'Scroll again for previous');
+    }
+
+    function scheduleEdgeRelease() {
+        clearEdgeReleaseTimer();
+        edgeReleaseTimer = setTimeout(() => {
+            clearEdgeState();
+        }, EDGE_INTENT_WINDOW_MS);
     }
 
     // --- Update UI chrome ---
@@ -686,6 +706,7 @@ const PageEngine = (() => {
         });
 
         document.body.classList.toggle('viewing-contact', idx === 5);
+        clearArrowAttract();
 
         // Close mobile menu
         navLinksEl?.classList.remove('active');
@@ -696,6 +717,7 @@ const PageEngine = (() => {
     // --- Core transition ---
     function goTo(idx, direction = null) {
         if (isAnimating || idx === current || idx < 0 || idx >= pages.length) return;
+        clearEdgeState();
         isAnimating = true;
 
         const prevPageIdx = current;
@@ -703,25 +725,11 @@ const PageEngine = (() => {
         const inPage  = pages[idx];
         const dir     = direction ?? (idx > current ? 'forward' : 'backward');
 
-        // For backward nav: snap incoming page to above-viewport position
-        // (no transition — the class carries transition:none !important)
-        if (dir === 'backward') {
-            inPage.classList.add('from-above');
-            // Force reflow so browser registers the snap before we remove the class
-            void inPage.offsetHeight;
-            inPage.classList.remove('from-above');
-            // Another reflow ensures transition kicks in on the NEXT paint
-            void inPage.offsetHeight;
-        }
-
-        // Exit outgoing page (CSS handles the animated drift + fade)
+        // Exit outgoing page
         outPage.classList.remove('active');
         outPage.classList.add(dir === 'forward' ? 'exit-up' : 'exit-down');
 
-        // Enter incoming page
-        inPage.classList.remove('exit-up', 'exit-down');
-        inPage.classList.add('active');
-
+        // Update state immediately so chrome/dots/hash are responsive
         current = idx;
         updateChrome(current);
         pulsePageTag(current);
@@ -730,10 +738,23 @@ const PageEngine = (() => {
         syncHash(current);
         _onPageChange(current, prevPageIdx);
 
+        if (dir === 'backward') {
+            // Snap incoming page above viewport (single reflow, no double)
+            inPage.classList.add('from-above');
+            void inPage.offsetHeight; // commit snap — one reflow
+            requestAnimationFrame(() => {
+                inPage.classList.remove('from-above');
+                inPage.classList.add('active');
+            });
+        } else {
+            inPage.classList.remove('exit-up', 'exit-down');
+            inPage.classList.add('active');
+        }
+
         setTimeout(() => {
             outPage.classList.remove('exit-up', 'exit-down');
             isAnimating = false;
-        }, DURATION_MS + 50);
+        }, DURATION_MS + 80);
     }
 
     function next() { goTo(current + 1, 'forward');  }
@@ -793,11 +814,6 @@ const PageEngine = (() => {
         if (e.key === 'ArrowUp'   || e.key === 'PageUp'  ) { e.preventDefault(); prev(); }
     });
 
-    // Wheel navigation: allow natural page scroll and only transition on deliberate edge intent.
-    let wheelTimer = null;
-    let edgeCueTimer = null;
-    const WHEEL_EVENT_THRESHOLD = 18;
-
     function clearEdgeCue() {
         pageEngine?.classList.remove('show-edge-cue-top', 'show-edge-cue-bottom');
         if (edgeCueTimer) {
@@ -821,72 +837,46 @@ const PageEngine = (() => {
 
     document.addEventListener('wheel', (e) => {
         const activePage = pages[current];
-        const atTop     = activePage.scrollTop <= 0;
-        const atBottom  = activePage.scrollTop + activePage.clientHeight >= activePage.scrollHeight - 2;
-        const direction = Math.sign(e.deltaY);
+        const atTop    = activePage.scrollTop <= 0;
+        const atBottom = activePage.scrollTop + activePage.clientHeight >= activePage.scrollHeight - 2;
+        const dir      = Math.sign(e.deltaY);
+        const deltaAbs = Math.abs(e.deltaY);
 
-        if (direction !== 0) {
-            flashDirectionalCue(direction, 0.48, 170);
-        }
-
-        if ((!atTop && e.deltaY < 0) || (!atBottom && e.deltaY > 0)) {
-            resetWheelState();
-            clearEdgeCue();
+        // Still scrolling inside the page — let it scroll naturally
+        if ((!atTop && dir < 0) || (!atBottom && dir > 0)) {
+            clearEdgeState();
             return;
         }
 
-        if (direction === 0) return;
-        const maxScroll = Math.max(activePage.scrollHeight - activePage.clientHeight, 0);
+        if (dir === 0) return;
 
-        // Only hijack wheel when page is at the edge of its own scroll.
-        if ((direction > 0 && atBottom) || (direction < 0 && atTop)) {
+        if ((dir > 0 && atBottom) || (dir < 0 && atTop)) {
             e.preventDefault();
-
-            if (Math.abs(e.deltaY) < WHEEL_EVENT_THRESHOLD) {
+            if (deltaAbs < EDGE_INTENT_THRESHOLD) {
+                scheduleEdgeRelease();
                 return;
             }
 
-            if (boundaryDirection !== 0 && boundaryDirection !== direction) {
-                resetWheelState();
+            if (edgePrimedDirection !== 0 && edgePrimedDirection !== dir) {
+                clearEdgeState({ keepCue: true });
             }
 
-            if (wheelState === 'idle') {
-                showEdgeCue(direction);
-                armWheelState(direction);
+            if (edgePrimedDirection === dir) {
+                clearEdgeState({ keepCue: true });
+                if (dir > 0) next(); else prev();
                 return;
             }
 
-            if (wheelState === 'edge-reached') {
-                showEdgeCue(direction);
-                armWheelState(direction);
-                return;
-            }
-
-            if (wheelTimer) {
-                showEdgeCue(direction);
-                return;
-            }
-
-            if (wheelState !== 'armed-after-pause') return;
-
-            showEdgeCue(direction);
-            wheelTimer = setTimeout(() => {
-                wheelTimer = null;
-            }, 460);
-            resetWheelState();
-            clearEdgeCue();
-            if (direction > 0) next(); else prev();
+            edgePrimedDirection = dir;
+            showEdgeCue(dir);
+            setDirectionalCue(dir, 1);
+            applyArrowAttract(dir);
+            pulsePageBadge();
+            scheduleEdgeRelease();
             return;
         }
 
-        if (maxScroll <= 0) {
-            resetWheelState();
-            clearEdgeCue();
-            return;
-        }
-
-        resetWheelState();
-        clearEdgeCue();
+        clearEdgeState();
     }, { passive: false });
 
     // Touch / swipe navigation

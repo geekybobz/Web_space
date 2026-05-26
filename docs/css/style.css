@@ -2969,6 +2969,7 @@ body {
     --scroll-cue-opacity: 0;
     --scroll-cue-origin: 0%;
     --scroll-cue-x: clamp(1.8rem, 3.2vw, 2.7rem);
+    --page-edge-shift: 0px;
     position: fixed;
     inset: 0;
     overflow: hidden;
@@ -3010,6 +3011,18 @@ body {
         0 0 30px color-mix(in srgb, var(--accent-2) 30%, transparent);
 }
 
+#page-engine.show-edge-cue-bottom .page.active {
+    box-shadow:
+        inset 0 -90px 120px -90px color-mix(in srgb, var(--accent-1) 24%, transparent),
+        inset 0 -18px 36px -26px color-mix(in srgb, var(--accent-2) 18%, transparent);
+}
+
+#page-engine.show-edge-cue-top .page.active {
+    box-shadow:
+        inset 0 90px 120px -90px color-mix(in srgb, var(--accent-1) 24%, transparent),
+        inset 0 18px 36px -26px color-mix(in srgb, var(--accent-2) 18%, transparent);
+}
+
 .page {
     position: absolute;
     inset: 0;
@@ -3030,6 +3043,15 @@ body {
     opacity: 1;
     pointer-events: auto;
     transform: translateY(0);
+    z-index: 2;
+}
+
+#page-engine.edge-push-bottom .page.active {
+    transform: translateY(calc(var(--page-edge-shift) * -1));
+}
+
+#page-engine.edge-push-top .page.active {
+    transform: translateY(var(--page-edge-shift));
 }
 
 .page.exit-up {
@@ -3725,6 +3747,7 @@ body {
     transition: all 0.2s ease;
     backdrop-filter: blur(8px);
     animation: control-flicker 2.8s steps(2, end) infinite;
+    position: relative;
 }
 
 .page-arrow:hover {
@@ -3746,6 +3769,48 @@ body {
     animation-delay: 0.55s;
 }
 
+.page-arrow.edge-attract {
+    color: var(--accent-1);
+    border-color: color-mix(in srgb, var(--accent-1) 74%, white 26%);
+    box-shadow:
+        0 0 18px color-mix(in srgb, var(--accent-1) 46%, transparent),
+        0 0 34px color-mix(in srgb, var(--accent-2) 20%, transparent);
+    animation:
+        control-flicker 1.15s steps(2, end) infinite,
+        edge-arrow-bounce 0.68s ease-in-out infinite;
+}
+
+.page-arrow.edge-attract::after {
+    content: attr(data-edge-label);
+    position: absolute;
+    right: calc(100% + 0.8rem);
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0.34rem 0.65rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--accent-1) 36%, var(--surface-border));
+    background: color-mix(in srgb, var(--surface-bg-hover) 88%, transparent);
+    color: var(--text-main);
+    font-family: monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    box-shadow: 0 0 18px color-mix(in srgb, var(--accent-1) 12%, transparent);
+    animation: edge-label-blink 0.9s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.page-arrow.edge-attract::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--accent-1) 20%, transparent);
+    opacity: 0.55;
+    animation: edge-arrow-halo 1.2s ease-out infinite;
+    pointer-events: none;
+}
+
 @keyframes control-flicker {
     0%, 100% {
         box-shadow: 0 0 0 rgba(0, 0, 0, 0);
@@ -3765,6 +3830,44 @@ body {
     }
     56% {
         box-shadow: 0 0 3px color-mix(in srgb, var(--accent-1) 8%, transparent);
+    }
+}
+
+@keyframes edge-arrow-bounce {
+    0%, 100% {
+        transform: scale(1) translateY(0);
+    }
+    40% {
+        transform: scale(1.08) translateY(-2px);
+    }
+    70% {
+        transform: scale(1.02) translateY(1px);
+    }
+}
+
+@keyframes edge-label-blink {
+    0%, 100% {
+        opacity: 0.56;
+        transform: translateY(-50%) translateX(0);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-50%) translateX(-2px);
+    }
+}
+
+@keyframes edge-arrow-halo {
+    0% {
+        opacity: 0.55;
+        transform: scale(0.94);
+    }
+    70% {
+        opacity: 0;
+        transform: scale(1.24);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.28);
     }
 }
 

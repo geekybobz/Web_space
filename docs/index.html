@@ -537,33 +537,43 @@
 
                 <style>
 
-                    #experience .expx-shell {
+                    #experience {
 
-                        display: grid;
+                        --gallery-surface: rgba(11, 20, 32, 0.72);
 
-                        gap: 1.8rem;
+                        --gallery-border: rgba(150, 231, 255, 0.16);
 
-                        padding-bottom: 2rem;
+                        --gallery-text: #edf6ff;
+
+                        --gallery-text-muted: #8da4b8;
+
+                        --gallery-cyan: #6ee7ff;
+
+                        --gallery-shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+
+                        --gallery-heading: var(--font-heading);
+
+                        --gallery-body: var(--font-sans);
+
+                        --gallery-mono: monospace;
 
                     }
 
 
 
-                    #experience .expx-hero,
+                    #experience .er-shell { display: grid; gap: 28px; padding-bottom: 32px; }
 
-                    #experience .expx-card,
+                    #experience .er-hero {
 
-                    #experience .expx-event-card,
+                        padding: 32px 34px 30px;
 
-                    #experience .expx-role-card {
+                        background: var(--gallery-surface);
 
-                        background: rgba(18, 24, 34, 0.55);
+                        border: 1px solid var(--gallery-border);
 
-                        border: 1px solid rgba(255, 255, 255, 0.08);
+                        border-radius: 28px;
 
-                        border-radius: 2rem;
-
-                        box-shadow: var(--glass-shadow);
+                        box-shadow: var(--gallery-shadow);
 
                         backdrop-filter: blur(18px);
 
@@ -571,21 +581,13 @@
 
                     }
 
-
-
-                    #experience .expx-hero {
-
-                        padding: 2.4rem 2.6rem 2.2rem;
-
-                    }
-
-
-
-                    #experience .expx-hero-title {
+                    #experience .er-hero-title {
 
                         margin: 0;
 
-                        font-size: clamp(3.2rem, 5vw, 5.8rem);
+                        font-family: var(--gallery-heading);
+
+                        font-size: clamp(36px, 6vw, 72px);
 
                         line-height: 0.96;
 
@@ -593,97 +595,87 @@
 
                     }
 
-
-
-                    #experience .expx-hero-title span {
+                    #experience .er-hero-title span {
 
                         display: block;
 
-                        margin-top: 0.9rem;
+                        color: var(--gallery-text-muted);
 
-                        color: var(--text-muted);
+                        font-size: clamp(18px, 2.6vw, 28px);
 
-                        font-size: clamp(1.5rem, 2.1vw, 2.2rem);
+                        margin-top: 10px;
 
                         line-height: 1.15;
 
-                        letter-spacing: -0.02em;
+                        letter-spacing: -0.03em;
 
                     }
 
-
-
-                    #experience .expx-hero-links {
+                    #experience .er-hero-links {
 
                         display: flex;
 
                         flex-wrap: wrap;
 
-                        gap: 0.8rem;
+                        gap: 10px;
 
-                        margin-top: 1.8rem;
+                        margin-top: 24px;
 
                     }
 
-
-
-                    #experience .expx-chip-link,
-
-                    #experience .expx-mini-link {
+                    #experience .er-hero-links a {
 
                         display: inline-flex;
 
                         align-items: center;
 
-                        gap: 0.5rem;
+                        padding: 10px 16px;
 
-                        padding: 0.85rem 1.2rem;
+                        border: 1px solid rgba(255,255,255,0.08);
 
                         border-radius: 999px;
 
-                        border: 1px solid rgba(0, 240, 255, 0.18);
+                        color: var(--gallery-cyan);
 
-                        background: rgba(0, 240, 255, 0.05);
-
-                        color: var(--accent-1);
-
-                        font-size: 1rem;
+                        font-size: 13px;
 
                         font-weight: 600;
 
-                    }
-
-
-
-                    #experience .expx-chip-link:hover,
-
-                    #experience .expx-mini-link:hover {
-
-                        background: rgba(0, 240, 255, 0.11);
-
-                        border-color: rgba(0, 240, 255, 0.28);
+                        background: rgba(255,255,255,0.03);
 
                     }
 
+                    #experience .er-hero-links a:hover { background: rgba(110,231,255,0.08); }
 
 
-                    #experience .expx-card {
+
+                    #experience .er-chapter {
+
+                        background: var(--gallery-surface);
+
+                        border: 1px solid var(--gallery-border);
+
+                        border-radius: 28px;
+
+                        box-shadow: var(--gallery-shadow);
+
+                        backdrop-filter: blur(18px);
+
+                        -webkit-backdrop-filter: blur(18px);
 
                         overflow: hidden;
 
                     }
 
-
-
-                    #experience .expx-card-main {
+                    #experience .er-chapter-main {
 
                         display: grid;
 
                         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 
-                        gap: 1.5rem;
+                        gap: 20px;
 
-                        padding: 1.5rem;
+                        padding: 20px;
 
                         align-items: start;
 
@@ -691,17 +683,9 @@
 
 
 
-                    #experience .expx-photo-frame {
+                    #experience .er-photo-frame { display: grid; gap: 10px; }
 
-                        display: grid;
-
-                        gap: 0.8rem;
-
-                    }
-
-
-
-                    #experience .expx-photo-stage {
+                    #experience .er-photo-stage {
 
                         position: relative;
 
@@ -709,15 +693,13 @@
 
                         overflow: hidden;
 
-                        border-radius: 1.3rem;
+                        border-radius: 16px;
 
                         background: #101824;
 
                     }
 
-
-
-                    #experience .expx-stage-img {
+                    #experience .er-stage-img {
 
                         position: absolute;
 
@@ -731,7 +713,7 @@
 
                         object-position: var(--stage-position, center);
 
-                        opacity: 0.92;
+                        opacity: 0.9;
 
                         display: block;
 
@@ -739,43 +721,35 @@
 
                     }
 
+                    #experience .er-stage-img.is-fading { opacity: 0; }
 
-
-                    #experience .expx-stage-img.is-fading {
-
-                        opacity: 0;
-
-                    }
-
-
-
-                    #experience .expx-photo-label {
+                    #experience .er-photo-label {
 
                         position: absolute;
 
-                        left: 1rem;
+                        left: 12px;
 
-                        bottom: 1rem;
+                        bottom: 12px;
 
                         z-index: 2;
 
-                        padding: 0.45rem 0.8rem;
+                        padding: 6px 10px;
 
                         border-radius: 999px;
 
-                        background: rgba(6, 12, 20, 0.72);
+                        background: rgba(6,12,20,0.82);
 
-                        border: 1px solid rgba(255, 255, 255, 0.08);
+                        border: 1px solid rgba(255,255,255,0.08);
 
-                        font-family: monospace;
+                        font-family: var(--gallery-mono);
 
-                        font-size: 0.78rem;
+                        font-size: 11px;
 
                         letter-spacing: 0.08em;
 
                         text-transform: uppercase;
 
-                        color: var(--text-main);
+                        color: var(--gallery-text);
 
                         pointer-events: none;
 
@@ -783,31 +757,31 @@
 
 
 
-                    #experience .expx-group-peek-btn,
+                    #experience .er-group-peek-btn,
 
-                    #experience .expx-group-close-btn {
+                    #experience .er-group-close-btn {
 
                         position: absolute;
 
-                        top: 1rem;
+                        top: 12px;
 
-                        right: 1rem;
+                        right: 12px;
 
                         z-index: 3;
 
-                        width: 2.8rem;
+                        width: 38px;
 
-                        height: 2.8rem;
+                        height: 38px;
 
                         border-radius: 50%;
 
-                        border: 1px solid rgba(255, 255, 255, 0.14);
+                        border: 1px solid rgba(255,255,255,0.14);
 
-                        background: rgba(6, 12, 20, 0.72);
+                        background: rgba(6,12,20,0.72);
 
-                        color: var(--text-main);
+                        color: var(--gallery-text);
 
-                        font-size: 1.2rem;
+                        font-size: 17px;
 
                         cursor: pointer;
 
@@ -827,113 +801,65 @@
 
                     }
 
+                    #experience .er-group-peek-btn:hover,
 
+                    #experience .er-group-close-btn:hover {
 
-                    #experience .expx-group-peek-btn:hover,
+                        background: rgba(110,231,255,0.14);
 
-                    #experience .expx-group-close-btn:hover {
+                        border-color: rgba(110,231,255,0.32);
 
-                        background: rgba(0, 240, 255, 0.14);
-
-                        border-color: rgba(0, 240, 255, 0.32);
-
-                        transform: scale(1.07);
+                        transform: scale(1.08);
 
                     }
 
 
 
-                    #experience .expx-group-close-btn {
+                    #experience .er-frame-footer { display: flex; align-items: center; min-height: 16px; }
 
-                        display: none;
+                    #experience .er-dots, #experience .er-dots-copy { display: flex; gap: 6px; }
 
-                    }
+                    #experience .er-dot {
 
+                        width: 6px;
 
-
-                    #experience .expx-frame-footer,
-
-                    #experience .expx-dots,
-
-                    #experience .expx-dots-copy {
-
-                        display: flex;
-
-                        align-items: center;
-
-                        gap: 0.45rem;
-
-                    }
-
-
-
-                    #experience .expx-frame-footer {
-
-                        min-height: 1rem;
-
-                    }
-
-
-
-                    #experience .expx-dot {
-
-                        width: 0.42rem;
-
-                        height: 0.42rem;
+                        height: 6px;
 
                         border-radius: 50%;
 
-                        background: rgba(255, 255, 255, 0.18);
+                        background: rgba(255,255,255,0.18);
 
                         transition: background 200ms;
 
                     }
 
-
-
-                    #experience .expx-dot.is-active {
-
-                        background: var(--accent-1);
-
-                    }
+                    #experience .er-dot.is-active { background: var(--gallery-cyan); }
 
 
 
-                    #experience .expx-copy {
+                    #experience .er-chapter-copy { display: flex; flex-direction: column; gap: 14px; padding: 4px 0; }
 
-                        display: flex;
+                    #experience .er-kicker {
 
-                        flex-direction: column;
+                        color: var(--gallery-cyan);
 
-                        gap: 1rem;
+                        font-family: var(--gallery-mono);
 
-                        padding: 0.2rem 0;
+                        font-size: 11px;
 
-                    }
-
-
-
-                    #experience .expx-kicker {
-
-                        color: var(--accent-1);
-
-                        font-family: monospace;
-
-                        font-size: 0.85rem;
-
-                        letter-spacing: 0.14em;
+                        letter-spacing: 0.12em;
 
                         text-transform: uppercase;
 
                     }
 
-
-
-                    #experience .expx-title {
+                    #experience .er-chapter-title {
 
                         margin: 0;
 
-                        font-size: clamp(2.2rem, 3vw, 3.3rem);
+                        font-family: var(--gallery-heading);
+
+                        font-size: clamp(26px, 3vw, 40px);
 
                         line-height: 1;
 
@@ -941,105 +867,69 @@
 
                     }
 
+                    #experience .er-role { color: #dce8f3; font-size: 16px; font-weight: 600; }
 
+                    #experience .er-org { color: var(--gallery-text-muted); font-size: 13px; }
 
-                    #experience .expx-role {
+                    #experience .er-copy { margin: 0; color: #cddae7; font-size: 14px; line-height: 1.8; }
 
-                        color: var(--text-main);
+                    #experience .er-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 
-                        font-size: 1.18rem;
+                    #experience .er-tags span {
 
-                        font-weight: 600;
+                        padding: 7px 11px;
 
-                    }
-
-
-
-                    #experience .expx-org {
-
-                        color: var(--text-muted);
-
-                        font-size: 1rem;
-
-                    }
-
-
-
-                    #experience .expx-text {
-
-                        margin: 0;
-
-                        color: #d5dfeb;
-
-                        font-size: 1.04rem;
-
-                        line-height: 1.78;
-
-                    }
-
-
-
-                    #experience .expx-tags {
-
-                        display: flex;
-
-                        flex-wrap: wrap;
-
-                        gap: 0.55rem;
-
-                    }
-
-
-
-                    #experience .expx-tags span {
-
-                        padding: 0.52rem 0.86rem;
-
-                        border: 1px solid rgba(255, 255, 255, 0.07);
+                        border: 1px solid rgba(255,255,255,0.07);
 
                         border-radius: 999px;
 
-                        font-size: 0.92rem;
+                        font-size: 12px;
 
                         font-weight: 600;
 
-                        background: rgba(255, 255, 255, 0.03);
+                        background: rgba(255,255,255,0.03);
 
-                        color: var(--text-muted);
-
-                    }
-
-
-
-                    #experience .expx-links {
-
-                        display: flex;
-
-                        flex-wrap: wrap;
-
-                        gap: 0.8rem;
-
-                        margin-top: 0.2rem;
+                        color: var(--gallery-text-muted);
 
                     }
 
+                    #experience .er-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+
+                    #experience .er-links a {
+
+                        color: var(--gallery-cyan);
+
+                        font-size: 13px;
+
+                        font-weight: 600;
+
+                        padding: 9px 14px;
+
+                        border-radius: 999px;
+
+                        border: 1px solid rgba(110,231,255,0.18);
+
+                        background: rgba(110,231,255,0.04);
+
+                    }
+
+                    #experience .er-links a:hover { background: rgba(110,231,255,0.10); }
 
 
-                    #experience .expx-card-main.is-blend-open {
+
+                    #experience .er-chapter-main.is-blend-open {
 
                         grid-template-columns: 1fr;
 
-                        gap: 1rem;
+                        gap: 14px;
 
-                        padding: 1.4rem;
+                        padding: 18px;
 
                         align-items: stretch;
 
                     }
 
-
-
-                    #experience .expx-card-main.is-blend-open .expx-photo-frame {
+                    #experience .er-chapter-main.is-blend-open .er-photo-frame {
 
                         display: grid;
 
@@ -1049,29 +939,29 @@
 
                     }
 
-
-
-                    #experience .expx-card-main.is-blend-open .expx-photo-stage {
+                    #experience .er-chapter-main.is-blend-open .er-photo-stage {
 
                         aspect-ratio: 2.62 / 1;
 
-                        border-radius: 1.4rem;
+                        border-radius: 18px;
 
                     }
 
+                    #experience .er-chapter-main.is-blend-open .er-stage-img {
 
+                        width: 100%;
 
-                    #experience .expx-card-main.is-blend-open .expx-stage-img {
+                        height: 100%;
+
+                        object-fit: cover;
 
                         object-position: var(--blend-group-position, center 34%);
 
-                        opacity: 0.95;
+                        opacity: 0.94;
 
                     }
 
-
-
-                    #experience .expx-card-main.is-blend-open .expx-photo-stage::after {
+                    #experience .er-chapter-main.is-blend-open .er-photo-stage::after {
 
                         content: "";
 
@@ -1091,67 +981,57 @@
 
                     }
 
-
-
-                    #experience .expx-card-main.is-blend-open .expx-copy {
+                    #experience .er-chapter-main.is-blend-open .er-chapter-copy {
 
                         order: 1;
 
                         display: grid;
 
-                        gap: 0.45rem;
+                        gap: 6px;
 
-                        padding: 0 0.15rem;
+                        padding: 0 2px;
 
                     }
 
+                    #experience .er-chapter-main.is-blend-open .er-role,
 
+                    #experience .er-chapter-main.is-blend-open .er-copy,
 
-                    #experience .expx-card-main.is-blend-open .expx-role,
+                    #experience .er-chapter-main.is-blend-open .er-tags,
 
-                    #experience .expx-card-main.is-blend-open .expx-text,
+                    #experience .er-chapter-main.is-blend-open .er-links,
 
-                    #experience .expx-card-main.is-blend-open .expx-tags,
+                    #experience .er-chapter-main.is-blend-open .er-frame-footer,
 
-                    #experience .expx-card-main.is-blend-open .expx-links,
-
-                    #experience .expx-card-main.is-blend-open .expx-frame-footer,
-
-                    #experience .expx-card-main.is-blend-open .expx-group-peek-btn {
+                    #experience .er-chapter-main.is-blend-open .er-group-peek-btn {
 
                         display: none;
 
                     }
 
+                    #experience .er-chapter-main.is-blend-open .er-kicker {
 
+                        font-size: 10px;
 
-                    #experience .expx-card-main.is-blend-open .expx-kicker {
-
-                        font-size: 0.74rem;
-
-                        letter-spacing: 0.17em;
+                        letter-spacing: 0.16em;
 
                     }
 
+                    #experience .er-chapter-main.is-blend-open .er-chapter-title {
 
-
-                    #experience .expx-card-main.is-blend-open .expx-title {
-
-                        font-size: clamp(2rem, 3vw, 2.8rem);
+                        font-size: clamp(24px, 3.4vw, 34px);
 
                     }
 
+                    #experience .er-chapter-main.is-blend-open .er-org {
 
+                        font-size: 12px;
 
-                    #experience .expx-card-main.is-blend-open .expx-org {
-
-                        font-size: 0.92rem;
+                        letter-spacing: 0.03em;
 
                     }
 
-
-
-                    #experience .expx-card-main.is-blend-open .expx-photo-label {
+                    #experience .er-chapter-main.is-blend-open .er-photo-stage .er-photo-label {
 
                         z-index: 2;
 
@@ -1159,11 +1039,11 @@
 
                         align-items: center;
 
-                        bottom: 1rem;
+                        bottom: 14px;
 
-                        left: 1rem;
+                        left: 14px;
 
-                        background: rgba(6, 12, 20, 0.66);
+                        background: rgba(6,12,20,0.66);
 
                         backdrop-filter: blur(10px);
 
@@ -1171,45 +1051,31 @@
 
                     }
 
+                    #experience .er-photo-stage .er-group-close-btn { display: none; }
 
-
-                    #experience .expx-card-main.is-blend-open .expx-group-close-btn {
+                    #experience .er-chapter-main.is-blend-open .er-photo-stage .er-group-close-btn {
 
                         display: flex;
 
-                    }
-
-
-
-                    #experience .expx-section {
-
-                        display: grid;
-
-                        gap: 1.15rem;
+                        z-index: 3;
 
                     }
 
 
 
-                    #experience .expx-section-header {
+                    #experience .er-section { display: grid; gap: 18px; }
 
-                        display: grid;
+                    #experience .er-section-header { display: grid; gap: 4px; }
 
-                        gap: 0.3rem;
-
-                    }
-
-
-
-                    #experience .expx-section-label {
+                    #experience .er-section-label {
 
                         margin: 0;
 
-                        color: var(--accent-1);
+                        color: var(--gallery-cyan);
 
-                        font-family: monospace;
+                        font-family: var(--gallery-mono);
 
-                        font-size: 0.82rem;
+                        font-size: 11px;
 
                         letter-spacing: 0.12em;
 
@@ -1217,151 +1083,105 @@
 
                     }
 
-
-
-                    #experience .expx-section-title {
+                    #experience .er-section-title {
 
                         margin: 0;
 
-                        font-size: clamp(1.9rem, 2.6vw, 2.8rem);
+                        font-family: var(--gallery-heading);
+
+                        font-size: clamp(22px, 2.8vw, 34px);
 
                         letter-spacing: -0.04em;
 
                     }
 
-
-
-                    #experience .expx-event-grid,
-
-                    #experience .expx-role-grid {
+                    #experience .er-event-grid {
 
                         display: grid;
 
-                        gap: 1.35rem;
+                        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+                        gap: 18px;
 
                         align-items: stretch;
 
                     }
 
+                    #experience .er-event-card,
 
-
-                    #experience .expx-event-grid {
-
-                        grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
-
-                    }
-
-
-
-                    #experience .expx-role-grid {
-
-                        grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-
-                    }
-
-
-
-                    #experience .expx-event-card,
-
-                    #experience .expx-role-card {
+                    #experience .er-role-card {
 
                         display: flex;
 
                         flex-direction: column;
 
-                        overflow: hidden;
+                        background: var(--gallery-surface);
 
-                    }
+                        border: 1px solid var(--gallery-border);
 
+                        border-radius: 24px;
 
+                        box-shadow: var(--gallery-shadow);
 
-                    #experience .expx-event-photo,
+                        backdrop-filter: blur(18px);
 
-                    #experience .expx-role-photo {
-
-                        position: relative;
-
-                        flex: 1 1 0;
-
-                        min-height: 16rem;
+                        -webkit-backdrop-filter: blur(18px);
 
                         overflow: hidden;
 
                     }
 
+                    #experience .er-event-photo,
 
+                    #experience .er-role-photo { position: relative; flex: 1 1 0; min-height: 200px; overflow: hidden; }
 
-                    #experience .expx-event-copy,
+                    #experience .er-event-copy { flex: 0 0 auto; display: grid; gap: 8px; padding: 16px 18px 20px; }
 
-                    #experience .expx-role-copy {
+                    #experience .er-event-copy h3,
+
+                    #experience .er-role-copy h3 { margin: 0; font-family: var(--gallery-heading); font-size: 20px; letter-spacing: -0.03em; }
+
+                    #experience .er-event-copy p,
+
+                    #experience .er-role-copy p { margin: 0; color: var(--gallery-text-muted); font-size: 13px; line-height: 1.7; }
+
+                    #experience .er-event-copy a { display: inline-block; color: var(--gallery-cyan); font-size: 13px; font-weight: 600; }
+
+                    #experience .er-role-grid {
 
                         display: grid;
 
-                        gap: 0.55rem;
+                        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 
-                        padding: 1.25rem 1.35rem 1.45rem;
+                        gap: 18px;
 
-                    }
-
-
-
-                    #experience .expx-event-copy h3,
-
-                    #experience .expx-role-copy h3 {
-
-                        margin: 0;
-
-                        font-size: 1.55rem;
-
-                        letter-spacing: -0.03em;
+                        align-items: stretch;
 
                     }
 
-
-
-                    #experience .expx-event-copy p,
-
-                    #experience .expx-role-copy p {
-
-                        margin: 0;
-
-                        color: var(--text-muted);
-
-                        font-size: 0.98rem;
-
-                        line-height: 1.7;
-
-                    }
+                    #experience .er-role-copy { flex: 0 0 auto; display: grid; gap: 6px; padding: 16px 18px 18px; }
 
 
 
                     @media (max-width: 1100px) {
 
-                        #experience .expx-card-main {
-
-                            grid-template-columns: 1fr;
-
-                        }
+                        #experience .er-chapter-main { grid-template-columns: 1fr; }
 
                     }
 
-
-
                     @media (max-width: 860px) {
 
-                        #experience .expx-card-main.is-blend-open .expx-photo-stage {
+                        #experience .er-chapter-main.is-blend-open .er-photo-stage { aspect-ratio: 1.66 / 1; }
 
-                            aspect-ratio: 1.66 / 1;
+                        #experience .er-chapter-main.is-blend-open .er-stage-img { object-position: var(--blend-group-position-mobile, center 28%); }
 
-                        }
+                    }
 
+                    @media (max-width: 600px) {
 
+                        #experience .er-hero { padding: 22px 20px; }
 
-                        #experience .expx-card-main.is-blend-open .expx-stage-img {
-
-                            object-position: var(--blend-group-position-mobile, center 28%);
-
-                        }
+                        #experience .er-chapter-main { padding: 14px; gap: 14px; }
 
                     }
 
@@ -1369,33 +1189,27 @@
 
 
 
-                <div class="expx-shell">
+                <div class="er-shell">
 
-                    <header class="expx-hero panel">
+                    <header class="er-hero">
 
-                        <div class="section-header">
+                        <p class="section-label">Timeline</p>
 
-                            <div class="section-label">Timeline</div>
-
-                            <h2 class="section-title">Experience</h2>
-
-                        </div>
-
-                        <h3 class="expx-hero-title">
+                        <h2 class="er-hero-title">
 
                             Experience
 
                             <span>Research · Teaching · Applied Mathematics</span>
 
-                        </h3>
+                        </h2>
 
-                        <div class="expx-hero-links">
+                        <div class="er-hero-links">
 
-                            <a class="expx-chip-link" href="assets/pdfs/Bilal_poster_JED.pdf" target="_blank" rel="noopener noreferrer">JED Poster PDF</a>
+                            <a href="assets/pdfs/Bilal_poster_JED.pdf" target="_blank" rel="noopener noreferrer">JED Poster PDF</a>
 
-                            <a class="expx-chip-link" href="assets/pdfs/quantum-battery-rl-thesis.pdf" target="_blank" rel="noopener noreferrer">MS Thesis PDF</a>
+                            <a href="assets/pdfs/quantum-battery-rl-thesis.pdf" target="_blank" rel="noopener noreferrer">MS Thesis PDF</a>
 
-                            <a class="expx-chip-link" href="https://arxiv.org/abs/2503.20130" target="_blank" rel="noopener noreferrer">arXiv:2503.20130</a>
+                            <a href="https://arxiv.org/abs/2503.20130" target="_blank" rel="noopener noreferrer">arXiv:2503.20130</a>
 
                         </div>
 
@@ -1403,11 +1217,11 @@
 
 
 
-                    <article class="expx-card">
+                    <article class="er-chapter">
 
-                        <div class="expx-card-main">
+                        <div class="er-chapter-main">
 
-                            <div class="expx-photo-frame"
+                            <div class="er-photo-frame"
 
                                  style="--blend-group-position: center 52%; --blend-group-position-mobile: center 46%;"
 
@@ -1419,25 +1233,25 @@
 
                                  data-group-labels="ICB Dijon · full group">
 
-                                <div class="expx-photo-stage">
+                                <div class="er-photo-stage">
 
-                                    <img class="expx-stage-img" src="assets/images/experience-review/camille-group-1.jpg" alt="Research environment at ICB Dijon">
+                                    <img class="er-stage-img" src="assets/images/experience-review/camille-group-1.jpg" alt="Research environment at ICB Dijon">
 
-                                    <span class="expx-photo-label">Research environment</span>
+                                    <span class="er-photo-label">Research environment</span>
 
-                                    <button class="expx-group-peek-btn" aria-label="View full group photo" title="View full group photo">👥</button>
+                                    <button class="er-group-peek-btn" aria-label="View full group photo" title="View full group photo">👥</button>
 
-                                    <button class="expx-group-close-btn" aria-label="Return to chapter view" title="Return">↩</button>
+                                    <button class="er-group-close-btn" aria-label="Return to chapter view" title="Return">↩</button>
 
                                 </div>
 
-                                <div class="expx-frame-footer">
+                                <div class="er-frame-footer">
 
-                                    <div class="expx-dots" aria-hidden="true">
+                                    <div class="er-dots" aria-hidden="true">
 
-                                        <span class="expx-dot is-active"></span>
+                                        <span class="er-dot is-active"></span>
 
-                                        <span class="expx-dot"></span>
+                                        <span class="er-dot"></span>
 
                                     </div>
 
@@ -1445,19 +1259,21 @@
 
                             </div>
 
-                            <div class="expx-copy">
 
-                                <div class="expx-kicker">2024 – Present</div>
 
-                                <h3 class="expx-title">ICB Dijon</h3>
+                            <div class="er-chapter-copy">
 
-                                <div class="expx-role">PhD Candidate in Theoretical Physics</div>
+                                <div class="er-kicker">2024 – Present</div>
 
-                                <div class="expx-org">Universite de Bourgogne, France</div>
+                                <h2 class="er-chapter-title">ICB Dijon</h2>
 
-                                <p class="expx-text">How cheap, fast, and robust can a quantum operation be? The work combines the Pontryagin Maximum Principle with GRAPE to study thermodynamic costs, work fluctuations, and timing constraints in quantum gate design. A second thread extends this to open quantum systems under noise and dissipation.</p>
+                                <div class="er-role">PhD Candidate in Theoretical Physics</div>
 
-                                <div class="expx-tags">
+                                <div class="er-org">Universite de Bourgogne, France</div>
+
+                                <p class="er-copy">How cheap, fast, and robust can a quantum operation be? The work combines the Pontryagin Maximum Principle with GRAPE to study thermodynamic costs, work fluctuations, and timing constraints in quantum gate design. A second thread extends this to open quantum systems under noise and dissipation.</p>
+
+                                <div class="er-tags">
 
                                     <span>Quantum Control</span>
 
@@ -1471,11 +1287,11 @@
 
                                 </div>
 
-                                <div class="expx-links">
+                                <div class="er-links">
 
-                                    <a class="expx-mini-link" href="https://arxiv.org/abs/2503.20130" target="_blank" rel="noopener noreferrer">arXiv:2503.20130</a>
+                                    <a href="https://arxiv.org/abs/2503.20130" target="_blank" rel="noopener noreferrer">arXiv:2503.20130</a>
 
-                                    <a class="expx-mini-link" href="#research" data-page-link="4">Research overview ↗</a>
+                                    <a href="#research" data-page-link="4">Research overview ↗</a>
 
                                 </div>
 
@@ -1487,15 +1303,15 @@
 
 
 
-                    <article class="expx-card">
+                    <article class="er-chapter">
 
-                        <div class="expx-card-main">
+                        <div class="er-chapter-main">
 
-                            <div class="expx-photo-frame"
+                            <div class="er-photo-frame"
 
                                  style="--blend-group-position: center 36%; --blend-group-position-mobile: center 34%;"
 
-                                 data-srcs="assets/images/experience-review/degree.jpg||assets/images/experience-review/iiser2.jpg?v=2"
+                                 data-srcs="assets/images/experience-review/degree.jpg||assets/images/experience-review/iiser2.jpg?v=3"
 
                                  data-labels="BSMS degree ceremony||With thesis supervisor"
 
@@ -1503,25 +1319,25 @@
 
                                  data-group-labels="Convocation batch||Thesis research group">
 
-                                <div class="expx-photo-stage">
+                                <div class="er-photo-stage">
 
-                                    <img class="expx-stage-img" style="--stage-position: center 38%;" src="assets/images/experience-review/degree.jpg" alt="BSMS degree ceremony at IISER Berhampur">
+                                    <img class="er-stage-img" style="--stage-position: center 38%;" src="assets/images/experience-review/degree.jpg" alt="BSMS degree ceremony at IISER Berhampur">
 
-                                    <span class="expx-photo-label">BSMS degree ceremony</span>
+                                    <span class="er-photo-label">BSMS degree ceremony</span>
 
-                                    <button class="expx-group-peek-btn" aria-label="View group photos" title="View group and team photos">👥</button>
+                                    <button class="er-group-peek-btn" aria-label="View group photos" title="View group and team photos">👥</button>
 
-                                    <button class="expx-group-close-btn" aria-label="Return to chapter view" title="Return">↩</button>
+                                    <button class="er-group-close-btn" aria-label="Return to chapter view" title="Return">↩</button>
 
                                 </div>
 
-                                <div class="expx-frame-footer">
+                                <div class="er-frame-footer">
 
-                                    <div class="expx-dots" aria-hidden="true">
+                                    <div class="er-dots" aria-hidden="true">
 
-                                        <span class="expx-dot is-active"></span>
+                                        <span class="er-dot is-active"></span>
 
-                                        <span class="expx-dot"></span>
+                                        <span class="er-dot"></span>
 
                                     </div>
 
@@ -1529,19 +1345,21 @@
 
                             </div>
 
-                            <div class="expx-copy">
 
-                                <div class="expx-kicker">2019 – 2024</div>
 
-                                <h3 class="expx-title">IISER Berhampur</h3>
+                            <div class="er-chapter-copy">
 
-                                <div class="expx-role">MS Thesis Researcher in Physics</div>
+                                <div class="er-kicker">2019 – 2024</div>
 
-                                <div class="expx-org">BS-MS Integrated Program, India</div>
+                                <h2 class="er-chapter-title">IISER Berhampur</h2>
 
-                                <p class="expx-text">Reinforcement-learning-based optimal control for quantum batteries, maximizing ergotropy in spin-1/2 chains. Protocols learned via Soft Actor-Critic outperform greedy strategies across ordered and disordered multi-qubit regimes.</p>
+                                <div class="er-role">MS Thesis Researcher in Physics</div>
 
-                                <div class="expx-tags">
+                                <div class="er-org">BS-MS Integrated Program, India</div>
+
+                                <p class="er-copy">Reinforcement-learning-based optimal control for quantum batteries — maximizing ergotropy in spin-&#189; chains. Protocols learned via Soft Actor-Critic outperform greedy strategies across ordered and disordered multi-qubit regimes.</p>
+
+                                <div class="er-tags">
 
                                     <span>Reinforcement Learning</span>
 
@@ -1553,11 +1371,11 @@
 
                                 </div>
 
-                                <div class="expx-links">
+                                <div class="er-links">
 
-                                    <a class="expx-mini-link" href="assets/pdfs/quantum-battery-rl-thesis.pdf" target="_blank" rel="noopener noreferrer">MS Thesis PDF</a>
+                                    <a href="assets/pdfs/quantum-battery-rl-thesis.pdf" target="_blank" rel="noopener noreferrer">MS Thesis PDF</a>
 
-                                    <a class="expx-mini-link" href="#research" data-page-link="4">Selected works ↗</a>
+                                    <a href="#research" data-page-link="4">Selected works ↗</a>
 
                                 </div>
 
@@ -1569,37 +1387,37 @@
 
 
 
-                    <section class="expx-section">
+                    <section class="er-section">
 
-                        <div class="expx-section-header">
+                        <div class="er-section-header">
 
-                            <p class="expx-section-label">Conferences &amp; Posters</p>
+                            <p class="er-section-label">Conferences &amp; Posters</p>
 
-                            <h3 class="expx-section-title">Poster Presentations</h3>
+                            <h2 class="er-section-title">Poster Presentations</h2>
 
                         </div>
 
-                        <div class="expx-event-grid">
+                        <div class="er-event-grid">
 
-                            <article class="expx-event-card">
+                            <article class="er-event-card">
 
-                                <div class="expx-event-photo">
+                                <div class="er-event-photo">
 
-                                    <img class="expx-stage-img" src="assets/images/experience-review/jed.jpg" alt="JED 2025 poster session">
+                                    <img class="er-stage-img" src="assets/images/experience-review/jed.jpg" alt="JED 2025 poster session">
 
-                                    <span class="expx-photo-label">JED 2025</span>
+                                    <span class="er-photo-label">JED 2025</span>
 
                                 </div>
 
-                                <div class="expx-event-copy">
+                                <div class="er-event-copy">
 
-                                    <div class="expx-kicker">June 2025 · Dijon</div>
+                                    <div class="er-kicker">June 2025 · Dijon</div>
 
                                     <h3>JED 2025</h3>
 
-                                    <p>Robust and Energy-Efficient Controls for a Two-Level System, linked to arXiv:2503.20130.</p>
+                                    <p>Robust and Energy-Efficient Controls for a Two-Level System — linked to arXiv:2503.20130.</p>
 
-                                    <a class="expx-mini-link" href="assets/pdfs/Bilal_poster_JED.pdf" target="_blank" rel="noopener noreferrer">Open poster PDF ↗</a>
+                                    <a href="assets/pdfs/Bilal_poster_JED.pdf" target="_blank" rel="noopener noreferrer">Open poster PDF ↗</a>
 
                                 </div>
 
@@ -1607,39 +1425,39 @@
 
 
 
-                            <article class="expx-event-card"
+                            <article class="er-event-card"
 
                                      data-srcs="assets/images/experience-review/gdr-welcome.jpg||assets/images/experience-review/poster-gdr-1.jpg||assets/images/experience-review/poster-gdr-2.jpg"
 
                                      data-labels="GdR TeQ 2025||Poster discussion||Another poster moment">
 
-                                <div class="expx-event-photo">
+                                <div class="er-event-photo">
 
-                                    <img class="expx-stage-img" src="assets/images/experience-review/gdr-welcome.jpg" alt="GdR TeQ 2025 colloquium">
+                                    <img class="er-stage-img" src="assets/images/experience-review/gdr-welcome.jpg" alt="GdR TeQ 2025 colloquium">
 
-                                    <span class="expx-photo-label">GdR TeQ 2025</span>
+                                    <span class="er-photo-label">GdR TeQ 2025</span>
 
                                 </div>
 
-                                <div class="expx-event-copy">
+                                <div class="er-event-copy">
 
-                                    <div class="expx-kicker">2025 · Grenoble</div>
+                                    <div class="er-kicker">2025 · Grenoble</div>
 
                                     <h3>GdR TeQ 2025</h3>
 
-                                    <div class="expx-dots-copy" aria-hidden="true">
+                                    <div class="er-dots-copy" aria-hidden="true">
 
-                                        <span class="expx-dot is-active"></span>
+                                        <span class="er-dot is-active"></span>
 
-                                        <span class="expx-dot"></span>
+                                        <span class="er-dot"></span>
 
-                                        <span class="expx-dot"></span>
+                                        <span class="er-dot"></span>
 
                                     </div>
 
-                                    <p>3rd GdR TeQ colloquium and poster session, covering robust optimal control using GRAPE and research discussions with the community.</p>
+                                    <p>3rd GdR TeQ colloquium and poster session — robust optimal control using GRAPE and research discussions with the community.</p>
 
-                                    <a class="expx-mini-link" href="#research" data-page-link="4">View works ↗</a>
+                                    <a href="#research" data-page-link="4">View works ↗</a>
 
                                 </div>
 
@@ -1647,19 +1465,19 @@
 
 
 
-                            <article class="expx-event-card">
+                            <article class="er-event-card">
 
-                                <div class="expx-event-photo">
+                                <div class="er-event-photo">
 
-                                    <img class="expx-stage-img" src="assets/images/experience-review/cargese.jpg" alt="Cargese summer school announcement">
+                                    <img class="er-stage-img" src="assets/images/experience-review/cargese.jpg" alt="Cargese summer school announcement">
 
-                                    <span class="expx-photo-label">Upcoming · 2026</span>
+                                    <span class="er-photo-label">Upcoming · 2026</span>
 
                                 </div>
 
-                                <div class="expx-event-copy">
+                                <div class="er-event-copy">
 
-                                    <div class="expx-kicker">June 8–20, 2026 · Cargese, Corsica</div>
+                                    <div class="er-kicker">June 8–20, 2026 · Cargese, Corsica</div>
 
                                     <h3>Cargese Summer School</h3>
 
@@ -1675,31 +1493,31 @@
 
 
 
-                    <section class="expx-section">
+                    <section class="er-section">
 
-                        <div class="expx-section-header">
+                        <div class="er-section-header">
 
-                            <p class="expx-section-label">Teaching &amp; Mathematics</p>
+                            <p class="er-section-label">Teaching &amp; Mathematics</p>
 
-                            <h3 class="expx-section-title">Supporting Roles</h3>
+                            <h2 class="er-section-title">Supporting Roles</h2>
 
                         </div>
 
-                        <div class="expx-role-grid">
+                        <div class="er-role-grid">
 
-                            <article class="expx-role-card">
+                            <article class="er-role-card">
 
-                                <div class="expx-role-photo">
+                                <div class="er-role-photo">
 
-                                    <img class="expx-stage-img" src="assets/images/experience-review/other-mathteacher.jpg" alt="Math teaching">
+                                    <img class="er-stage-img" src="assets/images/experience-review/other-mathteacher.jpg" alt="Math teaching">
 
                                 </div>
 
-                                <div class="expx-role-copy">
+                                <div class="er-role-copy">
 
                                     <h3>Math Teacher</h3>
 
-                                    <div class="expx-org">revamp24, Bangalore · 2020–2024</div>
+                                    <div class="er-org">revamp24, Bangalore · 2020–2024</div>
 
                                     <p>Teaching role that sharpened explanation, pacing, and mathematical clarity across varied student levels.</p>
 
@@ -1709,19 +1527,19 @@
 
 
 
-                            <article class="expx-role-card">
+                            <article class="er-role-card">
 
-                                <div class="expx-role-photo">
+                                <div class="er-role-photo">
 
-                                    <img class="expx-stage-img" src="assets/images/experience-review/srm.jpg" alt="Six Red Marbles">
+                                    <img class="er-stage-img" src="assets/images/experience-review/srm.jpg" alt="Six Red Marbles">
 
                                 </div>
 
-                                <div class="expx-role-copy">
+                                <div class="er-role-copy">
 
                                     <h3>Subject Matter Expert</h3>
 
-                                    <div class="expx-org">Calculus · Six Red Marbles, Chennai · 2019–2021</div>
+                                    <div class="er-org">Calculus · Six Red Marbles, Chennai · 2019–2021</div>
 
                                     <p>Mathematics-focused content and curriculum work, developing materials for structured learning pathways.</p>
 
@@ -1765,19 +1583,19 @@
 
 
 
-                        const card = frame.closest('.expx-card');
+                        const chapter = frame.closest('.er-chapter');
 
-                        const mainEl = card.querySelector('.expx-card-main');
+                        const mainEl = chapter.querySelector('.er-chapter-main');
 
-                        const peekBtn = frame.querySelector('.expx-group-peek-btn');
+                        const peekBtn = frame.querySelector('.er-group-peek-btn');
 
-                        const closeBtn = frame.querySelector('.expx-group-close-btn');
+                        const closeBtn = frame.querySelector('.er-photo-stage .er-group-close-btn');
 
-                        const stageImg = frame.querySelector('.expx-stage-img');
+                        const stageImg = frame.querySelector('.er-stage-img');
 
-                        const stageLbl = frame.querySelector('.expx-photo-label');
+                        const stageLbl = frame.querySelector('.er-photo-stage .er-photo-label');
 
-                        const dotsEl = frame.querySelector('.expx-dots');
+                        const dotsEl = frame.querySelector('.er-dots');
 
                         const initialStageSrc = stageImg?.getAttribute('src') || '';
 
@@ -1803,7 +1621,7 @@
 
                                 const d = document.createElement('span');
 
-                                d.className = 'expx-dot' + (i === active ? ' is-active' : '');
+                                d.className = 'er-dot' + (i === active ? ' is-active' : '');
 
                                 container.appendChild(d);
 
@@ -1815,7 +1633,7 @@
 
                         function setActiveDot(container, active) {
 
-                            container?.querySelectorAll('.expx-dot').forEach((d, i) => {
+                            container?.querySelectorAll('.er-dot').forEach((d, i) => {
 
                                 d.classList.toggle('is-active', i === active);
 
@@ -1971,11 +1789,11 @@
 
                         if (srcs.length < 2) return;
 
-                        const img = card.querySelector('.expx-stage-img');
+                        const img = card.querySelector('.er-stage-img');
 
-                        const labelEl = card.querySelector('.expx-photo-label');
+                        const labelEl = card.querySelector('.er-photo-label');
 
-                        const dots = card.querySelectorAll('.expx-dot');
+                        const dots = card.querySelectorAll('.er-dot');
 
                         let idx = 0;
 
@@ -2005,9 +1823,9 @@
 
 
 
-                    document.querySelectorAll('#experience .expx-photo-frame').forEach(initPhotoFrame);
+                    document.querySelectorAll('#experience .er-photo-frame').forEach(initPhotoFrame);
 
-                    document.querySelectorAll('#experience .expx-event-card[data-srcs]').forEach(initEventCycler);
+                    document.querySelectorAll('#experience .er-event-card[data-srcs]').forEach(initEventCycler);
 
                 })();
 

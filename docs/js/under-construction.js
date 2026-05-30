@@ -97,8 +97,14 @@ function attemptWindowClose() {
 function initLocalPreviewControls() {
     if (!isLocalPreview()) return;
     document.body.classList.add('local-preview');
-    const button = document.getElementById('local-preview-exit');
-    if (!button) return;
+
+    // Inject button dynamically — never ships in production HTML
+    const button = document.createElement('button');
+    button.className = 'local-preview-exit';
+    button.id = 'local-preview-exit';
+    button.type = 'button';
+    button.textContent = 'Exit Preview';
+    document.body.appendChild(button);
 
     button.addEventListener('click', () => {
         if (button.disabled) return;

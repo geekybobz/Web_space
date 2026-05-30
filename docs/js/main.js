@@ -208,7 +208,7 @@ const THEMES = [
     { id: 'mid-atmosphere', label: 'Mid Atmosphere', icon: '2' },
 ];
 
-const avatarPool = ['assets/images/avatar_1.png', 'assets/images/avatar_2.png'];
+const avatarPool = ['assets/images/avatar_1.webp', 'assets/images/avatar_2.webp'];
 const THEME_MODES = {
     dark: ['dark', 'crimson', 'carbon', 'dusk', 'volt'],
     light: ['light-editorial'],

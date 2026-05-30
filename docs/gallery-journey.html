@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Prototype gallery concept: Journey Board.">
+    <title>Gallery Prototype C | Journey Board</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/gallery.css">
+</head>
+<body class="gallery-body">
+    <main class="gallery-shell">
+        <div class="gallery-topbar">
+            <a class="gallery-back" href="index.html">← Back To Main Site</a>
+            <nav class="gallery-switcher" aria-label="Gallery prototypes">
+                <a href="gallery-git.html">Prototype A · Git Graph</a>
+                <a href="gallery-museum.html">Prototype B · Museum</a>
+                <a class="is-active" href="gallery-journey.html">Prototype C · Journey Board</a>
+            </nav>
+        </div>
+
+        <section class="gallery-hero">
+            <div class="gallery-hero-card">
+                <p class="gallery-kicker">Prototype C</p>
+                <h1 class="gallery-title">Journey<span>Board Narrative</span></h1>
+                <p class="gallery-lead">
+                    This direction sits between a timeline and a storyboard. It is the strongest option if you want each milestone to feel like a chapter with room for mini-highlights, side notes, and future sub-links.
+                </p>
+                <div class="gallery-hero-meta">
+                    <span class="gallery-chip">Best for chapter-based storytelling</span>
+                    <span class="gallery-chip">Room for nested highlights</span>
+                    <span class="gallery-chip">Good balance of text and image</span>
+                </div>
+            </div>
+
+            <aside class="gallery-aside-card">
+                <h2 class="gallery-aside-title">How This Prototype Reads</h2>
+                <p class="gallery-aside-copy">
+                    The left rail explains the overall arc while the right side expands each stage into a chapter card. This is useful if some milestones later need more internal structure than a simple caption card.
+                </p>
+                <div class="gallery-legend">
+                    <div class="gallery-legend-item">
+                        <span class="gallery-legend-label"><span class="gallery-dot transition"></span>Story-forward</span>
+                        <span class="gallery-legend-note">Feels like a guided narrative</span>
+                    </div>
+                    <div class="gallery-legend-item">
+                        <span class="gallery-legend-label"><span class="gallery-dot project"></span>Supports clusters</span>
+                        <span class="gallery-legend-note">Projects can sit inside each chapter</span>
+                    </div>
+                    <div class="gallery-legend-item">
+                        <span class="gallery-legend-label"><span class="gallery-dot research"></span>Future-proof</span>
+                        <span class="gallery-legend-note">Easy to add PDFs and work summaries</span>
+                    </div>
+                </div>
+            </aside>
+        </section>
+
+        <section class="journey-grid">
+            <aside class="gallery-panel journey-sidebar">
+                <h2>Sample Arc</h2>
+                <p>This prototype is less literal than the git graph and less image-heavy than the museum layout. It is useful if you want each stage to feel like a chapter with internal highlights.</p>
+                <a class="gallery-link" href="under_construction.html">Open a future chapter container →</a>
+            </aside>
+
+            <div class="journey-axis">
+                <article class="journey-node">
+                    <div class="journey-year">Stage 01</div>
+                    <div class="gallery-card journey-card">
+                        <div>
+                            <h3>10th Standard</h3>
+                            <p>The first chapter card introduces a stage and gives room for two or three supporting notes without making the page feel crowded.</p>
+                            <ul>
+                                <li>Can hold a concise description of the period</li>
+                                <li>Can point to an award, image, or memory block</li>
+                                <li>Can later link to a dedicated detail page</li>
+                            </ul>
+                        </div>
+                        <div class="journey-mini">
+                            <div class="gallery-card-image">
+                                <img src="assets/images/avatar_about.webp" alt="Placeholder image for 10th standard">
+                                <div class="gallery-card-image-label">Chapter Image</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="journey-node">
+                    <div class="journey-year">Stage 02</div>
+                    <div class="gallery-card journey-card">
+                        <div>
+                            <h3>12th Standard</h3>
+                            <p>This layout works well when the milestone needs a bit more structure than a normal card, such as notes, two small takeaways, and one related link.</p>
+                            <ul>
+                                <li>Supports narrative transitions clearly</li>
+                                <li>Useful for exam, city, or institution shifts</li>
+                                <li>Keeps the visual flow simple and readable</li>
+                            </ul>
+                        </div>
+                        <div class="journey-mini">
+                            <div class="gallery-card-image">
+                                <img src="assets/images/avatar_philosophy.webp" alt="Placeholder image for 12th standard">
+                                <div class="gallery-card-image-label">Chapter Image</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="journey-node transition">
+                    <div class="journey-year">Stage 03</div>
+                    <div class="gallery-card journey-card">
+                        <div>
+                            <h3>College</h3>
+                            <p>The college stage becomes a central chapter. Later it can contain internal links to project pages, departments, posters, clubs, or a breakdown of what changed during that period.</p>
+                            <ul>
+                                <li>Works as the main chapter split point</li>
+                                <li>Allows multiple sub-highlights in one card</li>
+                                <li>Can grow without breaking the page rhythm</li>
+                            </ul>
+                        </div>
+                        <div class="journey-mini">
+                            <div class="gallery-card-image">
+                                <img src="assets/images/avatar_1.webp" alt="Placeholder image for college">
+                                <div class="gallery-card-image-label">Chapter Image</div>
+                            </div>
+                            <div class="journey-mini-panel">
+                                <strong>Future Slot</strong>
+                                Add institution, years, or a signature note here.
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="journey-node project">
+                    <div class="journey-year">Stage 04</div>
+                    <div class="gallery-card journey-card">
+                        <div>
+                            <h3>Projects During College</h3>
+                            <p>This chapter can later hold a small list of project titles or a grouped card pattern without needing a separate page redesign.</p>
+                            <ul>
+                                <li>Best if some milestones contain several outputs</li>
+                                <li>Can accommodate tags, posters, and screenshots</li>
+                                <li>Lets you group related work by phase</li>
+                            </ul>
+                        </div>
+                        <div class="journey-mini">
+                            <div class="gallery-card-image">
+                                <img src="assets/images/avatar_experience.webp" alt="Placeholder image for projects">
+                                <div class="gallery-card-image-label">Chapter Image</div>
+                            </div>
+                            <div class="journey-mini-panel">
+                                <strong>Future Slot</strong>
+                                Add project tags or quick stats here.
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="journey-node research">
+                    <div class="journey-year">Stage 05</div>
+                    <div class="gallery-card journey-card">
+                        <div>
+                            <h3>Joined PhD</h3>
+                            <p>The final chapter can later become the richest one: active themes, major achievements, posters, thesis links, or deeper routes into research containers.</p>
+                            <ul>
+                                <li>Strong place for current trajectory</li>
+                                <li>Natural home for work-in-progress callouts</li>
+                                <li>Easy to connect with research and contact pages</li>
+                            </ul>
+                        </div>
+                        <div class="journey-mini">
+                            <div class="gallery-card-image">
+                                <img src="assets/images/avatar_research.webp" alt="Placeholder image for phd">
+                                <div class="gallery-card-image-label">Chapter Image</div>
+                            </div>
+                            <div class="journey-mini-panel">
+                                <strong>Future Slot</strong>
+                                Add publications, poster links, or PhD focus here.
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <footer class="gallery-footer">
+            <strong>Prototype note:</strong> this version is optimized for chapter-based storytelling and will be the easiest one to expand if your real content varies a lot in depth between milestones.
+        </footer>
+    </main>
+</body>
+</html>

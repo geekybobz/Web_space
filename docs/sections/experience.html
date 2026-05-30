@@ -4,84 +4,744 @@
         <div class="page-avatar-ring"></div>
     </div>
     <div class="page-inner">
-        <div class="section-header">
-            <div class="section-label">Timeline</div>
-            <h2 class="section-title">Experience</h2>
-        </div>
+        <style>
+            #experience .expx-shell {
+                display: grid;
+                gap: 1.8rem;
+                padding-bottom: 2rem;
+            }
 
-        <div class="exp-grid">
-            <div class="exp-col">
-                <div class="exp-col-header">
-                    <span class="exp-col-icon"><i class="fa-solid fa-flask-vial"></i></span>
-                    <span class="exp-col-label">Academic &amp; Research</span>
+            #experience .expx-hero,
+            #experience .expx-card,
+            #experience .expx-event-card,
+            #experience .expx-role-card {
+                background: rgba(18, 24, 34, 0.55);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 2rem;
+                box-shadow: var(--glass-shadow);
+                backdrop-filter: blur(18px);
+                -webkit-backdrop-filter: blur(18px);
+            }
+
+            #experience .expx-hero {
+                padding: 2.4rem 2.6rem 2.2rem;
+            }
+
+            #experience .expx-hero-title {
+                margin: 0;
+                font-size: clamp(3.2rem, 5vw, 5.8rem);
+                line-height: 0.96;
+                letter-spacing: -0.05em;
+            }
+
+            #experience .expx-hero-title span {
+                display: block;
+                margin-top: 0.9rem;
+                color: var(--text-muted);
+                font-size: clamp(1.5rem, 2.1vw, 2.2rem);
+                line-height: 1.15;
+                letter-spacing: -0.02em;
+            }
+
+            #experience .expx-hero-links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.8rem;
+                margin-top: 1.8rem;
+            }
+
+            #experience .expx-chip-link,
+            #experience .expx-mini-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.85rem 1.2rem;
+                border-radius: 999px;
+                border: 1px solid rgba(0, 240, 255, 0.18);
+                background: rgba(0, 240, 255, 0.05);
+                color: var(--accent-1);
+                font-size: 1rem;
+                font-weight: 600;
+            }
+
+            #experience .expx-chip-link:hover,
+            #experience .expx-mini-link:hover {
+                background: rgba(0, 240, 255, 0.11);
+                border-color: rgba(0, 240, 255, 0.28);
+            }
+
+            #experience .expx-card {
+                overflow: hidden;
+            }
+
+            #experience .expx-card-main {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+                gap: 1.5rem;
+                padding: 1.5rem;
+                align-items: start;
+            }
+
+            #experience .expx-photo-frame {
+                display: grid;
+                gap: 0.8rem;
+            }
+
+            #experience .expx-photo-stage {
+                position: relative;
+                aspect-ratio: 4 / 3;
+                overflow: hidden;
+                border-radius: 1.3rem;
+                background: #101824;
+            }
+
+            #experience .expx-stage-img {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: var(--stage-position, center);
+                opacity: 0.92;
+                display: block;
+                transition: opacity 220ms ease;
+            }
+
+            #experience .expx-stage-img.is-fading {
+                opacity: 0;
+            }
+
+            #experience .expx-photo-label {
+                position: absolute;
+                left: 1rem;
+                bottom: 1rem;
+                z-index: 2;
+                padding: 0.45rem 0.8rem;
+                border-radius: 999px;
+                background: rgba(6, 12, 20, 0.72);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                font-family: monospace;
+                font-size: 0.78rem;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: var(--text-main);
+                pointer-events: none;
+            }
+
+            #experience .expx-group-peek-btn,
+            #experience .expx-group-close-btn {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                z-index: 3;
+                width: 2.8rem;
+                height: 2.8rem;
+                border-radius: 50%;
+                border: 1px solid rgba(255, 255, 255, 0.14);
+                background: rgba(6, 12, 20, 0.72);
+                color: var(--text-main);
+                font-size: 1.2rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                transition: background 180ms, border-color 180ms, transform 180ms;
+                line-height: 1;
+            }
+
+            #experience .expx-group-peek-btn:hover,
+            #experience .expx-group-close-btn:hover {
+                background: rgba(0, 240, 255, 0.14);
+                border-color: rgba(0, 240, 255, 0.32);
+                transform: scale(1.07);
+            }
+
+            #experience .expx-group-close-btn {
+                display: none;
+            }
+
+            #experience .expx-frame-footer,
+            #experience .expx-dots,
+            #experience .expx-dots-copy {
+                display: flex;
+                align-items: center;
+                gap: 0.45rem;
+            }
+
+            #experience .expx-frame-footer {
+                min-height: 1rem;
+            }
+
+            #experience .expx-dot {
+                width: 0.42rem;
+                height: 0.42rem;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.18);
+                transition: background 200ms;
+            }
+
+            #experience .expx-dot.is-active {
+                background: var(--accent-1);
+            }
+
+            #experience .expx-copy {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0.2rem 0;
+            }
+
+            #experience .expx-kicker {
+                color: var(--accent-1);
+                font-family: monospace;
+                font-size: 0.85rem;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+            }
+
+            #experience .expx-title {
+                margin: 0;
+                font-size: clamp(2.2rem, 3vw, 3.3rem);
+                line-height: 1;
+                letter-spacing: -0.04em;
+            }
+
+            #experience .expx-role {
+                color: var(--text-main);
+                font-size: 1.18rem;
+                font-weight: 600;
+            }
+
+            #experience .expx-org {
+                color: var(--text-muted);
+                font-size: 1rem;
+            }
+
+            #experience .expx-text {
+                margin: 0;
+                color: #d5dfeb;
+                font-size: 1.04rem;
+                line-height: 1.78;
+            }
+
+            #experience .expx-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.55rem;
+            }
+
+            #experience .expx-tags span {
+                padding: 0.52rem 0.86rem;
+                border: 1px solid rgba(255, 255, 255, 0.07);
+                border-radius: 999px;
+                font-size: 0.92rem;
+                font-weight: 600;
+                background: rgba(255, 255, 255, 0.03);
+                color: var(--text-muted);
+            }
+
+            #experience .expx-links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.8rem;
+                margin-top: 0.2rem;
+            }
+
+            #experience .expx-card-main.is-blend-open {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 1.4rem;
+                align-items: stretch;
+            }
+
+            #experience .expx-card-main.is-blend-open .expx-photo-frame {
+                display: grid;
+                gap: 0;
+                order: 2;
+            }
+
+            #experience .expx-card-main.is-blend-open .expx-photo-stage {
+                aspect-ratio: 2.62 / 1;
+                border-radius: 1.4rem;
+            }
+
+            #experience .expx-card-main.is-blend-open .expx-stage-img {
+                object-position: var(--blend-group-position, center 34%);
+                opacity: 0.95;
+            }
+
+            #experience .expx-card-main.is-blend-open .expx-photo-stage::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background:
+                    linear-gradient(180deg, rgba(4, 10, 17, 0.12) 0%, rgba(4, 10, 17, 0.04) 28%, rgba(4, 10, 17, 0.42) 100%),
+                    linear-gradient(90deg, rgba(9, 17, 28, 0.10) 0%, rgba(9, 17, 28, 0) 42%, rgba(9, 17, 28, 0.18) 100%);
+                pointer-events: none;
+                z-index: 1;
+            }
+
+            #experience .expx-card-main.is-blend-open .expx-copy {
+                order: 1;
+                display: grid;
+                gap: 0.45rem;
+                padding: 0 0.15rem;
+            }
+
+            #experience .expx-card-main.is-blend-open .expx-role,
+            #experience .expx-card-main.is-blend-open .expx-text,
+            #experience .expx-card-main.is-blend-open .expx-tags,
+            #experience .expx-card-main.is-blend-open .expx-links,
+            #experience .expx-card-main.is-blend-open .expx-frame-footer,
+            #experience .expx-card-main.is-blend-open .expx-group-peek-btn {
+                display: none;
+            }
+
+            #experience .expx-card-main.is-blend-open .expx-kicker {
+                font-size: 0.74rem;
+                letter-spacing: 0.17em;
+            }
+
+            #experience .expx-card-main.is-blend-open .expx-title {
+                font-size: clamp(2rem, 3vw, 2.8rem);
+            }
+
+            #experience .expx-card-main.is-blend-open .expx-org {
+                font-size: 0.92rem;
+            }
+
+            #experience .expx-card-main.is-blend-open .expx-photo-label {
+                z-index: 2;
+                display: inline-flex;
+                align-items: center;
+                bottom: 1rem;
+                left: 1rem;
+                background: rgba(6, 12, 20, 0.66);
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+            }
+
+            #experience .expx-card-main.is-blend-open .expx-group-close-btn {
+                display: flex;
+            }
+
+            #experience .expx-section {
+                display: grid;
+                gap: 1.15rem;
+            }
+
+            #experience .expx-section-header {
+                display: grid;
+                gap: 0.3rem;
+            }
+
+            #experience .expx-section-label {
+                margin: 0;
+                color: var(--accent-1);
+                font-family: monospace;
+                font-size: 0.82rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+            }
+
+            #experience .expx-section-title {
+                margin: 0;
+                font-size: clamp(1.9rem, 2.6vw, 2.8rem);
+                letter-spacing: -0.04em;
+            }
+
+            #experience .expx-event-grid,
+            #experience .expx-role-grid {
+                display: grid;
+                gap: 1.35rem;
+                align-items: stretch;
+            }
+
+            #experience .expx-event-grid {
+                grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
+            }
+
+            #experience .expx-role-grid {
+                grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+            }
+
+            #experience .expx-event-card,
+            #experience .expx-role-card {
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+            }
+
+            #experience .expx-event-photo,
+            #experience .expx-role-photo {
+                position: relative;
+                flex: 1 1 0;
+                min-height: 16rem;
+                overflow: hidden;
+            }
+
+            #experience .expx-event-copy,
+            #experience .expx-role-copy {
+                display: grid;
+                gap: 0.55rem;
+                padding: 1.25rem 1.35rem 1.45rem;
+            }
+
+            #experience .expx-event-copy h3,
+            #experience .expx-role-copy h3 {
+                margin: 0;
+                font-size: 1.55rem;
+                letter-spacing: -0.03em;
+            }
+
+            #experience .expx-event-copy p,
+            #experience .expx-role-copy p {
+                margin: 0;
+                color: var(--text-muted);
+                font-size: 0.98rem;
+                line-height: 1.7;
+            }
+
+            @media (max-width: 1100px) {
+                #experience .expx-card-main {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            @media (max-width: 860px) {
+                #experience .expx-card-main.is-blend-open .expx-photo-stage {
+                    aspect-ratio: 1.66 / 1;
+                }
+
+                #experience .expx-card-main.is-blend-open .expx-stage-img {
+                    object-position: var(--blend-group-position-mobile, center 28%);
+                }
+            }
+        </style>
+
+        <div class="expx-shell">
+            <header class="expx-hero panel">
+                <div class="section-header">
+                    <div class="section-label">Timeline</div>
+                    <h2 class="section-title">Experience</h2>
                 </div>
-                <div class="timeline">
-                    <div class="timeline-item panel">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-meta">
-                                <div class="timeline-date">Nov 2024 &mdash; Present</div>
-                                <h3 class="timeline-title">PhD Candidate</h3>
-                                <div class="timeline-degree text-muted">Doctor of Philosophy &middot; Theoretical Physics</div>
-                                <div class="timeline-company">ICB Dijon, Université de Bourgogne, France</div>
-                            </div>
-                            <div class="timeline-body">
-                                <p class="timeline-desc text-muted">
-                                    The research focuses on fundamental questions in quantum control: how cheap, fast, and robust can a quantum operation be made? Working with both analytical tools, particularly the Pontryagin Maximum Principle, and numerical methods such as GRAPE, the work tackles thermodynamic costs, work fluctuations, and timing constraints in quantum gate design. A second thread extends this to open quantum systems, where noise and dissipation from the environment make the problem harder and the answers more relevant.
-                                </p>
-                                <div class="timeline-tags">
-                                    <span class="project-tag">Quantum Control</span>
-                                    <span class="project-tag">Quantum Thermodynamics</span>
-                                    <span class="project-tag">Open Quantum Systems</span>
-                                    <span class="project-tag">GRAPE</span>
-                                    <span class="project-tag">Pontryagin Maximum Principle</span>
-                                </div>
-                                <a href="#research" data-page-link="4" class="timeline-project-link">Project Page <i class="fa-solid fa-arrow-right"></i></a>
+                <h3 class="expx-hero-title">
+                    Experience
+                    <span>Research · Teaching · Applied Mathematics</span>
+                </h3>
+                <div class="expx-hero-links">
+                    <a class="expx-chip-link" href="assets/pdfs/Bilal_poster_JED.pdf" target="_blank" rel="noopener noreferrer">JED Poster PDF</a>
+                    <a class="expx-chip-link" href="assets/pdfs/quantum-battery-rl-thesis.pdf" target="_blank" rel="noopener noreferrer">MS Thesis PDF</a>
+                    <a class="expx-chip-link" href="https://arxiv.org/abs/2503.20130" target="_blank" rel="noopener noreferrer">arXiv:2503.20130</a>
+                </div>
+            </header>
+
+            <article class="expx-card">
+                <div class="expx-card-main">
+                    <div class="expx-photo-frame"
+                         style="--blend-group-position: center 52%; --blend-group-position-mobile: center 46%;"
+                         data-srcs="assets/images/experience-review/camille-group-1.jpg||assets/images/experience-review/camille-group-2.jpg"
+                         data-labels="Research environment||Board work"
+                         data-group-srcs="assets/images/experience-review/icb-group-panoramic.jpg"
+                         data-group-labels="ICB Dijon · full group">
+                        <div class="expx-photo-stage">
+                            <img class="expx-stage-img" src="assets/images/experience-review/camille-group-1.jpg" alt="Research environment at ICB Dijon">
+                            <span class="expx-photo-label">Research environment</span>
+                            <button class="expx-group-peek-btn" aria-label="View full group photo" title="View full group photo">👥</button>
+                            <button class="expx-group-close-btn" aria-label="Return to chapter view" title="Return">↩</button>
+                        </div>
+                        <div class="expx-frame-footer">
+                            <div class="expx-dots" aria-hidden="true">
+                                <span class="expx-dot is-active"></span>
+                                <span class="expx-dot"></span>
                             </div>
                         </div>
                     </div>
-                    <div class="timeline-item panel">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <div class="timeline-meta">
-                                <div class="timeline-date">2019 &mdash; 2024</div>
-                                <h3 class="timeline-title">MS Thesis Researcher</h3>
-                                <div class="timeline-degree text-muted">BS-MS Integrated &middot; Physics</div>
-                                <div class="timeline-company">IISER Berhampur, India</div>
-                            </div>
-                            <div class="timeline-body">
-                                <p class="timeline-desc text-muted">
-                                    Developed reinforcement learning based optimal control protocols for quantum batteries, targeting maximum ergotropy in spin-1/2 chain systems. Starting from a single-qubit system validated against known results, the work extended to multi-qubit configurations (2 to 5 qubits) under both ordered and disordered dynamics, demonstrating that RL-guided control outperforms greedy protocols for many-body quantum battery charging.
-                                </p>
-                                <div class="timeline-tags">
-                                    <span class="project-tag">Reinforcement Learning</span>
-                                    <span class="project-tag">Quantum Batteries</span>
-                                    <span class="project-tag">Optimal Control</span>
-                                </div>
-                                <a href="#research" data-page-link="4" class="timeline-project-link">Project Page <i class="fa-solid fa-arrow-right"></i></a>
-                            </div>
+                    <div class="expx-copy">
+                        <div class="expx-kicker">2024 – Present</div>
+                        <h3 class="expx-title">ICB Dijon</h3>
+                        <div class="expx-role">PhD Candidate in Theoretical Physics</div>
+                        <div class="expx-org">Universite de Bourgogne, France</div>
+                        <p class="expx-text">How cheap, fast, and robust can a quantum operation be? The work combines the Pontryagin Maximum Principle with GRAPE to study thermodynamic costs, work fluctuations, and timing constraints in quantum gate design. A second thread extends this to open quantum systems under noise and dissipation.</p>
+                        <div class="expx-tags">
+                            <span>Quantum Control</span>
+                            <span>Quantum Thermodynamics</span>
+                            <span>Open Quantum Systems</span>
+                            <span>GRAPE</span>
+                            <span>PMP</span>
+                        </div>
+                        <div class="expx-links">
+                            <a class="expx-mini-link" href="https://arxiv.org/abs/2503.20130" target="_blank" rel="noopener noreferrer">arXiv:2503.20130</a>
+                            <a class="expx-mini-link" href="#research" data-page-link="4">Research overview ↗</a>
                         </div>
                     </div>
                 </div>
-            </div>
+            </article>
 
+            <article class="expx-card">
+                <div class="expx-card-main">
+                    <div class="expx-photo-frame"
+                         style="--blend-group-position: center 36%; --blend-group-position-mobile: center 34%;"
+                         data-srcs="assets/images/experience-review/degree.jpg||assets/images/experience-review/iiser2.jpg?v=2"
+                         data-labels="BSMS degree ceremony||With thesis supervisor"
+                         data-group-srcs="assets/images/experience-review/iiser-group.jpg||assets/images/experience-review/victor-group.jpg"
+                         data-group-labels="Convocation batch||Thesis research group">
+                        <div class="expx-photo-stage">
+                            <img class="expx-stage-img" style="--stage-position: center 38%;" src="assets/images/experience-review/degree.jpg" alt="BSMS degree ceremony at IISER Berhampur">
+                            <span class="expx-photo-label">BSMS degree ceremony</span>
+                            <button class="expx-group-peek-btn" aria-label="View group photos" title="View group and team photos">👥</button>
+                            <button class="expx-group-close-btn" aria-label="Return to chapter view" title="Return">↩</button>
+                        </div>
+                        <div class="expx-frame-footer">
+                            <div class="expx-dots" aria-hidden="true">
+                                <span class="expx-dot is-active"></span>
+                                <span class="expx-dot"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="expx-copy">
+                        <div class="expx-kicker">2019 – 2024</div>
+                        <h3 class="expx-title">IISER Berhampur</h3>
+                        <div class="expx-role">MS Thesis Researcher in Physics</div>
+                        <div class="expx-org">BS-MS Integrated Program, India</div>
+                        <p class="expx-text">Reinforcement-learning-based optimal control for quantum batteries, maximizing ergotropy in spin-1/2 chains. Protocols learned via Soft Actor-Critic outperform greedy strategies across ordered and disordered multi-qubit regimes.</p>
+                        <div class="expx-tags">
+                            <span>Reinforcement Learning</span>
+                            <span>Quantum Batteries</span>
+                            <span>Optimal Control</span>
+                            <span>Soft Actor-Critic</span>
+                        </div>
+                        <div class="expx-links">
+                            <a class="expx-mini-link" href="assets/pdfs/quantum-battery-rl-thesis.pdf" target="_blank" rel="noopener noreferrer">MS Thesis PDF</a>
+                            <a class="expx-mini-link" href="#research" data-page-link="4">Selected works ↗</a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <section class="expx-section">
+                <div class="expx-section-header">
+                    <p class="expx-section-label">Conferences &amp; Posters</p>
+                    <h3 class="expx-section-title">Poster Presentations</h3>
+                </div>
+                <div class="expx-event-grid">
+                    <article class="expx-event-card">
+                        <div class="expx-event-photo">
+                            <img class="expx-stage-img" src="assets/images/experience-review/jed.jpg" alt="JED 2025 poster session">
+                            <span class="expx-photo-label">JED 2025</span>
+                        </div>
+                        <div class="expx-event-copy">
+                            <div class="expx-kicker">June 2025 · Dijon</div>
+                            <h3>JED 2025</h3>
+                            <p>Robust and Energy-Efficient Controls for a Two-Level System, linked to arXiv:2503.20130.</p>
+                            <a class="expx-mini-link" href="assets/pdfs/Bilal_poster_JED.pdf" target="_blank" rel="noopener noreferrer">Open poster PDF ↗</a>
+                        </div>
+                    </article>
+
+                    <article class="expx-event-card"
+                             data-srcs="assets/images/experience-review/gdr-welcome.jpg||assets/images/experience-review/poster-gdr-1.jpg||assets/images/experience-review/poster-gdr-2.jpg"
+                             data-labels="GdR TeQ 2025||Poster discussion||Another poster moment">
+                        <div class="expx-event-photo">
+                            <img class="expx-stage-img" src="assets/images/experience-review/gdr-welcome.jpg" alt="GdR TeQ 2025 colloquium">
+                            <span class="expx-photo-label">GdR TeQ 2025</span>
+                        </div>
+                        <div class="expx-event-copy">
+                            <div class="expx-kicker">2025 · Grenoble</div>
+                            <h3>GdR TeQ 2025</h3>
+                            <div class="expx-dots-copy" aria-hidden="true">
+                                <span class="expx-dot is-active"></span>
+                                <span class="expx-dot"></span>
+                                <span class="expx-dot"></span>
+                            </div>
+                            <p>3rd GdR TeQ colloquium and poster session, covering robust optimal control using GRAPE and research discussions with the community.</p>
+                            <a class="expx-mini-link" href="#research" data-page-link="4">View works ↗</a>
+                        </div>
+                    </article>
+
+                    <article class="expx-event-card">
+                        <div class="expx-event-photo">
+                            <img class="expx-stage-img" src="assets/images/experience-review/cargese.jpg" alt="Cargese summer school announcement">
+                            <span class="expx-photo-label">Upcoming · 2026</span>
+                        </div>
+                        <div class="expx-event-copy">
+                            <div class="expx-kicker">June 8–20, 2026 · Cargese, Corsica</div>
+                            <h3>Cargese Summer School</h3>
+                            <p>Next poster presentation at the summer school “Quantum Technologies for Computation and Communication” at IESC. Poster title: “Universal Robust Quantum Control”.</p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="expx-section">
+                <div class="expx-section-header">
+                    <p class="expx-section-label">Teaching &amp; Mathematics</p>
+                    <h3 class="expx-section-title">Supporting Roles</h3>
+                </div>
+                <div class="expx-role-grid">
+                    <article class="expx-role-card">
+                        <div class="expx-role-photo">
+                            <img class="expx-stage-img" src="assets/images/experience-review/other-mathteacher.jpg" alt="Math teaching">
+                        </div>
+                        <div class="expx-role-copy">
+                            <h3>Math Teacher</h3>
+                            <div class="expx-org">revamp24, Bangalore · 2020–2024</div>
+                            <p>Teaching role that sharpened explanation, pacing, and mathematical clarity across varied student levels.</p>
+                        </div>
+                    </article>
+
+                    <article class="expx-role-card">
+                        <div class="expx-role-photo">
+                            <img class="expx-stage-img" src="assets/images/experience-review/srm.jpg" alt="Six Red Marbles">
+                        </div>
+                        <div class="expx-role-copy">
+                            <h3>Subject Matter Expert</h3>
+                            <div class="expx-org">Calculus · Six Red Marbles, Chennai · 2019–2021</div>
+                            <p>Mathematics-focused content and curriculum work, developing materials for structured learning pathways.</p>
+                        </div>
+                    </article>
+                </div>
+            </section>
         </div>
 
-        <div class="exp-other-strip">
-            <div class="exp-other-label">Other</div>
-            <div class="exp-other-items">
-                <div class="exp-other-item">
-                    <div class="exp-other-item-role">Math Teacher</div>
-                    <div class="exp-other-item-company">revamp24, Bangalore</div>
-                    <div class="exp-other-item-date">2020 &ndash; 2024</div>
-                </div>
-                <div class="exp-other-item">
-                    <div class="exp-other-item-role">Mathematics Specialist</div>
-                    <div class="exp-other-item-company">Six Red Marbles, Chennai</div>
-                    <div class="exp-other-item-date">2019 &ndash; 2021</div>
-                </div>
-            </div>
-        </div>
+        <script>
+        (() => {
+            if (window.__experienceReviewInit) return;
+            window.__experienceReviewInit = true;
+            const CYCLE_MS = 3500;
 
+            function initPhotoFrame(frame) {
+                const split = key => (frame.dataset[key] || '').split('||').filter(Boolean);
+                const resSrcs = split('srcs');
+                const resLbls = split('labels');
+                const grpSrcs = split('groupSrcs');
+                const grpLbls = split('groupLabels');
+                if (!resSrcs.length) return;
+
+                const card = frame.closest('.expx-card');
+                const mainEl = card.querySelector('.expx-card-main');
+                const peekBtn = frame.querySelector('.expx-group-peek-btn');
+                const closeBtn = frame.querySelector('.expx-group-close-btn');
+                const stageImg = frame.querySelector('.expx-stage-img');
+                const stageLbl = frame.querySelector('.expx-photo-label');
+                const dotsEl = frame.querySelector('.expx-dots');
+                const initialStageSrc = stageImg?.getAttribute('src') || '';
+                const initialStageAlt = stageImg?.getAttribute('alt') || '';
+                let resIdx = 0;
+                let grpIdx = 0;
+                let resTimer = null;
+                let grpTimer = null;
+
+                function buildDots(container, count, active) {
+                    if (!container) return;
+                    container.innerHTML = '';
+                    for (let i = 0; i < count; i++) {
+                        const d = document.createElement('span');
+                        d.className = 'expx-dot' + (i === active ? ' is-active' : '');
+                        container.appendChild(d);
+                    }
+                }
+
+                function setActiveDot(container, active) {
+                    container?.querySelectorAll('.expx-dot').forEach((d, i) => {
+                        d.classList.toggle('is-active', i === active);
+                    });
+                }
+
+                function showRes(i, animate) {
+                    resIdx = ((i % resSrcs.length) + resSrcs.length) % resSrcs.length;
+                    const apply = () => {
+                        stageImg.src = resSrcs[resIdx];
+                        stageImg.alt = resLbls[resIdx] || '';
+                        if (stageLbl) stageLbl.textContent = resLbls[resIdx] || '';
+                        setActiveDot(dotsEl, resIdx);
+                        if (animate) stageImg.classList.remove('is-fading');
+                    };
+                    if (animate) {
+                        stageImg.classList.add('is-fading');
+                        setTimeout(apply, 220);
+                    } else {
+                        apply();
+                    }
+                }
+
+                function startResAuto() {
+                    clearInterval(resTimer);
+                    if (resSrcs.length < 2) return;
+                    resTimer = setInterval(() => showRes(resIdx + 1, true), CYCLE_MS);
+                }
+
+                function showGrp(i) {
+                    grpIdx = ((i % grpSrcs.length) + grpSrcs.length) % grpSrcs.length;
+                    stageImg.classList.add('is-fading');
+                    setTimeout(() => {
+                        stageImg.src = grpSrcs[grpIdx];
+                        stageImg.alt = grpLbls[grpIdx] || '';
+                        if (stageLbl) stageLbl.textContent = grpLbls[grpIdx] || '';
+                        stageImg.classList.remove('is-fading');
+                    }, 220);
+                }
+
+                function openGroup() {
+                    if (!grpSrcs.length) return;
+                    clearInterval(resTimer);
+                    mainEl.classList.add('is-blend-open');
+                    grpIdx = 0;
+                    stageImg.src = grpSrcs[0];
+                    stageImg.alt = grpLbls[0] || '';
+                    if (stageLbl) stageLbl.textContent = grpLbls[0] || '';
+                    clearInterval(grpTimer);
+                    if (grpSrcs.length > 1) {
+                        grpTimer = setInterval(() => showGrp(grpIdx + 1), CYCLE_MS);
+                    }
+                }
+
+                function closeGroup() {
+                    clearInterval(grpTimer);
+                    mainEl.classList.remove('is-blend-open');
+                    stageImg.src = initialStageSrc;
+                    stageImg.alt = initialStageAlt;
+                    if (stageLbl) stageLbl.textContent = resLbls[resIdx] || '';
+                    showRes(resIdx, false);
+                    startResAuto();
+                }
+
+                buildDots(dotsEl, resSrcs.length, 0);
+                showRes(0, false);
+                startResAuto();
+
+                if (peekBtn) {
+                    if (!grpSrcs.length) peekBtn.hidden = true;
+                    else peekBtn.addEventListener('click', openGroup);
+                }
+                if (closeBtn) closeBtn.addEventListener('click', closeGroup);
+            }
+
+            function initEventCycler(card) {
+                const srcs = (card.dataset.srcs || '').split('||').filter(Boolean);
+                const lbls = (card.dataset.labels || '').split('||');
+                if (srcs.length < 2) return;
+                const img = card.querySelector('.expx-stage-img');
+                const labelEl = card.querySelector('.expx-photo-label');
+                const dots = card.querySelectorAll('.expx-dot');
+                let idx = 0;
+                setInterval(() => {
+                    idx = (idx + 1) % srcs.length;
+                    img.classList.add('is-fading');
+                    setTimeout(() => {
+                        img.src = srcs[idx];
+                        img.alt = lbls[idx] || '';
+                        if (labelEl) labelEl.textContent = lbls[idx] || '';
+                        dots.forEach((d, j) => d.classList.toggle('is-active', j === idx));
+                        img.classList.remove('is-fading');
+                    }, 220);
+                }, CYCLE_MS);
+            }
+
+            document.querySelectorAll('#experience .expx-photo-frame').forEach(initPhotoFrame);
+            document.querySelectorAll('#experience .expx-event-card[data-srcs]').forEach(initEventCycler);
+        })();
+        </script>
     </div>
 </section>

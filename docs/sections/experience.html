@@ -16,8 +16,8 @@
                             --gallery-body: var(--font-sans);
                             --gallery-mono: monospace;
                         }
-            #experience .er-shell { display: grid; gap: 28px; }
-                    #experience .er-hero {
+            .er-shell { display: grid; gap: 28px; }
+                    .er-hero {
                         padding: 32px 34px 30px;
                         background: var(--gallery-surface);
                         border: 1px solid var(--gallery-border);
@@ -25,14 +25,14 @@
                         box-shadow: var(--gallery-shadow);
                         backdrop-filter: blur(18px);
                     }
-                    #experience .er-hero-title {
+                    .er-hero-title {
                         margin: 0;
                         font-family: var(--gallery-heading);
                         font-size: clamp(36px, 6vw, 72px);
                         line-height: 0.96;
                         letter-spacing: -0.05em;
                     }
-                    #experience .er-hero-title span {
+                    .er-hero-title span {
                         display: block;
                         color: var(--gallery-text-muted);
                         font-size: clamp(18px, 2.6vw, 28px);
@@ -40,8 +40,8 @@
                         line-height: 1.15;
                         letter-spacing: -0.03em;
                     }
-                    #experience .er-hero-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
-                    #experience .er-hero-links a {
+                    .er-hero-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+                    .er-hero-links a {
                         display: inline-flex;
                         align-items: center;
                         padding: 10px 16px;
@@ -52,8 +52,8 @@
                         font-weight: 600;
                         background: rgba(255,255,255,0.03);
                     }
-                    #experience .er-hero-links a:hover { background: rgba(110,231,255,0.08); }
-                    #experience .er-chapter {
+                    .er-hero-links a:hover { background: rgba(110,231,255,0.08); }
+                    .er-chapter {
                         background: var(--gallery-surface);
                         border: 1px solid var(--gallery-border);
                         border-radius: 28px;
@@ -61,22 +61,22 @@
                         backdrop-filter: blur(18px);
                         overflow: hidden;
                     }
-                    #experience .er-chapter-main {
+                    .er-chapter-main {
                         display: grid;
                         grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
                         gap: 20px;
                         padding: 20px;
                         align-items: start;
                     }
-                    #experience .er-photo-frame { display: grid; gap: 10px; }
-                    #experience .er-photo-stage {
+                    .er-photo-frame { display: grid; gap: 10px; }
+                    .er-photo-stage {
                         position: relative;
                         aspect-ratio: 4 / 3;
                         overflow: hidden;
                         border-radius: 16px;
                         background: #101824;
                     }
-                    #experience .er-stage-img {
+                    .er-stage-img {
                         position: absolute;
                         inset: 0;
                         width: 100%;
@@ -87,8 +87,8 @@
                         display: block;
                         transition: opacity 220ms ease;
                     }
-                    #experience .er-stage-img.is-fading { opacity: 0; }
-                    #experience .er-photo-label {
+                    .er-stage-img.is-fading { opacity: 0; }
+                    .er-photo-label {
                         position: absolute;
                         left: 12px;
                         bottom: 12px;
@@ -104,8 +104,8 @@
                         color: var(--gallery-text);
                         pointer-events: none;
                     }
-                    #experience .er-group-peek-btn,
-                    #experience .er-group-close-btn {
+                    .er-group-peek-btn,
+                    .er-group-close-btn {
                         position: absolute;
                         top: 12px;
                         right: 12px;
@@ -125,42 +125,42 @@
                         transition: background 180ms, border-color 180ms, transform 180ms;
                         line-height: 1;
                     }
-                    #experience .er-group-peek-btn:hover,
-                    #experience .er-group-close-btn:hover {
+                    .er-group-peek-btn:hover,
+                    .er-group-close-btn:hover {
                         background: rgba(110,231,255,0.14);
                         border-color: rgba(110,231,255,0.32);
                         transform: scale(1.08);
                     }
-                    #experience .er-frame-footer { display: flex; align-items: center; min-height: 16px; }
-                    #experience .er-dots, #experience .er-dots-copy { display: flex; gap: 6px; }
-                    #experience .er-dot {
+                    .er-frame-footer { display: flex; align-items: center; min-height: 16px; }
+                    .er-dots, .er-dots-copy { display: flex; gap: 6px; }
+                    .er-dot {
                         width: 6px;
                         height: 6px;
                         border-radius: 50%;
                         background: rgba(255,255,255,0.18);
                         transition: background 200ms;
                     }
-                    #experience .er-dot.is-active { background: var(--gallery-cyan); }
-                    #experience .er-chapter-copy { display: flex; flex-direction: column; gap: 14px; padding: 4px 0; }
-                    #experience .er-kicker {
+                    .er-dot.is-active { background: var(--gallery-cyan); }
+                    .er-chapter-copy { display: flex; flex-direction: column; gap: 14px; padding: 4px 0; }
+                    .er-kicker {
                         color: var(--gallery-cyan);
                         font-family: var(--gallery-mono);
                         font-size: 11px;
                         letter-spacing: 0.12em;
                         text-transform: uppercase;
                     }
-                    #experience .er-chapter-title {
+                    .er-chapter-title {
                         margin: 0;
                         font-family: var(--gallery-heading);
                         font-size: clamp(26px, 3vw, 40px);
                         line-height: 1;
                         letter-spacing: -0.04em;
                     }
-                    #experience .er-role { color: #dce8f3; font-size: 16px; font-weight: 600; }
-                    #experience .er-org { color: var(--gallery-text-muted); font-size: 13px; }
-                    #experience .er-copy { margin: 0; color: #cddae7; font-size: 14px; line-height: 1.8; }
-                    #experience .er-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-                    #experience .er-tags span {
+                    .er-role { color: #dce8f3; font-size: 16px; font-weight: 600; }
+                    .er-org { color: var(--gallery-text-muted); font-size: 13px; }
+                    .er-copy { margin: 0; color: #cddae7; font-size: 14px; line-height: 1.8; }
+                    .er-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+                    .er-tags span {
                         padding: 7px 11px;
                         border: 1px solid rgba(255,255,255,0.07);
                         border-radius: 999px;
@@ -169,8 +169,8 @@
                         background: rgba(255,255,255,0.03);
                         color: var(--gallery-text-muted);
                     }
-                    #experience .er-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
-                    #experience .er-links a {
+                    .er-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+                    .er-links a {
                         color: var(--gallery-cyan);
                         font-size: 13px;
                         font-weight: 600;
@@ -179,23 +179,23 @@
                         border: 1px solid rgba(110,231,255,0.18);
                         background: rgba(110,231,255,0.04);
                     }
-                    #experience .er-links a:hover { background: rgba(110,231,255,0.10); }
-                    #experience .er-chapter-main.is-blend-open {
+                    .er-links a:hover { background: rgba(110,231,255,0.10); }
+                    .er-chapter-main.is-blend-open {
                         grid-template-columns: 1fr;
                         gap: 14px;
                         padding: 18px;
                         align-items: stretch;
                     }
-                    #experience .er-chapter-main.is-blend-open #experience .er-photo-frame { display: grid; gap: 0; order: 2; }
-                    #experience .er-chapter-main.is-blend-open #experience .er-photo-stage { aspect-ratio: 2.62 / 1; border-radius: 18px; }
-                    #experience .er-chapter-main.is-blend-open #experience .er-stage-img {
+                    .er-chapter-main.is-blend-open .er-photo-frame { display: grid; gap: 0; order: 2; }
+                    .er-chapter-main.is-blend-open .er-photo-stage { aspect-ratio: 2.62 / 1; border-radius: 18px; }
+                    .er-chapter-main.is-blend-open .er-stage-img {
                         width: 100%;
                         height: 100%;
                         object-fit: cover;
                         object-position: var(--blend-group-position, center 34%);
                         opacity: 0.94;
                     }
-                    #experience .er-chapter-main.is-blend-open #experience .er-photo-stage::after {
+                    .er-chapter-main.is-blend-open .er-photo-stage::after {
                         content: "";
                         position: absolute;
                         inset: 0;
@@ -205,17 +205,17 @@
                         pointer-events: none;
                         z-index: 1;
                     }
-                    #experience .er-chapter-main.is-blend-open #experience .er-chapter-copy { order: 1; display: grid; gap: 6px; padding: 0 2px; }
-                    #experience .er-chapter-main.is-blend-open #experience .er-role,
-                    #experience .er-chapter-main.is-blend-open #experience .er-copy,
-                    #experience .er-chapter-main.is-blend-open #experience .er-tags,
-                    #experience .er-chapter-main.is-blend-open #experience .er-links,
-                    #experience .er-chapter-main.is-blend-open #experience .er-frame-footer,
-                    #experience .er-chapter-main.is-blend-open #experience .er-group-peek-btn { display: none; }
-                    #experience .er-chapter-main.is-blend-open #experience .er-kicker { font-size: 10px; letter-spacing: 0.16em; }
-                    #experience .er-chapter-main.is-blend-open #experience .er-chapter-title { font-size: clamp(24px, 3.4vw, 34px); }
-                    #experience .er-chapter-main.is-blend-open #experience .er-org { font-size: 12px; letter-spacing: 0.03em; }
-                    #experience .er-chapter-main.is-blend-open #experience .er-photo-stage #experience .er-photo-label {
+                    .er-chapter-main.is-blend-open .er-chapter-copy { order: 1; display: grid; gap: 6px; padding: 0 2px; }
+                    .er-chapter-main.is-blend-open .er-role,
+                    .er-chapter-main.is-blend-open .er-copy,
+                    .er-chapter-main.is-blend-open .er-tags,
+                    .er-chapter-main.is-blend-open .er-links,
+                    .er-chapter-main.is-blend-open .er-frame-footer,
+                    .er-chapter-main.is-blend-open .er-group-peek-btn { display: none; }
+                    .er-chapter-main.is-blend-open .er-kicker { font-size: 10px; letter-spacing: 0.16em; }
+                    .er-chapter-main.is-blend-open .er-chapter-title { font-size: clamp(24px, 3.4vw, 34px); }
+                    .er-chapter-main.is-blend-open .er-org { font-size: 12px; letter-spacing: 0.03em; }
+                    .er-chapter-main.is-blend-open .er-photo-stage .er-photo-label {
                         z-index: 2;
                         display: inline-flex;
                         align-items: center;
@@ -224,11 +224,11 @@
                         background: rgba(6,12,20,0.66);
                         backdrop-filter: blur(10px);
                     }
-                    #experience .er-photo-stage #experience .er-group-close-btn { display: none; }
-                    #experience .er-chapter-main.is-blend-open #experience .er-photo-stage #experience .er-group-close-btn { display: flex; z-index: 3; }
-                    #experience .er-section { display: grid; gap: 18px; }
-                    #experience .er-section-header { display: grid; gap: 4px; }
-                    #experience .er-section-label {
+                    .er-photo-stage .er-group-close-btn { display: none; }
+                    .er-chapter-main.is-blend-open .er-photo-stage .er-group-close-btn { display: flex; z-index: 3; }
+                    .er-section { display: grid; gap: 18px; }
+                    .er-section-header { display: grid; gap: 4px; }
+                    .er-section-label {
                         margin: 0;
                         color: var(--gallery-cyan);
                         font-family: var(--gallery-mono);
@@ -236,19 +236,19 @@
                         letter-spacing: 0.12em;
                         text-transform: uppercase;
                     }
-                    #experience .er-section-title {
+                    .er-section-title {
                         margin: 0;
                         font-family: var(--gallery-heading);
                         font-size: clamp(22px, 2.8vw, 34px);
                         letter-spacing: -0.04em;
                     }
-                    #experience .er-event-grid {
+                    .er-event-grid {
                         display: grid;
                         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
                         gap: 18px;
                         align-items: stretch;
                     }
-                    #experience .er-event-card, #experience .er-role-card {
+                    .er-event-card, .er-role-card {
                         display: flex;
                         flex-direction: column;
                         background: var(--gallery-surface);
@@ -258,28 +258,26 @@
                         backdrop-filter: blur(18px);
                         overflow: hidden;
                     }
-                    #experience .er-event-photo, #experience .er-role-photo { position: relative; flex: 1 1 0; min-height: 200px; overflow: hidden; }
-                    #experience .er-event-copy { flex: 0 0 auto; display: grid; gap: 8px; padding: 16px 18px 20px; }
-                    #experience .er-event-copy h3, #experience .er-role-copy h3 { margin: 0; font-family: var(--gallery-heading); font-size: 20px; letter-spacing: -0.03em; }
-                    #experience .er-event-copy p, #experience .er-role-copy p { margin: 0; color: var(--gallery-text-muted); font-size: 13px; line-height: 1.7; }
-                    #experience .er-event-copy a { display: inline-block; color: var(--gallery-cyan); font-size: 13px; font-weight: 600; }
-                    #experience .er-role-grid {
+                    .er-event-photo, .er-role-photo { position: relative; flex: 1 1 0; min-height: 200px; overflow: hidden; }
+                    .er-event-copy { flex: 0 0 auto; display: grid; gap: 8px; padding: 16px 18px 20px; }
+                    .er-event-copy h3, .er-role-copy h3 { margin: 0; font-family: var(--gallery-heading); font-size: 20px; letter-spacing: -0.03em; }
+                    .er-event-copy p, .er-role-copy p { margin: 0; color: var(--gallery-text-muted); font-size: 13px; line-height: 1.7; }
+                    .er-event-copy a { display: inline-block; color: var(--gallery-cyan); font-size: 13px; font-weight: 600; }
+                    .er-role-grid {
                         display: grid;
                         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
                         gap: 18px;
                         align-items: stretch;
                     }
-                    #experience .er-role-copy { flex: 0 0 auto; display: grid; gap: 6px; padding: 16px 18px 18px; }
-                    @media (max-width: 860px) {
-                        #experience .er-chapter-main { grid-template-columns: 1fr; } }
+                    .er-role-copy { flex: 0 0 auto; display: grid; gap: 6px; padding: 16px 18px 18px; }
+                    @media (max-width: 860px) { .er-chapter-main { grid-template-columns: 1fr; } }
                     @media (max-width: 600px) {
-                        
-                        #experience .er-hero { padding: 22px 20px; }
-                        #experience .er-chapter-main { padding: 14px; gap: 14px; }
+                        .er-hero { padding: 22px 20px; }
+                        .er-chapter-main { padding: 14px; gap: 14px; }
                     }
                     @media (max-width: 860px) {
-                        #experience .er-chapter-main.is-blend-open #experience .er-photo-stage { aspect-ratio: 1.66 / 1; }
-                        #experience .er-chapter-main.is-blend-open #experience .er-stage-img { object-position: var(--blend-group-position-mobile, center 28%); }
+                        .er-chapter-main.is-blend-open .er-photo-stage { aspect-ratio: 1.66 / 1; }
+                        .er-chapter-main.is-blend-open .er-stage-img { object-position: var(--blend-group-position-mobile, center 28%); }
                     }
         </style>
 

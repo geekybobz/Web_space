@@ -628,7 +628,9 @@ def _render_experience_body(data: dict, include_topbar: bool) -> str:
 def render_experience_section() -> str:
     data = _load_json(EXPERIENCE)
     body = _render_experience_body(data, include_topbar=False)
-    style = EXPERIENCE_STANDALONE_STYLE.replace(".er-", "#experience .er-")
+    # Keep the standalone experience selectors unchanged here.
+    # Naive selector prefixing broke nested blend-mode rules in the main site.
+    style = EXPERIENCE_STANDALONE_STYLE
     section_root = """
             #experience {
                 --gallery-surface: rgba(11, 20, 32, 0.72);
@@ -642,9 +644,6 @@ def render_experience_section() -> str:
                 --gallery-mono: monospace;
             }
 """.strip()
-    style = style.replace("@media (max-width: 860px) { #experience .er-chapter-main {", "@media (max-width: 860px) {\n            #experience .er-chapter-main {")
-    style = style.replace("@media (max-width: 600px) {", "@media (max-width: 600px) {\n            ")
-    style = style.replace("@media (max-width: 860px) {\n            #experience .er-chapter-main.is-blend-open", "@media (max-width: 860px) {\n            #experience .er-chapter-main.is-blend-open")
     style = section_root + "\n" + style
     script = EXPERIENCE_SCRIPT.replace("document.querySelectorAll('.er-photo-frame')", "document.querySelectorAll('#experience .er-photo-frame')")
     script = script.replace("document.querySelectorAll('.er-event-card[data-srcs]')", "document.querySelectorAll('#experience .er-event-card[data-srcs]')")

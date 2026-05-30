@@ -1,0 +1,385 @@
+/* ========== TIMELINE (EXPERIENCE) ========== */
+.timeline {
+    position: relative;
+    width: 100%;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; left: 24px;
+    width: 1px;
+    background: linear-gradient(to bottom, 
+        transparent, 
+        rgba(176, 38, 255, 0.3) 10%, 
+        rgba(0, 240, 255, 0.3) 90%, 
+        transparent);
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 2.9rem;
+    margin-bottom: clamp(0.75rem, 1.25vw, 1rem);
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: 17px;
+    top: 1.35rem;
+    width: 15px;
+    height: 15px;
+    background: var(--bg-main);
+    border: 2px solid var(--accent-2);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--accent-2);
+    z-index: 2;
+    transition: var(--transition-fast);
+}
+
+.timeline-item:hover .timeline-dot {
+    background: var(--accent-2);
+    transform: scale(1.2);
+}
+
+.timeline-item:nth-child(even) .timeline-dot {
+    border-color: var(--accent-1);
+    box-shadow: 0 0 15px var(--accent-1);
+}
+.timeline-item:nth-child(even):hover .timeline-dot {
+    background: var(--accent-1);
+}
+
+.timeline-content {
+    background: var(--surface-bg);
+    border: 1px solid var(--surface-border);
+    border-radius: 12px;
+    padding: clamp(1.15rem, 1.7vw, 1.55rem);
+    transition: var(--transition-medium);
+    display: grid;
+    grid-template-columns: minmax(14.5rem, 16.5rem) minmax(0, 1fr);
+    gap: clamp(1.15rem, 1.75vw, 1.7rem);
+    align-items: start;
+}
+
+.timeline-item:hover .timeline-content {
+    border-color: var(--surface-border-hover);
+    background: var(--surface-bg-hover);
+}
+
+.timeline-date {
+    font-family: monospace;
+    font-size: 0.96rem;
+    color: var(--accent-1);
+    margin-bottom: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.timeline-title {
+    font-size: clamp(1.5rem, 2.05vw, 1.8rem);
+    margin-bottom: 0.32rem;
+    color: var(--text-main);
+    line-height: 1.1;
+}
+
+.timeline-company {
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 0;
+    font-size: 1.05rem;
+}
+
+/* ========== EXPERIENCE GRID (SPLIT COLUMNS) ========== */
+.exp-grid {
+    display: block;
+    width: min(100%, 1020px);
+    margin: 0 auto;
+}
+
+.exp-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.exp-col-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.4rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid var(--surface-border);
+}
+
+.exp-col-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: rgba(0, 240, 255, 0.08);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    color: var(--accent-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.exp-col--other .exp-col-icon {
+    background: rgba(176, 38, 255, 0.08);
+    border-color: rgba(176, 38, 255, 0.2);
+    color: var(--accent-2);
+}
+
+.exp-col-label {
+    font-family: monospace;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-1);
+}
+
+.exp-col--other .exp-col-label {
+    color: var(--accent-2);
+}
+
+/* Purple timeline dots for "other" column */
+.exp-col--other .timeline-dot {
+    border-color: var(--accent-2);
+    box-shadow: 0 0 15px var(--accent-2);
+}
+.exp-col--other .timeline-item:hover .timeline-dot {
+    background: var(--accent-2);
+}
+.exp-col--other .timeline-date {
+    color: var(--accent-2);
+}
+
+/* Each column's timeline line stays within its column */
+.exp-col .timeline::before {
+    background: linear-gradient(to bottom,
+        transparent,
+        rgba(0, 240, 255, 0.25) 10%,
+        rgba(0, 240, 255, 0.25) 90%,
+        transparent);
+}
+.exp-col--other .timeline::before {
+    background: linear-gradient(to bottom,
+        transparent,
+        rgba(176, 38, 255, 0.25) 10%,
+        rgba(176, 38, 255, 0.25) 90%,
+        transparent);
+}
+
+@media (max-width: 900px) {
+    .exp-grid {
+        width: 100%;
+    }
+}
+
+.timeline-degree {
+    font-size: 0.98rem;
+    margin-bottom: 0.85rem;
+    letter-spacing: 0.02em;
+}
+
+.timeline-meta {
+    display: grid;
+    gap: 0.28rem;
+    align-self: stretch;
+    padding-right: clamp(1.1rem, 1.45vw, 1.5rem);
+    border-right: 1px solid color-mix(in srgb, var(--surface-border) 82%, transparent);
+}
+
+.timeline-body {
+    min-width: 0;
+}
+
+.timeline-desc {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.72;
+}
+
+.timeline-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.timeline-project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.92rem;
+    font-family: monospace;
+    color: var(--accent-1);
+    text-decoration: none;
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.timeline-project-link:hover {
+    background: rgba(0, 240, 255, 0.08);
+    border-color: rgba(0, 240, 255, 0.34);
+    transform: translateY(-1px);
+}
+
+.exp-other-strip {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--surface-border);
+    width: min(100%, 1020px);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.exp-other-label {
+    font-family: monospace;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    margin-bottom: 0.9rem;
+}
+
+.exp-other-items {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.exp-other-item {
+    min-width: 13.5rem;
+    padding: 0.95rem 1.1rem;
+    border: 1px solid color-mix(in srgb, var(--surface-border) 88%, transparent);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--surface-bg) 88%, transparent);
+}
+
+.group-strip {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--surface-border);
+    width: min(100%, 1020px);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.group-strip-header {
+    margin-bottom: 0.9rem;
+}
+
+.group-strip-row {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.group-cluster {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+    min-width: 18rem;
+}
+
+.group-cluster-label {
+    font-family: monospace;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+}
+
+.group-photos {
+    display: flex;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.group-photo-slot {
+    width: 7.5rem;
+    height: 5.5rem;
+    border-radius: 10px;
+    border: 1px dashed color-mix(in srgb, var(--surface-border) 90%, transparent);
+    background: color-mix(in srgb, var(--surface-bg) 60%, transparent);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    color: var(--text-muted);
+    font-size: 0.72rem;
+    opacity: 0.55;
+    transition: var(--transition-medium);
+    overflow: hidden;
+}
+
+.group-photo-slot i {
+    font-size: 1.1rem;
+}
+
+.group-photo-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 9px;
+}
+
+.group-photo-slot img ~ i,
+.group-photo-slot img ~ span {
+    display: none;
+}
+
+#experience .section-header {
+    display: block;
+    width: min(100%, 1020px);
+    max-width: 1020px;
+    margin: 0 auto clamp(1rem, 1.8vw, 1.8rem);
+}
+
+@media (min-width: 1180px) {
+    .timeline-content {
+        grid-template-columns: minmax(16rem, 18rem) minmax(0, 1fr);
+        gap: clamp(1.25rem, 1.9vw, 1.95rem);
+    }
+}
+
+.exp-other-item-role {
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.exp-other-item-company {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.exp-other-item-date {
+    font-size: 0.84rem;
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+@media (max-width: 900px) {
+    .timeline-content {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+
+    .timeline-meta {
+        padding-right: 0;
+        padding-bottom: 0.85rem;
+        border-right: 0;
+        border-bottom: 1px solid color-mix(in srgb, var(--surface-border) 82%, transparent);
+    }
+}

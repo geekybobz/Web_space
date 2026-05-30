@@ -1,0 +1,308 @@
+/* ========== NAVBAR ========== */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 1.5rem 0;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.navbar.scrolled {
+    padding: 1rem 0;
+    background: rgba(11, 14, 20, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nav-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 1.82rem;
+    color: var(--text-main);
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.brand i {
+    color: var(--accent-1);
+    font-size: 1.25rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2.5rem;
+    align-items: center;
+}
+
+.nav-link {
+    font-weight: 500;
+    font-size: 1.06rem;
+    color: var(--text-muted);
+    position: relative;
+    padding-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.nav-link:hover {
+    color: var(--text-main);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    right: 0;
+    background-color: var(--accent-1);
+    transition: width 0.3s ease;
+    box-shadow: 0 0 8px var(--accent-1);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+    left: 0;
+    right: auto;
+}
+
+.btn-contact {
+    color: var(--accent-1);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.btn-contact::after { display: none; }
+.btn-contact:hover {
+    color: var(--accent-1);
+    text-shadow: 0 0 10px var(--accent-1);
+}
+
+.mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-main);
+    cursor: pointer;
+}
+
+.nav-scholar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.55rem 1rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    color: var(--text-main);
+    font-family: var(--font-heading);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.25s ease;
+    white-space: nowrap;
+}
+
+.nav-scholar i {
+    color: var(--accent-1);
+}
+
+.nav-scholar:hover {
+    border-color: var(--accent-1);
+    box-shadow: 0 0 14px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
+}
+
+.mode-toggle {
+    display: inline-flex;
+    align-items: stretch;
+    gap: 0.5rem;
+    padding: 0.4rem 0.45rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: var(--glass-shadow);
+}
+
+.mode-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 4.5rem;
+    padding: 0.52rem 0.95rem;
+    border: 1px solid color-mix(in srgb, var(--glass-border) 80%, transparent);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: var(--font-heading);
+    cursor: pointer;
+    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+    white-space: nowrap;
+    animation: control-flicker 3.6s steps(2, end) infinite;
+}
+
+.mode-toggle-btn.active {
+    background: color-mix(in srgb, var(--bg-secondary) 64%, black 36%);
+    border-color: color-mix(in srgb, var(--accent-1) 48%, rgba(255,255,255,0.18));
+    color: #f8fafc;
+    box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--accent-1) 26%, transparent),
+        0 0 18px color-mix(in srgb, var(--accent-1) 32%, transparent),
+        0 0 34px color-mix(in srgb, var(--accent-2) 16%, transparent);
+    transform: translateY(-1px) scale(1.03);
+    animation-duration: 2.4s;
+}
+
+.mode-toggle-btn:hover {
+    border-color: var(--surface-border-hover);
+    color: var(--text-main);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--accent-1) 10%, transparent);
+}
+
+.mode-state {
+    font-family: var(--font-heading);
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: currentColor;
+}
+
+/* Theme preview chips: keep dark/mid/light meaning while staying visible on the current theme. */
+.mode-toggle-btn[data-theme-mode="dark"] {
+    background: #151c2a;
+    border-color: rgba(255, 255, 255, 0.16);
+    color: #f7f9fd;
+}
+
+.mode-toggle-btn[data-theme-mode="mid"] {
+    background: #91add8;
+    border-color: rgba(214, 231, 255, 0.44);
+    color: #132136;
+}
+
+.mode-toggle-btn[data-theme-mode="light"] {
+    background: #f4f8ff;
+    border-color: rgba(255, 255, 255, 0.78);
+    color: #18253c;
+}
+
+.mode-toggle-btn[data-theme-mode="dark"]:hover {
+    background: #101827;
+    border-color: color-mix(in srgb, #f8fbff 56%, var(--accent-1));
+    color: #ffffff;
+}
+
+.mode-toggle-btn[data-theme-mode="mid"]:hover {
+    background: #a9c0e4;
+    border-color: color-mix(in srgb, #e8f2ff 56%, var(--accent-1));
+    color: #0f1d31;
+}
+
+.mode-toggle-btn[data-theme-mode="light"]:hover {
+    background: #ffffff;
+    border-color: color-mix(in srgb, #ffffff 64%, var(--accent-1));
+    color: #0f1b2d;
+}
+
+[data-theme="dark"] .mode-toggle-btn[data-theme-mode="dark"],
+[data-theme="crimson"] .mode-toggle-btn[data-theme-mode="dark"],
+[data-theme="carbon"] .mode-toggle-btn[data-theme-mode="dark"],
+[data-theme="dusk"] .mode-toggle-btn[data-theme-mode="dark"],
+[data-theme="volt"] .mode-toggle-btn[data-theme-mode="dark"] {
+    border-color: rgba(255, 255, 255, 0.34);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .mode-toggle-btn[data-theme-mode="mid"],
+[data-theme="crimson"] .mode-toggle-btn[data-theme-mode="mid"],
+[data-theme="carbon"] .mode-toggle-btn[data-theme-mode="mid"],
+[data-theme="dusk"] .mode-toggle-btn[data-theme-mode="mid"],
+[data-theme="volt"] .mode-toggle-btn[data-theme-mode="mid"] {
+    background: #b6cae9;
+    border-color: rgba(229, 238, 255, 0.52);
+    color: #122033;
+}
+
+[data-theme="dark"] .mode-toggle-btn[data-theme-mode="light"],
+[data-theme="crimson"] .mode-toggle-btn[data-theme-mode="light"],
+[data-theme="carbon"] .mode-toggle-btn[data-theme-mode="light"],
+[data-theme="dusk"] .mode-toggle-btn[data-theme-mode="light"],
+[data-theme="volt"] .mode-toggle-btn[data-theme-mode="light"] {
+    background: #ffffff;
+    border-color: rgba(255, 255, 255, 0.88);
+    color: #102033;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="mid-atmosphere"] .mode-toggle-btn[data-theme-mode="mid"] {
+    background: #7292bf;
+    border-color: rgba(220, 232, 255, 0.5);
+    color: #0f1d31;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="mid-atmosphere"] .mode-toggle-btn[data-theme-mode="light"] {
+    background: #f7fbff;
+    border-color: rgba(255, 255, 255, 0.84);
+    color: #152238;
+}
+
+[data-theme="mid-atmosphere"] .mode-toggle-btn[data-theme-mode="dark"] {
+    background: #131c2b;
+    border-color: rgba(224, 232, 246, 0.28);
+    color: #f8fbff;
+}
+
+[data-theme="light-editorial"] .mode-toggle-btn[data-theme-mode="light"] {
+    background: #f2eee7;
+    border-color: rgba(32, 46, 74, 0.28);
+    color: #22314d;
+    box-shadow: inset 0 0 0 1px rgba(27, 39, 62, 0.05);
+}
+
+[data-theme="light-editorial"] .mode-toggle-btn[data-theme-mode="mid"] {
+    background: #879fbe;
+    border-color: rgba(28, 46, 78, 0.18);
+    color: #102039;
+}
+
+[data-theme="light-editorial"] .mode-toggle-btn[data-theme-mode="dark"] {
+    background: #121a28;
+    border-color: rgba(28, 46, 78, 0.22);
+    color: #f7f9fd;
+}
+
+[data-theme="light-editorial"] .mode-toggle-btn.active,
+[data-theme="mid-atmosphere"] .mode-toggle-btn.active,
+[data-theme="dark"] .mode-toggle-btn.active,
+[data-theme="crimson"] .mode-toggle-btn.active,
+[data-theme="carbon"] .mode-toggle-btn.active,
+[data-theme="dusk"] .mode-toggle-btn.active,
+[data-theme="volt"] .mode-toggle-btn.active {
+    border-color: color-mix(in srgb, var(--accent-1) 54%, rgba(255,255,255,0.42));
+    box-shadow:
+        0 0 0 2px color-mix(in srgb, var(--accent-1) 28%, transparent),
+        0 0 18px color-mix(in srgb, var(--accent-1) 26%, transparent),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    transform: translateY(-1px) scale(1.03);
+}

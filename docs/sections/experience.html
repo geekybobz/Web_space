@@ -1,4 +1,4 @@
-<!-- PAGE 3 — Experience -->
+<!-- Generated from docs/data/experience.json via tools/build_index.py -->
 <section class="page section" id="experience" data-page="3" data-label="Experience">
     <div class="page-avatar" data-page-avatar="3" data-icon="fa-code-branch" data-color="accent-3" aria-hidden="true">
         <div class="page-avatar-ring"></div>
@@ -6,651 +6,581 @@
     <div class="page-inner">
         <style>
             #experience {
-                --gallery-surface: rgba(11, 20, 32, 0.72);
-                --gallery-border: rgba(150, 231, 255, 0.16);
-                --gallery-text: #edf6ff;
-                --gallery-text-muted: #8da4b8;
-                --gallery-cyan: #6ee7ff;
-                --gallery-shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
-                --gallery-heading: var(--font-heading);
-                --gallery-body: var(--font-sans);
-                --gallery-mono: monospace;
-            }
-
-            #experience .er-shell { display: grid; gap: 28px; padding-bottom: 32px; }
-            #experience .er-hero {
-                padding: 32px 34px 30px;
-                background: var(--gallery-surface);
-                border: 1px solid var(--gallery-border);
-                border-radius: 28px;
-                box-shadow: var(--gallery-shadow);
-                backdrop-filter: blur(18px);
-                -webkit-backdrop-filter: blur(18px);
-            }
-            #experience .er-hero-title {
-                margin: 0;
-                font-family: var(--gallery-heading);
-                font-size: clamp(36px, 6vw, 72px);
-                line-height: 0.96;
-                letter-spacing: -0.05em;
-            }
-            #experience .er-hero-title span {
-                display: block;
-                color: var(--gallery-text-muted);
-                font-size: clamp(18px, 2.6vw, 28px);
-                margin-top: 10px;
-                line-height: 1.15;
-                letter-spacing: -0.03em;
-            }
-            #experience .er-hero-links {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 10px;
-                margin-top: 24px;
-            }
-            #experience .er-hero-links a {
-                display: inline-flex;
-                align-items: center;
-                padding: 10px 16px;
-                border: 1px solid rgba(255,255,255,0.08);
-                border-radius: 999px;
-                color: var(--gallery-cyan);
-                font-size: 13px;
-                font-weight: 600;
-                background: rgba(255,255,255,0.03);
-            }
-            #experience .er-hero-links a:hover { background: rgba(110,231,255,0.08); }
-
-            #experience .er-chapter {
-                background: var(--gallery-surface);
-                border: 1px solid var(--gallery-border);
-                border-radius: 28px;
-                box-shadow: var(--gallery-shadow);
-                backdrop-filter: blur(18px);
-                -webkit-backdrop-filter: blur(18px);
-                overflow: hidden;
-            }
-            #experience .er-chapter-main {
-                display: grid;
-                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-                gap: 20px;
-                padding: 20px;
-                align-items: start;
-            }
-
-            #experience .er-photo-frame { display: grid; gap: 10px; }
-            #experience .er-photo-stage {
-                position: relative;
-                aspect-ratio: 4 / 3;
-                overflow: hidden;
-                border-radius: 16px;
-                background: #101824;
-            }
-            #experience .er-stage-img {
-                position: absolute;
-                inset: 0;
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                object-position: var(--stage-position, center);
-                opacity: 0.9;
-                display: block;
-                transition: opacity 220ms ease;
-            }
-            #experience .er-stage-img.is-fading { opacity: 0; }
-            #experience .er-photo-label {
-                position: absolute;
-                left: 12px;
-                bottom: 12px;
-                z-index: 2;
-                padding: 6px 10px;
-                border-radius: 999px;
-                background: rgba(6,12,20,0.82);
-                border: 1px solid rgba(255,255,255,0.08);
-                font-family: var(--gallery-mono);
-                font-size: 11px;
-                letter-spacing: 0.08em;
-                text-transform: uppercase;
-                color: var(--gallery-text);
-                pointer-events: none;
-            }
-
-            #experience .er-group-peek-btn,
-            #experience .er-group-close-btn {
-                position: absolute;
-                top: 12px;
-                right: 12px;
-                z-index: 3;
-                width: 38px;
-                height: 38px;
-                border-radius: 50%;
-                border: 1px solid rgba(255,255,255,0.14);
-                background: rgba(6,12,20,0.72);
-                color: var(--gallery-text);
-                font-size: 17px;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
-                transition: background 180ms, border-color 180ms, transform 180ms;
-                line-height: 1;
-            }
-            #experience .er-group-peek-btn:hover,
-            #experience .er-group-close-btn:hover {
-                background: rgba(110,231,255,0.14);
-                border-color: rgba(110,231,255,0.32);
-                transform: scale(1.08);
-            }
-
-            #experience .er-frame-footer { display: flex; align-items: center; min-height: 16px; }
-            #experience .er-dots, #experience .er-dots-copy { display: flex; gap: 6px; }
-            #experience .er-dot {
-                width: 6px;
-                height: 6px;
-                border-radius: 50%;
-                background: rgba(255,255,255,0.18);
-                transition: background 200ms;
-            }
-            #experience .er-dot.is-active { background: var(--gallery-cyan); }
-
-            #experience .er-chapter-copy { display: flex; flex-direction: column; gap: 14px; padding: 4px 0; }
-            #experience .er-kicker {
-                color: var(--gallery-cyan);
-                font-family: var(--gallery-mono);
-                font-size: 11px;
-                letter-spacing: 0.12em;
-                text-transform: uppercase;
-            }
-            #experience .er-chapter-title {
-                margin: 0;
-                font-family: var(--gallery-heading);
-                font-size: clamp(26px, 3vw, 40px);
-                line-height: 1;
-                letter-spacing: -0.04em;
-            }
-            #experience .er-role { color: #dce8f3; font-size: 16px; font-weight: 600; }
-            #experience .er-org { color: var(--gallery-text-muted); font-size: 13px; }
-            #experience .er-copy { margin: 0; color: #cddae7; font-size: 14px; line-height: 1.8; }
-            #experience .er-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-            #experience .er-tags span {
-                padding: 7px 11px;
-                border: 1px solid rgba(255,255,255,0.07);
-                border-radius: 999px;
-                font-size: 12px;
-                font-weight: 600;
-                background: rgba(255,255,255,0.03);
-                color: var(--gallery-text-muted);
-            }
-            #experience .er-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
-            #experience .er-links a {
-                color: var(--gallery-cyan);
-                font-size: 13px;
-                font-weight: 600;
-                padding: 9px 14px;
-                border-radius: 999px;
-                border: 1px solid rgba(110,231,255,0.18);
-                background: rgba(110,231,255,0.04);
-            }
-            #experience .er-links a:hover { background: rgba(110,231,255,0.10); }
-
-            #experience .er-chapter-main.is-blend-open {
-                grid-template-columns: 1fr;
-                gap: 14px;
-                padding: 18px;
-                align-items: stretch;
-            }
-            #experience .er-chapter-main.is-blend-open .er-photo-frame {
-                display: grid;
-                gap: 0;
-                order: 2;
-            }
-            #experience .er-chapter-main.is-blend-open .er-photo-stage {
-                aspect-ratio: 2.62 / 1;
-                border-radius: 18px;
-            }
-            #experience .er-chapter-main.is-blend-open .er-stage-img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                object-position: var(--blend-group-position, center 34%);
-                opacity: 0.94;
-            }
-            #experience .er-chapter-main.is-blend-open .er-photo-stage::after {
-                content: "";
-                position: absolute;
-                inset: 0;
-                background:
-                    linear-gradient(180deg, rgba(4, 10, 17, 0.12) 0%, rgba(4, 10, 17, 0.04) 28%, rgba(4, 10, 17, 0.42) 100%),
-                    linear-gradient(90deg, rgba(9, 17, 28, 0.10) 0%, rgba(9, 17, 28, 0) 42%, rgba(9, 17, 28, 0.18) 100%);
-                pointer-events: none;
-                z-index: 1;
-            }
-            #experience .er-chapter-main.is-blend-open .er-chapter-copy {
-                order: 1;
-                display: grid;
-                gap: 6px;
-                padding: 0 2px;
-            }
-            #experience .er-chapter-main.is-blend-open .er-role,
-            #experience .er-chapter-main.is-blend-open .er-copy,
-            #experience .er-chapter-main.is-blend-open .er-tags,
-            #experience .er-chapter-main.is-blend-open .er-links,
-            #experience .er-chapter-main.is-blend-open .er-frame-footer,
-            #experience .er-chapter-main.is-blend-open .er-group-peek-btn {
-                display: none;
-            }
-            #experience .er-chapter-main.is-blend-open .er-kicker {
-                font-size: 10px;
-                letter-spacing: 0.16em;
-            }
-            #experience .er-chapter-main.is-blend-open .er-chapter-title {
-                font-size: clamp(24px, 3.4vw, 34px);
-            }
-            #experience .er-chapter-main.is-blend-open .er-org {
-                font-size: 12px;
-                letter-spacing: 0.03em;
-            }
-            #experience .er-chapter-main.is-blend-open .er-photo-stage .er-photo-label {
-                z-index: 2;
-                display: inline-flex;
-                align-items: center;
-                bottom: 14px;
-                left: 14px;
-                background: rgba(6,12,20,0.66);
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
-            }
-            #experience .er-photo-stage .er-group-close-btn { display: none; }
-            #experience .er-chapter-main.is-blend-open .er-photo-stage .er-group-close-btn {
-                display: flex;
-                z-index: 3;
-            }
-
-            #experience .er-section { display: grid; gap: 18px; }
-            #experience .er-section-header { display: grid; gap: 4px; }
-            #experience .er-section-label {
-                margin: 0;
-                color: var(--gallery-cyan);
-                font-family: var(--gallery-mono);
-                font-size: 11px;
-                letter-spacing: 0.12em;
-                text-transform: uppercase;
-            }
-            #experience .er-section-title {
-                margin: 0;
-                font-family: var(--gallery-heading);
-                font-size: clamp(22px, 2.8vw, 34px);
-                letter-spacing: -0.04em;
-            }
-            #experience .er-event-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-                gap: 18px;
-                align-items: stretch;
-            }
-            #experience .er-event-card,
-            #experience .er-role-card {
-                display: flex;
-                flex-direction: column;
-                background: var(--gallery-surface);
-                border: 1px solid var(--gallery-border);
-                border-radius: 24px;
-                box-shadow: var(--gallery-shadow);
-                backdrop-filter: blur(18px);
-                -webkit-backdrop-filter: blur(18px);
-                overflow: hidden;
-            }
-            #experience .er-event-photo,
-            #experience .er-role-photo { position: relative; flex: 1 1 0; min-height: 200px; overflow: hidden; }
-            #experience .er-event-copy { flex: 0 0 auto; display: grid; gap: 8px; padding: 16px 18px 20px; }
-            #experience .er-event-copy h3,
-            #experience .er-role-copy h3 { margin: 0; font-family: var(--gallery-heading); font-size: 20px; letter-spacing: -0.03em; }
-            #experience .er-event-copy p,
-            #experience .er-role-copy p { margin: 0; color: var(--gallery-text-muted); font-size: 13px; line-height: 1.7; }
-            #experience .er-event-copy a { display: inline-block; color: var(--gallery-cyan); font-size: 13px; font-weight: 600; }
-            #experience .er-role-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-                gap: 18px;
-                align-items: stretch;
-            }
-            #experience .er-role-copy { flex: 0 0 auto; display: grid; gap: 6px; padding: 16px 18px 18px; }
-
-            @media (max-width: 1100px) {
-                #experience .er-chapter-main { grid-template-columns: 1fr; }
-            }
-            @media (max-width: 860px) {
-                #experience .er-chapter-main.is-blend-open .er-photo-stage { aspect-ratio: 1.66 / 1; }
-                #experience .er-chapter-main.is-blend-open .er-stage-img { object-position: var(--blend-group-position-mobile, center 28%); }
-            }
-            @media (max-width: 600px) {
-                #experience .er-hero { padding: 22px 20px; }
-                #experience .er-chapter-main { padding: 14px; gap: 14px; }
-            }
+                            --gallery-surface: rgba(11, 20, 32, 0.72);
+                            --gallery-border: rgba(150, 231, 255, 0.16);
+                            --gallery-text: #edf6ff;
+                            --gallery-text-muted: #8da4b8;
+                            --gallery-cyan: #6ee7ff;
+                            --gallery-shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+                            --gallery-heading: var(--font-heading);
+                            --gallery-body: var(--font-sans);
+                            --gallery-mono: monospace;
+                        }
+            #experience .er-shell { display: grid; gap: 28px; }
+                    #experience .er-hero {
+                        padding: 32px 34px 30px;
+                        background: var(--gallery-surface);
+                        border: 1px solid var(--gallery-border);
+                        border-radius: 28px;
+                        box-shadow: var(--gallery-shadow);
+                        backdrop-filter: blur(18px);
+                    }
+                    #experience .er-hero-title {
+                        margin: 0;
+                        font-family: var(--gallery-heading);
+                        font-size: clamp(36px, 6vw, 72px);
+                        line-height: 0.96;
+                        letter-spacing: -0.05em;
+                    }
+                    #experience .er-hero-title span {
+                        display: block;
+                        color: var(--gallery-text-muted);
+                        font-size: clamp(18px, 2.6vw, 28px);
+                        margin-top: 10px;
+                        line-height: 1.15;
+                        letter-spacing: -0.03em;
+                    }
+                    #experience .er-hero-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+                    #experience .er-hero-links a {
+                        display: inline-flex;
+                        align-items: center;
+                        padding: 10px 16px;
+                        border: 1px solid rgba(255,255,255,0.08);
+                        border-radius: 999px;
+                        color: var(--gallery-cyan);
+                        font-size: 13px;
+                        font-weight: 600;
+                        background: rgba(255,255,255,0.03);
+                    }
+                    #experience .er-hero-links a:hover { background: rgba(110,231,255,0.08); }
+                    #experience .er-chapter {
+                        background: var(--gallery-surface);
+                        border: 1px solid var(--gallery-border);
+                        border-radius: 28px;
+                        box-shadow: var(--gallery-shadow);
+                        backdrop-filter: blur(18px);
+                        overflow: hidden;
+                    }
+                    #experience .er-chapter-main {
+                        display: grid;
+                        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+                        gap: 20px;
+                        padding: 20px;
+                        align-items: start;
+                    }
+                    #experience .er-photo-frame { display: grid; gap: 10px; }
+                    #experience .er-photo-stage {
+                        position: relative;
+                        aspect-ratio: 4 / 3;
+                        overflow: hidden;
+                        border-radius: 16px;
+                        background: #101824;
+                    }
+                    #experience .er-stage-img {
+                        position: absolute;
+                        inset: 0;
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        object-position: var(--stage-position, center);
+                        opacity: 0.9;
+                        display: block;
+                        transition: opacity 220ms ease;
+                    }
+                    #experience .er-stage-img.is-fading { opacity: 0; }
+                    #experience .er-photo-label {
+                        position: absolute;
+                        left: 12px;
+                        bottom: 12px;
+                        z-index: 2;
+                        padding: 6px 10px;
+                        border-radius: 999px;
+                        background: rgba(6,12,20,0.82);
+                        border: 1px solid rgba(255,255,255,0.08);
+                        font-family: var(--gallery-mono);
+                        font-size: 11px;
+                        letter-spacing: 0.08em;
+                        text-transform: uppercase;
+                        color: var(--gallery-text);
+                        pointer-events: none;
+                    }
+                    #experience .er-group-peek-btn,
+                    #experience .er-group-close-btn {
+                        position: absolute;
+                        top: 12px;
+                        right: 12px;
+                        z-index: 3;
+                        width: 38px;
+                        height: 38px;
+                        border-radius: 50%;
+                        border: 1px solid rgba(255,255,255,0.14);
+                        background: rgba(6,12,20,0.72);
+                        color: var(--gallery-text);
+                        font-size: 17px;
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        backdrop-filter: blur(10px);
+                        transition: background 180ms, border-color 180ms, transform 180ms;
+                        line-height: 1;
+                    }
+                    #experience .er-group-peek-btn:hover,
+                    #experience .er-group-close-btn:hover {
+                        background: rgba(110,231,255,0.14);
+                        border-color: rgba(110,231,255,0.32);
+                        transform: scale(1.08);
+                    }
+                    #experience .er-frame-footer { display: flex; align-items: center; min-height: 16px; }
+                    #experience .er-dots, #experience .er-dots-copy { display: flex; gap: 6px; }
+                    #experience .er-dot {
+                        width: 6px;
+                        height: 6px;
+                        border-radius: 50%;
+                        background: rgba(255,255,255,0.18);
+                        transition: background 200ms;
+                    }
+                    #experience .er-dot.is-active { background: var(--gallery-cyan); }
+                    #experience .er-chapter-copy { display: flex; flex-direction: column; gap: 14px; padding: 4px 0; }
+                    #experience .er-kicker {
+                        color: var(--gallery-cyan);
+                        font-family: var(--gallery-mono);
+                        font-size: 11px;
+                        letter-spacing: 0.12em;
+                        text-transform: uppercase;
+                    }
+                    #experience .er-chapter-title {
+                        margin: 0;
+                        font-family: var(--gallery-heading);
+                        font-size: clamp(26px, 3vw, 40px);
+                        line-height: 1;
+                        letter-spacing: -0.04em;
+                    }
+                    #experience .er-role { color: #dce8f3; font-size: 16px; font-weight: 600; }
+                    #experience .er-org { color: var(--gallery-text-muted); font-size: 13px; }
+                    #experience .er-copy { margin: 0; color: #cddae7; font-size: 14px; line-height: 1.8; }
+                    #experience .er-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+                    #experience .er-tags span {
+                        padding: 7px 11px;
+                        border: 1px solid rgba(255,255,255,0.07);
+                        border-radius: 999px;
+                        font-size: 12px;
+                        font-weight: 600;
+                        background: rgba(255,255,255,0.03);
+                        color: var(--gallery-text-muted);
+                    }
+                    #experience .er-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+                    #experience .er-links a {
+                        color: var(--gallery-cyan);
+                        font-size: 13px;
+                        font-weight: 600;
+                        padding: 9px 14px;
+                        border-radius: 999px;
+                        border: 1px solid rgba(110,231,255,0.18);
+                        background: rgba(110,231,255,0.04);
+                    }
+                    #experience .er-links a:hover { background: rgba(110,231,255,0.10); }
+                    #experience .er-chapter-main.is-blend-open {
+                        grid-template-columns: 1fr;
+                        gap: 14px;
+                        padding: 18px;
+                        align-items: stretch;
+                    }
+                    #experience .er-chapter-main.is-blend-open #experience .er-photo-frame { display: grid; gap: 0; order: 2; }
+                    #experience .er-chapter-main.is-blend-open #experience .er-photo-stage { aspect-ratio: 2.62 / 1; border-radius: 18px; }
+                    #experience .er-chapter-main.is-blend-open #experience .er-stage-img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        object-position: var(--blend-group-position, center 34%);
+                        opacity: 0.94;
+                    }
+                    #experience .er-chapter-main.is-blend-open #experience .er-photo-stage::after {
+                        content: "";
+                        position: absolute;
+                        inset: 0;
+                        background:
+                            linear-gradient(180deg, rgba(4, 10, 17, 0.12) 0%, rgba(4, 10, 17, 0.04) 28%, rgba(4, 10, 17, 0.42) 100%),
+                            linear-gradient(90deg, rgba(9, 17, 28, 0.10) 0%, rgba(9, 17, 28, 0) 42%, rgba(9, 17, 28, 0.18) 100%);
+                        pointer-events: none;
+                        z-index: 1;
+                    }
+                    #experience .er-chapter-main.is-blend-open #experience .er-chapter-copy { order: 1; display: grid; gap: 6px; padding: 0 2px; }
+                    #experience .er-chapter-main.is-blend-open #experience .er-role,
+                    #experience .er-chapter-main.is-blend-open #experience .er-copy,
+                    #experience .er-chapter-main.is-blend-open #experience .er-tags,
+                    #experience .er-chapter-main.is-blend-open #experience .er-links,
+                    #experience .er-chapter-main.is-blend-open #experience .er-frame-footer,
+                    #experience .er-chapter-main.is-blend-open #experience .er-group-peek-btn { display: none; }
+                    #experience .er-chapter-main.is-blend-open #experience .er-kicker { font-size: 10px; letter-spacing: 0.16em; }
+                    #experience .er-chapter-main.is-blend-open #experience .er-chapter-title { font-size: clamp(24px, 3.4vw, 34px); }
+                    #experience .er-chapter-main.is-blend-open #experience .er-org { font-size: 12px; letter-spacing: 0.03em; }
+                    #experience .er-chapter-main.is-blend-open #experience .er-photo-stage #experience .er-photo-label {
+                        z-index: 2;
+                        display: inline-flex;
+                        align-items: center;
+                        bottom: 14px;
+                        left: 14px;
+                        background: rgba(6,12,20,0.66);
+                        backdrop-filter: blur(10px);
+                    }
+                    #experience .er-photo-stage #experience .er-group-close-btn { display: none; }
+                    #experience .er-chapter-main.is-blend-open #experience .er-photo-stage #experience .er-group-close-btn { display: flex; z-index: 3; }
+                    #experience .er-section { display: grid; gap: 18px; }
+                    #experience .er-section-header { display: grid; gap: 4px; }
+                    #experience .er-section-label {
+                        margin: 0;
+                        color: var(--gallery-cyan);
+                        font-family: var(--gallery-mono);
+                        font-size: 11px;
+                        letter-spacing: 0.12em;
+                        text-transform: uppercase;
+                    }
+                    #experience .er-section-title {
+                        margin: 0;
+                        font-family: var(--gallery-heading);
+                        font-size: clamp(22px, 2.8vw, 34px);
+                        letter-spacing: -0.04em;
+                    }
+                    #experience .er-event-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                        gap: 18px;
+                        align-items: stretch;
+                    }
+                    #experience .er-event-card, #experience .er-role-card {
+                        display: flex;
+                        flex-direction: column;
+                        background: var(--gallery-surface);
+                        border: 1px solid var(--gallery-border);
+                        border-radius: 24px;
+                        box-shadow: var(--gallery-shadow);
+                        backdrop-filter: blur(18px);
+                        overflow: hidden;
+                    }
+                    #experience .er-event-photo, #experience .er-role-photo { position: relative; flex: 1 1 0; min-height: 200px; overflow: hidden; }
+                    #experience .er-event-copy { flex: 0 0 auto; display: grid; gap: 8px; padding: 16px 18px 20px; }
+                    #experience .er-event-copy h3, #experience .er-role-copy h3 { margin: 0; font-family: var(--gallery-heading); font-size: 20px; letter-spacing: -0.03em; }
+                    #experience .er-event-copy p, #experience .er-role-copy p { margin: 0; color: var(--gallery-text-muted); font-size: 13px; line-height: 1.7; }
+                    #experience .er-event-copy a { display: inline-block; color: var(--gallery-cyan); font-size: 13px; font-weight: 600; }
+                    #experience .er-role-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                        gap: 18px;
+                        align-items: stretch;
+                    }
+                    #experience .er-role-copy { flex: 0 0 auto; display: grid; gap: 6px; padding: 16px 18px 18px; }
+                    @media (max-width: 860px) {
+                        #experience .er-chapter-main { grid-template-columns: 1fr; } }
+                    @media (max-width: 600px) {
+                        
+                        #experience .er-hero { padding: 22px 20px; }
+                        #experience .er-chapter-main { padding: 14px; gap: 14px; }
+                    }
+                    @media (max-width: 860px) {
+                        #experience .er-chapter-main.is-blend-open #experience .er-photo-stage { aspect-ratio: 1.66 / 1; }
+                        #experience .er-chapter-main.is-blend-open #experience .er-stage-img { object-position: var(--blend-group-position-mobile, center 28%); }
+                    }
         </style>
 
         <div class="er-shell">
             <header class="er-hero">
-                <p class="section-label">Timeline</p>
-                <h2 class="er-hero-title">
-                    Experience
-                    <span>Research · Teaching · Applied Mathematics</span>
-                </h2>
-                <div class="er-hero-links">
-                    <a href="assets/pdfs/Bilal_poster_JED.pdf" target="_blank" rel="noopener noreferrer">JED Poster PDF</a>
-                    <a href="assets/pdfs/quantum-battery-rl-thesis.pdf" target="_blank" rel="noopener noreferrer">MS Thesis PDF</a>
-                    <a href="https://arxiv.org/abs/2503.20130" target="_blank" rel="noopener noreferrer">arXiv:2503.20130</a>
-                </div>
-            </header>
+                        <h1 class="er-hero-title">
+                            Experience
+                            <span>Physics Trained · Passion Driven · Mathematically Guided</span>
+                        </h1>
+                    </header>
 
             <article class="er-chapter">
-                <div class="er-chapter-main">
-                    <div class="er-photo-frame"
-                         style="--blend-group-position: center 52%; --blend-group-position-mobile: center 46%;"
-                         data-srcs="assets/images/experience-review/camille-group-1.jpg||assets/images/experience-review/camille-group-2.jpg"
-                         data-labels="Research environment||Board work"
-                         data-group-srcs="assets/images/experience-review/icb-group-panoramic.jpg"
-                         data-group-labels="ICB Dijon · full group">
-                        <div class="er-photo-stage">
-                            <img class="er-stage-img" src="assets/images/experience-review/camille-group-1.jpg" alt="Research environment at ICB Dijon">
-                            <span class="er-photo-label">Research environment</span>
-                            <button class="er-group-peek-btn" aria-label="View full group photo" title="View full group photo">👥</button>
-                            <button class="er-group-close-btn" aria-label="Return to chapter view" title="Return">↩</button>
-                        </div>
-                        <div class="er-frame-footer">
-                            <div class="er-dots" aria-hidden="true">
-                                <span class="er-dot is-active"></span>
-                                <span class="er-dot"></span>
+                        <div class="er-chapter-main">
+                            <div class="er-photo-frame" style="--blend-group-position: center 52%; --blend-group-position-mobile: center 46%;" data-srcs="assets/images/experience-review/camille-group-1.jpg||assets/images/experience-review/camille-group-2.jpg" data-labels="Research environment||Board work" data-group-srcs="assets/images/experience-review/icb-group-panoramic.jpg" data-group-labels="ICB Dijon · full group">
+                                <div class="er-photo-stage">
+                                    <img class="er-stage-img" src="assets/images/experience-review/camille-group-1.jpg" alt="Research environment at ICB Dijon">
+                                    <span class="er-photo-label">Research environment</span>
+                                    <button class="er-group-peek-btn" aria-label="View full group photo" title="View full group photo">👥</button>
+                                    <button class="er-group-close-btn" aria-label="Return to chapter view" title="Return">↩</button>
+                                </div>
+                                <div class="er-frame-footer">
+                                    <div class="er-dots" aria-hidden="true"><span class="er-dot is-active"></span><span class="er-dot"></span></div>
+                                </div>
+                            </div>
+
+                            <div class="er-chapter-copy">
+                                <div class="er-kicker">2024 – 2027</div>
+                                <h2 class="er-chapter-title">Université de Bourgogne</h2>
+                                <div class="er-role">PhD Candidate · Theoretical Physics</div>
+                                <div class="er-org">Institut Carnot de Bourgogne (ICB) · Dijon, France · 3-year doctoral fellowship</div>
+                                <p class="er-copy">Working on quantum control theory at ICB Dijon. The central question is how fast, cheap, and robust a quantum gate can be made.</p>
+                                <p class="er-copy">The work uses the Pontryagin Maximum Principle and GRAPE to design energy-efficient protocols with timing constraints and bounded work fluctuations. A separate thread extends this to open quantum systems, where noise and dissipation are part of the problem from the start.</p>
+                                <div class="er-tags">
+                                    <span>Quantum Control</span>
+                                    <span>PMP</span>
+                                    <span>GRAPE</span>
+                                    <span>Quantum Thermodynamics</span>
+                                    <span>Open Quantum Systems</span>
+                                    <span>Robust Control</span>
+                                </div>
+                                <div class="er-links">
+                                    <a href="#research" data-page-link="4">Works ↗</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="er-chapter-copy">
-                        <div class="er-kicker">2024 – Present</div>
-                        <h2 class="er-chapter-title">ICB Dijon</h2>
-                        <div class="er-role">PhD Candidate in Theoretical Physics</div>
-                        <div class="er-org">Universite de Bourgogne, France</div>
-                        <p class="er-copy">How cheap, fast, and robust can a quantum operation be? The work combines the Pontryagin Maximum Principle with GRAPE to study thermodynamic costs, work fluctuations, and timing constraints in quantum gate design. A second thread extends this to open quantum systems under noise and dissipation.</p>
-                        <div class="er-tags">
-                            <span>Quantum Control</span>
-                            <span>Quantum Thermodynamics</span>
-                            <span>Open Quantum Systems</span>
-                            <span>GRAPE</span>
-                            <span>PMP</span>
-                        </div>
-                        <div class="er-links">
-                            <a href="https://arxiv.org/abs/2503.20130" target="_blank" rel="noopener noreferrer">arXiv:2503.20130</a>
-                            <a href="#research" data-page-link="4">Research overview ↗</a>
-                        </div>
-                    </div>
-                </div>
-            </article>
+                    </article>
 
             <article class="er-chapter">
-                <div class="er-chapter-main">
-                    <div class="er-photo-frame"
-                         style="--blend-group-position: center 36%; --blend-group-position-mobile: center 34%;"
-                         data-srcs="assets/images/experience-review/degree.jpg||assets/images/experience-review/iiser2.jpg?v=3"
-                         data-labels="BSMS degree ceremony||With thesis supervisor"
-                         data-group-srcs="assets/images/experience-review/iiser-group.jpg||assets/images/experience-review/victor-group.jpg"
-                         data-group-labels="Convocation batch||Thesis research group">
-                        <div class="er-photo-stage">
-                            <img class="er-stage-img" style="--stage-position: center 38%;" src="assets/images/experience-review/degree.jpg" alt="BSMS degree ceremony at IISER Berhampur">
-                            <span class="er-photo-label">BSMS degree ceremony</span>
-                            <button class="er-group-peek-btn" aria-label="View group photos" title="View group and team photos">👥</button>
-                            <button class="er-group-close-btn" aria-label="Return to chapter view" title="Return">↩</button>
-                        </div>
-                        <div class="er-frame-footer">
-                            <div class="er-dots" aria-hidden="true">
-                                <span class="er-dot is-active"></span>
-                                <span class="er-dot"></span>
+                        <div class="er-chapter-main">
+                            <div class="er-photo-frame" style="--blend-group-position: center 36%; --blend-group-position-mobile: center 34%;" data-srcs="assets/images/experience-review/degree.jpg||assets/images/experience-review/iiser2.jpg?v=3" data-labels="BSMS degree ceremony||With thesis supervisor" data-group-srcs="assets/images/experience-review/iiser-group.jpg||assets/images/experience-review/victor-group.jpg" data-group-labels="Convocation batch||Thesis research group">
+                                <div class="er-photo-stage">
+                                    <img class="er-stage-img" src="assets/images/experience-review/degree.jpg" alt="BSMS degree ceremony at IISER Berhampur" style="--stage-position: center 38%;">
+                                    <span class="er-photo-label">BSMS degree ceremony</span>
+                                    <button class="er-group-peek-btn" aria-label="View group and team photos" title="View group and team photos">👥</button>
+                                    <button class="er-group-close-btn" aria-label="Return to chapter view" title="Return">↩</button>
+                                </div>
+                                <div class="er-frame-footer">
+                                    <div class="er-dots" aria-hidden="true"><span class="er-dot is-active"></span><span class="er-dot"></span></div>
+                                </div>
+                            </div>
+
+                            <div class="er-chapter-copy">
+                                <div class="er-kicker">2019 – 2024</div>
+                                <h2 class="er-chapter-title">IISER Berhampur</h2>
+                                <div class="er-role">BS-MS Integrated Physics · CPI 7.9 / 10</div>
+                                <div class="er-org">Admitted via JEE Advanced · IISER Berhampur, India</div>
+                                <p class="er-copy">Five years of integrated physics covering quantum mechanics, statistical mechanics, classical mechanics, electrodynamics, condensed matter, and mathematical methods.</p>
+                                <p class="er-copy">For the MS thesis, joined Victor Mukherjee&#x27;s group working on RL-based optimal control for quantum batteries:<br>· Objective: maximize ergotropy in spin-½ chain systems<br>· Approach: Soft Actor-Critic learning charging protocols from scratch<br>· Scope: single-qubit to multi-qubit (2–5 qubits), ordered and disordered dynamics<br>· Outcome: RL protocols outperform greedy strategies in relevant charging regimes</p>
+                                <p class="er-copy">Awarded the Chanakya Fellowship (iHub-QTF, IISER Pune) in the final year for this work.</p>
+                                <div class="er-tags">
+                                    <span>Quantum Mechanics</span>
+                                    <span>Statistical Mechanics</span>
+                                    <span>Condensed Matter</span>
+                                    <span>Quantum Batteries</span>
+                                    <span>Reinforcement Learning</span>
+                                    <span>Optimal Control</span>
+                                </div>
+                                <div class="er-links">
+                                    <a href="#research" data-page-link="4">Works ↗</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="er-chapter-copy">
-                        <div class="er-kicker">2019 – 2024</div>
-                        <h2 class="er-chapter-title">IISER Berhampur</h2>
-                        <div class="er-role">MS Thesis Researcher in Physics</div>
-                        <div class="er-org">BS-MS Integrated Program, India</div>
-                        <p class="er-copy">Reinforcement-learning-based optimal control for quantum batteries — maximizing ergotropy in spin-&#189; chains. Protocols learned via Soft Actor-Critic outperform greedy strategies across ordered and disordered multi-qubit regimes.</p>
-                        <div class="er-tags">
-                            <span>Reinforcement Learning</span>
-                            <span>Quantum Batteries</span>
-                            <span>Optimal Control</span>
-                            <span>Soft Actor-Critic</span>
-                        </div>
-                        <div class="er-links">
-                            <a href="assets/pdfs/quantum-battery-rl-thesis.pdf" target="_blank" rel="noopener noreferrer">MS Thesis PDF</a>
-                            <a href="#research" data-page-link="4">Selected works ↗</a>
-                        </div>
-                    </div>
-                </div>
-            </article>
+                    </article>
 
             <section class="er-section">
-                <div class="er-section-header">
-                    <p class="er-section-label">Conferences &amp; Posters</p>
-                    <h2 class="er-section-title">Poster Presentations</h2>
-                </div>
-                <div class="er-event-grid">
-                    <article class="er-event-card">
-                        <div class="er-event-photo">
-                            <img class="er-stage-img" src="assets/images/experience-review/jed.jpg" alt="JED 2025 poster session">
-                            <span class="er-photo-label">JED 2025</span>
+                        <div class="er-section-header">
+                            <p class="er-section-label">Conferences &amp; Posters</p>
+                            <h2 class="er-section-title">Poster Presentations</h2>
                         </div>
-                        <div class="er-event-copy">
-                            <div class="er-kicker">June 2025 · Dijon</div>
-                            <h3>JED 2025</h3>
-                            <p>Robust and Energy-Efficient Controls for a Two-Level System — linked to arXiv:2503.20130.</p>
-                            <a href="assets/pdfs/Bilal_poster_JED.pdf" target="_blank" rel="noopener noreferrer">Open poster PDF ↗</a>
-                        </div>
-                    </article>
+                        <div class="er-event-grid">
 
-                    <article class="er-event-card"
-                             data-srcs="assets/images/experience-review/gdr-welcome.jpg||assets/images/experience-review/poster-gdr-1.jpg||assets/images/experience-review/poster-gdr-2.jpg"
-                             data-labels="GdR TeQ 2025||Poster discussion||Another poster moment">
-                        <div class="er-event-photo">
-                            <img class="er-stage-img" src="assets/images/experience-review/gdr-welcome.jpg" alt="GdR TeQ 2025 colloquium">
-                            <span class="er-photo-label">GdR TeQ 2025</span>
-                        </div>
-                        <div class="er-event-copy">
-                            <div class="er-kicker">2025 · Grenoble</div>
-                            <h3>GdR TeQ 2025</h3>
-                            <div class="er-dots-copy" aria-hidden="true">
-                                <span class="er-dot is-active"></span>
-                                <span class="er-dot"></span>
-                                <span class="er-dot"></span>
-                            </div>
-                            <p>3rd GdR TeQ colloquium and poster session — robust optimal control using GRAPE and research discussions with the community.</p>
-                            <a href="#research" data-page-link="4">View works ↗</a>
-                        </div>
-                    </article>
+                                            <article class="er-event-card">
+                                                <div class="er-event-photo">
+                                                    <img class="er-stage-img" src="assets/images/experience-review/jed.jpg" alt="JED 2025 poster session">
+                                                    <span class="er-photo-label">JED 2025</span>
+                                                </div>
+                                                <div class="er-event-copy">
+                                                    <div class="er-kicker">June 2025 · Dijon</div>
+                                                    <h3>JED 2025</h3>
+                                                    <p>Robust and Energy-Efficient Controls for a Two-Level System — linked to arXiv:2503.20130.</p>
+                                                    <a href="assets/pdfs/Bilal_poster_JED.pdf" target="_blank" rel="noopener noreferrer">Open poster PDF ↗</a>
+                                                </div>
+                                            </article>
 
-                    <article class="er-event-card">
-                        <div class="er-event-photo">
-                            <img class="er-stage-img" src="assets/images/experience-review/cargese.jpg" alt="Cargese summer school announcement">
-                            <span class="er-photo-label">Upcoming · 2026</span>
+                            <article class="er-event-card" data-srcs="assets/images/experience-review/gdr-welcome.jpg||assets/images/experience-review/poster-gdr-1.jpg||assets/images/experience-review/poster-gdr-2.jpg" data-labels="GdR TeQ 2025||Poster discussion||Another poster moment">
+                                                <div class="er-event-photo">
+                                                    <img class="er-stage-img" src="assets/images/experience-review/gdr-welcome.jpg" alt="GdR TeQ 2025 colloquium">
+                                                    <span class="er-photo-label">GdR TeQ 2025</span>
+                                                </div>
+                                                <div class="er-event-copy">
+                                                    <div class="er-kicker">2025 · Grenoble</div>
+                                                    <h3>GdR TeQ 2025</h3>
+                                                    <div class="er-dots-copy" aria-hidden="true"><span class="er-dot is-active"></span><span class="er-dot"></span><span class="er-dot"></span></div>
+                                                    <p>3rd GdR TeQ colloquium and poster session — robust optimal control using GRAPE and research discussions with the community.</p>
+                                                    <a href="#research" data-page-link="4">View works ↗</a>
+                                                </div>
+                                            </article>
+
+
+                                            <article class="er-event-card">
+                                                <div class="er-event-photo">
+                                                    <img class="er-stage-img" src="assets/images/experience-review/cargese.jpg" alt="Cargese summer school announcement">
+                                                    <span class="er-photo-label">Upcoming · 2026</span>
+                                                </div>
+                                                <div class="er-event-copy">
+                                                    <div class="er-kicker">June 8–20, 2026 · Cargese, Corsica</div>
+                                                    <h3>Cargese Summer School</h3>
+                                                    <p>Next poster presentation at the summer school “Quantum Technologies for Computation and Communication” at IESC. Poster title: “Universal Robust Quantum Control”.</p>
+                                                </div>
+                                            </article>
                         </div>
-                        <div class="er-event-copy">
-                            <div class="er-kicker">June 8–20, 2026 · Cargese, Corsica</div>
-                            <h3>Cargese Summer School</h3>
-                            <p>Next poster presentation at the summer school “Quantum Technologies for Computation and Communication” at IESC. Poster title: “Universal Robust Quantum Control”.</p>
-                        </div>
-                    </article>
-                </div>
-            </section>
+                    </section>
 
             <section class="er-section">
-                <div class="er-section-header">
-                    <p class="er-section-label">Teaching &amp; Mathematics</p>
-                    <h2 class="er-section-title">Supporting Roles</h2>
-                </div>
-                <div class="er-role-grid">
-                    <article class="er-role-card">
-                        <div class="er-role-photo">
-                            <img class="er-stage-img" src="assets/images/experience-review/other-mathteacher.jpg" alt="Math teaching">
+                        <div class="er-section-header">
+                            <p class="er-section-label">Teaching &amp; Mathematics</p>
+                            <h2 class="er-section-title">Supporting Roles</h2>
                         </div>
-                        <div class="er-role-copy">
-                            <h3>Math Teacher</h3>
-                            <div class="er-org">revamp24, Bangalore · 2020–2024</div>
-                            <p>Teaching role that sharpened explanation, pacing, and mathematical clarity across varied student levels.</p>
-                        </div>
-                    </article>
+                        <div class="er-role-grid">
+                            <article class="er-role-card">
+                                                <div class="er-role-photo">
+                                                    <img class="er-stage-img" src="assets/images/experience-review/other-mathteacher.jpg" alt="Math teaching">
+                                                </div>
+                                                <div class="er-role-copy">
+                                                    <h3>Math Teacher</h3>
+                                                    <div class="er-org">revamp24, Bangalore · 2020–2024</div>
+                                                    <p>Teaching role that sharpened explanation, pacing, and mathematical clarity across varied student levels.</p>
+                                                </div>
+                                            </article>
 
-                    <article class="er-role-card">
-                        <div class="er-role-photo">
-                            <img class="er-stage-img" src="assets/images/experience-review/srm.jpg" alt="Six Red Marbles">
+                            <article class="er-role-card">
+                                                <div class="er-role-photo">
+                                                    <img class="er-stage-img" src="assets/images/experience-review/srm.jpg" alt="Six Red Marbles">
+                                                </div>
+                                                <div class="er-role-copy">
+                                                    <h3>Subject Matter Expert</h3>
+                                                    <div class="er-org">Calculus · Six Red Marbles, Chennai · 2019–2021</div>
+                                                    <p>Mathematics-focused content and curriculum work, developing materials for structured learning pathways.</p>
+                                                </div>
+                                            </article>
                         </div>
-                        <div class="er-role-copy">
-                            <h3>Subject Matter Expert</h3>
-                            <div class="er-org">Calculus · Six Red Marbles, Chennai · 2019–2021</div>
-                            <p>Mathematics-focused content and curriculum work, developing materials for structured learning pathways.</p>
-                        </div>
-                    </article>
-                </div>
-            </section>
+                    </section>
         </div>
 
         <script>
-        (() => {
-            if (window.__experienceReviewInit) return;
-            window.__experienceReviewInit = true;
-            const CYCLE_MS = 3500;
+            (() => {
+                if (window.__experienceReviewInit) return;
+                window.__experienceReviewInit = true;
+                const CYCLE_MS = 3500;
 
-            function initPhotoFrame(frame) {
-                const split = key => (frame.dataset[key] || '').split('||').filter(Boolean);
-                const resSrcs = split('srcs');
-                const resLbls = split('labels');
-                const grpSrcs = split('groupSrcs');
-                const grpLbls = split('groupLabels');
-                if (!resSrcs.length) return;
+                function initPhotoFrame(frame) {
+                    const split = key => (frame.dataset[key] || '').split('||').filter(Boolean);
+                    const resSrcs = split('srcs');
+                    const resLbls = split('labels');
+                    const grpSrcs = split('groupSrcs');
+                    const grpLbls = split('groupLabels');
+                    if (!resSrcs.length) return;
 
-                const chapter = frame.closest('.er-chapter');
-                const mainEl = chapter.querySelector('.er-chapter-main');
-                const peekBtn = frame.querySelector('.er-group-peek-btn');
-                const closeBtn = frame.querySelector('.er-photo-stage .er-group-close-btn');
-                const stageImg = frame.querySelector('.er-stage-img');
-                const stageLbl = frame.querySelector('.er-photo-stage .er-photo-label');
-                const dotsEl = frame.querySelector('.er-dots');
-                const initialStageSrc = stageImg?.getAttribute('src') || '';
-                const initialStageAlt = stageImg?.getAttribute('alt') || '';
-                let resIdx = 0;
-                let grpIdx = 0;
-                let resTimer = null;
-                let grpTimer = null;
+                    const chapter = frame.closest('.er-chapter');
+                    const mainEl = chapter.querySelector('.er-chapter-main');
+                    const peekBtn = frame.querySelector('.er-group-peek-btn');
+                    const closeBtn = frame.querySelector('.er-photo-stage .er-group-close-btn');
+                    const stageImg = frame.querySelector('.er-stage-img');
+                    const stageLbl = frame.querySelector('.er-photo-stage .er-photo-label');
+                    const dotsEl = frame.querySelector('.er-dots');
+                    const initialStageSrc = stageImg?.getAttribute('src') || '';
+                    const initialStageAlt = stageImg?.getAttribute('alt') || '';
+                    let resIdx = 0;
+                    let grpIdx = 0;
+                    let resTimer = null;
+                    let grpTimer = null;
 
-                function buildDots(container, count, active) {
-                    if (!container) return;
-                    container.innerHTML = '';
-                    for (let i = 0; i < count; i++) {
-                        const d = document.createElement('span');
-                        d.className = 'er-dot' + (i === active ? ' is-active' : '');
-                        container.appendChild(d);
+                    function buildDots(container, count, active) {
+                        if (!container) return;
+                        container.innerHTML = '';
+                        for (let i = 0; i < count; i++) {
+                            const d = document.createElement('span');
+                            d.className = 'er-dot' + (i === active ? ' is-active' : '');
+                            container.appendChild(d);
+                        }
                     }
-                }
 
-                function setActiveDot(container, active) {
-                    container?.querySelectorAll('.er-dot').forEach((d, i) => {
-                        d.classList.toggle('is-active', i === active);
-                    });
-                }
+                    function setActiveDot(container, active) {
+                        container?.querySelectorAll('.er-dot').forEach((d, i) => {
+                            d.classList.toggle('is-active', i === active);
+                        });
+                    }
 
-                function showRes(i, animate) {
-                    resIdx = ((i % resSrcs.length) + resSrcs.length) % resSrcs.length;
-                    const apply = () => {
-                        stageImg.src = resSrcs[resIdx];
-                        stageImg.alt = resLbls[resIdx] || '';
-                        if (stageLbl) stageLbl.textContent = resLbls[resIdx] || '';
-                        setActiveDot(dotsEl, resIdx);
-                        if (animate) stageImg.classList.remove('is-fading');
-                    };
-                    if (animate) {
+                    function showRes(i, animate) {
+                        resIdx = ((i % resSrcs.length) + resSrcs.length) % resSrcs.length;
+                        const apply = () => {
+                            stageImg.src = resSrcs[resIdx];
+                            stageImg.alt = resLbls[resIdx] || '';
+                            if (stageLbl) stageLbl.textContent = resLbls[resIdx] || '';
+                            setActiveDot(dotsEl, resIdx);
+                            if (animate) stageImg.classList.remove('is-fading');
+                        };
+                        if (animate) {
+                            stageImg.classList.add('is-fading');
+                            setTimeout(apply, 220);
+                        } else {
+                            apply();
+                        }
+                    }
+
+                    function startResAuto() {
+                        clearInterval(resTimer);
+                        if (resSrcs.length < 2) return;
+                        resTimer = setInterval(() => showRes(resIdx + 1, true), CYCLE_MS);
+                    }
+
+                    function showGrp(i) {
+                        grpIdx = ((i % grpSrcs.length) + grpSrcs.length) % grpSrcs.length;
                         stageImg.classList.add('is-fading');
-                        setTimeout(apply, 220);
-                    } else {
-                        apply();
+                        setTimeout(() => {
+                            stageImg.src = grpSrcs[grpIdx];
+                            stageImg.alt = grpLbls[grpIdx] || '';
+                            if (stageLbl) stageLbl.textContent = grpLbls[grpIdx] || '';
+                            stageImg.classList.remove('is-fading');
+                        }, 220);
                     }
-                }
 
-                function startResAuto() {
-                    clearInterval(resTimer);
-                    if (resSrcs.length < 2) return;
-                    resTimer = setInterval(() => showRes(resIdx + 1, true), CYCLE_MS);
-                }
-
-                function showGrp(i) {
-                    grpIdx = ((i % grpSrcs.length) + grpSrcs.length) % grpSrcs.length;
-                    stageImg.classList.add('is-fading');
-                    setTimeout(() => {
-                        stageImg.src = grpSrcs[grpIdx];
-                        stageImg.alt = grpLbls[grpIdx] || '';
-                        if (stageLbl) stageLbl.textContent = grpLbls[grpIdx] || '';
-                        stageImg.classList.remove('is-fading');
-                    }, 220);
-                }
-
-                function openGroup() {
-                    if (!grpSrcs.length) return;
-                    clearInterval(resTimer);
-                    mainEl.classList.add('is-blend-open');
-                    grpIdx = 0;
-                    stageImg.src = grpSrcs[0];
-                    stageImg.alt = grpLbls[0] || '';
-                    if (stageLbl) stageLbl.textContent = grpLbls[0] || '';
-                    clearInterval(grpTimer);
-                    if (grpSrcs.length > 1) {
-                        grpTimer = setInterval(() => showGrp(grpIdx + 1), CYCLE_MS);
+                    function openGroup() {
+                        if (!grpSrcs.length) return;
+                        clearInterval(resTimer);
+                        mainEl.classList.add('is-blend-open');
+                        grpIdx = 0;
+                        stageImg.src = grpSrcs[0];
+                        stageImg.alt = grpLbls[0] || '';
+                        if (stageLbl) stageLbl.textContent = grpLbls[0] || '';
+                        clearInterval(grpTimer);
+                        if (grpSrcs.length > 1) {
+                            grpTimer = setInterval(() => showGrp(grpIdx + 1), CYCLE_MS);
+                        }
                     }
-                }
 
-                function closeGroup() {
-                    clearInterval(grpTimer);
-                    mainEl.classList.remove('is-blend-open');
-                    stageImg.src = initialStageSrc;
-                    stageImg.alt = initialStageAlt;
-                    if (stageLbl) stageLbl.textContent = resLbls[resIdx] || '';
-                    showRes(resIdx, false);
+                    function closeGroup() {
+                        clearInterval(grpTimer);
+                        mainEl.classList.remove('is-blend-open');
+                        stageImg.src = initialStageSrc;
+                        stageImg.alt = initialStageAlt;
+                        if (stageLbl) stageLbl.textContent = resLbls[resIdx] || '';
+                        showRes(resIdx, false);
+                        startResAuto();
+                    }
+
+                    buildDots(dotsEl, resSrcs.length, 0);
+                    showRes(0, false);
                     startResAuto();
+
+                    if (peekBtn) {
+                        if (!grpSrcs.length) peekBtn.hidden = true;
+                        else peekBtn.addEventListener('click', openGroup);
+                    }
+                    if (closeBtn) closeBtn.addEventListener('click', closeGroup);
                 }
 
-                buildDots(dotsEl, resSrcs.length, 0);
-                showRes(0, false);
-                startResAuto();
-
-                if (peekBtn) {
-                    if (!grpSrcs.length) peekBtn.hidden = true;
-                    else peekBtn.addEventListener('click', openGroup);
+                function initEventCycler(card) {
+                    const srcs = (card.dataset.srcs || '').split('||').filter(Boolean);
+                    const lbls = (card.dataset.labels || '').split('||');
+                    if (srcs.length < 2) return;
+                    const img = card.querySelector('.er-stage-img');
+                    const labelEl = card.querySelector('.er-photo-label');
+                    const dots = card.querySelectorAll('.er-dot');
+                    let idx = 0;
+                    setInterval(() => {
+                        idx = (idx + 1) % srcs.length;
+                        img.classList.add('is-fading');
+                        setTimeout(() => {
+                            img.src = srcs[idx];
+                            img.alt = lbls[idx] || '';
+                            if (labelEl) labelEl.textContent = lbls[idx] || '';
+                            dots.forEach((d, j) => d.classList.toggle('is-active', j === idx));
+                            img.classList.remove('is-fading');
+                        }, 220);
+                    }, CYCLE_MS);
                 }
-                if (closeBtn) closeBtn.addEventListener('click', closeGroup);
-            }
 
-            function initEventCycler(card) {
-                const srcs = (card.dataset.srcs || '').split('||').filter(Boolean);
-                const lbls = (card.dataset.labels || '').split('||');
-                if (srcs.length < 2) return;
-                const img = card.querySelector('.er-stage-img');
-                const labelEl = card.querySelector('.er-photo-label');
-                const dots = card.querySelectorAll('.er-dot');
-                let idx = 0;
-                setInterval(() => {
-                    idx = (idx + 1) % srcs.length;
-                    img.classList.add('is-fading');
-                    setTimeout(() => {
-                        img.src = srcs[idx];
-                        img.alt = lbls[idx] || '';
-                        if (labelEl) labelEl.textContent = lbls[idx] || '';
-                        dots.forEach((d, j) => d.classList.toggle('is-active', j === idx));
-                        img.classList.remove('is-fading');
-                    }, 220);
-                }, CYCLE_MS);
-            }
-
-            document.querySelectorAll('#experience .er-photo-frame').forEach(initPhotoFrame);
-            document.querySelectorAll('#experience .er-event-card[data-srcs]').forEach(initEventCycler);
-        })();
-        </script>
+                document.querySelectorAll('#experience .er-photo-frame').forEach(initPhotoFrame);
+                document.querySelectorAll('#experience .er-event-card[data-srcs]').forEach(initEventCycler);
+            })();
+            </script>
     </div>
 </section>

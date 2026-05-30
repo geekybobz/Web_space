@@ -1,0 +1,104 @@
+{
+  "filename": "gallery-journey.html",
+  "description": "Prototype gallery concept: Journey Board.",
+  "title": "Gallery Prototype C | Journey Board",
+  "switcher": [
+    {"href": "gallery-git.html", "label": "Prototype A \u00b7 Git Graph"},
+    {"href": "gallery-museum.html", "label": "Prototype B \u00b7 Museum"},
+    {"href": "gallery-journey.html", "label": "Prototype C \u00b7 Journey Board", "active": true}
+  ],
+  "hero": {
+    "kicker": "Prototype C",
+    "title": "Journey",
+    "subtitle": "Board Narrative",
+    "lead": "This direction sits between a timeline and a storyboard. It is the strongest option if you want each milestone to feel like a chapter with room for mini-highlights, side notes, and future sub-links.",
+    "chips": [
+      "Best for chapter-based storytelling",
+      "Room for nested highlights",
+      "Good balance of text and image"
+    ]
+  },
+  "aside": {
+    "title": "How This Prototype Reads",
+    "copy": "The left rail explains the overall arc while the right side expands each stage into a chapter card. This is useful if some milestones later need more internal structure than a simple caption card.",
+    "legend": [
+      {"dot": "transition", "label": "Story-forward", "note": "Feels like a guided narrative"},
+      {"dot": "project", "label": "Supports clusters", "note": "Projects can sit inside each chapter"},
+      {"dot": "research", "label": "Future-proof", "note": "Easy to add PDFs and work summaries"}
+    ]
+  },
+  "sidebar": {
+    "title": "Sample Arc",
+    "copy": "This prototype is less literal than the git graph and less image-heavy than the museum layout. It is useful if you want each stage to feel like a chapter with internal highlights.",
+    "link": {"href": "under_construction.html", "label": "Open a future chapter container \u2192"}
+  },
+  "nodes": [
+    {
+      "year": "Stage 01",
+      "title": "10th Standard",
+      "copy": "The first chapter card introduces a stage and gives room for two or three supporting notes without making the page feel crowded.",
+      "bullets": [
+        "Can hold a concise description of the period",
+        "Can point to an award, image, or memory block",
+        "Can later link to a dedicated detail page"
+      ],
+      "image": "assets/images/avatar_about.webp",
+      "alt": "Placeholder image for 10th standard"
+    },
+    {
+      "year": "Stage 02",
+      "title": "12th Standard",
+      "copy": "This layout works well when the milestone needs a bit more structure than a normal card, such as notes, two small takeaways, and one related link.",
+      "bullets": [
+        "Supports narrative transitions clearly",
+        "Useful for exam, city, or institution shifts",
+        "Keeps the visual flow simple and readable"
+      ],
+      "image": "assets/images/avatar_philosophy.webp",
+      "alt": "Placeholder image for 12th standard"
+    },
+    {
+      "year": "Stage 03",
+      "title": "College",
+      "copy": "The college stage becomes a central chapter. Later it can contain internal links to project pages, departments, posters, clubs, or a breakdown of what changed during that period.",
+      "bullets": [
+        "Works as the main chapter split point",
+        "Allows multiple sub-highlights in one card",
+        "Can grow without breaking the page rhythm"
+      ],
+      "image": "assets/images/avatar_1.webp",
+      "alt": "Placeholder image for college",
+      "class": "transition",
+      "mini_note": "Add institution, years, or a signature note here."
+    },
+    {
+      "year": "Stage 04",
+      "title": "Projects During College",
+      "copy": "This chapter can later hold a small list of project titles or a grouped card pattern without needing a separate page redesign.",
+      "bullets": [
+        "Best if some milestones contain several outputs",
+        "Can accommodate tags, posters, and screenshots",
+        "Lets you group related work by phase"
+      ],
+      "image": "assets/images/avatar_experience.webp",
+      "alt": "Placeholder image for projects",
+      "class": "project",
+      "mini_note": "Add project tags or quick stats here."
+    },
+    {
+      "year": "Stage 05",
+      "title": "Joined PhD",
+      "copy": "The final chapter can later become the richest one: active themes, major achievements, posters, thesis links, or deeper routes into research containers.",
+      "bullets": [
+        "Strong place for current trajectory",
+        "Natural home for work-in-progress callouts",
+        "Easy to connect with research and contact pages"
+      ],
+      "image": "assets/images/avatar_research.webp",
+      "alt": "Placeholder image for phd",
+      "class": "research",
+      "mini_note": "Add publications, poster links, or PhD focus here."
+    }
+  ],
+  "footer": "this version is optimized for chapter-based storytelling and will be the easiest one to expand if your real content varies a lot in depth between milestones."
+}

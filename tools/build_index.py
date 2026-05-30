@@ -2,6 +2,10 @@ import argparse
 import os
 from pathlib import Path
 
+from build_assets import build_assets
+from render_under_construction import render_under_construction
+from site_builder import render_generated_pages
+
 
 ROOT = Path(__file__).resolve().parent.parent
 DOCS = ROOT / "docs"
@@ -32,6 +36,9 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
+    render_generated_pages()
+    build_assets()
+    render_under_construction(args.asset_version)
     template = TEMPLATE.read_text(encoding="utf-8")
     fragments = []
     for name in ORDER:

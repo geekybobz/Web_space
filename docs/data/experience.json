@@ -1,0 +1,179 @@
+{
+  "hero": {
+    "title": "Experience",
+    "subtitle": "Physics Trained · Passion Driven · Mathematically Guided"
+  },
+  "chapters": [
+    {
+      "year": "2024 – 2027",
+      "title": "Université de Bourgogne",
+      "role": "PhD Candidate · Theoretical Physics",
+      "org": "Institut Carnot de Bourgogne (ICB) · Dijon, France · 3-year doctoral fellowship",
+      "copy": [
+        "Working on quantum control theory at ICB Dijon. The central question is how fast, cheap, and robust a quantum gate can be made.",
+        "The work uses the Pontryagin Maximum Principle and GRAPE to design energy-efficient protocols with timing constraints and bounded work fluctuations. A separate thread extends this to open quantum systems, where noise and dissipation are part of the problem from the start."
+      ],
+      "tags": [
+        "Quantum Control",
+        "PMP",
+        "GRAPE",
+        "Quantum Thermodynamics",
+        "Open Quantum Systems",
+        "Robust Control"
+      ],
+      "links": [
+        {
+          "href": "#research",
+          "label": "Works ↗",
+          "page_link": 4
+        }
+      ],
+      "frame": {
+        "blend_position": "center 52%",
+        "blend_position_mobile": "center 46%",
+        "srcs": [
+          "assets/images/experience-review/camille-group-1.jpg",
+          "assets/images/experience-review/camille-group-2.jpg"
+        ],
+        "labels": [
+          "Research environment",
+          "Board work"
+        ],
+        "group_srcs": [
+          "assets/images/experience-review/icb-group-panoramic.jpg"
+        ],
+        "group_labels": [
+          "ICB Dijon · full group"
+        ],
+        "default_src": "assets/images/experience-review/camille-group-1.jpg",
+        "default_alt": "Research environment at ICB Dijon",
+        "default_label": "Research environment",
+        "peek_title": "View full group photo"
+      }
+    },
+    {
+      "year": "2019 – 2024",
+      "title": "IISER Berhampur",
+      "role": "BS-MS Integrated Physics · CPI 7.9 / 10",
+      "org": "Admitted via JEE Advanced · IISER Berhampur, India",
+      "copy": [
+        "Five years of integrated physics covering quantum mechanics, statistical mechanics, classical mechanics, electrodynamics, condensed matter, and mathematical methods.",
+        "For the MS thesis, joined Victor Mukherjee's group working on RL-based optimal control for quantum batteries:\n· Objective: maximize ergotropy in spin-½ chain systems\n· Approach: Soft Actor-Critic learning charging protocols from scratch\n· Scope: single-qubit to multi-qubit (2–5 qubits), ordered and disordered dynamics\n· Outcome: RL protocols outperform greedy strategies in relevant charging regimes",
+        "Awarded the Chanakya Fellowship (iHub-QTF, IISER Pune) in the final year for this work."
+      ],
+      "tags": [
+        "Quantum Mechanics",
+        "Statistical Mechanics",
+        "Condensed Matter",
+        "Quantum Batteries",
+        "Reinforcement Learning",
+        "Optimal Control"
+      ],
+      "links": [
+        {
+          "href": "#research",
+          "label": "Works ↗",
+          "page_link": 4
+        }
+      ],
+      "frame": {
+        "blend_position": "center 36%",
+        "blend_position_mobile": "center 34%",
+        "stage_position": "center 38%",
+        "srcs": [
+          "assets/images/experience-review/degree.jpg",
+          "assets/images/experience-review/iiser2.jpg?v=3"
+        ],
+        "labels": [
+          "BSMS degree ceremony",
+          "With thesis supervisor"
+        ],
+        "group_srcs": [
+          "assets/images/experience-review/iiser-group.jpg",
+          "assets/images/experience-review/victor-group.jpg"
+        ],
+        "group_labels": [
+          "Convocation batch",
+          "Thesis research group"
+        ],
+        "default_src": "assets/images/experience-review/degree.jpg",
+        "default_alt": "BSMS degree ceremony at IISER Berhampur",
+        "default_label": "BSMS degree ceremony",
+        "peek_title": "View group and team photos"
+      }
+    }
+  ],
+  "poster_section": {
+    "label": "Conferences & Posters",
+    "title": "Poster Presentations",
+    "events": [
+      {
+        "type": "static",
+        "kicker": "June 2025 · Dijon",
+        "title": "JED 2025",
+        "copy": "Robust and Energy-Efficient Controls for a Two-Level System — linked to arXiv:2503.20130.",
+        "image": "assets/images/experience-review/jed.jpg",
+        "alt": "JED 2025 poster session",
+        "label": "JED 2025",
+        "link": {
+          "href": "assets/pdfs/Bilal_poster_JED.pdf",
+          "label": "Open poster PDF ↗",
+          "external": true
+        }
+      },
+      {
+        "type": "cycler",
+        "kicker": "2025 · Grenoble",
+        "title": "GdR TeQ 2025",
+        "copy": "3rd GdR TeQ colloquium and poster session — robust optimal control using GRAPE and research discussions with the community.",
+        "srcs": [
+          "assets/images/experience-review/gdr-welcome.jpg",
+          "assets/images/experience-review/poster-gdr-1.jpg",
+          "assets/images/experience-review/poster-gdr-2.jpg"
+        ],
+        "labels": [
+          "GdR TeQ 2025",
+          "Poster discussion",
+          "Another poster moment"
+        ],
+        "default_src": "assets/images/experience-review/gdr-welcome.jpg",
+        "default_alt": "GdR TeQ 2025 colloquium",
+        "default_label": "GdR TeQ 2025",
+        "link": {
+          "href": "#research",
+          "label": "View works ↗",
+          "page_link": 4
+        }
+      },
+      {
+        "type": "static",
+        "kicker": "June 8–20, 2026 · Cargese, Corsica",
+        "title": "Cargese Summer School",
+        "copy": "Next poster presentation at the summer school “Quantum Technologies for Computation and Communication” at IESC. Poster title: “Universal Robust Quantum Control”.",
+        "image": "assets/images/experience-review/cargese.jpg",
+        "alt": "Cargese summer school announcement",
+        "label": "Upcoming · 2026"
+      }
+    ]
+  },
+  "roles_section": {
+    "label": "Teaching & Mathematics",
+    "title": "Supporting Roles",
+    "roles": [
+      {
+        "title": "Math Teacher",
+        "org": "revamp24, Bangalore · 2020–2024",
+        "copy": "Teaching role that sharpened explanation, pacing, and mathematical clarity across varied student levels.",
+        "image": "assets/images/experience-review/other-mathteacher.jpg",
+        "alt": "Math teaching"
+      },
+      {
+        "title": "Subject Matter Expert",
+        "org": "Calculus · Six Red Marbles, Chennai · 2019–2021",
+        "copy": "Mathematics-focused content and curriculum work, developing materials for structured learning pathways.",
+        "image": "assets/images/experience-review/srm.jpg",
+        "alt": "Six Red Marbles"
+      }
+    ]
+  }
+}

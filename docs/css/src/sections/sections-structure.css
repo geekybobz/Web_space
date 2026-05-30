@@ -1,0 +1,164 @@
+/* ========== SECTIONS STRUCTURE ========== */
+.section {
+    padding: 6rem 0;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 6rem;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.05));
+}
+
+.section-grid {
+    padding: 3rem 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* About layout is driven by the shared .page-cols grid inside .page-inner. */
+#about.section {
+    display: block;
+}
+
+#about .section-header {
+    display: block;
+    width: min(100%, 1020px);
+    max-width: 1020px;
+    margin: 0 auto clamp(1rem, 1.8vw, 1.8rem);
+}
+
+#about .about-rows {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.75rem, 1.25vw, 1rem);
+    width: min(100%, 1020px);
+    margin: 0 auto;
+}
+
+#about .about-card {
+    background: var(--surface-bg);
+    border: 1px solid var(--surface-border);
+    border-radius: 12px;
+    padding: clamp(1.15rem, 1.7vw, 1.55rem);
+    box-shadow: none;
+}
+
+#about .about-card::before {
+    display: none;
+}
+
+#about .about-card:hover {
+    border-color: var(--surface-border-hover);
+    background: var(--surface-bg-hover);
+    box-shadow: none;
+    transform: translateY(-2px);
+}
+
+#about .about-card-inner {
+    display: grid;
+    grid-template-columns: minmax(14.5rem, 16.5rem) minmax(0, 1fr);
+    gap: clamp(1.15rem, 1.75vw, 1.7rem);
+    align-items: start;
+}
+
+#about .about-card-meta {
+    display: grid;
+    gap: 0.28rem;
+    align-self: stretch;
+    padding-right: clamp(1.1rem, 1.45vw, 1.5rem);
+    border-right: 1px solid color-mix(in srgb, var(--surface-border) 82%, transparent);
+}
+
+#about .about-card-title {
+    font-size: clamp(1.5rem, 2.05vw, 1.8rem);
+    margin: 0;
+    color: var(--text-main);
+    line-height: 1.1;
+}
+
+#about .about-card-body {
+    min-width: 0;
+}
+
+#about .about-card-body p:first-child {
+    margin-top: 0;
+}
+
+#about .about-card-body p:last-child {
+    margin-bottom: 0;
+}
+
+#about .about-card-body .skills-container {
+    margin-bottom: 0;
+}
+
+#about .about-card-body .subsection-title {
+    margin-top: 0;
+}
+
+@media (max-width: 900px) {
+    #about .about-card-inner {
+        grid-template-columns: 1fr;
+        gap: 0.85rem;
+    }
+
+    #about .about-card-meta {
+        padding-right: 0;
+        padding-bottom: 0.85rem;
+        border-right: 0;
+        border-bottom: 1px solid color-mix(in srgb, var(--surface-border) 82%, transparent);
+    }
+}
+
+.grid-2 {
+    display: grid;
+    --grid-min: 18rem;
+    --grid-max: 26rem;
+    --grid-gap: clamp(0.75rem, 1.2vw, 1rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min)), min(100%, var(--grid-max))));
+    justify-content: center;
+    gap: var(--grid-gap);
+    align-items: start;
+}
+
+.section-label {
+    font-family: monospace;
+    color: var(--accent-2);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 1.02rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.section-label::before {
+    content: '<';
+    color: var(--text-muted);
+}
+.section-label::after {
+    content: '/>';
+    color: var(--text-muted);
+}
+
+.section-title {
+    font-size: clamp(1.95rem, 2.75vw, 2.65rem);
+    margin-bottom: clamp(1rem, 1.5vw, 1.5rem);
+    color: var(--text-main);
+}
+
+.section-header {
+    margin-bottom: clamp(1rem, 1.8vw, 1.8rem);
+}

@@ -1,0 +1,358 @@
+/* ========== HERO SECTION ========== */
+.hero {
+    min-height: auto;
+    padding-top: 8rem;
+    margin-bottom: 2rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.hero-title {
+    font-size: clamp(2.55rem, 4vw, 3.95rem);
+    margin-bottom: 0.75rem;
+    color: var(--text-main);
+    text-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+}
+
+.hero-subtitle {
+    font-size: clamp(1.02rem, 1.34vw, 1.2rem);
+    font-weight: 500;
+    color: var(--accent-1);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    font-family: monospace;
+    letter-spacing: 0.05em;
+}
+
+.hero-subtitle span {
+    color: var(--text-muted);
+    font-weight: 300;
+}
+
+.hero-desc-container {
+    max-width: 100%;
+}
+
+.hero-desc {
+    font-size: clamp(1.06rem, 1.35vw, 1.2rem);
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    border-left: 2px solid rgba(176, 38, 255, 0.3);
+    padding-left: 1.25rem;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.btn-cv {
+    margin-left: auto;
+}
+
+/* ========== HERO AVATAR & VISUALS ========== */
+.hero-avatar {
+    width: clamp(110px, 14vw, 160px);
+    height: clamp(110px, 14vw, 160px);
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    position: relative;
+    border: 2px solid var(--accent-1);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3), inset 0 0 20px rgba(0, 240, 255, 0.3);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
+    border-radius: 50%;
+    display: block;
+    transition: transform 0.15s ease-out;
+}
+
+/* ========== QUANTUM BANNER ========== */
+.quantum-banner {
+    width: 100%;
+    margin-bottom: 4rem;
+}
+
+.hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 350px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(17, 24, 39, 0.5), rgba(0, 0, 0, 0.8));
+}
+
+.abstract-visual {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+}
+
+/* ========== BLOCH SPHERE SIMULATION ========== */
+
+.bloch-simulation {
+    position: relative;
+    width: 100%;
+    min-height: 350px; /* guarantees height won't collapse to 0 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+    z-index: 5;
+}
+
+/* ========== 3D BLOCH SPHERE CSS UPDATES ========== */
+.bloch-sphere {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    /* Add a strong spherical radial gradient to give it a 3D glass ball look */
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1) 0%, rgba(11, 14, 20, 0.4) 60%, rgba(0, 0, 0, 0.8) 100%);
+    box-shadow: inset 0 0 40px rgba(176, 38, 255, 0.4), inset -20px -20px 50px rgba(0, 0, 0, 0.8), 0 0 60px rgba(0, 240, 255, 0.1);
+    border: 1px solid rgba(176, 38, 255, 0.3);
+    transform-style: preserve-3d;
+    animation: spin-bloch 15s linear infinite;
+}
+
+/* 3D Wireframe Rings */
+.equator {
+    position: absolute;
+    top: 50%; left: 0;
+    width: 100%; height: 2px;
+    background: rgba(0, 240, 255, 0.4);
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
+    transform: translateY(-50%) rotateX(90deg);
+}
+
+.meridian {
+    position: absolute;
+    top: 0; left: 50%;
+    width: 2px; height: 100%;
+    background: rgba(176, 38, 255, 0.2);
+    transform-origin: center;
+}
+
+.meridian.m1 { transform: translateX(-50%) rotateY(0deg); }
+.meridian.m2 { transform: translateX(-50%) rotateY(90deg); }
+
+/* Poles */
+.pole {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-heading);
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: var(--text-main);
+    text-shadow: 0 0 10px white;
+    background: transparent;
+    padding: 0 5px;
+    z-index: 20;
+}
+
+.target-pole { top: -35px; color: var(--accent-1); text-shadow: 0 0 10px var(--accent-1); }
+.start-pole { bottom: -35px; color: var(--accent-3); text-shadow: 0 0 10px var(--accent-3); }
+
+/* State Vector Arrow */
+.state-vector {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 4px;
+    height: 140px; /* almost reaches pole */
+    background: linear-gradient(to top, transparent, var(--accent-1));
+    transform-origin: bottom center;
+    transform: translate(-50%, -100%) rotateX(0deg) rotateZ(180deg); 
+    box-shadow: 0 0 15px var(--accent-1);
+    z-index: 10;
+    /* JS animation loop handles updates, no CSS transition needed here */
+}
+
+.arrow-head {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 12px solid var(--accent-1);
+    filter: drop-shadow(0 0 5px var(--accent-1));
+}
+
+/* ========== AI NEURAL NETWORK ========== */
+.neural-network {
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+    height: 250px;
+    z-index: 10;
+}
+
+.nn-layer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    z-index: 2;
+}
+
+.node {
+    width: 12px;
+    height: 12px;
+    background: var(--bg-main);
+    border: 2px solid var(--accent-1);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent-1);
+    position: relative;
+}
+
+.node.out-node {
+    border-color: var(--accent-3);
+    box-shadow: 0 0 15px var(--accent-3);
+}
+
+.nn-connections {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.nn-line {
+    stroke: rgba(0, 240, 255, 0.2);
+    stroke-width: 1.5;
+}
+
+/* Dynamic Sine Wave generated by JS */
+.dynamic-sine-pulse {
+    position: absolute;
+    right: -100px; /* overlaps into the sphere area */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 140px;
+    height: 40px;
+    overflow: visible;
+}
+
+.dynamic-sine-pulse path {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: url(#sineGlow);
+    transition: d 0.1s linear;
+}
+
+/* Fire Pulse Button */
+.pulse-btn {
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent;
+    border: 1px solid var(--accent-3);
+    color: var(--accent-3);
+    padding: 0.5rem 1rem;
+    font-family: var(--font-heading);
+    font-weight: bold;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.2), inset 0 0 10px rgba(16, 185, 129, 0.1);
+    transition: all 0.2s ease;
+    z-index: 20;
+    white-space: nowrap;
+}
+
+.pulse-btn:hover {
+    background: var(--accent-3);
+    color: var(--bg-main);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+    transform: translateX(-50%) translateY(-2px);
+}
+
+.pulse-btn:active {
+    transform: translateX(-50%) translateY(2px);
+    box-shadow: 0 0 5px rgba(16, 185, 129, 0.4);
+}
+
+/* Terminal Readout Repositioned */
+.terminal-readout.right-aligned {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    left: auto; /* override older left-aligned rule */
+    background: rgba(11, 14, 20, 0.8);
+    padding: 1rem 1.5rem;
+    border-right: 3px solid var(--accent-1);
+    border-left: none; /* remove left border */
+    border-radius: 4px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    z-index: 30;
+    text-align: right; /* align text to the right border */
+}
+
+/* Base Terminal Style Keep for compatibility */
+.terminal-readout {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    background: rgba(11, 14, 20, 0.8);
+    padding: 1rem 1.5rem;
+    border-left: 3px solid var(--accent-1);
+    border-radius: 4px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    z-index: 30; /* Ensure text is above 3D sphere */
+}
+
+.typewriter {
+    font-family: monospace;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+}
+
+.typewriter .highlight {
+    color: var(--accent-1);
+    font-weight: bold;
+}
+
+.typewriter .status-ok {
+    color: var(--accent-3);
+    font-weight: bold;
+}
+
+.visual-data-overlay {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    font-family: monospace;
+    font-size: 0.75rem;
+    color: var(--accent-1);
+    opacity: 0.7;
+    text-shadow: 0 0 5px var(--accent-1);
+}
+
+.visual-data-overlay p { margin-bottom: 0.25rem; }

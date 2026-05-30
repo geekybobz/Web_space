@@ -1,0 +1,102 @@
+/* ========== ROOT ========== */
+        :root {
+            --bg-main:        #0B0E14;
+            --bg-secondary:   #121822;
+            --text-main:      #F3F4F6;
+            --text-muted:     #9CA3AF;
+            --accent-1:       #00F0FF;
+            --accent-2:       #B026FF;
+            --accent-3:       #10B981;
+            --glass-bg:       rgba(18, 24, 34, 0.55);
+            --glass-border:   rgba(255, 255, 255, 0.07);
+            --glass-shadow:   0 8px 40px 0 rgba(0, 0, 0, 0.5);
+            --font-sans:      'Inter', sans-serif;
+            --font-heading:   'Outfit', sans-serif;
+            --grid-color:     rgba(0, 240, 255, 0.03);
+            --overlay-bg:     rgba(11,14,20,0.85);
+            --status-bg:      rgba(0,0,0,0.2);
+            --status-border:  rgba(255,255,255,0.05);
+            --status-hover:   rgba(0,240,255,0.03);
+            --progress-track: rgba(255,255,255,0.06);
+            --progress-border:rgba(255,255,255,0.04);
+            --back-link:      rgba(0, 240, 255, 0.55);
+            --footer-link:    rgba(0, 240, 255, 0.6);
+        }
+
+        [data-theme="light-editorial"] {
+            --bg-main:        #F6F1E7;
+            --bg-secondary:   #EDE2D2;
+            --text-main:      #22252B;
+            --text-muted:     #5C584D;
+            --accent-1:       #0F766E;
+            --accent-2:       #1D4ED8;
+            --accent-3:       #B45309;
+            --glass-bg:       rgba(255, 251, 245, 0.9);
+            --glass-border:   rgba(34, 37, 43, 0.12);
+            --glass-shadow:   0 16px 34px rgba(90, 72, 44, 0.16);
+            --grid-color:     rgba(15, 118, 110, 0.04);
+            --overlay-bg:     rgba(218, 205, 186, 0.68);
+            --status-bg:      rgba(255,255,255,0.88);
+            --status-border:  rgba(34, 37, 43, 0.12);
+            --status-hover:   rgba(29, 78, 216, 0.05);
+            --progress-track: rgba(255,255,255,0.92);
+            --progress-border:rgba(34, 37, 43, 0.08);
+            --back-link:      rgba(15, 118, 110, 0.65);
+            --footer-link:    rgba(15, 118, 110, 0.78);
+        }
+
+        [data-theme="mid-atmosphere"] {
+            --bg-main:        #C7D2DB;
+            --bg-secondary:   #B3C0CB;
+            --text-main:      #1A2D3D;
+            --text-muted:     #5E7488;
+            --accent-1:       #0EA5E9;
+            --accent-2:       #4F46E5;
+            --accent-3:       #3F9C7B;
+            --glass-bg:       rgba(234, 240, 245, 0.6);
+            --glass-border:   rgba(26, 45, 61, 0.1);
+            --glass-shadow:   0 12px 28px rgba(64, 85, 101, 0.17);
+            --grid-color:     rgba(14, 165, 233, 0.032);
+            --overlay-bg:     rgba(174, 188, 198, 0.46);
+            --status-bg:      rgba(255,255,255,0.48);
+            --status-border:  rgba(26, 45, 61, 0.09);
+            --status-hover:   rgba(79, 70, 229, 0.05);
+            --progress-track: rgba(255,255,255,0.55);
+            --progress-border:rgba(26, 45, 61, 0.08);
+            --back-link:      rgba(14, 165, 233, 0.62);
+            --footer-link:    rgba(14, 165, 233, 0.72);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { font-size: 62.5%; scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--text-main);
+            background-color: var(--bg-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: clamp(7.6rem, 11vh, 9rem) 1.6rem clamp(1.8rem, 5vh, 3rem);
+            /* Deep-space grid */
+            background-image:
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Vignette */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.18) 12%, var(--overlay-bg) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }

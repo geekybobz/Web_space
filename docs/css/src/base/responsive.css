@@ -1,0 +1,103 @@
+/* ========== RESPONSIVE DESIGN ========== */
+@media (max-width: 992px) {
+    .hero, .section-grid, .grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        padding-top: 8rem;
+    }
+    
+    .quantum-banner {
+        display: none !important;
+    }
+
+    .footer-content,
+    .footer-meta {
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        background: rgba(11, 14, 20, 0.98);
+        backdrop-filter: blur(15px);
+        padding: 2rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        gap: 2rem;
+    }
+    
+    .nav-links.active {
+        display: flex;
+    }
+    
+    .mobile-toggle {
+        display: block;
+    }
+
+    .nav-scholar {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.72rem;
+    }
+
+    .local-preview-exit {
+        padding: 0.45rem 0.72rem;
+        font-size: 0.66rem;
+    }
+
+    .mode-toggle {
+        gap: 0.3rem;
+        padding: 0.28rem 0.32rem;
+    }
+
+    .mode-toggle-btn {
+        min-width: 3.7rem;
+        padding: 0.45rem 0.68rem;
+    }
+
+    .mode-state {
+        font-size: 0.66rem;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-actions {
+        gap: 1rem;
+    }
+
+    .btn-cv {
+        margin-left: 0;
+    }
+    
+    .section {
+        padding: 5rem 0;
+    }
+    
+    .panel {
+        padding: 1.5rem;
+    }
+    
+    .timeline-item {
+        padding-left: 3rem;
+    }
+    
+    .timeline::before {
+        left: 14px;
+    }
+    
+    .timeline-dot {
+        left: 7px;
+    }
+    
+    .cursor-dot, .cursor-outline {
+        display: none;
+    }
+}

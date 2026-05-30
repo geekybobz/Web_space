@@ -1,0 +1,37 @@
+/* ========== ROOT VARIABLES ========== */
+:root {
+    /* Colors - Deep Space Quantum Theme */
+    --bg-main: #0B0E14; /* Deep space black/navy */
+    --bg-secondary: #121822;
+    
+    --text-main: #F3F4F6;
+    --text-muted: #9CA3AF;
+    
+    /* Neon Quantum Accents */
+    --accent-1: #00F0FF; /* Cyan - Represents tech/AI */
+    --accent-2: #B026FF; /* Purple - Represents quantum/physics */
+    --accent-3: #10B981; /* Neon Emerald - Success/Reinforcement Learning */
+    
+    --glass-bg: rgba(18, 24, 34, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.05);
+    --glass-highlight: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+
+    /* Surface tokens — used by timeline, cards, tags, etc. */
+    --surface-bg:          rgba(18, 24, 34, 0.4);
+    --surface-bg-hover:    rgba(18, 24, 34, 0.6);
+    --surface-border:      rgba(255, 255, 255, 0.07);
+    --surface-border-hover:rgba(255, 255, 255, 0.18);
+    --item-bg:             rgba(0, 0, 0, 0.25);
+    --item-bg-hover:       rgba(0, 0, 0, 0.35);
+    --icon-border:         rgba(255, 255, 255, 0.12);
+    
+    /* Typography */
+    --font-sans: 'Inter', sans-serif;
+    --font-heading: 'Outfit', sans-serif;
+    
+    /* Transitions */
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-medium: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}

@@ -1,0 +1,82 @@
+{
+  "filename": "gallery-museum.html",
+  "description": "Prototype gallery concept: Museum Gallery Timeline.",
+  "title": "Gallery Prototype B | Museum Timeline",
+  "switcher": [
+    {"href": "gallery-git.html", "label": "Prototype A \u00b7 Git Graph"},
+    {"href": "gallery-museum.html", "label": "Prototype B \u00b7 Museum", "active": true},
+    {"href": "gallery-journey.html", "label": "Prototype C \u00b7 Journey Board"}
+  ],
+  "hero": {
+    "kicker": "Prototype B",
+    "title": "Museum",
+    "subtitle": "Gallery Timeline",
+    "lead": "This direction treats each life phase like an exhibit panel. It is the strongest option if images should dominate and if you want the story to feel curated, cinematic, and easy for visitors to browse.",
+    "chips": [
+      "Best for image-led storytelling",
+      "Editorial exhibit rhythm",
+      "Clear room for captions and callouts"
+    ]
+  },
+  "aside": {
+    "title": "How This Prototype Reads",
+    "copy": "Each stage becomes a framed exhibit with image, caption, and short narrative. This design feels less like a code graph and more like a portfolio installation or curated archive.",
+    "legend": [
+      {"dot": "edu", "label": "Education-first", "note": "Stronger space for photos"},
+      {"dot": "project", "label": "Project frames", "note": "Good for screenshots or posters"},
+      {"dot": "research", "label": "Research spotlights", "note": "Can scale into larger feature rows"}
+    ]
+  },
+  "section_heading": {
+    "title": "Sample Exhibit Flow",
+    "copy": "All entries use placeholder copy and temporary images. The goal here is purely the visual reading experience and pacing between image-led blocks."
+  },
+  "rows": [
+    {
+      "phase": "Phase 01 \u00b7 Education",
+      "title": "10th Standard",
+      "copy": "A clean opening panel. Later this could hold one important photo, a short turning-point note, and perhaps a small caption about why this stage mattered.",
+      "image": "assets/images/avatar_about.webp",
+      "alt": "Placeholder exhibit image for 10th standard",
+      "image_label": "Exhibit I",
+      "pills": ["First milestone", "Caption-friendly"]
+    },
+    {
+      "phase": "Phase 02 \u00b7 Education",
+      "title": "12th Standard",
+      "copy": "The alternating layout breaks the page into memorable sections. This is useful if the real page will include certificates, achievements, portraits, campus imagery, or visual artifacts.",
+      "image": "assets/images/avatar_philosophy.webp",
+      "alt": "Placeholder exhibit image for 12th standard",
+      "image_label": "Exhibit II",
+      "pills": ["Curated rhythm", "Photo-led layout"]
+    },
+    {
+      "phase": "Phase 03 \u00b7 Transition",
+      "title": "College",
+      "copy": "This middle section can later become a major feature block with layered captions, special callouts, or embedded links into projects, labs, groups, or academic chapters.",
+      "image": "assets/images/avatar_1.webp",
+      "alt": "Placeholder exhibit image for college",
+      "image_label": "Exhibit III",
+      "pills": ["Main chapter", "Expandable showcase"]
+    },
+    {
+      "phase": "Phase 04 \u00b7 Projects",
+      "title": "Projects During College",
+      "copy": "If you want a richer visual gallery later, this pattern can accommodate project screenshots, poster thumbnails, lab photos, or multi-image carousels without changing the overall structure.",
+      "image": "assets/images/avatar_experience.webp",
+      "alt": "Placeholder exhibit image for projects",
+      "image_label": "Exhibit IV",
+      "pills": ["Visual storytelling", "Project archive ready"]
+    },
+    {
+      "phase": "Phase 05 \u00b7 Research",
+      "title": "Joined PhD",
+      "copy": "The latest chapter reads like a final room in the sequence. Later it can widen further for publications, active work, posters, PDFs, and links into your deeper research content.",
+      "image": "assets/images/avatar_research.webp",
+      "alt": "Placeholder exhibit image for phd",
+      "image_label": "Exhibit V",
+      "pills": ["Strong final act", "Poster and PDF friendly"]
+    }
+  ],
+  "footer": "this version is optimized for visitors who should first feel the story through imagery, then read the details."
+}

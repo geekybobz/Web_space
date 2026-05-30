@@ -1,0 +1,78 @@
+        /* ========== CUSTOM CURSOR ========== */
+        .cursor-dot {
+            width: 6px; height: 6px;
+            background: var(--accent-1);
+            border-radius: 50%;
+            position: fixed; top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 10px var(--accent-1);
+            transition: width 0.2s, height 0.2s;
+        }
+        .cursor-outline {
+            width: 36px; height: 36px;
+            border: 1px solid rgba(0,240,255,0.4);
+            border-radius: 50%;
+            position: fixed; top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        .mode-toggle {
+            position: fixed;
+            top: 48px;
+            right: 2.4rem;
+            z-index: 70;
+            display: inline-flex;
+            align-items: stretch;
+            gap: 0.5rem;
+            padding: 0.4rem 0.45rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 999px;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            box-shadow: var(--glass-shadow);
+        }
+
+        .mode-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 4.5rem;
+            padding: 0.52rem 0.95rem;
+            border: 1px solid color-mix(in srgb, var(--glass-border) 80%, transparent);
+            border-radius: 999px;
+            background: transparent;
+            color: var(--text-muted);
+            font-family: var(--font-heading);
+            cursor: pointer;
+            transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .mode-toggle-btn.active {
+            background: color-mix(in srgb, var(--bg-secondary) 64%, black 36%);
+            border-color: color-mix(in srgb, var(--accent-1) 48%, rgba(255,255,255,0.18));
+            color: #f8fafc;
+            box-shadow:
+                0 0 0 1px color-mix(in srgb, var(--accent-1) 26%, transparent),
+                0 0 18px color-mix(in srgb, var(--accent-1) 32%, transparent),
+                0 0 34px color-mix(in srgb, var(--accent-2) 16%, transparent);
+            transform: translateY(-1px) scale(1.03);
+        }
+
+        .mode-toggle-btn:hover {
+            border-color: var(--glass-border);
+            color: var(--text-main);
+            box-shadow: 0 0 12px color-mix(in srgb, var(--accent-1) 10%, transparent);
+        }
+
+        .mode-state {
+            font-family: monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: currentColor;
+        }

@@ -1,0 +1,27 @@
+{
+  "meta_description": "Page under construction \u2014 Mohammed Bilal P S is busy optimizing quantum systems.",
+  "title": "\ud83d\udea7 Under Construction | MBPS.",
+  "badge": "Parsing existence.html...",
+  "meta": "Local lab build \u00b7 unstable but alive",
+  "heading": "Page Under Construction",
+  "subtitle_html": "Takes <strong>time, coffee, and a few quantum leaps</strong> before it converges into something publishable.",
+  "progress_label": "webspace.build()",
+  "note": "The section is being rebuilt into something cleaner, faster, and worth the wait. Until then, the optimizer is still improvising.",
+  "image": {
+    "src": "assets/images/under_construction.webp",
+    "alt": "Cartoon of Mohammed Bilal looking overwhelmed in a construction hard hat with quantum physics equations floating around him"
+  },
+  "status_items": [
+    {"icon": "fa-circle-check", "class": "icon-ok", "text": "Schr\u00f6dinger eq. solved \u2714"},
+    {"icon": "fa-gear", "class": "icon-spin", "text": "Finding optimal workflow\u2026"},
+    {"icon": "fa-coffee", "class": "icon-ok", "text": "Coffee intake optimal \u2714"},
+    {"icon": "fa-triangle-exclamation", "class": "icon-warn", "text": "PhD thesis, don't ask me"},
+    {"icon": "fa-robot", "class": "icon-ok", "text": "ML model initialized \u2714"},
+    {"icon": "fa-hourglass-half", "class": "icon-spin", "text": "Research works still cooking"}
+  ],
+  "cta": {
+    "href": "index.html",
+    "label": "Jump Back Home"
+  },
+  "footer_html": "&copy; 2026 <a href=\"index.html\">Mohammed Bilal P S</a> \u00b7 Quantum Control &amp; AI/ML"
+}

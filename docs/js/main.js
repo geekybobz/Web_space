@@ -1,3 +1,6 @@
+/* Generated file. Edit docs/js/src/**, not docs/js/main.js. */
+
+/* Source: js/src/loader.js */
 // =====================================================
 // INTRO LOADER — waves + drift
 // =====================================================
@@ -154,6 +157,7 @@ function triggerHeroFadeIn() {
     setTimeout(startTypewriter, 720);
 }
 
+/* Source: js/src/hero-typewriter.js */
 let _twTimeoutId = null;
 let _twRunning = false;
 
@@ -197,6 +201,8 @@ function stopTypewriter() {
 }
 
 // ========== THEME SWITCHER ==========
+
+/* Source: js/src/theme-mode.js */
 // All themes available for all avatars — no grouping.
 const THEMES = [
     { id: 'crimson', label: 'Crimson', icon: '🌹' },
@@ -334,6 +340,7 @@ function initLocalPreviewControls() {
     });
 }
 
+/* Source: js/src/avatar-theme-init.js */
 // ========== AVATAR + THEME SELECTION ==========
 // On every fresh page load: randomly alternate avatar, then select from the active mode family.
 const avatarImg = document.querySelector('.profile-pic');
@@ -363,6 +370,7 @@ modeButtons.forEach((button) => {
 
 initLocalPreviewControls();
 
+/* Source: js/src/project-toggles.js */
 // ========== PROJECT CARD TOGGLES ==========
 const projectToggleButtons = Array.from(document.querySelectorAll('.project-toggle'));
 
@@ -403,6 +411,7 @@ if (projectToggleButtons.length) {
     });
 }
 
+/* Source: js/src/poster-toggles.js */
 // ========== POSTER TOGGLES ==========
 const posterToggleButtons = Array.from(document.querySelectorAll('.poster-toggle'));
 if (posterToggleButtons.length) {
@@ -430,6 +439,7 @@ if (posterToggleButtons.length) {
     });
 }
 
+/* Source: js/src/avatar-tilt.js */
 // ========== AVATAR TILT ==========
 const avatarContainer = document.querySelector('.hero-avatar');
 if (avatarContainer && avatarImg) {
@@ -450,6 +460,7 @@ if (avatarContainer && avatarImg) {
     });
 }
 
+/* Source: js/src/custom-cursor.js */
 // ========== CUSTOM CURSOR ==========
 const cursorDot     = document.querySelector('.cursor-dot');
 const cursorOutline = document.querySelector('.cursor-outline');
@@ -500,6 +511,7 @@ if (cursorDot && cursorOutline) {
     });
 }
 
+/* Source: js/src/navbar-mobile.js */
 // ========== NAVBAR SCROLL CLASS ==========
 const navbar = document.querySelector('.navbar');
 // In page-engine mode the navbar stays fixed; mark .scrolled immediately for style
@@ -524,6 +536,8 @@ if (mobileToggle && navLinksEl) {
 
 // =====================================================
 // PAGE ENGINE
+
+/* Source: js/src/page-engine.js */
 // =====================================================
 const PageEngine = (() => {
     if (isMobileBlockedViewport()) {
@@ -906,6 +920,7 @@ const PageEngine = (() => {
     return { goTo, next, prev };
 })();
 
+/* Source: js/src/crt-terminal.js */
 // ========== CRT TERMINAL LOG CYCLING ==========
 let _crtPause = null;
 let _crtResume = null;
@@ -970,9 +985,10 @@ let _crtResume = null;
             clearInterval(bootInterval);
             _crtResume();
         }
-    }, 350);
+    }, 260);
 })();
 
+/* Source: js/src/analytics-toast.js */
 // =========================================================
 // ANALYTICS TOAST — shows once per browser, then remembers
 // =========================================================
@@ -993,14 +1009,17 @@ let _crtResume = null;
         toast.classList.add('gc-visible');
     }, 5500);
 
-    // Auto-dismiss after 10 s (non-intrusive)
-    setTimeout(function () {
-        if (toast.classList.contains('gc-visible')) dismiss();
-    }, 12500);
+// Auto-dismiss after 10 s (non-intrusive)
+setTimeout(function () {
+    if (toast.classList.contains('gc-visible')) dismiss();
+}, 12500);
 
-    if (closeBtn) closeBtn.addEventListener('click', dismiss);
+if (closeBtn) {
+    closeBtn.addEventListener('click', dismiss);
+}
 })();
 
+/* Source: js/src/page-avatars.js */
 // =====================================================
 // PAGE ICON BADGE — inject icon + color, ripple, tooltip, click-to-home
 // =====================================================
@@ -1070,6 +1089,7 @@ let _crtResume = null;
     });
 })();
 
+/* Source: js/src/page-lifecycle.js */
 // =====================================================
 // HERO LIFECYCLE — gate effects to active hero page
 // =====================================================

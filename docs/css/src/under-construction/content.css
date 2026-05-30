@@ -1,0 +1,133 @@
+        /* ========== TEXT ========== */
+        .uc-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 3vw, 2.8rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--text-main) 0%, var(--accent-1) 50%, var(--accent-2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+        }
+
+        .uc-subtitle {
+            font-size: clamp(1.08rem, 1.22vw, 1.3rem);
+            color: var(--text-muted);
+            line-height: 1.45;
+            max-width: 44rem;
+            margin: 0;
+        }
+        .uc-subtitle strong {
+            color: var(--accent-1);
+            font-weight: 600;
+        }
+
+        /* ========== PROGRESS BAR ========== */
+        .progress-section {
+            margin: 0;
+        }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.55rem;
+            font-family: monospace;
+            font-size: 1.02rem;
+        }
+        .progress-label .label-text { color: var(--text-muted); }
+        .progress-label .label-pct  { color: var(--accent-1); font-weight: 700; }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--progress-track);
+            border-radius: 100px;
+            overflow: hidden;
+            border: 1px solid var(--progress-border);
+        }
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 100px;
+            background: linear-gradient(90deg, var(--accent-2), var(--accent-1));
+            box-shadow: 0 0 12px var(--accent-1);
+            transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ========== QUIRKY STATUS ITEMS ========== */
+        .status-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.7rem;
+            margin: 0;
+            text-align: left;
+        }
+        .status-list li {
+            background: var(--status-bg);
+            border: 1px solid var(--status-border);
+            border-radius: 8px;
+            padding: 0.72rem 0.84rem;
+            font-size: 0.98rem;
+            line-height: 1.35;
+            color: var(--text-muted);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.68rem;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .status-list li:hover {
+            border-color: rgba(0, 240, 255, 0.2);
+            background: var(--status-hover);
+        }
+        .status-list .icon-ok   { color: var(--accent-3); }
+        .status-list .icon-spin { color: var(--accent-1); animation: iconSpin 2s linear infinite; }
+        .status-list .icon-warn { color: #F59E0B; animation: blink 1.5s infinite; }
+        @keyframes iconSpin {
+            from { transform: rotate(0deg); }
+            to   { transform: rotate(360deg); }
+        }
+
+        /* ========== CTA BUTTON ========== */
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.78rem 1.45rem;
+            border: 1px solid var(--accent-1);
+            color: var(--accent-1);
+            background: transparent;
+            border-radius: 6px;
+            font-family: var(--font-heading);
+            font-size: 1.02rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15), inset 0 0 15px rgba(0, 240, 255, 0.08);
+        }
+        .btn-home:hover {
+            background: var(--accent-1);
+            color: var(--bg-main);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+            transform: translateY(-3px);
+        }
+
+        /* ========== FOOTER ========== */
+        .uc-footer {
+            font-size: 0.96rem;
+            line-height: 1.45;
+            color: rgba(156, 163, 175, 0.6);
+            font-family: monospace;
+        }
+        .uc-footer a {
+            color: var(--footer-link);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .uc-footer a:hover { color: var(--accent-1); }

@@ -1,0 +1,33 @@
+        /* ========== BACKGROUND BLOBS ========== */
+        .bg-blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.28;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .blob-1 {
+            width: 55vw; height: 55vw;
+            top: -15%; left: -15%;
+            background: radial-gradient(circle, color-mix(in srgb, var(--accent-2) 35%, transparent), transparent 65%);
+            animation: floatBlob 22s ease-in-out infinite alternate;
+        }
+        .blob-2 {
+            width: 45vw; height: 45vw;
+            bottom: -10%; right: -10%;
+            background: radial-gradient(circle, color-mix(in srgb, var(--accent-1) 30%, transparent), transparent 65%);
+            animation: floatBlob 28s ease-in-out infinite alternate-reverse;
+        }
+        .blob-3 {
+            width: 35vw; height: 35vw;
+            top: 50%; left: 30%;
+            transform: translateY(-50%);
+            background: radial-gradient(circle, color-mix(in srgb, var(--accent-3) 20%, transparent), transparent 65%);
+            animation: floatBlob 35s ease-in-out infinite alternate;
+        }
+        @keyframes floatBlob {
+            0%   { transform: translateY(0) scale(1) rotate(0deg); }
+            50%  { transform: translateY(-40px) scale(1.08) rotate(8deg); }
+            100% { transform: translateY(15px) scale(0.93) rotate(-5deg); }
+        }

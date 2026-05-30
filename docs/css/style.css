@@ -1,3 +1,6 @@
+/* Generated file. Edit docs/css/src/**, not docs/css/style.css. */
+
+/* Source: css/src/base/root-variables.css */
 /* ========== ROOT VARIABLES ========== */
 :root {
     /* Colors - Deep Space Quantum Theme */
@@ -36,6 +39,7 @@
     --transition-slow: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Source: css/src/base/reset-base.css */
 /* ========== RESET & BASE ========== */
 * {
     margin: 0;
@@ -132,6 +136,7 @@ body::before {
     color: white;
 }
 
+/* Source: css/src/components/cursor.css */
 /* ========== CUSTOM CURSOR ========== */
 .cursor-dot {
     width: 6px;
@@ -161,6 +166,7 @@ body::before {
     transition: width 0.2s, height 0.2s, border-color 0.2s;
 }
 
+/* Source: css/src/components/background-shapes.css */
 /* ========== BACKGROUND SHAPES ========== */
 .bg-shape {
     position: fixed;  /* fixed so decorative shapes never affect layout flow */
@@ -206,6 +212,7 @@ body::before {
     100% { transform: translateY(20px) scale(0.9) rotate(-5deg); }
 }
 
+/* Source: css/src/base/typography-utils.css */
 /* ========== TYPOGRAPHY & UTILS ========== */
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
@@ -262,6 +269,7 @@ a {
     box-sizing: border-box;
 }
 
+/* Source: css/src/components/ui-components.css */
 /* ========== UI COMPONENTS ========== */
 .panel {
     background: var(--glass-bg);
@@ -367,6 +375,7 @@ a {
     transform: translateY(-2px);
 }
 
+/* Source: css/src/components/navbar.css */
 /* ========== NAVBAR ========== */
 .navbar {
     position: fixed;
@@ -676,6 +685,7 @@ a {
     transform: translateY(-1px) scale(1.03);
 }
 
+/* Source: css/src/sections/hero-visuals.css */
 /* ========== HERO SECTION ========== */
 .hero {
     min-height: auto;
@@ -1035,6 +1045,7 @@ a {
 
 .visual-data-overlay p { margin-bottom: 0.25rem; }
 
+/* Source: css/src/sections/sections-structure.css */
 /* ========== SECTIONS STRUCTURE ========== */
 .section {
     padding: 6rem 0;
@@ -1200,6 +1211,7 @@ a {
     margin-bottom: clamp(1rem, 1.8vw, 1.8rem);
 }
 
+/* Source: css/src/sections/skills-tech.css */
 /* ========== SKILLS & TECH STACK ========== */
 .skills-container {
     display: flex;
@@ -1250,6 +1262,7 @@ a {
     letter-spacing: 0.05em;
 }
 
+/* Source: css/src/sections/experience.css */
 /* ========== TIMELINE (EXPERIENCE) ========== */
 .timeline {
     position: relative;
@@ -1636,6 +1649,7 @@ a {
     }
 }
 
+/* Source: css/src/sections/cards-projects.css */
 /* ========== CARDS (EDUCATION & PROJECTS) ========== */
 .card {
     display: flex;
@@ -1799,6 +1813,7 @@ a {
     margin-bottom: 1.5rem;
 }
 
+/* Source: css/src/sections/research-works.css */
 /* ========== RESEARCH CARDS (HORIZONTAL) ========== */
 .research-cards {
     display: flex;
@@ -2107,6 +2122,7 @@ a {
     border: none;
 }
 
+/* Source: css/src/sections/philosophy.css */
 /* ========== PHILOSOPHY SECTION ========== */
 .philosophy-layout {
     display: grid;
@@ -2343,6 +2359,7 @@ a {
     }
 }
 
+/* Source: css/src/sections/contact-footer.css */
 /* ========== CONTACT ========== */
 .contact-panel {
     border-color: rgba(0, 240, 255, 0.15);
@@ -2418,18 +2435,7 @@ footer {
     opacity: 0.85;
 }
 
-/* ========== REVEAL ANIMATIONS ========== */
-.reveal {
-    opacity: 0;
-    transform: translateY(40px);
-    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-
+/* Source: css/src/base/responsive.css */
 /* ========== RESPONSIVE DESIGN ========== */
 @media (max-width: 992px) {
     .hero, .section-grid, .grid-2 {
@@ -2534,46 +2540,7 @@ footer {
     }
 }
 
-/* ========== NAV RIGHT WRAPPER ========== */
-.nav-right {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.local-preview-exit {
-    display: none;
-    align-items: center;
-    gap: 0.45rem;
-    padding: 0.52rem 0.9rem;
-    border-radius: 999px;
-    border: 1px solid rgba(248, 113, 113, 0.28);
-    background: rgba(248, 113, 113, 0.08);
-    color: #f87171;
-    font-family: monospace;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: transform 0.2s ease, opacity 0.2s ease, border-color 0.2s ease;
-}
-
-.local-preview-exit:hover {
-    transform: translateY(-1px);
-    border-color: rgba(248, 113, 113, 0.45);
-}
-
-body.local-preview .local-preview-exit {
-    display: inline-flex;
-}
-
-body.viewing-contact .nav-scholar {
-    opacity: 0;
-    pointer-events: none;
-    visibility: hidden;
-}
-
+/* Source: css/src/components/theme-toggle.css */
 /* ========== THEME TOGGLE BUTTON ========== */
 .theme-toggle {
     display: inline-flex;
@@ -2609,6 +2576,7 @@ body.viewing-contact .nav-scholar {
     transition: transform 0.25s ease;
 }
 
+/* Source: css/src/themes/all-themes.css */
 /* ========== THEME 1: QUANTUM DARK (default) ========== */
 [data-theme="dark"] {
     --bg-main: #111827;
@@ -2958,10 +2926,7 @@ body {
     opacity: 0.45;
 }
 
-/* =====================================================
-   PAGE ENGINE — full-viewport page-based layout
-   ===================================================== */
-
+/* Source: css/src/components/page-engine-shell.css */
 #page-engine {
     --edge-cue-top: calc(var(--nav-height, 70px) + 0.75rem);
     --edge-cue-bottom: 3rem;
@@ -3112,13 +3077,7 @@ body {
     width: 100%;
 }
 
-/* Section pages: push content below the top-right icon badge
-   Badge is at top:72px, height 48px → ends at 120px. Start at 135px. */
-.page.section .page-inner {
-    padding-top: var(--page-safe-top);
-}
-
-
+/* Source: css/src/sections/hero-card-redesign.css */
 /* ========== HERO CARD — SINGLE CENTERED CARD ========== */
 .hero-page .hero-content {
     max-width: min(810px, 92vw);
@@ -3647,6 +3606,7 @@ body {
 /* Override old section padding — pages handle their own spacing */
 .page.section, .page .section { padding: 0; }
 
+/* Source: css/src/components/page-dots-arrows.css */
 /* --- Side dot navigator ------------------------------- */
 .page-dots {
     position: fixed;
@@ -4172,6 +4132,7 @@ body {
     .page-avatar-ring { inset: -3px; border-radius: 13px; }
 }
 
+/* Source: css/src/effects/loader.css */
 /* ========================================
    INTRO LOADER — waves + drift
    ======================================== */
@@ -4303,6 +4264,7 @@ body {
     transition: width 0.07s linear;
 }
 
+/* Source: css/src/effects/intro-typewriter.css */
 /* ========================================
    HERO INTRO FADE-UP STAGGER
    ======================================== */

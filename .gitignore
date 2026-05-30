@@ -7,3 +7,5 @@
 .DS_Store
 local_run.sh
 cv_assets/
+
+tools/__pycache__/

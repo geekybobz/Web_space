@@ -1,0 +1,307 @@
+/* ========== RESEARCH CARDS (HORIZONTAL) ========== */
+.research-cards {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.5rem, 0.8vw, 0.75rem);
+    width: min(100%, 1020px);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.research-card {
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.research-card--toggleable {
+    align-items: stretch;
+}
+
+.rc-num {
+    width: clamp(3.5rem, 5vw, 4.5rem);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid var(--surface-border);
+    font-family: monospace;
+    font-size: clamp(1rem, 1.6vw, 1.5rem);
+    font-weight: 700;
+    color: var(--accent-1);
+    opacity: 0.3;
+}
+
+.rc-body {
+    flex: 1;
+    padding: clamp(0.8rem, 1.2vw, 1.1rem) clamp(1rem, 1.5vw, 1.35rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.rc-summary {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.rc-summary-main {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.rc-title {
+    font-size: clamp(1.22rem, 1.72vw, 1.52rem);
+    color: var(--text-main);
+    font-weight: 600;
+    margin: 0;
+}
+
+.rc-desc {
+    font-size: clamp(1rem, 1.12vw, 1.08rem);
+    color: var(--text-muted);
+    line-height: 1.68;
+    margin: 0;
+}
+
+.rc-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding-top: 0.95rem;
+    margin-top: 0.95rem;
+    border-top: 1px solid var(--surface-border);
+}
+
+.rc-detail[hidden] {
+    display: none !important;
+}
+
+.rc-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
+}
+
+.rc-tags {
+    display: flex;
+    gap: 0.35rem;
+    flex-wrap: wrap;
+}
+
+.rc-footer--detail {
+    justify-content: flex-start;
+    margin-top: 0;
+}
+
+.project-toggle {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 9.5rem;
+    padding: 0.55rem 0.95rem;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 240, 255, 0.18);
+    background: rgba(0, 240, 255, 0.04);
+    color: var(--accent-1);
+    font-family: monospace;
+    font-size: 0.86rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.project-toggle:hover {
+    background: rgba(0, 240, 255, 0.08);
+    border-color: rgba(0, 240, 255, 0.34);
+    transform: translateY(-1px);
+}
+
+.project-toggle[aria-expanded="true"] {
+    background: rgba(0, 240, 255, 0.1);
+    border-color: rgba(0, 240, 255, 0.42);
+}
+
+.research-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0, 240, 255, 0.03), transparent);
+    pointer-events: none;
+    transition: var(--transition-medium);
+    opacity: 0;
+}
+
+.research-card:hover::after { opacity: 1; }
+
+.draft-card.research-card {
+    align-items: stretch;
+    text-align: left;
+}
+
+.draft-card.research-card .rc-num {
+    opacity: 0.15;
+}
+
+/* ========== WORKS PAGE — block labels, in-progress, posters ========== */
+
+.works-block-label {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: monospace;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+    margin-top: 1.6rem;
+    width: min(100%, 1020px);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.works-block-label:first-of-type {
+    margin-top: 0;
+}
+
+.works-active-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent-1);
+    box-shadow: 0 0 6px var(--accent-1);
+    animation: pulse-dot 1.8s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.45; transform: scale(0.75); }
+}
+
+.rc-inprogress {
+    border-style: dashed;
+    border-color: color-mix(in srgb, #F59E0B 28%, var(--surface-border));
+}
+
+.rc-inprogress .rc-num {
+    color: #F59E0B;
+    opacity: 0.7;
+    border-right-color: color-mix(in srgb, #F59E0B 20%, var(--surface-border));
+}
+
+.works-active-dot {
+    background: #F59E0B;
+    box-shadow: 0 0 6px #F59E0B;
+}
+
+.rc-num--poster {
+    color: var(--accent-2);
+    border-right-color: color-mix(in srgb, var(--accent-2) 20%, var(--surface-border));
+}
+
+.rc-status-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.18rem 0.55rem;
+    border-radius: 4px;
+    line-height: 1.4;
+}
+
+.rc-status-tag--prl {
+    align-self: flex-start;
+    background: color-mix(in srgb, #F59E0B 10%, transparent);
+    border: 1px solid color-mix(in srgb, #F59E0B 40%, transparent);
+    color: #F59E0B;
+    font-size: 0.65rem;
+    padding: 0.12rem 0.45rem;
+    animation: prl-flicker 3s ease-in-out infinite;
+}
+
+@keyframes prl-flicker {
+    0%, 100% { opacity: 1;   box-shadow: 0 0 4px color-mix(in srgb, #F59E0B 35%, transparent); }
+    45%       { opacity: 0.4; box-shadow: none; }
+    55%       { opacity: 0.4; box-shadow: none; }
+    70%       { opacity: 1;   box-shadow: 0 0 6px color-mix(in srgb, #F59E0B 50%, transparent); }
+}
+
+.rc-inprogress .clean-list {
+    margin-top: 0.65rem;
+    padding-left: 0;
+}
+
+/* Posters grid */
+.rc-meta-line {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.1rem;
+}
+
+.rc-num--poster {
+    flex-direction: column;
+    gap: 0.1rem;
+    font-size: 0.65rem;
+    opacity: 0.45;
+    line-height: 1.2;
+}
+
+.rc-num-conf {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.rc-num-year {
+    font-size: 0.65rem;
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+.poster-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: var(--accent-1);
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    font-family: inherit;
+}
+
+.poster-toggle:hover {
+    opacity: 0.75;
+}
+
+.poster-embed {
+    margin-top: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--surface-border);
+}
+
+.poster-embed iframe {
+    display: block;
+    width: 100%;
+    height: 72vh;
+    border: none;
+}

@@ -1,0 +1,88 @@
+{
+  "filename": "gallery-git.html",
+  "description": "Prototype gallery concept: Git Graph Timeline.",
+  "title": "Gallery Prototype A | Git Graph Timeline",
+  "switcher": [
+    {"href": "gallery-git.html", "label": "Prototype A \u00b7 Git Graph", "active": true},
+    {"href": "gallery-museum.html", "label": "Prototype B \u00b7 Museum"},
+    {"href": "gallery-journey.html", "label": "Prototype C \u00b7 Journey Board"}
+  ],
+  "hero": {
+    "kicker": "Prototype A",
+    "title": "Git Graph",
+    "subtitle": "Timeline Gallery",
+    "lead": "This direction turns your life and work path into a visual commit history. It is the strongest option if you want the page to feel technical, personal, and structured around milestones that later link out to deeper pages.",
+    "chips": [
+      "Best for academic + technical identity",
+      "Alternating milestone cards",
+      "Easy to extend with future branches"
+    ]
+  },
+  "aside": {
+    "title": "How This Prototype Reads",
+    "copy": "The central line behaves like a repository history. Small nodes can represent transitions, while larger cards can later hold real achievements, publications, posters, awards, or project breakouts.",
+    "legend": [
+      {"dot": "edu", "label": "Education", "note": "Foundational study stages"},
+      {"dot": "project", "label": "Projects", "note": "Major build or work outputs"},
+      {"dot": "transition", "label": "Transition", "note": "Moves between chapters"},
+      {"dot": "research", "label": "Research", "note": "PhD and advanced work"}
+    ]
+  },
+  "section_heading": {
+    "title": "Sample Git History",
+    "copy": "Temporary milestones only. Real text, images, dates, and target links can be replaced later once the layout direction is approved."
+  },
+  "rows": [
+    {
+      "row_class": "edu",
+      "commit": "Commit 01",
+      "state": "Foundation",
+      "image": "assets/images/avatar_about.webp",
+      "image_label": "Temporary Image",
+      "title": "10th Standard",
+      "copy": "A first major checkpoint in the story. This card would later hold a short note, one image, and a redirect to a deeper page or achievement container.",
+      "tag": "Education"
+    },
+    {
+      "row_class": "edu",
+      "commit": "Commit 02",
+      "state": "Preparation",
+      "image": "assets/images/avatar_philosophy.webp",
+      "image_label": "Temporary Image",
+      "title": "12th Standard",
+      "copy": "The layout supports a short narrative under each checkpoint. Later this could show rank, interests, formative work, or the start of a specific research direction.",
+      "tag": "Education"
+    },
+    {
+      "row_class": "transition",
+      "commit": "Commit 03",
+      "state": "Branch Point",
+      "image": "assets/images/avatar_1.webp",
+      "image_label": "Temporary Image",
+      "title": "College",
+      "copy": "This is a good spot for a wider branch in the future: coursework, early research exposure, clubs, internships, and role shifts can all split out from this node.",
+      "tag": "Transition"
+    },
+    {
+      "row_class": "project",
+      "commit": "Commit 04",
+      "state": "Build Cycle",
+      "image": "assets/images/avatar_experience.webp",
+      "image_label": "Temporary Image",
+      "title": "Projects During College",
+      "copy": "This card format can later expand into project tags, short impact notes, posters, demos, or links to individual containers for each major build or experiment.",
+      "tag": "Projects"
+    },
+    {
+      "row_class": "research",
+      "commit": "Commit 05",
+      "state": "Current Head",
+      "image": "assets/images/avatar_research.webp",
+      "image_label": "Temporary Image",
+      "title": "Joined PhD",
+      "copy": "The latest and most important node can be visually larger later, with publications, posters, active themes, and onward links to work pages, PDFs, or a living research log.",
+      "tag": "Research"
+    }
+  ],
+  "footer": "this version is optimized for a technical narrative. It will work especially well if later you want branch lines, year filters, or links out to research and project sub-pages."
+}

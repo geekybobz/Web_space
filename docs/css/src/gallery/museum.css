@@ -1,0 +1,61 @@
+.museum-stack {
+    display: grid;
+    gap: 26px;
+}
+
+.museum-row {
+    display: grid;
+    grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.1fr);
+    gap: 24px;
+    align-items: stretch;
+}
+
+.museum-row:nth-child(even) {
+    grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
+}
+
+.museum-row:nth-child(even) .gallery-card-image {
+    order: 2;
+}
+
+.museum-copy-card {
+    padding: 24px 24px 22px;
+}
+
+.museum-phase {
+    margin-bottom: 12px;
+    color: var(--gallery-text-muted);
+    font-family: var(--gallery-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.museum-title {
+    margin: 0 0 14px;
+    font-family: var(--gallery-heading);
+    font-size: clamp(26px, 3vw, 42px);
+    letter-spacing: -0.04em;
+}
+
+.museum-copy {
+    margin: 0 0 18px;
+    color: var(--gallery-text-muted);
+    font-size: 15px;
+    line-height: 1.85;
+}
+
+.museum-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.museum-pill {
+    padding: 9px 13px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--gallery-text);
+    font-size: 13px;
+    font-weight: 600;
+}

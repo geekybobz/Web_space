@@ -58,10 +58,9 @@
             <a href="#" class="brand" data-page-link="0">MBPS.</a>
             <div class="nav-links">
                 <a href="#about" class="nav-link" data-page-link="1"><i class="fa-solid fa-terminal" style="margin-right:4px;"></i> About</a>
-                <a href="#philosophy" class="nav-link" data-page-link="2"><i class="fa-solid fa-lightbulb" style="margin-right:4px;"></i> Philosophy</a>
-                <a href="#experience" class="nav-link" data-page-link="3"><i class="fa-solid fa-code-branch" style="margin-right:4px;"></i> Experience</a>
-                <a href="#research" class="nav-link" data-page-link="4"><i class="fa-solid fa-microchip" style="margin-right:4px;"></i> Works</a>
-                <a href="#contact" class="nav-link btn-contact" data-page-link="5"><i class="fa-solid fa-paper-plane" style="margin-right:4px;"></i> Contact</a>
+                <a href="#experience" class="nav-link" data-page-link="2"><i class="fa-solid fa-code-branch" style="margin-right:4px;"></i> Experience</a>
+                <a href="#research" class="nav-link" data-page-link="3"><i class="fa-solid fa-microchip" style="margin-right:4px;"></i> Works</a>
+                <a href="#contact" class="nav-link btn-contact" data-page-link="4"><i class="fa-solid fa-paper-plane" style="margin-right:4px;"></i> Contact</a>
             </div>
             <div class="nav-right">
                 <div class="mode-toggle" aria-label="Theme mode toggle" role="group">
@@ -238,7 +237,7 @@
 
         </section>
 
-        <!-- PAGE 1 — About -->
+        <!-- PAGE 1 — About (philosophy panel at top, profile below) -->
 
         <section class="page section" id="about" data-page="1" data-label="About">
 
@@ -255,6 +254,112 @@
             <div class="page-inner">
 
 
+
+                <!-- ── Philosophy panel ─────────────────────────────────────
+
+                     First thing the user sees on this page.
+
+                     Uses .panel directly (NOT .about-card) so it inherits
+
+                     the full glass treatment; about-card overrides don't apply.
+
+                ──────────────────────────────────────────────────────────── -->
+
+                <div class="panel" id="phil-card" data-accent="2">
+
+
+
+                    <div class="phil-header">
+
+                        <div>
+
+                            <div class="section-label">Mindset</div>
+
+                            <h3 class="phil-card-title">My Philosophy</h3>
+
+                        </div>
+
+                        <span class="phil-count" id="philCount">1 / 5</span>
+
+                    </div>
+
+
+
+                    <nav class="phil-nav" aria-label="Select a thought">
+
+                        <button class="phil-btn" data-idx="0" data-accent="2">
+
+                            <span class="phil-sym">◈</span>Origin
+
+                        </button>
+
+                        <button class="phil-btn" data-idx="1" data-accent="1">
+
+                            <span class="phil-sym">{H, ·}</span>Structure
+
+                        </button>
+
+                        <button class="phil-btn" data-idx="2" data-accent="1">
+
+                            <span class="phil-sym">∇L</span>Learning
+
+                        </button>
+
+                        <button class="phil-btn" data-idx="3" data-accent="3">
+
+                            <span class="phil-sym">≅</span>Fields
+
+                        </button>
+
+                        <button class="phil-btn" data-idx="4" data-accent="2">
+
+                            <span class="phil-sym">⌨</span>Code
+
+                        </button>
+
+                    </nav>
+
+
+
+                    <div class="phil-stage">
+
+                        <span class="phil-ghost" id="philGhost" aria-hidden="true"></span>
+
+                        <div class="phil-kicker" id="philKicker"></div>
+
+                        <h4 class="phil-thought-title" id="philTitle"></h4>
+
+                        <div class="phil-text-wrap">
+
+                            <p class="phil-text">
+
+                                <span id="philText"></span><span class="phil-cursor" id="philCursor">█</span>
+
+                            </p>
+
+                        </div>
+
+                        <div class="phil-footer">
+
+                            <div class="phil-track"><div class="phil-fill" id="philFill"></div></div>
+
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+
+
+                <!-- ── Gradient separator ───────────────────────────────── -->
+
+                <div class="phil-section-sep" aria-hidden="true"></div>
+
+
+
+                <!-- ── About section ────────────────────────────────────── -->
 
                 <div class="section-header">
 
@@ -294,7 +399,7 @@
 
                                     <a class="inline-link" href="https://scholar.google.com/citations?user=lvShgyQAAAAJ&hl=it" target="_blank" rel="noopener noreferrer">Paolo Andrea Erdman</a>,
 
-                                    focused on quantum batteries via reinforcement learning — which drew me toward control, optimization, and the deeper questions around how algorithms learn and generalize.
+                                    focused on quantum batteries via reinforcement learning, which drew me toward control, optimization, and the deeper questions around how algorithms learn and generalize.
 
                                 </p>
 
@@ -385,140 +490,6 @@
             </div>
 
 
-
-        </section>
-
-        <!-- PAGE 2 — Philosophy -->
-
-        <section class="page section philosophy-polish-aura philosophy-polish-varied philosophy-polish-tactile" id="philosophy" data-page="2" data-label="Philosophy">
-
-            <div class="page-avatar" data-page-avatar="2" data-icon="fa-lightbulb" data-color="accent-2" aria-hidden="true">
-
-                <div class="page-avatar-ring"></div>
-
-            </div>
-
-            <div class="page-inner">
-
-                <div class="section-header">
-
-                    <div class="section-label">Mindset</div>
-
-                    <h2 class="section-title">My Philosophy</h2>
-
-                </div>
-
-
-
-                <div class="philosophy-layout">
-
-                    <article class="panel philosophy-feature">
-
-                        <div class="philosophy-kicker">Where My Curiosity Begins</div>
-
-                        <div class="philosophy-feature-grid">
-
-                            <p class="philosophy-lead">
-
-                                What has stayed with me across different problems is a certain kind of curiosity: the wish to understand why something works before deciding how to work with it.
-
-                            </p>
-
-                            <div class="philosophy-feature-copy">
-
-                                <p class="text-muted">
-
-                                    That is part of what draws me to quantum control. I like problems where physical intuition, mathematical structure, and constructive method have to stay in conversation with each other: not only to find a solution, but to understand what kind of solution is even meaningful.
-
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                    </article>
-
-
-
-                    <div class="philosophy-rail">
-
-                        <article class="panel philosophy-note">
-
-                            <div class="philosophy-note-symbol">{H, ·}</div>
-
-                            <h3 class="philosophy-note-title">Starting from Structure</h3>
-
-                            <p class="philosophy-note-body text-muted">
-
-                                Before reaching for a technique, I want to understand the structure of the problem: what is constrained, what is preserved, and what solutions are actually possible. A method chosen too early can work in a limited setting and still miss the deeper logic.
-
-                            </p>
-
-                        </article>
-
-
-
-                        <article class="panel philosophy-note">
-
-                            <div class="philosophy-note-symbol">∇L</div>
-
-                            <h3 class="philosophy-note-title">Why Learning Interests Me</h3>
-
-                            <p class="philosophy-note-body text-muted">
-
-                                Machine learning interests me beyond the toolkit it provides. The deeper question is how a system exposed to examples begins to extract structure it was never shown. What gets represented, what gets compressed, what generalizes. That feels genuinely open.
-
-                            </p>
-
-                        </article>
-
-
-
-                        <article class="panel philosophy-note">
-
-                            <div class="philosophy-note-symbol">≅</div>
-
-                            <h3 class="philosophy-note-title">Following Ideas Across Fields</h3>
-
-                            <p class="philosophy-note-body text-muted">
-
-                                The same pattern tends to reappear across fields: a variational argument, a notion of robustness, a constrained optimization picture. When an idea resurfaces in a different language, I take it seriously. It usually points to something deeper underneath.
-
-                            </p>
-
-                        </article>
-
-                    </div>
-
-                </div>
-
-
-
-                <article class="panel philosophy-bridge">
-
-                    <div class="philosophy-bridge-icon" aria-hidden="true">💻</div>
-
-                    <div class="philosophy-bridge-copy">
-
-                        <h3 class="philosophy-note-title">Programming and Clarity</h3>
-
-                        <p class="text-muted">
-
-                            I tend to trust an idea more after I have built it. Programming exposes vague understanding quickly. It forces assumptions into the open and makes it hard to hide behind elegant language.
-
-                        </p>
-
-                        <p class="philosophy-closing">
-
-                            Moving across ideas, for me, is not a way of leaving a field behind, but a way of seeing it more clearly.
-
-                        </p>
-
-                    </div>
-
-                </article>
-
-            </div>
 
         </section>
 

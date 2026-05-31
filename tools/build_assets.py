@@ -64,6 +64,7 @@ MAIN_JS_MODULES = [
     "js/src/crt-terminal.js",
     "js/src/analytics-toast.js",
     "js/src/page-avatars.js",
+    "js/src/philosophy-reveal.js",
     "js/src/page-lifecycle.js"
 ]
 

@@ -17,7 +17,6 @@ DEFAULT_ASSET_VERSION = "dev"
 ORDER = [
     "hero.html",
     "about.html",
-    "philosophy.html",
     "experience.html",
     "research.html",
     "contact.html",

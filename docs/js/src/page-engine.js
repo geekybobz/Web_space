@@ -179,7 +179,7 @@ const PageEngine = (() => {
             a.classList.toggle('active', parseInt(a.dataset.pageLink) === idx);
         });
 
-        document.body.classList.toggle('viewing-contact', idx === 5);
+        document.body.classList.toggle('viewing-contact', idx === 4);
         clearArrowAttract();
 
         // Close mobile menu

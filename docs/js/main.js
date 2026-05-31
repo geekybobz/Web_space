@@ -1145,14 +1145,20 @@ const _philCount   = document.getElementById('philCount');
 const _philButtons = Array.from(document.querySelectorAll('.phil-btn'));
 
 // ── State ─────────────────────────────────────────────────
-let _philCurrentIdx = -1;
-let _philTypeTimer  = null;
-let _philActive     = false;
+let _philCurrentIdx  = -1;
+let _philTypeTimer   = null;
+let _philStartTimer  = null;  /* BUG-FIX: track start-delay timer so stop() can cancel it */
+let _philActive      = false;
 
-// ── Helpers ───────────────────────────────────────────────
-function _philClearTyping() {
+// ── Clear ALL pending timers ───────────────────────────────
+// Must cancel both the word-step timer AND the start-delay timer.
+// Using separate _philClearTyping() that only cleared _philTypeTimer was
+// the root cause of the duplicate-showThought glitch.
+function _philClearAll() {
     clearTimeout(_philTypeTimer);
-    _philTypeTimer = null;
+    clearTimeout(_philStartTimer);
+    _philTypeTimer  = null;
+    _philStartTimer = null;
 }
 
 function _philSetActive(idx) {
@@ -1163,19 +1169,21 @@ function _philSetActive(idx) {
 function _philShowThought(idx) {
     if (!_philCard) return;
     if (idx < 0 || idx >= _PHIL_THOUGHTS.length) return;
-    _philClearTyping();
+    _philClearAll();
     _philCurrentIdx = idx;
     const t = _PHIL_THOUGHTS[idx];
 
     _philSetActive(idx);
-    _philCard.dataset.accent   = t.accent;
-    _philCount.textContent     = `${idx + 1} / ${_PHIL_THOUGHTS.length}`;
-    _philFill.style.width      = '0%';
-    _philKicker.textContent    = t.symbol;
+    _philCard.dataset.accent = t.accent;
+    _philCount.textContent   = `${idx + 1} / ${_PHIL_THOUGHTS.length}`;
+    _philFill.style.width    = '0%';
+    _philKicker.textContent  = t.symbol;
 
-    /* Ghost cross-fade */
+    /* Ghost cross-fade — guard so a stale callback can't clobber a newer thought */
+    const ghostForIdx = idx;
     _philGhost.style.opacity = '0';
     setTimeout(() => {
+        if (_philCurrentIdx !== ghostForIdx) return;
         _philGhost.textContent   = t.symbol;
         _philGhost.style.opacity = '';
     }, 220);
@@ -1185,7 +1193,7 @@ function _philShowThought(idx) {
     _philTitle.textContent   = t.title;
     setTimeout(() => { _philTitle.style.opacity = '1'; }, 20);
 
-    /* Clear body then type */
+    /* Clear body then start typing */
     _philText.style.opacity = '0';
     _philText.textContent   = '';
     setTimeout(() => {
@@ -1216,31 +1224,55 @@ function _philTypeWords(text, forIdx) {
 }
 
 // ── Public API ────────────────────────────────────────────
+
 function startPhilosophyReveal() {
     if (!_philCard) return;
+    _philClearAll();   /* cancel any stale start or type timers from a previous visit */
     _philActive = true;
-    /* Trigger entry animation — remove/reflow/re-add to replay */
+
+    /* BUG-FIX: Pre-populate thought-0 chrome BEFORE animation starts.
+       Previously the card faded in with empty content for ~500 ms, looking broken.
+       Now the title, kicker, and ghost are visible as the card fades in;
+       only the body text types in after the 500 ms delay. */
+    const t = _PHIL_THOUGHTS[0];
+    _philCurrentIdx          = 0;
+    _philSetActive(0);
+    _philCard.dataset.accent = t.accent;
+    _philCount.textContent   = `1 / ${_PHIL_THOUGHTS.length}`;
+    _philKicker.textContent  = t.symbol;
+    _philGhost.textContent   = t.symbol;
+    _philGhost.style.opacity = '';          /* restore CSS value (0.03) */
+    _philTitle.textContent   = t.title;
+    _philTitle.style.opacity = '1';
+    _philText.textContent    = '';
+    _philText.style.opacity  = '1';
+    _philFill.style.width    = '0%';
+
+    /* Restart entry animation */
     _philCard.classList.remove('phil-entering');
-    void _philCard.offsetWidth;
+    void _philCard.offsetWidth;             /* force reflow so animation replays */
     _philCard.classList.add('phil-entering');
-    /* Start typing after the animation has begun */
-    setTimeout(() => {
-        if (_philActive) _philShowThought(0);
+
+    /* BUG-FIX: Store the start timer so stop() can cancel it.
+       Previously this was an anonymous setTimeout — if stop() fired before
+       500 ms and start() fired again, the stale timer would also trigger
+       showThought(0), causing two concurrent typing loops. */
+    _philStartTimer = setTimeout(() => {
+        _philStartTimer = null;
+        if (_philActive && _philCurrentIdx === 0) _philTypeWords(t.body, 0);
     }, 500);
 }
 
 function stopPhilosophyReveal() {
-    _philActive     = false;
-    _philCurrentIdx = -1;
-    _philClearTyping();
-    _philCard.classList.remove('phil-entering');
-    _philSetActive(-1);
-    if (_philText)   _philText.textContent   = '';
-    if (_philTitle)  { _philTitle.textContent = ''; _philTitle.style.opacity = '1'; }
-    if (_philKicker) _philKicker.textContent  = '';
-    if (_philGhost)  { _philGhost.textContent = ''; _philGhost.style.opacity = ''; }
-    if (_philFill)   _philFill.style.width    = '0%';
-    if (_philCount)  _philCount.textContent   = `1 / ${_PHIL_THOUGHTS.length}`;
+    _philActive = false;
+    _philClearAll();   /* cancels both _philTypeTimer and _philStartTimer */
+
+    /* BUG-FIX: Do NOT remove 'phil-entering' and do NOT wipe content here.
+       - Removing the class mid-animation snapped the card's opacity from its
+         current animated value back to 1 while the page was mid-exit-transition,
+         causing a visible brightness flash.
+       - Wiping content caused the card to fade in blank on re-entry.
+       Both are handled cleanly at the start of the next startPhilosophyReveal(). */
 }
 
 // ── Button clicks ─────────────────────────────────────────

@@ -1,6 +1,6 @@
 /* ========== MOBILE PORTFOLIO MODE ========== */
 .mobile-connect-strip {
-    display: none;
+    display: none !important;
 }
 
 .poster-popup {
@@ -453,7 +453,7 @@
     }
 
     .mobile-connect-strip {
-        display: grid;
+        display: grid !important;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 0.55rem;
         width: 100%;

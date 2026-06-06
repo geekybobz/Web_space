@@ -9,6 +9,8 @@ const MobileScrollMode = (() => {
     function closeMenu() {
         navLinksEl?.classList.remove('active');
         const icon = mobileToggle?.querySelector('i');
+        mobileToggle?.setAttribute('aria-expanded', 'false');
+        mobileToggle?.setAttribute('aria-label', 'Open navigation menu');
         if (icon) {
             icon.classList.remove('fa-times');
             icon.classList.add('fa-bars');

@@ -237,6 +237,7 @@ const DARK_INDEX_STORAGE_KEY = 'darkThemeIndex';
 const LOCAL_PREVIEW_STORAGE_KEY = 'localPreviewEnabled';
 const MOBILE_VIEWPORT_BREAKPOINT = 900;
 const MOBILE_THEME_ID = 'crimson';
+const DESKTOP_DEFAULT_THEME_ID = 'crimson';
 
 const htmlEl = document.documentElement;
 const bodyEl = document.body;
@@ -315,7 +316,7 @@ function initialThemeMode() {
     const storedMode = localStorage.getItem(MODE_STORAGE_KEY);
     if (storedMode && THEME_MODES[storedMode]) return storedMode;
     const storedTheme = localStorage.getItem('selectedTheme');
-    return storedTheme ? inferModeFromTheme(storedTheme) : 'mid';
+    return storedTheme ? inferModeFromTheme(storedTheme) : 'dark';
 }
 
 function isLocalPreview() {
@@ -379,8 +380,11 @@ const FIXED_AVATAR = 'assets/images/avatar_1.webp';
     if (avatarImg) avatarImg.src = FIXED_AVATAR;
     localStorage.setItem('selectedAvatar', FIXED_AVATAR);
 
-    const mode = isMobileViewport() ? 'dark' : initialThemeMode();
-    applyThemeMode(mode, { advanceDark: mode === 'dark' && !sessionStorage.getItem('q-intro-seen') });
+    localStorage.setItem('selectedTheme', DESKTOP_DEFAULT_THEME_ID);
+    localStorage.setItem('selectedThemeMode', 'dark');
+    localStorage.setItem('darkThemeIndex', '0');
+    applyTheme(isMobileViewport() ? MOBILE_THEME_ID : DESKTOP_DEFAULT_THEME_ID);
+    syncModeButtons('dark');
 })();
 
 modeButtons.forEach((button) => {
@@ -546,8 +550,11 @@ if (mobileToggle && navLinksEl) {
     mobileToggle.addEventListener('click', () => {
         if (isMobileBlockedViewport()) return;
         navLinksEl.classList.toggle('active');
+        const expanded = navLinksEl.classList.contains('active');
         const icon = mobileToggle.querySelector('i');
-        if (navLinksEl.classList.contains('active')) {
+        mobileToggle.setAttribute('aria-expanded', String(expanded));
+        mobileToggle.setAttribute('aria-label', expanded ? 'Close navigation menu' : 'Open navigation menu');
+        if (expanded) {
             icon.classList.replace('fa-bars', 'fa-times');
         } else {
             icon.classList.replace('fa-times', 'fa-bars');
@@ -570,6 +577,8 @@ const MobileScrollMode = (() => {
     function closeMenu() {
         navLinksEl?.classList.remove('active');
         const icon = mobileToggle?.querySelector('i');
+        mobileToggle?.setAttribute('aria-expanded', 'false');
+        mobileToggle?.setAttribute('aria-label', 'Open navigation menu');
         if (icon) {
             icon.classList.remove('fa-times');
             icon.classList.add('fa-bars');
@@ -668,6 +677,8 @@ window.addEventListener('resize', () => {
     const noBtn = document.getElementById('poster-popup-no');
     const yesBtn = document.getElementById('poster-popup-yes');
     const SESSION_KEY = 'poster-popup-seen';
+    const MOBILE_DELAY_MS = 30000;
+    const DESKTOP_DELAY_MS = 50000;
 
     function closePopup() {
         popup.classList.remove('is-visible');
@@ -703,7 +714,7 @@ window.addEventListener('resize', () => {
         if (event.key === 'Escape' && !popup.hidden) closePopup();
     });
 
-    window.setTimeout(openPopup, isMobileViewport() ? 900 : 1300);
+    window.setTimeout(openPopup, isMobileViewport() ? MOBILE_DELAY_MS : DESKTOP_DELAY_MS);
 })();
 
 /* Source: js/src/page-engine.js */

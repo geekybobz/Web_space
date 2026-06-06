@@ -6,8 +6,11 @@ const FIXED_AVATAR = 'assets/images/avatar_1.webp';
     if (avatarImg) avatarImg.src = FIXED_AVATAR;
     localStorage.setItem('selectedAvatar', FIXED_AVATAR);
 
-    const mode = isMobileViewport() ? 'dark' : initialThemeMode();
-    applyThemeMode(mode, { advanceDark: mode === 'dark' && !sessionStorage.getItem('q-intro-seen') });
+    localStorage.setItem('selectedTheme', DESKTOP_DEFAULT_THEME_ID);
+    localStorage.setItem('selectedThemeMode', 'dark');
+    localStorage.setItem('darkThemeIndex', '0');
+    applyTheme(isMobileViewport() ? MOBILE_THEME_ID : DESKTOP_DEFAULT_THEME_ID);
+    syncModeButtons('dark');
 })();
 
 modeButtons.forEach((button) => {

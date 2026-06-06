@@ -7,6 +7,8 @@
     const noBtn = document.getElementById('poster-popup-no');
     const yesBtn = document.getElementById('poster-popup-yes');
     const SESSION_KEY = 'poster-popup-seen';
+    const MOBILE_DELAY_MS = 30000;
+    const DESKTOP_DELAY_MS = 50000;
 
     function closePopup() {
         popup.classList.remove('is-visible');
@@ -42,5 +44,5 @@
         if (event.key === 'Escape' && !popup.hidden) closePopup();
     });
 
-    window.setTimeout(openPopup, isMobileViewport() ? 900 : 1300);
+    window.setTimeout(openPopup, isMobileViewport() ? MOBILE_DELAY_MS : DESKTOP_DELAY_MS);
 })();

@@ -11,8 +11,11 @@ if (mobileToggle && navLinksEl) {
     mobileToggle.addEventListener('click', () => {
         if (isMobileBlockedViewport()) return;
         navLinksEl.classList.toggle('active');
+        const expanded = navLinksEl.classList.contains('active');
         const icon = mobileToggle.querySelector('i');
-        if (navLinksEl.classList.contains('active')) {
+        mobileToggle.setAttribute('aria-expanded', String(expanded));
+        mobileToggle.setAttribute('aria-label', expanded ? 'Close navigation menu' : 'Open navigation menu');
+        if (expanded) {
             icon.classList.replace('fa-bars', 'fa-times');
         } else {
             icon.classList.replace('fa-times', 'fa-bars');

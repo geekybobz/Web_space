@@ -20,6 +20,7 @@ const DARK_INDEX_STORAGE_KEY = 'darkThemeIndex';
 const LOCAL_PREVIEW_STORAGE_KEY = 'localPreviewEnabled';
 const MOBILE_VIEWPORT_BREAKPOINT = 900;
 const MOBILE_THEME_ID = 'crimson';
+const DESKTOP_DEFAULT_THEME_ID = 'crimson';
 
 const htmlEl = document.documentElement;
 const bodyEl = document.body;
@@ -98,7 +99,7 @@ function initialThemeMode() {
     const storedMode = localStorage.getItem(MODE_STORAGE_KEY);
     if (storedMode && THEME_MODES[storedMode]) return storedMode;
     const storedTheme = localStorage.getItem('selectedTheme');
-    return storedTheme ? inferModeFromTheme(storedTheme) : 'mid';
+    return storedTheme ? inferModeFromTheme(storedTheme) : 'dark';
 }
 
 function isLocalPreview() {

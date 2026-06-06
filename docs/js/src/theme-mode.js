@@ -9,7 +9,7 @@ const THEMES = [
     { id: 'mid-atmosphere', label: 'Mid Atmosphere', icon: '2' },
 ];
 
-const avatarPool = ['assets/images/avatar_1.webp', 'assets/images/avatar_2.webp'];
+const avatarPool = ['assets/images/avatar_1.webp'];
 const THEME_MODES = {
     dark: ['dark', 'crimson', 'carbon', 'dusk', 'volt'],
     light: ['light-editorial'],
@@ -18,26 +18,36 @@ const THEME_MODES = {
 const MODE_STORAGE_KEY = 'selectedThemeMode';
 const DARK_INDEX_STORAGE_KEY = 'darkThemeIndex';
 const LOCAL_PREVIEW_STORAGE_KEY = 'localPreviewEnabled';
-const MOBILE_BLOCK_BREAKPOINT = 900;
+const MOBILE_VIEWPORT_BREAKPOINT = 900;
+const MOBILE_THEME_ID = 'crimson';
 
 const htmlEl = document.documentElement;
 const bodyEl = document.body;
 const modeButtons = Array.from(document.querySelectorAll('[data-theme-mode]'));
 let mobileBlockedState = null;
 
+function isMobileViewport() {
+    return window.innerWidth <= MOBILE_VIEWPORT_BREAKPOINT;
+}
+
 function isMobileBlockedViewport() {
-    return window.innerWidth <= MOBILE_BLOCK_BREAKPOINT;
+    return false;
 }
 
 function syncMobileDeviceBlock() {
-    const blocked = isMobileBlockedViewport();
-    bodyEl?.classList.toggle('mobile-device-blocked', blocked);
-    bodyEl?.setAttribute('data-device-blocked', blocked ? 'true' : 'false');
-    if (mobileBlockedState !== null && mobileBlockedState !== blocked) {
-        window.location.reload();
+    const mobile = isMobileViewport();
+    bodyEl?.classList.toggle('mobile-scroll-mode', mobile);
+    bodyEl?.classList.remove('mobile-device-blocked');
+    bodyEl?.setAttribute('data-device-blocked', 'false');
+    bodyEl?.setAttribute('data-mobile-mode', mobile ? 'true' : 'false');
+    if (mobile) {
+        htmlEl.setAttribute('data-theme', MOBILE_THEME_ID);
+        localStorage.setItem('selectedTheme', MOBILE_THEME_ID);
+        localStorage.setItem(MODE_STORAGE_KEY, 'dark');
+        syncModeButtons('dark');
     }
-    mobileBlockedState = blocked;
-    return blocked;
+    mobileBlockedState = mobile;
+    return mobile;
 }
 
 syncMobileDeviceBlock();
@@ -45,6 +55,9 @@ window.addEventListener('resize', syncMobileDeviceBlock);
 window.addEventListener('orientationchange', syncMobileDeviceBlock);
 
 function applyTheme(themeId) {
+    if (isMobileViewport()) {
+        themeId = MOBILE_THEME_ID;
+    }
     const theme = THEMES.find(t => t.id === themeId) || THEMES[0]; // fallback → crimson
     htmlEl.setAttribute('data-theme', theme.id);
     localStorage.setItem('selectedTheme', theme.id);

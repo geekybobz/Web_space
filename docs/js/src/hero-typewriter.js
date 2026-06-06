@@ -20,13 +20,13 @@ function startTypewriter() {
         if (!deleting) {
             cIdx++;
             el.textContent = phrase.slice(0, cIdx);
-            if (cIdx === phrase.length) { deleting = true; delay = 2200; }
-            else delay = 68;
+            if (cIdx === phrase.length) { deleting = true; delay = 1800; }
+            else delay = 48;
         } else {
             cIdx--;
             el.textContent = phrase.slice(0, cIdx);
-            if (cIdx === 0) { deleting = false; pIdx = (pIdx + 1) % phrases.length; delay = 320; }
-            else delay = 36;
+            if (cIdx === 0) { deleting = false; pIdx = (pIdx + 1) % phrases.length; delay = 240; }
+            else delay = 26;
         }
         _twTimeoutId = setTimeout(tick, delay);
     }

@@ -648,8 +648,8 @@ def render_experience_section() -> str:
     script = EXPERIENCE_SCRIPT.replace("document.querySelectorAll('.er-photo-frame')", "document.querySelectorAll('#experience .er-photo-frame')")
     script = script.replace("document.querySelectorAll('.er-event-card[data-srcs]')", "document.querySelectorAll('#experience .er-event-card[data-srcs]')")
     return f"""<!-- Generated from docs/data/experience.json via tools/build_index.py -->
-<section class="page section" id="experience" data-page="3" data-label="Experience">
-    <div class="page-avatar" data-page-avatar="3" data-icon="fa-code-branch" data-color="accent-3" aria-hidden="true">
+<section class="page section" id="experience" data-page="2" data-label="Experience">
+    <div class="page-avatar" data-page-avatar="2" data-icon="fa-code-branch" data-color="accent-3" aria-hidden="true">
         <div class="page-avatar-ring"></div>
     </div>
     <div class="page-inner">

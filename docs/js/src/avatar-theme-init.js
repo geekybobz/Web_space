@@ -1,21 +1,12 @@
 // ========== AVATAR + THEME SELECTION ==========
-// On every fresh page load: randomly alternate avatar, then select from the active mode family.
 const avatarImg = document.querySelector('.profile-pic');
+const FIXED_AVATAR = 'assets/images/avatar_1.webp';
 
 (function initAvatarAndTheme() {
-    // --- Pick avatar (alternate from last session) ---
-    const lastAvatar = localStorage.getItem('selectedAvatar');
-    let chosenAvatar = avatarPool[Math.floor(Math.random() * avatarPool.length)];
-    if (chosenAvatar === lastAvatar) {
-        const others = avatarPool.filter(a => a !== lastAvatar);
-        chosenAvatar = others[Math.floor(Math.random() * others.length)] || chosenAvatar;
-    }
-    localStorage.setItem('selectedAvatar', chosenAvatar);
+    if (avatarImg) avatarImg.src = FIXED_AVATAR;
+    localStorage.setItem('selectedAvatar', FIXED_AVATAR);
 
-    // Apply avatar to hero image
-    if (avatarImg) avatarImg.src = chosenAvatar;
-
-    const mode = initialThemeMode();
+    const mode = isMobileViewport() ? 'dark' : initialThemeMode();
     applyThemeMode(mode, { advanceDark: mode === 'dark' && !sessionStorage.getItem('q-intro-seen') });
 })();
 

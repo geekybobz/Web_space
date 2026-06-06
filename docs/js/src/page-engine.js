@@ -1,8 +1,9 @@
 // =====================================================
 const PageEngine = (() => {
-    if (isMobileBlockedViewport()) {
+    if (isMobileViewport()) {
+        MobileScrollMode?.init();
         return {
-            goTo() {},
+            goTo(idx) { MobileScrollMode?.goTo(idx); },
             next() {},
             prev() {},
         };
@@ -190,6 +191,10 @@ const PageEngine = (() => {
 
     // --- Core transition ---
     function goTo(idx, direction = null) {
+        if (isMobileViewport()) {
+            MobileScrollMode?.goTo(idx);
+            return;
+        }
         if (isAnimating || idx === current || idx < 0 || idx >= pages.length) return;
         clearEdgeState();
         isAnimating = true;
@@ -260,6 +265,7 @@ const PageEngine = (() => {
     // Navbar & brand links
     document.querySelectorAll('[data-page-link]').forEach(a => {
         a.addEventListener('click', (e) => {
+            if (isMobileViewport()) return;
             e.preventDefault();
             goTo(parseInt(a.dataset.pageLink));
         });
@@ -269,6 +275,7 @@ const PageEngine = (() => {
     document.querySelectorAll('[data-page-link]').forEach(a => {
         if (a.classList.contains('btn-primary')) {
             a.addEventListener('click', (e) => {
+                if (isMobileViewport()) return;
                 e.preventDefault();
                 goTo(parseInt(a.dataset.pageLink));
             });
@@ -283,6 +290,7 @@ const PageEngine = (() => {
 
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
+        if (isMobileViewport()) return;
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
         if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); next(); }
         if (e.key === 'ArrowUp'   || e.key === 'PageUp'  ) { e.preventDefault(); prev(); }
@@ -310,6 +318,7 @@ const PageEngine = (() => {
     }
 
     document.addEventListener('wheel', (e) => {
+        if (isMobileViewport()) return;
         const activePage = pages[current];
         const atTop    = activePage.scrollTop <= 0;
         const atBottom = activePage.scrollTop + activePage.clientHeight >= activePage.scrollHeight - 2;
@@ -356,12 +365,12 @@ const PageEngine = (() => {
     // Touch / swipe navigation
     let touchStartY = 0;
     document.addEventListener('touchstart', (e) => {
-        if (isMobileBlockedViewport()) return;
+        if (isMobileViewport()) return;
         touchStartY = e.touches[0].clientY;
     }, { passive: true });
 
     document.addEventListener('touchend', (e) => {
-        if (isMobileBlockedViewport()) return;
+        if (isMobileViewport()) return;
         const dy = touchStartY - e.changedTouches[0].clientY;
         const activePage = pages[current];
         const atTop     = activePage.scrollTop <= 0;

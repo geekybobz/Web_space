@@ -2,6 +2,18 @@
 // INTRO LOADER — waves + drift
 // =====================================================
 (function initLoader() {
+    if (window.innerWidth <= 900) {
+        const l = document.getElementById('q-loader');
+        if (l) {
+            l.style.transition = 'opacity 0.22s ease, visibility 0.22s ease';
+            l.classList.add('q-loader--hidden');
+        }
+        document.documentElement.setAttribute('data-theme', 'crimson');
+        setTimeout(triggerHeroFadeIn, 0);
+        sessionStorage.setItem('q-intro-seen', '1');
+        return;
+    }
+
     if (sessionStorage.getItem('q-intro-seen')) {
         const l = document.getElementById('q-loader');
         if (l) { l.style.transition = 'none'; l.classList.add('q-loader--hidden'); }

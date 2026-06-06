@@ -3,6 +3,7 @@ let _crtPause = null;
 let _crtResume = null;
 
 (function initCRTTerminal() {
+    if (typeof isMobileViewport === 'function' && isMobileViewport()) return;
     const log = document.getElementById('crt-log');
     if (!log) return;
 

@@ -28,7 +28,8 @@ MAIN_CSS_MODULES = [
     "css/src/sections/hero-card-redesign.css",
     "css/src/components/page-dots-arrows.css",
     "css/src/effects/loader.css",
-    "css/src/effects/intro-typewriter.css"
+    "css/src/effects/intro-typewriter.css",
+    "css/src/mobile.css",
 ]
 
 GALLERY_CSS_MODULES = [
@@ -60,6 +61,8 @@ MAIN_JS_MODULES = [
     "js/src/avatar-tilt.js",
     "js/src/custom-cursor.js",
     "js/src/navbar-mobile.js",
+    "js/src/mobile-scroll.js",
+    "js/src/poster-popup.js",
     "js/src/page-engine.js",
     "js/src/crt-terminal.js",
     "js/src/analytics-toast.js",

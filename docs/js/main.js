@@ -332,42 +332,202 @@ function attemptWindowClose() {
     window.close();
 }
 
+async function stopLocalPreviewServer() {
+    try {
+        const response = await fetch('/__exit_preview__', {
+            method: 'POST',
+            keepalive: true,
+            cache: 'no-store',
+        });
+        return response.ok;
+    } catch {
+        return false;
+    }
+}
+
+async function loadLocalPreviewStatus() {
+    try {
+        const response = await fetch('/__preview_status__', { cache: 'no-store' });
+        if (!response.ok) throw new Error('Preview status unavailable');
+        return await response.json();
+    } catch {
+        return {
+            status: 'unknown',
+            port: window.location.port || '80',
+            localUrl: window.location.href,
+            lanUrl: null,
+            lanEnabled: false,
+        };
+    }
+}
+
+async function setWifiPreview(action) {
+    const response = await fetch('/__wifi_preview__', {
+        method: 'POST',
+        cache: 'no-store',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action }),
+    });
+    if (!response.ok) throw new Error('WiFi preview update failed');
+    return response.json();
+}
+
+async function copyPreviewText(text, button) {
+    if (!text) return;
+    const originalText = button.textContent;
+    try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = 'Copied';
+    } catch {
+        button.textContent = 'Copy failed';
+    }
+    window.setTimeout(() => {
+        button.textContent = originalText;
+    }, 1100);
+}
+
+function createPreviewRow(label, value, copyLabel = 'Copy') {
+    const row = document.createElement('div');
+    row.className = 'local-preview-row';
+
+    const text = document.createElement('div');
+    text.className = 'local-preview-row-text';
+
+    const labelEl = document.createElement('span');
+    labelEl.className = 'local-preview-row-label';
+    labelEl.textContent = label;
+
+    const valueEl = document.createElement('span');
+    valueEl.className = 'local-preview-row-value';
+    valueEl.textContent = value;
+
+    text.append(labelEl, valueEl);
+    row.appendChild(text);
+
+    if (copyLabel) {
+        const copyButton = document.createElement('button');
+        copyButton.className = 'local-preview-action';
+        copyButton.type = 'button';
+        copyButton.textContent = copyLabel;
+        copyButton.addEventListener('click', () => copyPreviewText(value, copyButton));
+        row.appendChild(copyButton);
+    }
+
+    return row;
+}
+
 function initLocalPreviewControls() {
     if (!isLocalPreview()) return;
     document.body.classList.add('local-preview');
 
-    // Inject button dynamically — never ships in production HTML
-    const button = document.createElement('button');
-    button.className = 'local-preview-exit';
-    button.id = 'local-preview-exit';
-    button.type = 'button';
-    button.textContent = 'Exit Preview';
-    document.body.appendChild(button);
+    const control = document.createElement('div');
+    control.className = 'local-preview-control';
+    control.id = 'local-preview-control';
 
-    button.addEventListener('click', async () => {
-        if (button.disabled) return;
+    const toggle = document.createElement('button');
+    toggle.className = 'local-preview-toggle';
+    toggle.type = 'button';
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.textContent = `Port ${window.location.port || '80'}`;
+
+    const panel = document.createElement('div');
+    panel.className = 'local-preview-panel';
+    panel.hidden = true;
+
+    const title = document.createElement('div');
+    title.className = 'local-preview-title';
+    title.textContent = 'Local server';
+
+    const meta = document.createElement('div');
+    meta.className = 'local-preview-meta';
+    meta.textContent = 'Checking preview status...';
+
+    const rows = document.createElement('div');
+    rows.className = 'local-preview-rows';
+
+    const wifiButton = document.createElement('button');
+    wifiButton.className = 'local-preview-action local-preview-wifi';
+    wifiButton.type = 'button';
+    wifiButton.textContent = 'Start WiFi :2032';
+
+    const stopButton = document.createElement('button');
+    stopButton.className = 'local-preview-action local-preview-stop';
+    stopButton.id = 'local-preview-exit';
+    stopButton.type = 'button';
+    stopButton.textContent = 'Stop server';
+
+    panel.append(title, meta, rows, wifiButton, stopButton);
+    control.append(toggle, panel);
+    document.body.appendChild(control);
+
+    toggle.addEventListener('click', () => {
+        const expanded = panel.hidden;
+        panel.hidden = !expanded;
+        toggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    });
+
+    const renderStatus = (status) => {
+        const wifi = status.wifiPreview || {};
+        const port = status.port || window.location.port || '80';
+        toggle.textContent = `Port ${port}`;
+        meta.textContent = wifi.running
+            ? `Desktop :${port} and WiFi :${wifi.port || 2032} are both running.`
+            : `Desktop preview is running on :${port}. WiFi preview can run in parallel.`;
+        wifiButton.textContent = wifi.running ? `Stop WiFi :${wifi.port || 2032}` : `Start WiFi :${wifi.port || 2032}`;
+        wifiButton.dataset.action = wifi.running ? 'stop' : 'start';
+        rows.replaceChildren(
+            createPreviewRow('Desktop', status.localUrl || window.location.href),
+            wifi.url
+                ? createPreviewRow('Phone/LAN', wifi.url)
+                : createPreviewRow('Phone/LAN', wifi.error || 'WiFi preview is stopped.', null),
+        );
+    };
+
+    loadLocalPreviewStatus().then(renderStatus);
+
+    wifiButton.addEventListener('click', async () => {
+        if (wifiButton.disabled) return;
+        const action = wifiButton.dataset.action || 'start';
+        wifiButton.disabled = true;
+        wifiButton.textContent = action === 'stop' ? 'Stopping WiFi...' : 'Starting WiFi...';
+        try {
+            renderStatus(await setWifiPreview(action));
+        } catch {
+            meta.textContent = 'Could not update WiFi preview. Check whether port 2032 is already in use.';
+        } finally {
+            wifiButton.disabled = false;
+        }
+    });
+
+    stopButton.addEventListener('click', async () => {
+        if (stopButton.disabled) return;
         if (!window.confirm('Exit local preview and stop the local server?')) return;
 
-        button.disabled = true;
-        button.textContent = 'Exiting...';
+        stopButton.disabled = true;
+        stopButton.textContent = 'Stopping...';
 
-        fetch('/__exit_preview__', {
-            method: 'POST',
-            keepalive: true,
-        }).catch(() => {});
+        const stopped = await Promise.race([
+            stopLocalPreviewServer(),
+            new Promise((resolve) => window.setTimeout(() => resolve(false), 1500)),
+        ]);
+
+        sessionStorage.removeItem(LOCAL_PREVIEW_STORAGE_KEY);
+
+        if (stopped) {
+            stopButton.textContent = 'Server stopped';
+        } else {
+            stopButton.textContent = 'Close tab';
+        }
 
         window.setTimeout(() => {
             attemptWindowClose();
-        }, 120);
+        }, 180);
 
         window.setTimeout(() => {
             if (!window.closed) {
                 window.location.replace('about:blank');
-                window.setTimeout(() => {
-                    attemptWindowClose();
-                }, 60);
             }
-        }, 320);
+        }, 420);
     });
 }
 

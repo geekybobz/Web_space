@@ -1,0 +1,59 @@
+/* Performance budget: keep the visual identity, but avoid rendering work users cannot see. */
+
+@media (min-width: 901px) {
+    .page:not(.active):not(.exit-up):not(.exit-down):not(.from-above) {
+        content-visibility: hidden;
+        contain-intrinsic-size: 720px 1200px;
+    }
+}
+
+@media (max-width: 900px) {
+    .page.section {
+        content-visibility: auto;
+        contain-intrinsic-size: 900px;
+    }
+
+    .hero-page .hero-subtitle {
+        min-height: 1.35em;
+    }
+
+    .hero-page .hero-desc {
+        padding-top: 0.6rem;
+    }
+
+    .navbar,
+    .panel {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+    .cursor-dot,
+    .cursor-outline {
+        display: none !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+
+    .hero-ticker-track,
+    .atom-orbit,
+    .atom-nucleus,
+    .holo-terminal::after,
+    .crt-cursor-blink,
+    .page-arrow.edge-attract::before,
+    .page-arrow.edge-attract::after,
+    .page-avatar.pa-ripple::before,
+    .page-avatar.edge-pulse::before {
+        animation: none !important;
+    }
+}

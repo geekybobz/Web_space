@@ -1,6 +1,6 @@
 // ========== AVATAR + THEME SELECTION ==========
 const avatarImg = document.querySelector('.profile-pic');
-const FIXED_AVATAR = 'assets/images/avatar_1.webp';
+const FIXED_AVATAR = 'assets/images/optimized/avatar_1-320.webp';
 
 (function initAvatarAndTheme() {
     if (avatarImg) avatarImg.src = FIXED_AVATAR;

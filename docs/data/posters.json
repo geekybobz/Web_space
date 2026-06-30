@@ -30,5 +30,21 @@
     "ref": "Presented at the 3rd colloquium of the GdR TeQ \"Quantum Technologies\", 12–14 November 2025, Campus Minatec, Grenoble.",
     "pdf": "under_construction.html",
     "pdf_title": "GdR TeQ 2025 Poster"
+  },
+  {
+    "id": "cargese-2026",
+    "conf": "Cargese",
+    "year": "2026",
+    "title": "Universally Robust Control for a Qubit under an Unknown Perturbation",
+    "meta": "Mohammed Bilal P. S., C. L. Latune, D. Sugny &middot; ICB Dijon &middot; Cargese Summer School",
+    "tags": ["Poster", "Quantum Control", "Robust Control", "Qubit", "Gate Synthesis"],
+    "abstract": [
+      "This poster studies how to design quantum controls that remain high-fidelity when the Hamiltonian contains an unknown static perturbation. The framework treats both state-to-state transfer and gate synthesis for a qubit driven by Pauli-basis controls.",
+      "Robustness is imposed through perturbative cancellation conditions on the Dyson expansion. The state-transfer examples retain near-unity averaged fidelity over the perturbation interval, and the same idea is extended to a robust NOT gate.",
+      "The work points toward energy-efficient robust pulses, higher-order robustness, and control designs that balance directional and universal robustness under realistic noise."
+    ],
+    "ref": "Presented at Cargese Summer School \"Quantum Technologies for Computation and Communication\", 8–20 June 2026, IESC Cargese.",
+    "pdf": "assets/pdfs/universal-robust-control-poster.pdf",
+    "pdf_title": "Cargese 2026 Poster"
   }
 ]

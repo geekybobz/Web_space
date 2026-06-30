@@ -277,19 +277,25 @@
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    padding: 0;
-    border: none;
-    background: transparent;
+    min-height: 2.35rem;
+    padding: 0.58rem 0.85rem;
+    border: 1px solid color-mix(in srgb, var(--accent-1) 48%, transparent);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--accent-1) 9%, transparent);
     color: var(--accent-1);
-    font-size: 0.82rem;
-    font-weight: 500;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
     cursor: pointer;
-    transition: var(--transition-fast);
+    transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, opacity 160ms ease;
     font-family: inherit;
 }
 
 .poster-toggle:hover {
-    opacity: 0.75;
+    border-color: var(--accent-1);
+    background: color-mix(in srgb, var(--accent-1) 15%, transparent);
+    transform: translateY(-1px);
 }
 
 .poster-embed {

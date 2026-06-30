@@ -29,6 +29,7 @@ MAIN_CSS_MODULES = [
     "css/src/components/page-dots-arrows.css",
     "css/src/effects/loader.css",
     "css/src/effects/intro-typewriter.css",
+    "css/src/effects/performance-budget.css",
     "css/src/mobile.css",
 ]
 
@@ -62,7 +63,6 @@ MAIN_JS_MODULES = [
     "js/src/custom-cursor.js",
     "js/src/navbar-mobile.js",
     "js/src/mobile-scroll.js",
-    "js/src/poster-popup.js",
     "js/src/page-engine.js",
     "js/src/crt-terminal.js",
     "js/src/analytics-toast.js",

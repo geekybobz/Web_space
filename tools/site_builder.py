@@ -16,6 +16,39 @@ EXPERIENCE_SCRIPT = """
         if (window.__experienceReviewInit) return;
         window.__experienceReviewInit = true;
         const CYCLE_MS = 3500;
+        const ACTIVE_MARGIN = 180;
+
+        function isSmallViewport() {
+            return window.matchMedia('(max-width: 900px)').matches;
+        }
+
+        function isActiveSurface(node) {
+            if (document.hidden) return false;
+            const page = node.closest('.page');
+            if (!isSmallViewport() && page && !page.classList.contains('active')) return false;
+            const rect = node.getBoundingClientRect();
+            return rect.bottom >= -ACTIVE_MARGIN && rect.top <= window.innerHeight + ACTIVE_MARGIN;
+        }
+
+        function watchActiveSurface(node, start, stop) {
+            const page = node.closest('.page');
+            const sync = () => {
+                if (isActiveSurface(node)) start();
+                else stop();
+            };
+
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver(sync, { rootMargin: `${ACTIVE_MARGIN}px 0px` });
+                observer.observe(node);
+            }
+            if (page) {
+                new MutationObserver(sync).observe(page, { attributes: true, attributeFilter: ['class'] });
+            }
+            document.addEventListener('visibilitychange', sync);
+            window.addEventListener('resize', sync, { passive: true });
+            window.addEventListener('scroll', sync, { passive: true });
+            sync();
+        }
 
         function initPhotoFrame(frame) {
             const split = key => (frame.dataset[key] || '').split('||').filter(Boolean);
@@ -73,9 +106,15 @@ EXPERIENCE_SCRIPT = """
             }
 
             function startResAuto() {
-                clearInterval(resTimer);
+                if (resTimer) return;
+                if (!isActiveSurface(frame)) return;
                 if (resSrcs.length < 2) return;
                 resTimer = setInterval(() => showRes(resIdx + 1, true), CYCLE_MS);
+            }
+
+            function stopResAuto() {
+                clearInterval(resTimer);
+                resTimer = null;
             }
 
             function showGrp(i) {
@@ -115,7 +154,7 @@ EXPERIENCE_SCRIPT = """
 
             buildDots(dotsEl, resSrcs.length, 0);
             showRes(0, false);
-            startResAuto();
+            watchActiveSurface(frame, startResAuto, stopResAuto);
 
             if (peekBtn) {
                 if (!grpSrcs.length) peekBtn.hidden = true;
@@ -127,22 +166,37 @@ EXPERIENCE_SCRIPT = """
         function initEventCycler(card) {
             const srcs = (card.dataset.srcs || '').split('||').filter(Boolean);
             const lbls = (card.dataset.labels || '').split('||');
+            const positions = (card.dataset.positions || '').split('||');
             if (srcs.length < 2) return;
             const img = card.querySelector('.er-stage-img');
             const labelEl = card.querySelector('.er-photo-label');
             const dots = card.querySelectorAll('.er-dot');
             let idx = 0;
-            setInterval(() => {
-                idx = (idx + 1) % srcs.length;
-                img.classList.add('is-fading');
-                setTimeout(() => {
-                    img.src = srcs[idx];
-                    img.alt = lbls[idx] || '';
-                    if (labelEl) labelEl.textContent = lbls[idx] || '';
-                    dots.forEach((d, j) => d.classList.toggle('is-active', j === idx));
-                    img.classList.remove('is-fading');
-                }, 220);
-            }, CYCLE_MS);
+            let timer = null;
+
+            function stop() {
+                clearInterval(timer);
+                timer = null;
+            }
+
+            function start() {
+                if (timer) return;
+                if (!isActiveSurface(card)) return;
+                timer = setInterval(() => {
+                    idx = (idx + 1) % srcs.length;
+                    img.classList.add('is-fading');
+                    setTimeout(() => {
+                        img.src = srcs[idx];
+                        img.alt = lbls[idx] || '';
+                        img.style.setProperty('--stage-position', positions[idx] || 'center');
+                        if (labelEl) labelEl.textContent = lbls[idx] || '';
+                        dots.forEach((d, j) => d.classList.toggle('is-active', j === idx));
+                        img.classList.remove('is-fading');
+                    }, 220);
+                }, CYCLE_MS);
+            }
+
+            watchActiveSurface(card, start, stop);
         }
 
         document.querySelectorAll('.er-photo-frame').forEach(initPhotoFrame);
@@ -437,6 +491,17 @@ def _attrs(attrs: dict) -> str:
     return (" " + " ".join(parts)) if parts else ""
 
 
+def _lazy_img_attrs(src: str, alt: str, class_name: str | None = None, style: str | None = None) -> dict:
+    return {
+        "class": class_name,
+        "src": src,
+        "alt": alt,
+        "style": style,
+        "loading": "lazy",
+        "decoding": "async",
+    }
+
+
 def _link(link: dict, label: str | None = None, cls: str | None = None) -> str:
     attrs = {"href": link["href"]}
     if link.get("external"):
@@ -505,13 +570,12 @@ def _render_experience_body(data: dict, include_topbar: bool) -> str:
             "data-group-srcs": "||".join(frame["group_srcs"]),
             "data-group-labels": "||".join(frame["group_labels"])
         }
-        img_attrs = {
-            "class": "er-stage-img",
-            "src": frame["default_src"],
-            "alt": frame["default_alt"]
-        }
-        if frame.get("stage_position"):
-            img_attrs["style"] = f"--stage-position: {frame['stage_position']};"
+        img_attrs = _lazy_img_attrs(
+            frame["default_src"],
+            frame["default_alt"],
+            "er-stage-img",
+            f"--stage-position: {frame['stage_position']};" if frame.get("stage_position") else None,
+        )
         parts.append(f"""
         <article class="er-chapter">
             <div class="er-chapter-main">
@@ -552,12 +616,17 @@ def _render_experience_body(data: dict, include_topbar: bool) -> str:
                 "data-srcs": "||".join(event["srcs"]),
                 "data-labels": "||".join(event["labels"])
             }
+            if event.get("positions"):
+                card_attrs["data-positions"] = "||".join(event["positions"])
+            img_attrs = _lazy_img_attrs(event['default_src'], event['default_alt'], "er-stage-img")
+            if event.get("default_position"):
+                img_attrs["style"] = f"--stage-position: {event['default_position']};"
             dots = _render_dots(len(event["srcs"]))
             link_html = _link(event["link"]) if event.get("link") else ""
             event_cards.append(f"""
                 <article{_attrs(card_attrs)}>
                     <div class="er-event-photo">
-                        <img class="er-stage-img" src="{escape(event['default_src'], quote=True)}" alt="{escape(event['default_alt'], quote=True)}">
+                        <img{_attrs(img_attrs)}>
                         <span class="er-photo-label">{escape(event['default_label'])}</span>
                     </div>
                     <div class="er-event-copy">
@@ -575,7 +644,7 @@ def _render_experience_body(data: dict, include_topbar: bool) -> str:
             event_cards.append(f"""
                 <article class="er-event-card">
                     <div class="er-event-photo">
-                        <img class="er-stage-img" src="{escape(event['image'], quote=True)}" alt="{escape(event['alt'], quote=True)}">
+                        <img{_attrs(_lazy_img_attrs(event['image'], event['alt'], "er-stage-img"))}>
                         <span class="er-photo-label">{escape(event['label'])}</span>
                     </div>
                     <div class="er-event-copy">
@@ -602,7 +671,7 @@ def _render_experience_body(data: dict, include_topbar: bool) -> str:
         role_cards.append(f"""
                 <article class="er-role-card">
                     <div class="er-role-photo">
-                        <img class="er-stage-img" src="{escape(role['image'], quote=True)}" alt="{escape(role['alt'], quote=True)}">
+                        <img{_attrs(_lazy_img_attrs(role['image'], role['alt'], "er-stage-img"))}>
                     </div>
                     <div class="er-role-copy">
                         <h3>{escape(role['title'])}</h3>

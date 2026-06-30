@@ -32,20 +32,20 @@
         "blend_position": "center 52%",
         "blend_position_mobile": "center 46%",
         "srcs": [
-          "assets/images/experience-review/camille-group-1.jpg",
-          "assets/images/experience-review/camille-group-2.jpg"
+          "assets/images/optimized/experience-review/camille-group-1-900.webp",
+          "assets/images/optimized/experience-review/camille-group-2-900.webp"
         ],
         "labels": [
           "Research environment",
           "Board work"
         ],
         "group_srcs": [
-          "assets/images/experience-review/icb-group-panoramic.jpg"
+          "assets/images/optimized/experience-review/icb-group-panoramic-1000.webp"
         ],
         "group_labels": [
           "ICB Dijon · full group"
         ],
-        "default_src": "assets/images/experience-review/camille-group-1.jpg",
+        "default_src": "assets/images/optimized/experience-review/camille-group-1-900.webp",
         "default_alt": "Research environment at ICB Dijon",
         "default_label": "Research environment",
         "peek_title": "View full group photo"
@@ -81,22 +81,22 @@
         "blend_position_mobile": "center 34%",
         "stage_position": "center 38%",
         "srcs": [
-          "assets/images/experience-review/degree.jpg",
-          "assets/images/experience-review/iiser2.jpg?v=3"
+          "assets/images/optimized/experience-review/degree-900.webp",
+          "assets/images/optimized/experience-review/iiser2-900.webp"
         ],
         "labels": [
           "BSMS degree ceremony",
           "With thesis supervisor"
         ],
         "group_srcs": [
-          "assets/images/experience-review/iiser-group.jpg",
-          "assets/images/experience-review/victor-group.jpg"
+          "assets/images/optimized/experience-review/iiser-group-1000.webp",
+          "assets/images/optimized/experience-review/victor-group-1000.webp"
         ],
         "group_labels": [
           "Convocation batch",
           "Thesis research group"
         ],
-        "default_src": "assets/images/experience-review/degree.jpg",
+        "default_src": "assets/images/optimized/experience-review/degree-900.webp",
         "default_alt": "BSMS degree ceremony at IISER Berhampur",
         "default_label": "BSMS degree ceremony",
         "peek_title": "View group and team photos"
@@ -112,7 +112,7 @@
         "kicker": "June 2025 · Dijon",
         "title": "JED 2025",
         "copy": "Robust and Energy-Efficient Controls for a Two-Level System — linked to arXiv:2503.20130.",
-        "image": "assets/images/experience-review/jed.jpg",
+        "image": "assets/images/optimized/experience-review/jed-900.webp",
         "alt": "JED 2025 poster session",
         "label": "JED 2025",
         "link": {
@@ -127,16 +127,16 @@
         "title": "GdR TeQ 2025",
         "copy": "3rd GdR TeQ colloquium and poster session — robust optimal control using GRAPE and research discussions with the community.",
         "srcs": [
-          "assets/images/experience-review/gdr-welcome.jpg",
-          "assets/images/experience-review/poster-gdr-1.jpg",
-          "assets/images/experience-review/poster-gdr-2.jpg"
+          "assets/images/optimized/experience-review/gdr-welcome-900.webp",
+          "assets/images/optimized/experience-review/poster-gdr-1-900.webp",
+          "assets/images/optimized/experience-review/poster-gdr-2-900.webp"
         ],
         "labels": [
           "GdR TeQ 2025",
           "Poster discussion",
           "Another poster moment"
         ],
-        "default_src": "assets/images/experience-review/gdr-welcome.jpg",
+        "default_src": "assets/images/optimized/experience-review/gdr-welcome-900.webp",
         "default_alt": "GdR TeQ 2025 colloquium",
         "default_label": "GdR TeQ 2025",
         "link": {
@@ -146,13 +146,34 @@
         }
       },
       {
-        "type": "static",
+        "type": "cycler",
         "kicker": "June 8–20, 2026 · Cargese, Corsica",
         "title": "Cargese Summer School",
-        "copy": "Next poster presentation at the summer school “Quantum Technologies for Computation and Communication” at IESC. Poster title: “Universal Robust Quantum Control”.",
-        "image": "assets/images/experience-review/cargese.jpg",
-        "alt": "Cargese summer school announcement",
-        "label": "Upcoming · 2026"
+        "copy": "Presented “Universally Robust Control for a Qubit under an Unknown Perturbation” at the Quantum Technologies for Computation and Communication summer school at IESC.",
+        "srcs": [
+          "assets/images/optimized/experience-review/cargese-group-1200.webp",
+          "assets/images/optimized/experience-review/cargese-me-poster-900.webp",
+          "assets/images/optimized/experience-review/cargese-poster-context-900.webp"
+        ],
+        "labels": [
+          "Cargese summer school group",
+          "Poster presentation",
+          "Poster session"
+        ],
+        "positions": [
+          "center 50%",
+          "center 42%",
+          "center 44%"
+        ],
+        "default_src": "assets/images/optimized/experience-review/cargese-group-1200.webp",
+        "default_alt": "Cargese summer school group photo",
+        "default_label": "Cargese · 2026",
+        "default_position": "center 50%",
+        "link": {
+          "href": "assets/pdfs/universal-robust-control-poster.pdf",
+          "label": "Open poster PDF ↗",
+          "external": true
+        }
       }
     ]
   },
@@ -164,14 +185,14 @@
         "title": "Math Teacher",
         "org": "revamp24, Bangalore · 2020–2024",
         "copy": "Teaching role that sharpened explanation, pacing, and mathematical clarity across varied student levels.",
-        "image": "assets/images/experience-review/other-mathteacher.jpg",
+        "image": "assets/images/optimized/experience-review/other-mathteacher-700.webp",
         "alt": "Math teaching"
       },
       {
         "title": "Subject Matter Expert",
         "org": "Calculus · Six Red Marbles, Chennai · 2019–2021",
         "copy": "Mathematics-focused content and curriculum work, developing materials for structured learning pathways.",
-        "image": "assets/images/experience-review/srm.jpg",
+        "image": "assets/images/optimized/experience-review/srm-700.webp",
         "alt": "Six Red Marbles"
       }
     ]

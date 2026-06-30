@@ -28,6 +28,9 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
+      - name: Build static assets
+        run: python3 tools/build_index.py --asset-version "$GITHUB_SHA"
+
       - name: Upload static site artifact
         uses: actions/upload-pages-artifact@v4
         with:

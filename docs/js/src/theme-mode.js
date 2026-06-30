@@ -9,7 +9,7 @@ const THEMES = [
     { id: 'mid-atmosphere', label: 'Mid Atmosphere', icon: '2' },
 ];
 
-const avatarPool = ['assets/images/avatar_1.webp'];
+const avatarPool = ['assets/images/optimized/avatar_1-320.webp'];
 const THEME_MODES = {
     dark: ['dark', 'crimson', 'carbon', 'dusk', 'volt'],
     light: ['light-editorial'],

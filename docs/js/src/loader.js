@@ -2,7 +2,8 @@
 // INTRO LOADER — waves + drift
 // =====================================================
 (function initLoader() {
-    if (window.innerWidth <= 900) {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (window.innerWidth <= 900 || prefersReducedMotion) {
         const l = document.getElementById('q-loader');
         if (l) {
             l.style.transition = 'opacity 0.22s ease, visibility 0.22s ease';
@@ -36,7 +37,7 @@
     // ── drift field (built once, runs forever) ──────────────────────────────────────
     const PHYS = ['ψ','α','β','∂','ℏ','∑','∇','ω','λ','σ','ε','ρ'];
     const CODE = ['0','1','{','}','f','x','→','n','i','[',']','*'];
-    for (let i = 0; i < 58; i++) {
+    for (let i = 0; i < 28; i++) {
         const phys = Math.random() > 0.5;
         const pool = phys ? PHYS : CODE;
         const s    = document.createElement('span');
@@ -61,7 +62,7 @@
     // ── waveforms ────────────────────────────────────────────────────
     function buildSinePath(W, H, cy, amp, freq, phase) {
         let d = '';
-        for (let x = 0; x <= W; x += 5) {
+        for (let x = 0; x <= W; x += 10) {
             const y = cy + amp * Math.sin(freq * (x / W) * 2 * Math.PI + phase);
             d += (d ? 'L' : 'M') + x.toFixed(0) + ',' + y.toFixed(1) + ' ';
         }
@@ -99,7 +100,7 @@
     const wordTimer = setInterval(() => {
         wordIdx++;
         nameEl.textContent = WORDS[wordIdx % WORDS.length];
-    }, 130);
+    }, 160);
 
     setTimeout(() => {
         clearInterval(wordTimer);
@@ -117,7 +118,7 @@
             while (lockPos < TARGET.length && TARGET[lockPos] === ' ') { locked[lockPos] = ' '; lockPos++; }
             if (lockPos < TARGET.length) { locked[lockPos] = TARGET[lockPos]; lockPos++; }
         }, 72);
-    }, 2000);
+    }, 620);
 
     // ── status cycling ───────────────────────────────────────────────────
     const statuses = ['reading the system...','iterating...','propagating...','refining...','stable.','converged.'];
@@ -127,15 +128,14 @@
         sIdx = (sIdx + 1) % statuses.length;
         statusEl.style.opacity = '0';
         setTimeout(() => { statusEl.textContent = statuses[sIdx]; statusEl.style.opacity = '1'; }, 200);
-    }, 950);
+    }, 700);
 
     // ── progress bar ───────────────────────────────────────────────────────────
     let p = 0;
     const progTimer = setInterval(() => {
         let inc;
-        if      (p < 45) inc = Math.random() * 7 + 3;
-        else if (p < 85) inc = Math.random() * 1.4 + 0.3;
-        else             inc = Math.random() * 3 + 1.5;
+        if      (p < 70) inc = Math.random() * 14 + 8;
+        else             inc = Math.random() * 9 + 5;
         p = Math.min(p + inc, 100);
         barEl.style.width = Math.floor(p) + '%';
 
@@ -152,16 +152,17 @@
                 loader.classList.add('q-loader--hidden');
                 triggerHeroFadeIn();
                 sessionStorage.setItem('q-intro-seen', '1');
-            }, 920);
+            }, 180);
         }
-    }, 90);
+    }, 70);
 })();
 
 function triggerHeroFadeIn() {
+    const fastIntro = window.innerWidth <= 900 || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     document.querySelectorAll('.intro-fade').forEach(el => {
-        const delay = el.dataset.delay ? parseFloat(el.dataset.delay) : 0;
+        const delay = fastIntro ? 0 : (el.dataset.delay ? parseFloat(el.dataset.delay) : 0);
         el.style.animationDelay = delay + 's';
         el.classList.add('intro-visible');
     });
-    setTimeout(startTypewriter, 720);
+    setTimeout(startTypewriter, fastIntro ? 80 : 420);
 }

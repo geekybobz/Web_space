@@ -5,7 +5,8 @@
 // INTRO LOADER — waves + drift
 // =====================================================
 (function initLoader() {
-    if (window.innerWidth <= 900) {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (window.innerWidth <= 900 || prefersReducedMotion) {
         const l = document.getElementById('q-loader');
         if (l) {
             l.style.transition = 'opacity 0.22s ease, visibility 0.22s ease';
@@ -39,7 +40,7 @@
     // ── drift field (built once, runs forever) ──────────────────────────────────────
     const PHYS = ['ψ','α','β','∂','ℏ','∑','∇','ω','λ','σ','ε','ρ'];
     const CODE = ['0','1','{','}','f','x','→','n','i','[',']','*'];
-    for (let i = 0; i < 58; i++) {
+    for (let i = 0; i < 28; i++) {
         const phys = Math.random() > 0.5;
         const pool = phys ? PHYS : CODE;
         const s    = document.createElement('span');
@@ -64,7 +65,7 @@
     // ── waveforms ────────────────────────────────────────────────────
     function buildSinePath(W, H, cy, amp, freq, phase) {
         let d = '';
-        for (let x = 0; x <= W; x += 5) {
+        for (let x = 0; x <= W; x += 10) {
             const y = cy + amp * Math.sin(freq * (x / W) * 2 * Math.PI + phase);
             d += (d ? 'L' : 'M') + x.toFixed(0) + ',' + y.toFixed(1) + ' ';
         }
@@ -102,7 +103,7 @@
     const wordTimer = setInterval(() => {
         wordIdx++;
         nameEl.textContent = WORDS[wordIdx % WORDS.length];
-    }, 130);
+    }, 160);
 
     setTimeout(() => {
         clearInterval(wordTimer);
@@ -120,7 +121,7 @@
             while (lockPos < TARGET.length && TARGET[lockPos] === ' ') { locked[lockPos] = ' '; lockPos++; }
             if (lockPos < TARGET.length) { locked[lockPos] = TARGET[lockPos]; lockPos++; }
         }, 72);
-    }, 2000);
+    }, 620);
 
     // ── status cycling ───────────────────────────────────────────────────
     const statuses = ['reading the system...','iterating...','propagating...','refining...','stable.','converged.'];
@@ -130,15 +131,14 @@
         sIdx = (sIdx + 1) % statuses.length;
         statusEl.style.opacity = '0';
         setTimeout(() => { statusEl.textContent = statuses[sIdx]; statusEl.style.opacity = '1'; }, 200);
-    }, 950);
+    }, 700);
 
     // ── progress bar ───────────────────────────────────────────────────────────
     let p = 0;
     const progTimer = setInterval(() => {
         let inc;
-        if      (p < 45) inc = Math.random() * 7 + 3;
-        else if (p < 85) inc = Math.random() * 1.4 + 0.3;
-        else             inc = Math.random() * 3 + 1.5;
+        if      (p < 70) inc = Math.random() * 14 + 8;
+        else             inc = Math.random() * 9 + 5;
         p = Math.min(p + inc, 100);
         barEl.style.width = Math.floor(p) + '%';
 
@@ -155,18 +155,19 @@
                 loader.classList.add('q-loader--hidden');
                 triggerHeroFadeIn();
                 sessionStorage.setItem('q-intro-seen', '1');
-            }, 920);
+            }, 180);
         }
-    }, 90);
+    }, 70);
 })();
 
 function triggerHeroFadeIn() {
+    const fastIntro = window.innerWidth <= 900 || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     document.querySelectorAll('.intro-fade').forEach(el => {
-        const delay = el.dataset.delay ? parseFloat(el.dataset.delay) : 0;
+        const delay = fastIntro ? 0 : (el.dataset.delay ? parseFloat(el.dataset.delay) : 0);
         el.style.animationDelay = delay + 's';
         el.classList.add('intro-visible');
     });
-    setTimeout(startTypewriter, 720);
+    setTimeout(startTypewriter, fastIntro ? 80 : 420);
 }
 
 /* Source: js/src/hero-typewriter.js */
@@ -226,7 +227,7 @@ const THEMES = [
     { id: 'mid-atmosphere', label: 'Mid Atmosphere', icon: '2' },
 ];
 
-const avatarPool = ['assets/images/avatar_1.webp'];
+const avatarPool = ['assets/images/optimized/avatar_1-320.webp'];
 const THEME_MODES = {
     dark: ['dark', 'crimson', 'carbon', 'dusk', 'volt'],
     light: ['light-editorial'],
@@ -534,7 +535,7 @@ function initLocalPreviewControls() {
 /* Source: js/src/avatar-theme-init.js */
 // ========== AVATAR + THEME SELECTION ==========
 const avatarImg = document.querySelector('.profile-pic');
-const FIXED_AVATAR = 'assets/images/avatar_1.webp';
+const FIXED_AVATAR = 'assets/images/optimized/avatar_1-320.webp';
 
 (function initAvatarAndTheme() {
     if (avatarImg) avatarImg.src = FIXED_AVATAR;
@@ -649,8 +650,9 @@ if (avatarContainer && avatarImg) {
 // ========== CUSTOM CURSOR ==========
 const cursorDot     = document.querySelector('.cursor-dot');
 const cursorOutline = document.querySelector('.cursor-outline');
+const cursorAllowed = window.matchMedia('(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)').matches;
 
-if (cursorDot && cursorOutline) {
+if (cursorDot && cursorOutline && cursorAllowed) {
     let mouseX = 0, mouseY = 0;
     let outlineX = 0, outlineY = 0;
 
@@ -677,7 +679,7 @@ if (cursorDot && cursorOutline) {
         cursorDot.style.left = mouseX + 'px';
         cursorDot.style.top  = mouseY + 'px';
         _startCursorRaf();
-    });
+    }, { passive: true });
 
     const interactables = document.querySelectorAll('a, button, .skill-tag, .project-card, .philosophy-card, .page-dot');
     interactables.forEach(item => {
@@ -694,6 +696,9 @@ if (cursorDot && cursorOutline) {
             cursorOutline.style.borderColor = 'rgba(139, 92, 246, 0.5)';
         });
     });
+} else {
+    cursorDot?.remove();
+    cursorOutline?.remove();
 }
 
 /* Source: js/src/navbar-mobile.js */
@@ -826,56 +831,6 @@ window.addEventListener('resize', () => {
         MobileScrollMode.init();
     }
 });
-
-/* Source: js/src/poster-popup.js */
-// ========== UPCOMING POSTER POPUP ==========
-(function initPosterPopup() {
-    const popup = document.getElementById('poster-popup');
-    if (!popup) return;
-
-    const closeBtn = document.getElementById('poster-popup-close');
-    const noBtn = document.getElementById('poster-popup-no');
-    const yesBtn = document.getElementById('poster-popup-yes');
-    const SESSION_KEY = 'poster-popup-seen';
-    const MOBILE_DELAY_MS = 30000;
-    const DESKTOP_DELAY_MS = 50000;
-
-    function closePopup() {
-        popup.classList.remove('is-visible');
-        document.body.classList.remove('poster-popup-open');
-        sessionStorage.setItem(SESSION_KEY, '1');
-        window.setTimeout(() => {
-            popup.hidden = true;
-        }, 180);
-    }
-
-    function openPopup() {
-        if (sessionStorage.getItem(SESSION_KEY)) return;
-        popup.hidden = false;
-        document.body.classList.add('poster-popup-open');
-        requestAnimationFrame(() => {
-            popup.classList.add('is-visible');
-            noBtn?.focus({ preventScroll: true });
-        });
-    }
-
-    closeBtn?.addEventListener('click', closePopup);
-    noBtn?.addEventListener('click', closePopup);
-    yesBtn?.addEventListener('click', () => {
-        sessionStorage.setItem(SESSION_KEY, '1');
-        window.setTimeout(closePopup, 80);
-    });
-
-    popup.addEventListener('click', (event) => {
-        if (event.target === popup) closePopup();
-    });
-
-    document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && !popup.hidden) closePopup();
-    });
-
-    window.setTimeout(openPopup, isMobileViewport() ? MOBILE_DELAY_MS : DESKTOP_DELAY_MS);
-})();
 
 /* Source: js/src/page-engine.js */
 // =====================================================

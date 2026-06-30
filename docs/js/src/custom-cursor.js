@@ -1,8 +1,9 @@
 // ========== CUSTOM CURSOR ==========
 const cursorDot     = document.querySelector('.cursor-dot');
 const cursorOutline = document.querySelector('.cursor-outline');
+const cursorAllowed = window.matchMedia('(min-width: 901px) and (pointer: fine) and (prefers-reduced-motion: no-preference)').matches;
 
-if (cursorDot && cursorOutline) {
+if (cursorDot && cursorOutline && cursorAllowed) {
     let mouseX = 0, mouseY = 0;
     let outlineX = 0, outlineY = 0;
 
@@ -29,7 +30,7 @@ if (cursorDot && cursorOutline) {
         cursorDot.style.left = mouseX + 'px';
         cursorDot.style.top  = mouseY + 'px';
         _startCursorRaf();
-    });
+    }, { passive: true });
 
     const interactables = document.querySelectorAll('a, button, .skill-tag, .project-card, .philosophy-card, .page-dot');
     interactables.forEach(item => {
@@ -46,4 +47,7 @@ if (cursorDot && cursorOutline) {
             cursorOutline.style.borderColor = 'rgba(139, 92, 246, 0.5)';
         });
     });
+} else {
+    cursorDot?.remove();
+    cursorOutline?.remove();
 }

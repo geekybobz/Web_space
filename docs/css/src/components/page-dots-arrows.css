@@ -91,22 +91,6 @@
     background: color-mix(in srgb, var(--accent-1) 60%, var(--surface-border-hover));
 }
 
-/* Adjacent dot pulsing when boundary is primed ("scroll again to go here") */
-.page-dot.dot-primed {
-    background: color-mix(in srgb, var(--accent-1) 65%, transparent);
-    animation: dot-prime-pulse 0.7s ease-in-out infinite;
-}
-
-@keyframes dot-prime-pulse {
-    0%, 100% {
-        box-shadow: 0 0 5px color-mix(in srgb, var(--accent-1) 35%, transparent);
-        background: color-mix(in srgb, var(--accent-1) 50%, transparent);
-    }
-    50% {
-        box-shadow: 0 0 13px color-mix(in srgb, var(--accent-1) 68%, transparent);
-        background: color-mix(in srgb, var(--accent-1) 82%, transparent);
-    }
-}
 
 /* --- Responsive ---------------------------------------- */
 @media (max-width: 900px) {

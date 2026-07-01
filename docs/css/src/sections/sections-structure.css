@@ -163,13 +163,15 @@
     margin-bottom: clamp(1rem, 1.8vw, 1.8rem);
 }
 
-/* Extra breathing room at the bottom of section pages so content doesn't slam the wall */
-.page.section .page-inner {
+/* Extra breathing room at the bottom of scrollable section pages.
+   Excluded from .page-center pages (contact) which use flex centering — padding would break the alignment. */
+.page.section .page-inner:not(.page-center) {
     --page-safe-bottom: clamp(5.5rem, 10vh, 8rem);
 }
 
-/* Subtle end-of-page termination line — signals "this page is done" */
-.page.section .page-inner::after {
+/* Subtle end-of-page termination line — signals "this page is done".
+   Not applied to .page-center pages since those are vertically centered, not scrollable. */
+.page.section .page-inner:not(.page-center)::after {
     content: '';
     display: block;
     width: clamp(2.5rem, 6vw, 4rem);

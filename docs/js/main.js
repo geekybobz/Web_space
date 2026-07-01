@@ -849,11 +849,14 @@ const PageEngine = (() => {
     const dotsNav    = document.querySelector('.page-dots');
     const DURATION_MS = 280;
 
-    let current         = 0;
-    let isAnimating     = false;
-    let edgePulseTimer  = null;
-    let glowTimer       = null;
-    let overScrollY     = 0;
+    // Cache .page-inner refs once — avoids querySelector on every wheel event
+    const pageInners = pages.map(p => p.querySelector('.page-inner'));
+
+    let current        = 0;
+    let isAnimating    = false;
+    let edgePulseTimer = null;
+    let glowTimer      = null;
+    let overScrollY    = 0;
     let overScrollTimer = null;
 
     function hashPageIndex() {
@@ -914,26 +917,47 @@ const PageEngine = (() => {
     }
 
     // --- Elastic boundary push ---
+    // During active press: instant (no transition) — feels responsive to touch.
+    // On release (140ms no-wheel timer): spring transition kicks in and snaps back.
     function resetElastic() {
         if (overScrollTimer) clearTimeout(overScrollTimer);
         overScrollTimer = null;
-        overScrollY     = 0;
-        pages.forEach(p => p.style.setProperty('--page-push-y', '0px'));
+        overScrollY = 0;
+        pageInners.forEach(inn => {
+            if (!inn) return;
+            inn.style.transition = '';
+            inn.style.transform  = '';
+        });
     }
 
     function applyElasticPush(deltaAbs, direction) {
+        const inner = pageInners[current];
+        if (!inner) return;
+
         overScrollY = Math.min(overScrollY + deltaAbs * 0.22, 46);
         const push  = direction > 0 ? -overScrollY : overScrollY;
-        if (pages[current]) pages[current].style.setProperty('--page-push-y', push + 'px');
+
+        // No transition while actively pressing — instant follow
+        inner.style.transition = 'none';
+        inner.style.transform  = `translateY(${push}px)`;
+
         if (overScrollTimer) clearTimeout(overScrollTimer);
         overScrollTimer = setTimeout(() => {
-            overScrollY = 0;
-            if (pages[current]) pages[current].style.setProperty('--page-push-y', '0px');
+            overScrollY     = 0;
             overScrollTimer = null;
+            // Spring-back: enable transition, snap to rest
+            inner.style.transition = 'transform 0.52s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            inner.style.transform  = 'translateY(0)';
+            // Clean up inline styles after spring completes
+            const settled = inner;
+            setTimeout(() => {
+                settled.style.transition = '';
+                settled.style.transform  = '';
+            }, 560);
         }, 140);
     }
 
-    // --- Boundary glow (visual feedback only, never navigates) ---
+    // --- Boundary glow (visual only — never navigates) ---
     function showBoundaryGlow(direction) {
         if (!pageEngine) return;
         pageEngine.classList.remove('show-edge-cue-top', 'show-edge-cue-bottom');
@@ -1010,7 +1034,6 @@ const PageEngine = (() => {
     function init() {
         pages.forEach((p) => {
             p.classList.remove('active', 'exit-up', 'exit-down', 'from-above');
-            p.style.setProperty('--page-push-y', '0px');
         });
         const initial = hashPageIndex();
         pages[initial].style.transition = 'none';
@@ -1044,7 +1067,7 @@ const PageEngine = (() => {
         }
     });
 
-    // Keyboard navigation (ArrowUp/Down, PageUp/Down)
+    // Keyboard navigation
     document.addEventListener('keydown', (e) => {
         if (isMobileViewport()) return;
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
@@ -1052,7 +1075,9 @@ const PageEngine = (() => {
         if (e.key === 'ArrowUp'   || e.key === 'PageUp'  ) { e.preventDefault(); prev(); }
     });
 
-    // Wheel: elastic push + boundary glow only — scroll NEVER navigates pages
+    // Wheel: passive so the browser's compositor handles native scroll unblocked.
+    // overscroll-behavior: none on .page prevents OS rubber-band at boundaries.
+    // We only apply our elastic push + glow — never navigate on scroll.
     document.addEventListener('wheel', (e) => {
         if (isMobileViewport()) return;
         const activePage = pages[current];
@@ -1064,12 +1089,13 @@ const PageEngine = (() => {
         if (dir === 0) return;
 
         if ((dir > 0 && atBottom) || (dir < 0 && atTop)) {
-            e.preventDefault();
             applyElasticPush(deltaAbs, dir);
             showBoundaryGlow(dir);
+        } else if (overScrollY > 0) {
+            // User scrolled back into the page — release elastic immediately
+            resetElastic();
         }
-        // Mid-page scroll: fall through — browser handles natively
-    }, { passive: false });
+    }, { passive: true }); // passive = compositor handles scroll, zero jank
 
     window.addEventListener('hashchange', () => {
         const idx = hashPageIndex();

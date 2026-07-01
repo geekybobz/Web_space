@@ -22,6 +22,8 @@
     inset: 0;
     overflow-y: auto;
     overflow-x: hidden;
+    /* Prevents OS rubber-band at boundaries — our JS elastic handles that instead */
+    overscroll-behavior: none;
     opacity: 0;
     pointer-events: none;
     transform: translateY(18px);
@@ -38,12 +40,6 @@
     pointer-events: auto;
     transform: translateY(0);
     z-index: 2;
-}
-
-/* Elastic boundary push — inner content springs against the wall and bounces back */
-.page.active .page-inner {
-    transform: translateY(var(--page-push-y, 0px));
-    transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .page.exit-up {

@@ -30,6 +30,10 @@
     display: block;
 }
 
+#about .page-inner {
+    padding-top: calc(var(--nav-height, 70px) + clamp(2.25rem, 6vh, 4.25rem));
+}
+
 #about .section-header {
     display: block;
     width: min(100%, 1020px);

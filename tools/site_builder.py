@@ -712,6 +712,65 @@ def render_experience_section() -> str:
                 --gallery-body: var(--font-sans);
                 --gallery-mono: monospace;
             }
+            [data-theme="mid-atmosphere"] #experience {
+                --gallery-surface: linear-gradient(135deg, rgba(244, 228, 200, 0.9), rgba(218, 190, 148, 0.8) 58%, rgba(232, 207, 171, 0.76));
+                --gallery-border: rgba(70, 45, 27, 0.18);
+                --gallery-text: #2A2119;
+                --gallery-text-muted: #654F39;
+                --gallery-cyan: #7A4E2E;
+                --gallery-shadow: 0 22px 52px rgba(73, 47, 25, 0.2);
+            }
+            [data-theme="mid-atmosphere"] #experience .er-hero-title,
+            [data-theme="mid-atmosphere"] #experience .er-chapter-title,
+            [data-theme="mid-atmosphere"] #experience .er-section-title,
+            [data-theme="mid-atmosphere"] #experience .er-event-copy h3,
+            [data-theme="mid-atmosphere"] #experience .er-role-copy h3 {
+                color: var(--gallery-text);
+            }
+            [data-theme="mid-atmosphere"] #experience .er-hero-title span,
+            [data-theme="mid-atmosphere"] #experience .er-org,
+            [data-theme="mid-atmosphere"] #experience .er-event-copy p,
+            [data-theme="mid-atmosphere"] #experience .er-role-copy p {
+                color: var(--gallery-text-muted);
+            }
+            [data-theme="mid-atmosphere"] #experience .er-role {
+                color: #3A2B20;
+            }
+            [data-theme="mid-atmosphere"] #experience .er-copy {
+                color: #554330;
+            }
+            [data-theme="mid-atmosphere"] #experience .er-tags span {
+                background: rgba(47, 102, 112, 0.09);
+                border-color: rgba(47, 102, 112, 0.22);
+                color: #27545D;
+            }
+            [data-theme="mid-atmosphere"] #experience .er-links a,
+            [data-theme="mid-atmosphere"] #experience .er-hero-links a {
+                background: rgba(122, 78, 46, 0.08);
+                border-color: rgba(122, 78, 46, 0.24);
+                color: #664124;
+            }
+            [data-theme="mid-atmosphere"] #experience .er-links a:hover,
+            [data-theme="mid-atmosphere"] #experience .er-hero-links a:hover {
+                background: rgba(122, 78, 46, 0.13);
+                border-color: rgba(122, 78, 46, 0.38);
+            }
+            [data-theme="mid-atmosphere"] #experience .er-photo-stage,
+            [data-theme="mid-atmosphere"] #experience .er-event-photo,
+            [data-theme="mid-atmosphere"] #experience .er-role-photo {
+                background: rgba(207, 177, 130, 0.74);
+            }
+            [data-theme="mid-atmosphere"] #experience .er-photo-label,
+            [data-theme="mid-atmosphere"] #experience .er-group-peek-btn,
+            [data-theme="mid-atmosphere"] #experience .er-group-close-btn {
+                color: #EDF6FF;
+            }
+            [data-theme="mid-atmosphere"] #experience .er-dot {
+                background: rgba(122, 78, 46, 0.2);
+            }
+            [data-theme="mid-atmosphere"] #experience .er-dot.is-active {
+                background: var(--gallery-cyan);
+            }
 """.strip()
     style = section_root + "\n" + style
     script = EXPERIENCE_SCRIPT.replace("document.querySelectorAll('.er-photo-frame')", "document.querySelectorAll('#experience .er-photo-frame')")

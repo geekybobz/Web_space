@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css?v=1782898964">
+    <link rel="stylesheet" href="css/style.css?v=1782907500">
 </head>
 <body>
     <!-- Intro Loader -->
@@ -55,14 +55,11 @@
             </div>
             <div class="nav-right">
                 <div class="mode-toggle" aria-label="Theme mode toggle" role="group">
-                    <button class="mode-toggle-btn" data-theme-mode="dark" aria-label="Select |0> state">
-                        <span class="mode-state">|0&gt;</span>
+                    <button class="mode-toggle-btn" data-theme-mode="dark" aria-label="Select dark mode">
+                        <span class="mode-state" aria-hidden="true">◐</span>
                     </button>
-                    <button class="mode-toggle-btn" data-theme-mode="mid" aria-label="Select superposition mode 1 over root 2 of |0> plus |1>">
-                        <span class="mode-state">|0&gt;+|1&gt;</span>
-                    </button>
-                    <button class="mode-toggle-btn" data-theme-mode="light" aria-label="Select |1> state">
-                        <span class="mode-state">|1&gt;</span>
+                    <button class="mode-toggle-btn" data-theme-mode="mid" aria-label="Select bright mode">
+                        <span class="mode-state" aria-hidden="true">◯</span>
                     </button>
                 </div>
                 <a href="https://scholar.google.com/citations?user=Yo9U7rIAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" class="nav-scholar">
@@ -248,107 +245,17 @@
 
 
 
-                <!-- ── Philosophy panel ─────────────────────────────────────
-
-                     First thing the user sees on this page.
-
-                     Uses .panel directly (NOT .about-card) so it inherits
-
-                     the full glass treatment; about-card overrides don't apply.
-
-                ──────────────────────────────────────────────────────────── -->
+                <!-- ── Philosophy panel (temporarily hidden) ───────────────
 
                 <div class="panel" id="phil-card" data-accent="2">
 
-
-
-                    <div class="phil-header">
-
-                        <div>
-
-                            <div class="section-label">Mindset</div>
-
-                            <h3 class="phil-card-title">My Philosophy</h3>
-
-                        </div>
-
-                        <span class="phil-count" id="philCount">1 / 5</span>
-
-                    </div>
-
-
-
-                    <nav class="phil-nav" aria-label="Select a thought">
-
-                        <button class="phil-btn" data-idx="0" data-accent="2">
-
-                            <span class="phil-sym">◈</span>Origin
-
-                        </button>
-
-                        <button class="phil-btn" data-idx="1" data-accent="1">
-
-                            <span class="phil-sym">{H, ·}</span>Structure
-
-                        </button>
-
-                        <button class="phil-btn" data-idx="2" data-accent="1">
-
-                            <span class="phil-sym">∇L</span>Learning
-
-                        </button>
-
-                        <button class="phil-btn" data-idx="3" data-accent="3">
-
-                            <span class="phil-sym">≅</span>Fields
-
-                        </button>
-
-                        <button class="phil-btn" data-idx="4" data-accent="2">
-
-                            <span class="phil-sym">⌨</span>Code
-
-                        </button>
-
-                    </nav>
-
-
-
-                    <div class="phil-stage">
-
-                        <span class="phil-ghost" id="philGhost" aria-hidden="true"></span>
-
-                        <div class="phil-kicker" id="philKicker"></div>
-
-                        <h4 class="phil-thought-title" id="philTitle"></h4>
-
-                        <div class="phil-text-wrap">
-
-                            <p class="phil-text">
-
-                                <span id="philText"></span><span class="phil-cursor" id="philCursor">█</span>
-
-                            </p>
-
-                        </div>
-
-                        <div class="phil-footer">
-
-                            <div class="phil-track"><div class="phil-fill" id="philFill"></div></div>
-
-                        </div>
-
-                    </div>
-
-
+                    ...
 
                 </div>
 
-
-
-                <!-- ── Gradient separator ───────────────────────────────── -->
-
                 <div class="phil-section-sep" aria-hidden="true"></div>
+
+                ──────────────────────────────────────────────────────────── -->
 
 
 
@@ -519,6 +426,124 @@
                                     --gallery-body: var(--font-sans);
 
                                     --gallery-mono: monospace;
+
+                                }
+
+                                [data-theme="mid-atmosphere"] #experience {
+
+                                    --gallery-surface: linear-gradient(135deg, rgba(244, 228, 200, 0.9), rgba(218, 190, 148, 0.8) 58%, rgba(232, 207, 171, 0.76));
+
+                                    --gallery-border: rgba(70, 45, 27, 0.18);
+
+                                    --gallery-text: #2A2119;
+
+                                    --gallery-text-muted: #654F39;
+
+                                    --gallery-cyan: #7A4E2E;
+
+                                    --gallery-shadow: 0 22px 52px rgba(73, 47, 25, 0.2);
+
+                                }
+
+                                [data-theme="mid-atmosphere"] #experience .er-hero-title,
+
+                                [data-theme="mid-atmosphere"] #experience .er-chapter-title,
+
+                                [data-theme="mid-atmosphere"] #experience .er-section-title,
+
+                                [data-theme="mid-atmosphere"] #experience .er-event-copy h3,
+
+                                [data-theme="mid-atmosphere"] #experience .er-role-copy h3 {
+
+                                    color: var(--gallery-text);
+
+                                }
+
+                                [data-theme="mid-atmosphere"] #experience .er-hero-title span,
+
+                                [data-theme="mid-atmosphere"] #experience .er-org,
+
+                                [data-theme="mid-atmosphere"] #experience .er-event-copy p,
+
+                                [data-theme="mid-atmosphere"] #experience .er-role-copy p {
+
+                                    color: var(--gallery-text-muted);
+
+                                }
+
+                                [data-theme="mid-atmosphere"] #experience .er-role {
+
+                                    color: #3A2B20;
+
+                                }
+
+                                [data-theme="mid-atmosphere"] #experience .er-copy {
+
+                                    color: #554330;
+
+                                }
+
+                                [data-theme="mid-atmosphere"] #experience .er-tags span {
+
+                                    background: rgba(47, 102, 112, 0.09);
+
+                                    border-color: rgba(47, 102, 112, 0.22);
+
+                                    color: #27545D;
+
+                                }
+
+                                [data-theme="mid-atmosphere"] #experience .er-links a,
+
+                                [data-theme="mid-atmosphere"] #experience .er-hero-links a {
+
+                                    background: rgba(122, 78, 46, 0.08);
+
+                                    border-color: rgba(122, 78, 46, 0.24);
+
+                                    color: #664124;
+
+                                }
+
+                                [data-theme="mid-atmosphere"] #experience .er-links a:hover,
+
+                                [data-theme="mid-atmosphere"] #experience .er-hero-links a:hover {
+
+                                    background: rgba(122, 78, 46, 0.13);
+
+                                    border-color: rgba(122, 78, 46, 0.38);
+
+                                }
+
+                                [data-theme="mid-atmosphere"] #experience .er-photo-stage,
+
+                                [data-theme="mid-atmosphere"] #experience .er-event-photo,
+
+                                [data-theme="mid-atmosphere"] #experience .er-role-photo {
+
+                                    background: rgba(207, 177, 130, 0.74);
+
+                                }
+
+                                [data-theme="mid-atmosphere"] #experience .er-photo-label,
+
+                                [data-theme="mid-atmosphere"] #experience .er-group-peek-btn,
+
+                                [data-theme="mid-atmosphere"] #experience .er-group-close-btn {
+
+                                    color: #EDF6FF;
+
+                                }
+
+                                [data-theme="mid-atmosphere"] #experience .er-dot {
+
+                                    background: rgba(122, 78, 46, 0.2);
+
+                                }
+
+                                [data-theme="mid-atmosphere"] #experience .er-dot.is-active {
+
+                                    background: var(--gallery-cyan);
 
                                 }
 
@@ -2288,7 +2313,7 @@
         <button class="gc-toast-close" id="gc-toast-close" aria-label="Dismiss">Got it ✓</button>
     </div>
 
-    <script src="js/main.js?v=1782898964"></script>
+    <script src="js/main.js?v=1782907500"></script>
 </body>
 </html>
 

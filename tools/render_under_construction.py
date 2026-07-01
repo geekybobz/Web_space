@@ -31,14 +31,11 @@ def render_under_construction(asset_version: str) -> None:
     </a>
 
     <div class="mode-toggle" aria-label="Theme mode toggle" role="group">
-        <button class="mode-toggle-btn" data-theme-mode="dark" aria-label="Select |0> state">
-            <span class="mode-state">|0&gt;</span>
+        <button class="mode-toggle-btn" data-theme-mode="dark" aria-label="Select dark mode">
+            <span class="mode-state" aria-hidden="true">◐</span>
         </button>
-        <button class="mode-toggle-btn" data-theme-mode="mid" aria-label="Select superposition mode 1 over root 2 of |0> plus |1>">
-            <span class="mode-state">|0&gt;+|1&gt;</span>
-        </button>
-        <button class="mode-toggle-btn" data-theme-mode="light" aria-label="Select |1> state">
-            <span class="mode-state">|1&gt;</span>
+        <button class="mode-toggle-btn" data-theme-mode="mid" aria-label="Select bright mode">
+            <span class="mode-state" aria-hidden="true">◯</span>
         </button>
     </div>
 

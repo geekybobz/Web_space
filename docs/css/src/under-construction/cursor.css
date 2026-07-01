@@ -41,8 +41,8 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-width: 4.5rem;
-            padding: 0.52rem 0.95rem;
+            min-width: 3.15rem;
+            padding: 0.48rem 0.72rem;
             border: 1px solid color-mix(in srgb, var(--glass-border) 80%, transparent);
             border-radius: 999px;
             background: transparent;
@@ -71,8 +71,9 @@
         }
 
         .mode-state {
-            font-family: monospace;
-            font-size: 0.72rem;
+            font-family: var(--font-heading), sans-serif;
+            font-size: 0.92rem;
             font-weight: 700;
+            line-height: 1;
             color: currentColor;
         }

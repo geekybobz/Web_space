@@ -32,6 +32,28 @@
         z-index: -1;
     }
 
+    [data-theme="mid-atmosphere"] body {
+        background-color: var(--bg-main);
+        background-image:
+            linear-gradient(rgba(103, 66, 38, 0.052) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(103, 66, 38, 0.036) 1px, transparent 1px),
+            linear-gradient(rgba(47, 102, 112, 0.022) 1px, transparent 1px);
+        background-size: 44px 44px, 44px 44px, 176px 176px;
+        background-position: center top, center top, 22px 18px;
+    }
+
+    [data-theme="mid-atmosphere"] body::before {
+        background:
+            repeating-linear-gradient(0deg, rgba(103, 66, 38, 0.022) 0 1px, transparent 1px 24px),
+            linear-gradient(90deg, transparent 0 72%, rgba(47, 102, 112, 0.03) 72% calc(72% + 1px), transparent calc(72% + 1px) 100%),
+            radial-gradient(circle at 30% 16%, rgba(154, 74, 58, 0.1) 0%, transparent 34%),
+            radial-gradient(circle at 72% 18%, rgba(47, 102, 112, 0.1) 0%, transparent 38%),
+            radial-gradient(circle at 50% 30%, rgba(255, 244, 224, 0.24) 0%, rgba(255, 244, 224, 0.07) 44%, transparent 70%),
+            radial-gradient(circle at 50% 50%, transparent 12%, var(--vignette) 100%);
+        background-size: auto, 96px 100%, auto, auto, auto, auto;
+        background-position: center top, center top, center, center, center, center;
+    }
+
     .unsupported-device,
     body.mobile-device-blocked .unsupported-device {
         display: none !important;
@@ -187,6 +209,10 @@
         align-items: stretch;
         min-height: auto;
         padding-top: clamp(1.1rem, 4vw, 1.8rem);
+    }
+
+    #about .page-inner {
+        padding-top: clamp(2rem, 7vw, 2.75rem);
     }
 
     .section::before {
@@ -537,6 +563,69 @@
         justify-content: center;
         text-align: center;
         border-radius: 8px !important;
+    }
+
+    [data-theme="mid-atmosphere"] #experience .er-hero,
+    [data-theme="mid-atmosphere"] #experience .er-chapter,
+    [data-theme="mid-atmosphere"] #experience .er-event-card,
+    [data-theme="mid-atmosphere"] #experience .er-role-card {
+        background: linear-gradient(180deg, rgba(244, 228, 200, 0.93), rgba(218, 190, 148, 0.86)) !important;
+        border-color: rgba(70, 45, 27, 0.2) !important;
+        box-shadow: 0 16px 34px rgba(73, 47, 25, 0.18) !important;
+        color: var(--text-main) !important;
+    }
+
+    [data-theme="mid-atmosphere"] #experience .er-photo-frame {
+        display: grid !important;
+        gap: 0.45rem !important;
+        margin-bottom: 0.9rem;
+    }
+
+    [data-theme="mid-atmosphere"] #experience .er-photo-stage {
+        display: block !important;
+        aspect-ratio: 4 / 3;
+        min-height: 0 !important;
+        border-radius: 9px;
+        background: rgba(207, 177, 130, 0.74);
+        overflow: hidden;
+    }
+
+    [data-theme="mid-atmosphere"] #experience .er-photo-stage .er-stage-img {
+        opacity: 0.96;
+    }
+
+    [data-theme="mid-atmosphere"] #experience .er-frame-footer {
+        display: flex !important;
+        min-height: 0 !important;
+    }
+
+    [data-theme="mid-atmosphere"] #experience .er-hero-title,
+    [data-theme="mid-atmosphere"] #experience .er-chapter-title,
+    [data-theme="mid-atmosphere"] #experience .er-section-title,
+    [data-theme="mid-atmosphere"] #experience .er-event-copy h3,
+    [data-theme="mid-atmosphere"] #experience .er-role-copy h3 {
+        color: var(--text-main) !important;
+    }
+
+    [data-theme="mid-atmosphere"] #experience .er-hero-title span,
+    [data-theme="mid-atmosphere"] #experience .er-org,
+    [data-theme="mid-atmosphere"] #experience .er-event-copy p,
+    [data-theme="mid-atmosphere"] #experience .er-role-copy p {
+        color: var(--text-muted) !important;
+    }
+
+    [data-theme="mid-atmosphere"] #experience .er-role {
+        color: #3A2B20 !important;
+    }
+
+    [data-theme="mid-atmosphere"] #experience .er-copy {
+        color: #554330 !important;
+    }
+
+    [data-theme="mid-atmosphere"] #experience .er-tags span {
+        background: rgba(47, 102, 112, 0.1) !important;
+        border-color: rgba(47, 102, 112, 0.24) !important;
+        color: #27545D !important;
     }
 
     .contact-panel {

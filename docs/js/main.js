@@ -230,14 +230,13 @@ const THEMES = [
 const avatarPool = ['assets/images/optimized/avatar_1-320.webp'];
 const THEME_MODES = {
     dark: ['dark', 'crimson', 'carbon', 'dusk', 'volt'],
-    light: ['light-editorial'],
     mid: ['mid-atmosphere'],
 };
 const MODE_STORAGE_KEY = 'selectedThemeMode';
 const DARK_INDEX_STORAGE_KEY = 'darkThemeIndex';
 const LOCAL_PREVIEW_STORAGE_KEY = 'localPreviewEnabled';
 const MOBILE_VIEWPORT_BREAKPOINT = 900;
-const MOBILE_THEME_ID = 'crimson';
+const MOBILE_THEME_ID = 'mid-atmosphere';
 const DESKTOP_DEFAULT_THEME_ID = 'crimson';
 
 const htmlEl = document.documentElement;
@@ -262,8 +261,8 @@ function syncMobileDeviceBlock() {
     if (mobile) {
         htmlEl.setAttribute('data-theme', MOBILE_THEME_ID);
         localStorage.setItem('selectedTheme', MOBILE_THEME_ID);
-        localStorage.setItem(MODE_STORAGE_KEY, 'dark');
-        syncModeButtons('dark');
+        localStorage.setItem(MODE_STORAGE_KEY, 'mid');
+        syncModeButtons('mid');
     }
     mobileBlockedState = mobile;
     return mobile;
@@ -289,7 +288,6 @@ function syncModeButtons(modeId) {
 }
 
 function inferModeFromTheme(themeId) {
-    if (THEME_MODES.light.includes(themeId)) return 'light';
     if (THEME_MODES.mid.includes(themeId)) return 'mid';
     return 'dark';
 }

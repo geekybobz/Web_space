@@ -849,15 +849,10 @@ const PageEngine = (() => {
     const dotsNav    = document.querySelector('.page-dots');
     const DURATION_MS = 280;
 
-    // Cache .page-inner refs once — avoids querySelector on every wheel event
-    const pageInners = pages.map(p => p.querySelector('.page-inner'));
-
     let current        = 0;
     let isAnimating    = false;
     let edgePulseTimer = null;
     let glowTimer      = null;
-    let overScrollY    = 0;
-    let overScrollTimer = null;
 
     function hashPageIndex() {
         const hash = window.location.hash;
@@ -916,48 +911,9 @@ const PageEngine = (() => {
         }, 260);
     }
 
-    // --- Elastic boundary push ---
-    // During active press: instant (no transition) — feels responsive to touch.
-    // On release (140ms no-wheel timer): spring transition kicks in and snaps back.
-    function resetElastic() {
-        if (overScrollTimer) clearTimeout(overScrollTimer);
-        overScrollTimer = null;
-        overScrollY = 0;
-        pageInners.forEach(inn => {
-            if (!inn) return;
-            inn.style.transition = '';
-            inn.style.transform  = '';
-        });
-    }
-
-    function applyElasticPush(deltaAbs, direction) {
-        const inner = pageInners[current];
-        if (!inner) return;
-
-        overScrollY = Math.min(overScrollY + deltaAbs * 0.22, 46);
-        const push  = direction > 0 ? -overScrollY : overScrollY;
-
-        // No transition while actively pressing — instant follow
-        inner.style.transition = 'none';
-        inner.style.transform  = `translateY(${push}px)`;
-
-        if (overScrollTimer) clearTimeout(overScrollTimer);
-        overScrollTimer = setTimeout(() => {
-            overScrollY     = 0;
-            overScrollTimer = null;
-            // Spring-back: enable transition, snap to rest
-            inner.style.transition = 'transform 0.52s cubic-bezier(0.34, 1.56, 0.64, 1)';
-            inner.style.transform  = 'translateY(0)';
-            // Clean up inline styles after spring completes
-            const settled = inner;
-            setTimeout(() => {
-                settled.style.transition = '';
-                settled.style.transform  = '';
-            }, 560);
-        }, 140);
-    }
-
     // --- Boundary glow (visual only — never navigates) ---
+    // CSS overscroll-behavior: none on .page stops scroll dead at the boundary.
+    // The glow is purely a compositor-side box-shadow change — zero layout cost.
     function showBoundaryGlow(direction) {
         if (!pageEngine) return;
         pageEngine.classList.remove('show-edge-cue-top', 'show-edge-cue-bottom');
@@ -989,7 +945,6 @@ const PageEngine = (() => {
             return;
         }
         if (isAnimating || idx === current || idx < 0 || idx >= pages.length) return;
-        resetElastic();
         pageEngine?.classList.remove('show-edge-cue-top', 'show-edge-cue-bottom');
         if (glowTimer) { clearTimeout(glowTimer); glowTimer = null; }
         isAnimating = true;
@@ -1047,7 +1002,6 @@ const PageEngine = (() => {
 
     // --- Listeners ---
 
-    // Navbar & brand links
     document.querySelectorAll('[data-page-link]').forEach(a => {
         a.addEventListener('click', (e) => {
             if (isMobileViewport()) return;
@@ -1056,7 +1010,6 @@ const PageEngine = (() => {
         });
     });
 
-    // Hero CTA buttons
     document.querySelectorAll('[data-page-link]').forEach(a => {
         if (a.classList.contains('btn-primary')) {
             a.addEventListener('click', (e) => {
@@ -1067,7 +1020,6 @@ const PageEngine = (() => {
         }
     });
 
-    // Keyboard navigation
     document.addEventListener('keydown', (e) => {
         if (isMobileViewport()) return;
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
@@ -1075,27 +1027,21 @@ const PageEngine = (() => {
         if (e.key === 'ArrowUp'   || e.key === 'PageUp'  ) { e.preventDefault(); prev(); }
     });
 
-    // Wheel: passive so the browser's compositor handles native scroll unblocked.
-    // overscroll-behavior: none on .page prevents OS rubber-band at boundaries.
-    // We only apply our elastic push + glow — never navigate on scroll.
+    // Wheel: passive — compositor handles native scroll with zero blocking.
+    // overscroll-behavior: none on .page stops scroll at boundary (no OS rubber-band).
+    // Boundary glow fires via class toggle — compositor-only box-shadow, no layout.
     document.addEventListener('wheel', (e) => {
         if (isMobileViewport()) return;
         const activePage = pages[current];
         const atTop    = activePage.scrollTop <= 0;
         const atBottom = activePage.scrollTop + activePage.clientHeight >= activePage.scrollHeight - 2;
         const dir      = Math.sign(e.deltaY);
-        const deltaAbs = Math.abs(e.deltaY);
 
         if (dir === 0) return;
-
         if ((dir > 0 && atBottom) || (dir < 0 && atTop)) {
-            applyElasticPush(deltaAbs, dir);
             showBoundaryGlow(dir);
-        } else if (overScrollY > 0) {
-            // User scrolled back into the page — release elastic immediately
-            resetElastic();
         }
-    }, { passive: true }); // passive = compositor handles scroll, zero jank
+    }, { passive: true });
 
     window.addEventListener('hashchange', () => {
         const idx = hashPageIndex();

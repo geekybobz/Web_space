@@ -1214,7 +1214,7 @@ a {
 /* Extra breathing room at the bottom of scrollable section pages.
    Excluded from .page-center pages (contact) which use flex centering — padding would break the alignment. */
 .page.section .page-inner:not(.page-center) {
-    --page-safe-bottom: clamp(5.5rem, 10vh, 8rem);
+    --page-safe-bottom: clamp(8rem, 14vh, 11rem);
 }
 
 /* Subtle end-of-page termination line — signals "this page is done".

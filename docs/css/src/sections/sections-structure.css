@@ -162,3 +162,23 @@
 .section-header {
     margin-bottom: clamp(1rem, 1.8vw, 1.8rem);
 }
+
+/* Extra breathing room at the bottom of section pages so content doesn't slam the wall */
+.page.section .page-inner {
+    --page-safe-bottom: clamp(5.5rem, 10vh, 8rem);
+}
+
+/* Subtle end-of-page termination line — signals "this page is done" */
+.page.section .page-inner::after {
+    content: '';
+    display: block;
+    width: clamp(2.5rem, 6vw, 4rem);
+    height: 1px;
+    margin: clamp(2rem, 3.5vh, 3rem) auto 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        color-mix(in srgb, var(--accent-1) 28%, var(--surface-border)),
+        transparent
+    );
+}

@@ -12,18 +12,18 @@ const PageEngine = (() => {
     const pages       = Array.from(document.querySelectorAll('.page'));
     const pageEngine  = document.getElementById('page-engine');
     const dotsNav     = document.querySelector('.page-dots');
-    const prevBtn     = document.getElementById('page-prev');
-    const nextBtn     = document.getElementById('page-next');
-    const DURATION_MS = 280; // matches CSS transition
+    const DURATION_MS = 280;
     const EDGE_INTENT_THRESHOLD = 18;
     const EDGE_INTENT_WINDOW_MS = 850;
 
-    let current        = 0;
-    let isAnimating    = false;
-    let edgePulseTimer = null;
-    let edgeCueTimer   = null;
-    let edgeReleaseTimer = null;
+    let current             = 0;
+    let isAnimating         = false;
+    let edgePulseTimer      = null;
+    let edgeCueTimer        = null;
+    let edgeReleaseTimer    = null;
     let edgePrimedDirection = 0;
+    let overScrollY         = 0;
+    let overScrollTimer     = null;
 
     function hashPageIndex() {
         const hash = window.location.hash;
@@ -43,16 +43,14 @@ const PageEngine = (() => {
         }
     }
 
-    // --- Build side dots ---
+    // --- Build bottom nav dots ---
     pages.forEach((page, i) => {
         const label = page.dataset.label || `Page ${i + 1}`;
         const dot   = document.createElement('button');
-        dot.className   = 'page-dot';
+        dot.className     = 'page-dot';
         dot.dataset.label = label;
         dot.setAttribute('aria-label', `Go to ${label}`);
-        dot.addEventListener('click', () => {
-            goTo(i);
-        });
+        dot.addEventListener('click', () => { goTo(i); });
         dotsNav?.appendChild(dot);
     });
 
@@ -87,7 +85,6 @@ const PageEngine = (() => {
             pageEngine.style.setProperty('--scroll-cue-opacity', '0');
             return;
         }
-
         pageEngine.style.setProperty('--scroll-cue-origin', direction > 0 ? '0%' : '100%');
         pageEngine.style.setProperty('--scroll-cue-progress', String(Math.min(Math.max(strength, 0), 1)));
         pageEngine.style.setProperty('--scroll-cue-opacity', '0.96');
@@ -103,13 +100,15 @@ const PageEngine = (() => {
         }, duration);
     }
 
+    // Drives the left scroll-depth bar — fills as user scrolls down the page
     function updateScrollFeedback(page = pages[current]) {
         if (!pageEngine || !page) return;
-        const maxScroll = Math.max(page.scrollHeight - page.clientHeight, 0);
+        const maxScroll   = Math.max(page.scrollHeight - page.clientHeight, 0);
         const hasOverflow = maxScroll > 0;
-        pageEngine.style.setProperty('--scroll-cue-opacity', hasOverflow ? '0.18' : '0');
-        pageEngine.style.setProperty('--scroll-cue-progress', hasOverflow ? '0.22' : '0');
-        pageEngine.style.setProperty('--scroll-cue-origin', '0%');
+        const depth       = maxScroll > 0 ? page.scrollTop / maxScroll : 0;
+        pageEngine.style.setProperty('--scroll-cue-opacity',  hasOverflow ? '0.42' : '0');
+        pageEngine.style.setProperty('--scroll-cue-progress', String(depth));
+        pageEngine.style.setProperty('--scroll-cue-origin',   '0%');
     }
 
     function pulsePageBadge() {
@@ -125,10 +124,6 @@ const PageEngine = (() => {
         }, 260);
     }
 
-    function getArrowForDirection(direction) {
-        return direction > 0 ? nextBtn : prevBtn;
-    }
-
     function clearEdgeReleaseTimer() {
         if (edgeReleaseTimer) {
             clearTimeout(edgeReleaseTimer);
@@ -136,27 +131,44 @@ const PageEngine = (() => {
         }
     }
 
-    function clearArrowAttract() {
-        [prevBtn, nextBtn].forEach((button) => {
-            if (!button) return;
-            button.classList.remove('edge-attract');
-            button.removeAttribute('data-edge-label');
-        });
+    // --- Adjacent dot priming (signals "scroll again to go here") ---
+    function clearDotPrimed() {
+        dots.forEach(d => d.classList.remove('dot-primed'));
+    }
+
+    function primeAdjacentDot(direction) {
+        clearDotPrimed();
+        const targetIdx = current + direction;
+        if (targetIdx >= 0 && targetIdx < dots.length) {
+            dots[targetIdx].classList.add('dot-primed');
+        }
+    }
+
+    // --- Elastic boundary push ---
+    function resetElastic() {
+        if (overScrollTimer) clearTimeout(overScrollTimer);
+        overScrollTimer = null;
+        overScrollY     = 0;
+        pages.forEach(p => p.style.setProperty('--page-push-y', '0px'));
+    }
+
+    function applyElasticPush(deltaAbs, direction) {
+        overScrollY = Math.min(overScrollY + deltaAbs * 0.22, 46);
+        const push  = direction > 0 ? -overScrollY : overScrollY;
+        if (pages[current]) pages[current].style.setProperty('--page-push-y', push + 'px');
+        if (overScrollTimer) clearTimeout(overScrollTimer);
+        overScrollTimer = setTimeout(() => {
+            overScrollY = 0;
+            if (pages[current]) pages[current].style.setProperty('--page-push-y', '0px');
+            overScrollTimer = null;
+        }, 140);
     }
 
     function clearEdgeState({ keepCue = false } = {}) {
         clearEdgeReleaseTimer();
         edgePrimedDirection = 0;
-        clearArrowAttract();
+        clearDotPrimed();
         if (!keepCue) clearEdgeCue();
-    }
-
-    function applyArrowAttract(direction) {
-        clearArrowAttract();
-        const button = getArrowForDirection(direction);
-        if (!button || button.disabled) return;
-        button.classList.add('edge-attract');
-        button.setAttribute('data-edge-label', direction > 0 ? 'Scroll again for next' : 'Scroll again for previous');
     }
 
     function scheduleEdgeRelease() {
@@ -168,22 +180,15 @@ const PageEngine = (() => {
 
     // --- Update UI chrome ---
     function updateChrome(idx) {
-        // Dots
         dots.forEach((d, i) => d.classList.toggle('active', i === idx));
 
-        // Prev/Next arrows
-        if (prevBtn) prevBtn.disabled = idx === 0;
-        if (nextBtn) nextBtn.disabled = idx === pages.length - 1;
-
-        // Navbar active link
         document.querySelectorAll('[data-page-link]').forEach(a => {
             a.classList.toggle('active', parseInt(a.dataset.pageLink) === idx);
         });
 
         document.body.classList.toggle('viewing-contact', idx === 4);
-        clearArrowAttract();
+        clearDotPrimed();
 
-        // Close mobile menu
         navLinksEl?.classList.remove('active');
         const icon = mobileToggle?.querySelector('i');
         if (icon) { icon.classList.remove('fa-times'); icon.classList.add('fa-bars'); }
@@ -196,19 +201,18 @@ const PageEngine = (() => {
             return;
         }
         if (isAnimating || idx === current || idx < 0 || idx >= pages.length) return;
+        resetElastic();
         clearEdgeState();
         isAnimating = true;
 
         const prevPageIdx = current;
-        const outPage = pages[current];
-        const inPage  = pages[idx];
-        const dir     = direction ?? (idx > current ? 'forward' : 'backward');
+        const outPage     = pages[current];
+        const inPage      = pages[idx];
+        const dir         = direction ?? (idx > current ? 'forward' : 'backward');
 
-        // Exit outgoing page
         outPage.classList.remove('active');
         outPage.classList.add(dir === 'forward' ? 'exit-up' : 'exit-down');
 
-        // Update state immediately so chrome/dots/hash are responsive
         current = idx;
         updateChrome(current);
         pulsePageTag(current);
@@ -218,9 +222,8 @@ const PageEngine = (() => {
         _onPageChange(current, prevPageIdx);
 
         if (dir === 'backward') {
-            // Snap incoming page above viewport (single reflow, no double)
             inPage.classList.add('from-above');
-            void inPage.offsetHeight; // commit snap — one reflow
+            void inPage.offsetHeight;
             requestAnimationFrame(() => {
                 inPage.classList.remove('from-above');
                 inPage.classList.add('active');
@@ -241,9 +244,9 @@ const PageEngine = (() => {
 
     // --- Init: show page 0 immediately (no animation) ---
     function init() {
-        pages.forEach((p, i) => {
+        pages.forEach((p) => {
             p.classList.remove('active', 'exit-up', 'exit-down', 'from-above');
-            // Ensure all pages start hidden via their base .page class styles
+            p.style.setProperty('--page-push-y', '0px');
         });
         const initial = hashPageIndex();
         pages[initial].style.transition = 'none';
@@ -258,10 +261,6 @@ const PageEngine = (() => {
 
     // --- Listeners ---
 
-    // Arrow buttons
-    prevBtn?.addEventListener('click', prev);
-    nextBtn?.addEventListener('click', next);
-
     // Navbar & brand links
     document.querySelectorAll('[data-page-link]').forEach(a => {
         a.addEventListener('click', (e) => {
@@ -271,7 +270,7 @@ const PageEngine = (() => {
         });
     });
 
-    // Hero CTA "View Research" button
+    // Hero CTA buttons
     document.querySelectorAll('[data-page-link]').forEach(a => {
         if (a.classList.contains('btn-primary')) {
             a.addEventListener('click', (e) => {
@@ -282,6 +281,7 @@ const PageEngine = (() => {
         }
     });
 
+    // Track scroll depth in each page for the left cue bar
     pages.forEach((page) => {
         page.addEventListener('scroll', () => {
             if (page === pages[current]) updateScrollFeedback(page);
@@ -317,13 +317,14 @@ const PageEngine = (() => {
         }, 760);
     }
 
+    // Wheel: elastic push at every boundary contact, double-scroll to navigate
     document.addEventListener('wheel', (e) => {
         if (isMobileViewport()) return;
         const activePage = pages[current];
-        const atTop    = activePage.scrollTop <= 0;
-        const atBottom = activePage.scrollTop + activePage.clientHeight >= activePage.scrollHeight - 2;
-        const dir      = Math.sign(e.deltaY);
-        const deltaAbs = Math.abs(e.deltaY);
+        const atTop      = activePage.scrollTop <= 0;
+        const atBottom   = activePage.scrollTop + activePage.clientHeight >= activePage.scrollHeight - 2;
+        const dir        = Math.sign(e.deltaY);
+        const deltaAbs   = Math.abs(e.deltaY);
 
         // Still scrolling inside the page — let it scroll naturally
         if ((!atTop && dir < 0) || (!atBottom && dir > 0)) {
@@ -335,6 +336,10 @@ const PageEngine = (() => {
 
         if ((dir > 0 && atBottom) || (dir < 0 && atTop)) {
             e.preventDefault();
+
+            // Elastic push fires on every boundary contact
+            applyElasticPush(deltaAbs, dir);
+
             if (deltaAbs < EDGE_INTENT_THRESHOLD) {
                 scheduleEdgeRelease();
                 return;
@@ -344,16 +349,18 @@ const PageEngine = (() => {
                 clearEdgeState({ keepCue: true });
             }
 
+            // Second intentional scroll in same direction → navigate
             if (edgePrimedDirection === dir) {
                 clearEdgeState({ keepCue: true });
                 if (dir > 0) next(); else prev();
                 return;
             }
 
+            // First intentional boundary scroll → prime + signal
             edgePrimedDirection = dir;
             showEdgeCue(dir);
             setDirectionalCue(dir, 1);
-            applyArrowAttract(dir);
+            primeAdjacentDot(dir);
             pulsePageBadge();
             scheduleEdgeRelease();
             return;
@@ -371,10 +378,10 @@ const PageEngine = (() => {
 
     document.addEventListener('touchend', (e) => {
         if (isMobileViewport()) return;
-        const dy = touchStartY - e.changedTouches[0].clientY;
+        const dy         = touchStartY - e.changedTouches[0].clientY;
         const activePage = pages[current];
-        const atTop     = activePage.scrollTop <= 0;
-        const atBottom  = activePage.scrollTop + activePage.clientHeight >= activePage.scrollHeight - 2;
+        const atTop      = activePage.scrollTop <= 0;
+        const atBottom   = activePage.scrollTop + activePage.clientHeight >= activePage.scrollHeight - 2;
 
         if (dy > 60  && atBottom) next();
         if (dy < -60 && atTop)   prev();

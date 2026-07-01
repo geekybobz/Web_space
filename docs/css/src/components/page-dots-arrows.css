@@ -1,33 +1,50 @@
-/* --- Side dot navigator ------------------------------- */
+/* --- Bottom-center page nav bar -------------------------------- */
 .page-dots {
     position: fixed;
-    right: 1.25rem;
-    top: 50%;
-    transform: translateY(-50%);
+    bottom: 1.75rem;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
     z-index: 200;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    padding: 0.5rem 1rem;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 var(--glass-highlight);
 }
 
 .page-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
     background: var(--surface-border-hover);
     border: none;
     cursor: pointer;
     padding: 0;
-    transition: all 0.25s ease;
+    flex-shrink: 0;
+    transition:
+        width    0.32s cubic-bezier(0.34, 1.56, 0.64, 1),
+        background 0.25s ease,
+        box-shadow 0.25s ease;
     position: relative;
 }
 
+/* Label tooltip — appears above bar */
 .page-dot::after {
     content: attr(data-label);
     position: absolute;
-    right: calc(100% + 0.6rem);
-    top: 50%;
-    transform: translateY(-50%);
+    left: 50%;
+    bottom: calc(100% + 0.65rem);
+    top: auto;
+    right: auto;
+    transform: translateX(-50%);
     font-family: monospace;
     font-size: 0.7rem;
     color: var(--text-muted);
@@ -51,174 +68,43 @@
 @keyframes page-dot-label-fade {
     0% {
         opacity: 0;
-        transform: translateY(-50%) translateX(6px);
+        transform: translateX(-50%) translateY(4px);
     }
-    15%,
-    70% {
+    15%, 70% {
         opacity: 1;
-        transform: translateY(-50%) translateX(0);
+        transform: translateX(-50%) translateY(0);
     }
     100% {
         opacity: 0;
-        transform: translateY(-50%) translateX(-2px);
+        transform: translateX(-50%) translateY(-2px);
     }
 }
 
+/* Active dot — morphs to a pill */
 .page-dot.active {
+    width: 20px;
     background: var(--accent-1);
-    box-shadow: 0 0 8px var(--accent-1);
-    transform: scale(1.4);
+    box-shadow: 0 0 10px color-mix(in srgb, var(--accent-1) 55%, transparent);
 }
 
-.page-dot:hover { background: var(--accent-1); opacity: 0.75; }
-
-/* --- Prev / Next arrows ------------------------------- */
-.page-arrows {
-    position: fixed;
-    right: 1rem;
-    bottom: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.65rem;
-    z-index: 200;
+.page-dot:hover {
+    background: color-mix(in srgb, var(--accent-1) 60%, var(--surface-border-hover));
 }
 
-.page-arrow {
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: var(--item-bg);
-    border: 1px solid var(--surface-border);
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 0.8rem;
-    transition: all 0.2s ease;
-    backdrop-filter: blur(8px);
-    animation: control-flicker 2.8s steps(2, end) infinite;
-    position: relative;
+/* Adjacent dot pulsing when boundary is primed ("scroll again to go here") */
+.page-dot.dot-primed {
+    background: color-mix(in srgb, var(--accent-1) 65%, transparent);
+    animation: dot-prime-pulse 0.7s ease-in-out infinite;
 }
 
-.page-arrow:hover {
-    border-color: var(--accent-1);
-    color: var(--accent-1);
-    box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
-    transform: scale(1.1);
-}
-
-.page-arrow:disabled {
-    opacity: 0.2;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-    animation: none;
-}
-
-.page-arrow--next {
-    animation-delay: 0.55s;
-}
-
-.page-arrow.edge-attract {
-    color: var(--accent-1);
-    border-color: color-mix(in srgb, var(--accent-1) 74%, white 26%);
-    box-shadow:
-        0 0 18px color-mix(in srgb, var(--accent-1) 46%, transparent),
-        0 0 34px color-mix(in srgb, var(--accent-2) 20%, transparent);
-    animation:
-        control-flicker 1.15s steps(2, end) infinite,
-        edge-arrow-bounce 0.68s ease-in-out infinite;
-}
-
-.page-arrow.edge-attract::after {
-    content: attr(data-edge-label);
-    position: absolute;
-    right: calc(100% + 0.8rem);
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 0.34rem 0.65rem;
-    border-radius: 999px;
-    border: 1px solid color-mix(in srgb, var(--accent-1) 36%, var(--surface-border));
-    background: color-mix(in srgb, var(--surface-bg-hover) 88%, transparent);
-    color: var(--text-main);
-    font-family: monospace;
-    font-size: 0.68rem;
-    letter-spacing: 0.08em;
-    white-space: nowrap;
-    box-shadow: 0 0 18px color-mix(in srgb, var(--accent-1) 12%, transparent);
-    animation: edge-label-blink 0.9s ease-in-out infinite;
-    pointer-events: none;
-}
-
-.page-arrow.edge-attract::before {
-    content: '';
-    position: absolute;
-    inset: -8px;
-    border-radius: 999px;
-    border: 1px solid color-mix(in srgb, var(--accent-1) 20%, transparent);
-    opacity: 0.55;
-    animation: edge-arrow-halo 1.2s ease-out infinite;
-    pointer-events: none;
-}
-
-@keyframes control-flicker {
+@keyframes dot-prime-pulse {
     0%, 100% {
-        box-shadow: 0 0 0 rgba(0, 0, 0, 0);
-        border-color: var(--surface-border);
-    }
-    20% {
-        box-shadow: 0 0 10px color-mix(in srgb, var(--accent-1) 18%, transparent);
-        border-color: color-mix(in srgb, var(--accent-1) 18%, var(--surface-border));
-    }
-    24% {
-        box-shadow: 0 0 4px color-mix(in srgb, var(--accent-2) 10%, transparent);
-        border-color: color-mix(in srgb, var(--accent-2) 12%, var(--surface-border));
-    }
-    52% {
-        box-shadow: 0 0 12px color-mix(in srgb, var(--accent-1) 22%, transparent);
-        border-color: color-mix(in srgb, var(--accent-1) 22%, var(--surface-border));
-    }
-    56% {
-        box-shadow: 0 0 3px color-mix(in srgb, var(--accent-1) 8%, transparent);
-    }
-}
-
-@keyframes edge-arrow-bounce {
-    0%, 100% {
-        transform: scale(1) translateY(0);
-    }
-    40% {
-        transform: scale(1.08) translateY(-2px);
-    }
-    70% {
-        transform: scale(1.02) translateY(1px);
-    }
-}
-
-@keyframes edge-label-blink {
-    0%, 100% {
-        opacity: 0.56;
-        transform: translateY(-50%) translateX(0);
+        box-shadow: 0 0 5px color-mix(in srgb, var(--accent-1) 35%, transparent);
+        background: color-mix(in srgb, var(--accent-1) 50%, transparent);
     }
     50% {
-        opacity: 1;
-        transform: translateY(-50%) translateX(-2px);
-    }
-}
-
-@keyframes edge-arrow-halo {
-    0% {
-        opacity: 0.55;
-        transform: scale(0.94);
-    }
-    70% {
-        opacity: 0;
-        transform: scale(1.24);
-    }
-    100% {
-        opacity: 0;
-        transform: scale(1.28);
+        box-shadow: 0 0 13px color-mix(in srgb, var(--accent-1) 68%, transparent);
+        background: color-mix(in srgb, var(--accent-1) 82%, transparent);
     }
 }
 
@@ -235,7 +121,6 @@
     body.mobile-device-blocked .navbar,
     body.mobile-device-blocked #page-engine,
     body.mobile-device-blocked .page-dots,
-    body.mobile-device-blocked .page-arrows,
     body.mobile-device-blocked .cursor-dot,
     body.mobile-device-blocked .cursor-outline,
     body.mobile-device-blocked .bg-shape,
@@ -243,9 +128,9 @@
         display: none !important;
     }
 
-    .page-dots { right: 0.5rem; }
-    .page-dot::after { display: none; }
-    /* Stack visual row on mobile, hide side widgets */
+    /* Nav bar is desktop-only — mobile has its own scroll UX */
+    .page-dots { display: none; }
+
     .hero-visual-row { gap: 1rem; }
     .hero-viz { display: none; }
 
@@ -260,10 +145,6 @@
 @media (max-width: 768px) {
     .page-inner {
         padding: calc(var(--nav-height, 70px) + 0.75rem) 1.25rem 4rem;
-    }
-    .page-arrows {
-        right: 0.75rem;
-        bottom: 0.75rem;
     }
 }
 
@@ -371,7 +252,7 @@
 
 /* =====================================================
    PAGE ICON BADGE — compact glowing section badge
-   (pages 1–7, not the hero)
+   (pages 1–4, not the hero)
    ===================================================== */
 
 .page-avatar {
@@ -404,7 +285,6 @@
     pointer-events: auto;
 }
 
-/* Icon inside the badge — color injected by JS via CSS var */
 .page-avatar-icon {
     font-size: 1.15rem;
     line-height: 1;
@@ -413,7 +293,6 @@
     transition: transform 0.2s ease;
 }
 
-/* Hover: lift + glow */
 .page-avatar:hover {
     transform: translateY(-3px);
     border-color: var(--page-badge-color, var(--accent-1));
@@ -426,7 +305,6 @@
     transform: scale(1.2);
 }
 
-/* Pulsing halo ring */
 .page-avatar-ring {
     position: absolute;
     inset: -4px;
@@ -442,7 +320,6 @@
     50%       { opacity: 0.5;  transform: scale(1.08); }
 }
 
-/* Tooltip — appears below-right */
 .page-avatar::after {
     content: attr(data-tooltip);
     position: absolute;
@@ -467,7 +344,6 @@
 
 .page-avatar:hover::after { opacity: 1; }
 
-/* Enter-page ripple */
 @keyframes pa-ripple {
     0%   { opacity: 0.7; transform: scale(1);   }
     100% { opacity: 0;   transform: scale(2.4); }
@@ -496,21 +372,11 @@
 }
 
 @keyframes pa-boundary-pulse {
-    0% {
-        opacity: 0.2;
-        transform: scale(0.96);
-    }
-    65% {
-        opacity: 0.9;
-        transform: scale(1.08);
-    }
-    100% {
-        opacity: 0;
-        transform: scale(1.14);
-    }
+    0%   { opacity: 0.2; transform: scale(0.96); }
+    65%  { opacity: 0.9; transform: scale(1.08); }
+    100% { opacity: 0;   transform: scale(1.14); }
 }
 
-/* Mobile */
 @media (max-width: 640px) {
     .page-avatar {
         width: 40px;

@@ -854,6 +854,9 @@ const PageEngine = (() => {
     let edgePulseTimer = null;
     let glowTimer      = null;
 
+    // Scroll position memory — restored when navigating back to a visited page
+    const scrollPositions = new Array(pages.length).fill(0);
+
     function hashPageIndex() {
         const hash = window.location.hash;
         if (!hash) return 0;
@@ -911,9 +914,7 @@ const PageEngine = (() => {
         }, 260);
     }
 
-    // --- Boundary glow (visual only — never navigates) ---
-    // CSS overscroll-behavior: none on .page stops scroll dead at the boundary.
-    // The glow is purely a compositor-side box-shadow change — zero layout cost.
+    // --- Boundary glow (compositor-only box-shadow, zero layout cost) ---
     function showBoundaryGlow(direction) {
         if (!pageEngine) return;
         pageEngine.classList.remove('show-edge-cue-top', 'show-edge-cue-bottom');
@@ -923,7 +924,7 @@ const PageEngine = (() => {
         glowTimer = setTimeout(() => {
             pageEngine.classList.remove('show-edge-cue-top', 'show-edge-cue-bottom');
             glowTimer = null;
-        }, 480);
+        }, 360); // CSS box-shadow transition on .page.active fades it out over another 500ms
     }
 
     // --- Update UI chrome ---
@@ -945,6 +946,7 @@ const PageEngine = (() => {
             return;
         }
         if (isAnimating || idx === current || idx < 0 || idx >= pages.length) return;
+
         pageEngine?.classList.remove('show-edge-cue-top', 'show-edge-cue-bottom');
         if (glowTimer) { clearTimeout(glowTimer); glowTimer = null; }
         isAnimating = true;
@@ -960,7 +962,7 @@ const PageEngine = (() => {
         current = idx;
         updateChrome(current);
         pulsePageTag(current);
-        inPage.scrollTop = 0;
+        inPage.scrollTop = scrollPositions[idx];
         syncHash(current);
         _onPageChange(current, prevPageIdx);
 
@@ -1010,16 +1012,6 @@ const PageEngine = (() => {
         });
     });
 
-    document.querySelectorAll('[data-page-link]').forEach(a => {
-        if (a.classList.contains('btn-primary')) {
-            a.addEventListener('click', (e) => {
-                if (isMobileViewport()) return;
-                e.preventDefault();
-                goTo(parseInt(a.dataset.pageLink));
-            });
-        }
-    });
-
     document.addEventListener('keydown', (e) => {
         if (isMobileViewport()) return;
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
@@ -1027,20 +1019,20 @@ const PageEngine = (() => {
         if (e.key === 'ArrowUp'   || e.key === 'PageUp'  ) { e.preventDefault(); prev(); }
     });
 
-    // Wheel: passive — compositor handles native scroll with zero blocking.
-    // overscroll-behavior: none on .page stops scroll at boundary (no OS rubber-band).
-    // Boundary glow fires via class toggle — compositor-only box-shadow, no layout.
+    // Save scroll position per page so navigation restores it
+    pages.forEach((page, i) => {
+        page.addEventListener('scroll', () => {
+            scrollPositions[i] = page.scrollTop;
+        }, { passive: true });
+    });
+
+    // Wheel: boundary glow on hard stop at top or bottom. Passive → compositor never blocked.
     document.addEventListener('wheel', (e) => {
         if (isMobileViewport()) return;
-        const activePage = pages[current];
-        const atTop    = activePage.scrollTop <= 0;
-        const atBottom = activePage.scrollTop + activePage.clientHeight >= activePage.scrollHeight - 2;
-        const dir      = Math.sign(e.deltaY);
-
-        if (dir === 0) return;
-        if ((dir > 0 && atBottom) || (dir < 0 && atTop)) {
-            showBoundaryGlow(dir);
-        }
+        const page = pages[current];
+        const dir  = Math.sign(e.deltaY);
+        if (dir < 0 && page.scrollTop <= 0) showBoundaryGlow(-1);
+        if (dir > 0 && page.scrollTop + page.clientHeight >= page.scrollHeight - 2) showBoundaryGlow(1);
     }, { passive: true });
 
     window.addEventListener('hashchange', () => {

@@ -729,317 +729,156 @@ if (mobileToggle && navLinksEl) {
 // PAGE ENGINE
 
 /* Source: js/src/mobile-scroll.js */
-// ========== MOBILE SINGLE-SCROLL MODE ==========
-const MobileScrollMode = (() => {
-    let initialized = false;
-
-    function pages() {
-        return Array.from(document.querySelectorAll('.page'));
-    }
-
-    function closeMenu() {
-        navLinksEl?.classList.remove('active');
-        const icon = mobileToggle?.querySelector('i');
-        mobileToggle?.setAttribute('aria-expanded', 'false');
-        mobileToggle?.setAttribute('aria-label', 'Open navigation menu');
-        if (icon) {
-            icon.classList.remove('fa-times');
-            icon.classList.add('fa-bars');
-        }
-    }
-
-    function sectionForLink(link) {
-        const href = link.getAttribute('href') || '';
-        if (href === '#' || link.dataset.pageLink === '0') {
-            return document.getElementById('page-hero');
-        }
-        if (href.startsWith('#')) {
-            return document.querySelector(href);
-        }
-        const idx = parseInt(link.dataset.pageLink || '', 10);
-        return Number.isNaN(idx) ? null : pages()[idx] || null;
-    }
-
-    function setActive(section) {
-        const allPages = pages();
-        const idx = allPages.indexOf(section);
-        document.querySelectorAll('[data-page-link]').forEach((link) => {
-            const target = sectionForLink(link);
-            link.classList.toggle('active', target === section || parseInt(link.dataset.pageLink || '-1', 10) === idx);
-        });
-        allPages.forEach((page) => page.classList.toggle('active', page === section));
-    }
-
-    function scrollToSection(section, { updateHash = true } = {}) {
-        if (!section) return;
-        setActive(section);
-        section.scrollIntoView({ behavior: 'auto', block: 'start' });
-        if (updateHash && window.history?.replaceState) {
-            const url = section.id === 'page-hero'
-                ? window.location.pathname + window.location.search
-                : `#${section.id}`;
-            window.history.replaceState(null, '', url);
-        }
-        closeMenu();
-    }
-
-    function goTo(idx) {
-        scrollToSection(pages()[idx] || pages()[0]);
-    }
-
-    function init() {
-        if (initialized) return;
-        initialized = true;
-
-        document.querySelectorAll('[data-page-link]').forEach((link) => {
-            link.addEventListener('click', (event) => {
-                if (!isMobileViewport()) return;
-                const section = sectionForLink(link);
-                if (!section) return;
-                event.preventDefault();
-                scrollToSection(section);
-            });
-        });
-
-        const observer = new IntersectionObserver((entries) => {
-            if (!isMobileViewport()) return;
-            const visible = entries
-                .filter((entry) => entry.isIntersecting)
-                .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-            if (visible?.target) setActive(visible.target);
-        }, {
-            root: null,
-            threshold: [0.25, 0.45, 0.65],
-        });
-
-        pages().forEach((page) => observer.observe(page));
-        const initial = window.location.hash ? document.querySelector(window.location.hash) : document.getElementById('page-hero');
-        setActive(initial || pages()[0]);
-    }
-
-    return { init, goTo };
-})();
-
-if (typeof isMobileViewport === 'function' && isMobileViewport()) {
-    MobileScrollMode.init();
-}
-
-window.addEventListener('resize', () => {
-    if (typeof isMobileViewport === 'function' && isMobileViewport()) {
-        MobileScrollMode.init();
-    }
-});
+// MobileScrollMode — superseded by CSS scroll-snap in page-engine.js
+const MobileScrollMode = { init() {}, goTo() {} };
 
 /* Source: js/src/page-engine.js */
 // =====================================================
+// PAGE ENGINE — explicit-only paging, native inner scroll
+// =====================================================
 const PageEngine = (() => {
-    if (isMobileViewport()) {
-        MobileScrollMode?.init();
-        return {
-            goTo(idx) { MobileScrollMode?.goTo(idx); },
-            next() {},
-            prev() {},
-        };
-    }
+    const pages    = Array.from(document.querySelectorAll('.page'));
+    const engine   = document.getElementById('page-engine');
+    const dotsNav  = document.querySelector('.page-dots');
+    const navbarEl = document.querySelector('.navbar');
+    let current = 0;
+    let isPaging = false;
 
-    const pages      = Array.from(document.querySelectorAll('.page'));
-    const pageEngine = document.getElementById('page-engine');
-    const dotsNav    = document.querySelector('.page-dots');
-    const DURATION_MS = 280;
+    const PAGE_LOCK_MS = 620;
 
-    let current        = 0;
-    let isAnimating    = false;
-    let edgePulseTimer = null;
-    let glowTimer      = null;
-
-    // Scroll position memory — restored when navigating back to a visited page
-    const scrollPositions = new Array(pages.length).fill(0);
-
-    function hashPageIndex() {
-        const hash = window.location.hash;
-        if (!hash) return 0;
-        const match = pages.findIndex((page) => `#${page.id}` === hash);
-        return match >= 0 ? match : 0;
-    }
-
-    function syncHash(idx) {
-        const target = pages[idx];
-        if (!target) return;
-        const url = idx === 0 ? window.location.pathname + window.location.search : `#${target.id}`;
-        if (window.history?.replaceState) {
-            window.history.replaceState(null, '', url);
-        } else {
-            window.location.hash = idx === 0 ? '' : target.id;
-        }
-    }
-
-    // --- Build bottom nav dots ---
     pages.forEach((page, i) => {
+        page.tabIndex = -1; // focusable so arrow keys / Space scroll the active page
         const label = page.dataset.label || `Page ${i + 1}`;
         const dot   = document.createElement('button');
         dot.className     = 'page-dot';
         dot.dataset.label = label;
         dot.setAttribute('aria-label', `Go to ${label}`);
-        dot.addEventListener('click', () => { goTo(i); });
+        dot.addEventListener('click', () => goTo(i));
         dotsNav?.appendChild(dot);
     });
-
     const dots = Array.from(dotsNav?.querySelectorAll('.page-dot') || []);
-    let pageTagTimer = null;
 
-    function pulsePageTag(idx) {
-        const dot = dots[idx];
-        if (!dot) return;
-        if (pageTagTimer) clearTimeout(pageTagTimer);
-        dots.forEach((d) => d.classList.remove('show-label'));
-        dot.classList.add('show-label');
-        pageTagTimer = setTimeout(() => {
-            dot.classList.remove('show-label');
-            pageTagTimer = null;
-        }, 1100);
+    function isMobileViewport() {
+        return window.matchMedia('(max-width: 900px)').matches;
     }
 
-    function pulsePageBadge() {
-        const avatar = pages[current]?.querySelector('.page-avatar');
-        if (!avatar) return;
-        if (edgePulseTimer) clearTimeout(edgePulseTimer);
-        avatar.classList.remove('edge-pulse');
-        void avatar.offsetWidth;
-        avatar.classList.add('edge-pulse');
-        edgePulseTimer = setTimeout(() => {
-            avatar.classList.remove('edge-pulse');
-            edgePulseTimer = null;
-        }, 260);
+    function normalizedWheelDeltaY(e) {
+        if (e.deltaMode === 1) return e.deltaY * 16;
+        if (e.deltaMode === 2) return e.deltaY * window.innerHeight;
+        return e.deltaY;
     }
 
-    // --- Boundary glow (compositor-only box-shadow, zero layout cost) ---
-    function showBoundaryGlow(direction) {
-        if (!pageEngine) return;
-        pageEngine.classList.remove('show-edge-cue-top', 'show-edge-cue-bottom');
-        pageEngine.classList.add(direction > 0 ? 'show-edge-cue-bottom' : 'show-edge-cue-top');
-        pulsePageBadge();
-        if (glowTimer) clearTimeout(glowTimer);
-        glowTimer = setTimeout(() => {
-            pageEngine.classList.remove('show-edge-cue-top', 'show-edge-cue-bottom');
-            glowTimer = null;
-        }, 360); // CSS box-shadow transition on .page.active fades it out over another 500ms
+    function syncHash(idx) {
+        const target = pages[idx];
+        if (!target) return;
+        const url = idx === 0
+            ? window.location.pathname + window.location.search
+            : `#${target.id}`;
+        history.replaceState?.(null, '', url);
     }
 
-    // --- Update UI chrome ---
     function updateChrome(idx) {
         dots.forEach((d, i) => d.classList.toggle('active', i === idx));
         document.querySelectorAll('[data-page-link]').forEach(a => {
-            a.classList.toggle('active', parseInt(a.dataset.pageLink) === idx);
+            a.classList.toggle('active', parseInt(a.dataset.pageLink, 10) === idx);
         });
-        document.body.classList.toggle('viewing-contact', idx === 4);
+        document.body.classList.toggle('viewing-contact', idx === pages.length - 1);
+        navbarEl?.classList.toggle('scrolled', idx > 0);
+    }
+
+    function setActive(idx) {
+        if (idx < 0 || idx >= pages.length) return;
+        const old = current;
+        current = idx;
+        pages.forEach((p, i) => {
+            p.classList.toggle('active', i === idx);
+            if (i !== idx) p.scrollTop = 0;
+        });
+        updateChrome(idx);
+        syncHash(idx);
+        pages[idx].focus({ preventScroll: true });
+        if (old !== current) _onPageChange(current, old);
         navLinksEl?.classList.remove('active');
         const icon = mobileToggle?.querySelector('i');
         if (icon) { icon.classList.remove('fa-times'); icon.classList.add('fa-bars'); }
+        mobileToggle?.setAttribute('aria-expanded', 'false');
     }
 
-    // --- Core transition ---
-    function goTo(idx, direction = null) {
-        if (isMobileViewport()) {
-            MobileScrollMode?.goTo(idx);
-            return;
-        }
-        if (isAnimating || idx === current || idx < 0 || idx >= pages.length) return;
+    function goTo(idx) {
+        if (!engine || idx < 0 || idx >= pages.length) return;
+        isPaging = true;
+        engine.scrollTo({ top: pages[idx].offsetTop, behavior: 'smooth' });
+        setActive(idx);
+        window.setTimeout(() => { isPaging = false; }, PAGE_LOCK_MS);
+    }
 
-        pageEngine?.classList.remove('show-edge-cue-top', 'show-edge-cue-bottom');
-        if (glowTimer) { clearTimeout(glowTimer); glowTimer = null; }
-        isAnimating = true;
+    // --- Wheel over the dot rail = one page step per gesture ---
+    // (wheel anywhere else is pure native inner scroll — never paginates)
+    const RAIL_WHEEL_THRESHOLD = 40;
+    let railDelta = 0;
+    let railResetTimer = null;
 
-        const prevPageIdx = current;
-        const outPage     = pages[current];
-        const inPage      = pages[idx];
-        const dir         = direction ?? (idx > current ? 'forward' : 'backward');
+    dotsNav?.addEventListener('wheel', (e) => {
+        e.preventDefault(); // the rail itself has nothing to scroll
+        if (isMobileViewport() || isPaging) return;
+        const dy = normalizedWheelDeltaY(e);
+        if (railDelta !== 0 && Math.sign(dy) !== Math.sign(railDelta)) railDelta = 0;
+        railDelta += dy;
+        if (railResetTimer) clearTimeout(railResetTimer);
+        railResetTimer = setTimeout(() => { railDelta = 0; }, 150);
+        if (Math.abs(railDelta) < RAIL_WHEEL_THRESHOLD) return;
+        railDelta = 0;
+        goTo(current + Math.sign(dy));
+    }, { passive: false });
 
-        outPage.classList.remove('active');
-        outPage.classList.add(dir === 'forward' ? 'exit-up' : 'exit-down');
+    // --- Dock-style magnifier: dots swell near the cursor ---
+    const DOCK_RANGE   = 56;  // px falloff radius around the cursor
+    const DOCK_BOOST   = 1.1; // nearest dot reaches ~2.1x
+    const ACTIVE_SCALE = 2;   // active dot never drops below its CSS scale
+    let dockRaf = null;
 
-        current = idx;
-        updateChrome(current);
-        pulsePageTag(current);
-        inPage.scrollTop = scrollPositions[idx];
-        syncHash(current);
-        _onPageChange(current, prevPageIdx);
-
-        if (dir === 'backward') {
-            inPage.classList.add('from-above');
-            void inPage.offsetHeight;
-            requestAnimationFrame(() => {
-                inPage.classList.remove('from-above');
-                inPage.classList.add('active');
+    dotsNav?.addEventListener('mousemove', (e) => {
+        if (isMobileViewport() || dockRaf) return;
+        const y = e.clientY;
+        dockRaf = requestAnimationFrame(() => {
+            dockRaf = null;
+            dots.forEach((dot, i) => {
+                const r = dot.getBoundingClientRect();
+                const d = Math.abs(y - (r.top + r.height / 2));
+                let s = 1 + DOCK_BOOST * Math.max(0, 1 - d / DOCK_RANGE);
+                if (i === current) s = Math.max(s, ACTIVE_SCALE);
+                dot.style.setProperty('--s', s.toFixed(3));
             });
-        } else {
-            inPage.classList.remove('exit-up', 'exit-down');
-            inPage.classList.add('active');
-        }
-
-        setTimeout(() => {
-            outPage.classList.remove('exit-up', 'exit-down');
-            isAnimating = false;
-        }, DURATION_MS + 80);
-    }
-
-    function next() { goTo(current + 1, 'forward');  }
-    function prev() { goTo(current - 1, 'backward'); }
-
-    // --- Init ---
-    function init() {
-        pages.forEach((p) => {
-            p.classList.remove('active', 'exit-up', 'exit-down', 'from-above');
         });
-        const initial = hashPageIndex();
-        pages[initial].style.transition = 'none';
-        pages[initial].classList.add('active');
-        void pages[initial].offsetHeight;
-        pages[initial].style.transition = '';
+    });
 
-        current = initial;
-        updateChrome(initial);
-    }
-
-    // --- Listeners ---
-
-    document.querySelectorAll('[data-page-link]').forEach(a => {
-        a.addEventListener('click', (e) => {
-            if (isMobileViewport()) return;
-            e.preventDefault();
-            goTo(parseInt(a.dataset.pageLink));
-        });
+    dotsNav?.addEventListener('mouseleave', () => {
+        if (dockRaf) { cancelAnimationFrame(dockRaf); dockRaf = null; }
+        dots.forEach(dot => dot.style.removeProperty('--s'));
     });
 
     document.addEventListener('keydown', (e) => {
-        if (isMobileViewport()) return;
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-        if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); next(); }
-        if (e.key === 'ArrowUp'   || e.key === 'PageUp'  ) { e.preventDefault(); prev(); }
+        if (e.key === 'PageDown') { e.preventDefault(); goTo(current + 1); }
+        if (e.key === 'PageUp')   { e.preventDefault(); goTo(current - 1); }
     });
 
-    // Save scroll position per page so navigation restores it
-    pages.forEach((page, i) => {
-        page.addEventListener('scroll', () => {
-            scrollPositions[i] = page.scrollTop;
-        }, { passive: true });
+    document.querySelectorAll('[data-page-link]').forEach(a => {
+        a.addEventListener('click', (e) => {
+            e.preventDefault();
+            goTo(parseInt(a.dataset.pageLink, 10));
+        });
     });
 
-    // Wheel: boundary glow on hard stop at top or bottom. Passive → compositor never blocked.
-    document.addEventListener('wheel', (e) => {
-        if (isMobileViewport()) return;
-        const page = pages[current];
-        const dir  = Math.sign(e.deltaY);
-        if (dir < 0 && page.scrollTop <= 0) showBoundaryGlow(-1);
-        if (dir > 0 && page.scrollTop + page.clientHeight >= page.scrollHeight - 2) showBoundaryGlow(1);
-    }, { passive: true });
+    pages.forEach((p, i) => p.classList.toggle('active', i === 0));
+    updateChrome(0);
 
-    window.addEventListener('hashchange', () => {
-        const idx = hashPageIndex();
-        if (idx !== current) goTo(idx);
-    });
+    if (window.location.hash) {
+        const idx = pages.findIndex(p => `#${p.id}` === window.location.hash);
+        if (idx > 0) requestAnimationFrame(() => goTo(idx));
+    }
 
-    init();
-    return { goTo, next, prev };
+    return { goTo, next: () => goTo(current + 1), prev: () => goTo(current - 1) };
 })();
 
 /* Source: js/src/crt-terminal.js */

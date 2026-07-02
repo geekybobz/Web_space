@@ -1,73 +1,35 @@
+/* ===== PAGE ENGINE — CSS scroll-snap container ===== */
 #page-engine {
     position: fixed;
     inset: 0;
-    overflow: hidden;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    scroll-snap-type: none;
+    scrollbar-width: none;
 }
 
-/* Boundary glow — blooms in fast, CSS transition fades it out slowly (500ms ease-out on .page.active) */
-#page-engine.show-edge-cue-bottom .page.active {
-    box-shadow:
-        inset 0 -110px 140px -80px color-mix(in srgb, var(--accent-1) 38%, transparent),
-        inset 0 -26px 52px -18px color-mix(in srgb, var(--accent-2) 28%, transparent);
-}
+#page-engine::-webkit-scrollbar { display: none; }
 
-#page-engine.show-edge-cue-top .page.active {
-    box-shadow:
-        inset 0 110px 140px -80px color-mix(in srgb, var(--accent-1) 38%, transparent),
-        inset 0 26px 52px -18px color-mix(in srgb, var(--accent-2) 28%, transparent);
-}
-
+/* Each page fills the viewport and snaps to its top edge */
 .page {
-    position: absolute;
-    inset: 0;
+    position: relative;
+    height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(18px);
-    transition:
-        opacity   0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
-        transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+    overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
     scrollbar-color: var(--surface-border) transparent;
 }
 
-.page.active {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-    z-index: 2;
-    /* box-shadow fades out over 500ms after glow class is removed — soft lingering boundary feel */
-    transition:
-        opacity   0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
-        transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1),
-        box-shadow 0.5s ease-out;
+/* Pages are programmatically focused so arrow keys / Space scroll them */
+.page:focus {
+    outline: none;
 }
 
-.page.exit-up {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-18px);
-}
-
-.page.exit-down {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(18px);
-}
-
-/* Snap an incoming page above viewport so backward nav enters from above */
-.page.from-above {
-    transform: translateY(-18px) !important;
-    opacity: 0 !important;
-    transition: none !important;
-}
-
-/* --- Page inner layout -------------------------------- */
+/* --- Page inner layout --- */
 .page-inner {
-    --page-safe-top: clamp(108px, 15vh, 135px);
-    --page-safe-bottom: clamp(3.75rem, 7vh, 5.5rem);
+    --page-safe-bottom: clamp(8rem, 18vh, 13rem);
     min-height: 100%;
     padding: calc(var(--nav-height, 70px) + 0.5rem) clamp(1rem, 2vw, 1.5rem) var(--page-safe-bottom);
     max-width: 1200px;
@@ -100,4 +62,255 @@
     align-items: center;
     justify-content: center;
     width: 100%;
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+    body.mobile-device-blocked {
+        overflow: hidden;
+    }
+
+    body.mobile-device-blocked .unsupported-device {
+        display: flex;
+    }
+
+    body.mobile-device-blocked .navbar,
+    body.mobile-device-blocked #page-engine,
+    body.mobile-device-blocked .page-dots,
+    body.mobile-device-blocked .page-arrows,
+    body.mobile-device-blocked .bg-shape,
+    body.mobile-device-blocked #gc-toast {
+        display: none !important;
+    }
+
+    .hero-visual-row { gap: 1rem; }
+    .hero-viz { display: none; }
+
+    .page-cols,
+    .grid-2,
+    .exp-grid,
+    .philosophy-grid {
+        --grid-max: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-inner {
+        padding: calc(var(--nav-height, 70px) + 0.75rem) 1.25rem 4rem;
+    }
+}
+
+@media (max-height: 760px) {
+    .page-inner {
+        --page-safe-bottom: 8rem;
+    }
+
+    .page.section .page-inner {
+        --page-safe-top: calc(var(--nav-height, 70px) + 2.5rem);
+    }
+
+    .section-header {
+        margin-bottom: 1rem;
+    }
+
+    .page-cols,
+    .grid-2,
+    .exp-grid,
+    .philosophy-grid {
+        --grid-gap: 1rem;
+    }
+
+    .panel {
+        padding: clamp(0.9rem, 1.2vw, 1.15rem);
+    }
+
+    .card,
+    .project-card {
+        min-height: 0;
+    }
+}
+
+@media (max-width: 1280px) and (max-height: 760px) {
+    .page-cols,
+    .exp-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================================
+   ANALYTICS TOAST — #gc-toast
+========================================================== */
+#gc-toast {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 9999;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    max-width: 320px;
+    padding: 1rem 1.1rem;
+    background: var(--glass-bg, rgba(26, 34, 53, 0.85));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border, rgba(255,255,255,0.08));
+    border-radius: 14px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.45),
+                inset 0 1px 0 var(--glass-highlight, rgba(255,255,255,0.08));
+    transform: translateY(120%);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                opacity 0.35s ease;
+    pointer-events: none;
+}
+#gc-toast.gc-visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+#gc-toast.gc-hiding {
+    transform: translateY(120%);
+    opacity: 0;
+}
+.gc-toast-icon { font-size: 1.6rem; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+.gc-toast-text { font-size: 0.82rem; line-height: 1.5; color: var(--text-main); }
+.gc-toast-text strong { color: var(--accent-1); }
+.gc-toast-sub { color: var(--text-muted); font-size: 0.75rem; }
+.gc-toast-close {
+    margin-top: 0.6rem;
+    display: inline-block;
+    padding: 0.3rem 0.75rem;
+    background: var(--accent-1);
+    color: #000;
+    font-size: 0.72rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+}
+.gc-toast-close:hover { opacity: 0.85; transform: scale(1.04); }
+@media (max-width: 500px) {
+    #gc-toast { right: 0.75rem; left: 0.75rem; max-width: none; bottom: 1rem; }
+}
+
+
+/* =====================================================
+   PAGE ICON BADGE — compact glowing section badge
+   ===================================================== */
+.page-avatar {
+    position: fixed;
+    top: 72px;
+    right: clamp(1rem, 2.5vw, 2.5rem);
+    z-index: 50;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.page.active .page-avatar {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.page-avatar-icon {
+    font-size: 1.15rem;
+    line-height: 1;
+    color: var(--page-badge-color, var(--accent-1));
+    filter: drop-shadow(0 0 5px var(--page-badge-color, var(--accent-1)));
+    transition: transform 0.2s ease;
+}
+
+.page-avatar:hover {
+    transform: translateY(-3px);
+    border-color: var(--page-badge-color, var(--accent-1));
+    box-shadow:
+        0 8px 24px rgba(0,0,0,0.4),
+        0 0 16px color-mix(in srgb, var(--page-badge-color, var(--accent-1)) 40%, transparent);
+}
+
+.page-avatar:hover .page-avatar-icon {
+    transform: scale(1.2);
+}
+
+.page-avatar-ring {
+    position: absolute;
+    inset: -4px;
+    border-radius: 16px;
+    border: 1.5px solid var(--page-badge-color, var(--accent-1));
+    opacity: 0.3;
+    animation: pa-halo-pulse 2.8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes pa-halo-pulse {
+    0%, 100% { opacity: 0.15; transform: scale(1);    }
+    50%       { opacity: 0.5;  transform: scale(1.08); }
+}
+
+.page-avatar::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: 0;
+    top: calc(100% + 6px);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(8px);
+    color: var(--text-main);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.page-avatar:hover::after { opacity: 1; }
+
+@keyframes pa-ripple {
+    0%   { opacity: 0.7; transform: scale(1);   }
+    100% { opacity: 0;   transform: scale(2.4); }
+}
+
+.page-avatar.pa-ripple::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 16px;
+    border: 2px solid var(--page-badge-color, var(--accent-1));
+    animation: pa-ripple 0.7s ease-out forwards;
+    pointer-events: none;
+    z-index: 2;
+}
+
+@media (max-width: 640px) {
+    .page-avatar {
+        width: 40px;
+        height: 40px;
+        top: 66px;
+        right: 0.75rem;
+        border-radius: 10px;
+    }
+    .page-avatar-icon { font-size: 0.95rem; }
+    .page-avatar-ring { inset: -3px; border-radius: 13px; }
 }

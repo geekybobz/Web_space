@@ -77,6 +77,11 @@
     gap: 0;  /* spacing handled by padding on the viz cells */
 }
 
+.hero-visual-row--avatar-only {
+    display: flex;
+    justify-content: center;
+}
+
 /* Avatar sits in the middle grid column — stays perfectly centred */
 .hero-visual-row .hero-avatar {
     grid-column: 2;

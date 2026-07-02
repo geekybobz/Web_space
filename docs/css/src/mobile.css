@@ -179,10 +179,7 @@
         scroll-margin-top: calc(var(--nav-height) + 0.75rem);
     }
 
-    .page.active,
-    .page.exit-up,
-    .page.exit-down,
-    .page.from-above {
+    .page.active {
         opacity: 1 !important;
         transform: none !important;
         pointer-events: auto !important;

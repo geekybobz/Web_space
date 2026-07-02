@@ -1,9 +1,9 @@
 /* Performance budget: keep the visual identity, but avoid rendering work users cannot see. */
 
 @media (min-width: 901px) {
-    .page:not(.active):not(.exit-up):not(.exit-down):not(.from-above) {
-        content-visibility: hidden;
-        contain-intrinsic-size: 720px 1200px;
+    .page:not(.active) {
+        content-visibility: auto;
+        contain-intrinsic-size: 100vw 100vh;
     }
 }
 

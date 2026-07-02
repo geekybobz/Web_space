@@ -51,8 +51,9 @@ const PageEngine = (() => {
         navbarEl?.classList.toggle('scrolled', idx > 0);
     }
 
-    function setActive(idx) {
+    function setActive(idx, options = {}) {
         if (idx < 0 || idx >= pages.length) return;
+        const notifyLifecycle = options.notifyLifecycle !== false;
         const old = current;
         current = idx;
         pages.forEach((p, i) => {
@@ -62,7 +63,7 @@ const PageEngine = (() => {
         updateChrome(idx);
         syncHash(idx);
         pages[idx].focus({ preventScroll: true });
-        if (old !== current) _onPageChange(current, old);
+        if (notifyLifecycle && old !== current && typeof _onPageChange === 'function') _onPageChange(current, old);
         navLinksEl?.classList.remove('active');
         const icon = mobileToggle?.querySelector('i');
         if (icon) { icon.classList.remove('fa-times'); icon.classList.add('fa-bars'); }
@@ -235,13 +236,16 @@ const PageEngine = (() => {
         });
     });
 
-    pages.forEach((p, i) => p.classList.toggle('active', i === 0));
-    updateChrome(0);
+    const initialIdx = window.location.hash
+        ? pages.findIndex(p => `#${p.id}` === window.location.hash)
+        : 0;
+    setActive(initialIdx > -1 ? initialIdx : 0, { notifyLifecycle: false });
 
-    if (window.location.hash) {
-        const idx = pages.findIndex(p => `#${p.id}` === window.location.hash);
-        if (idx > 0) requestAnimationFrame(() => goTo(idx));
+    if (current > 0) {
+        requestAnimationFrame(() => {
+            engine?.scrollTo({ top: pages[current].offsetTop, behavior: 'auto' });
+        });
     }
 
-    return { goTo, next: () => goTo(current + 1), prev: () => goTo(current - 1) };
+    return { goTo, next: () => goTo(current + 1), prev: () => goTo(current - 1), current: () => current };
 })();

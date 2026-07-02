@@ -37,6 +37,49 @@
     --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-medium: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Adaptive layout scale */
+    --adaptive-root-font-size: 81.25%;
+    --layout-scale: 1;
+    --layout-page-max: 1200px;
+    --layout-section-max: 1020px;
+    --layout-hero-card-max: 810px;
+    --layout-inline-pad: clamp(1rem, 2vw, 1.5rem);
+    --layout-page-top-extra: 0.5rem;
+    --layout-safe-bottom: clamp(8rem, 18vh, 13rem);
+    --layout-panel-padding: clamp(1rem, 1.5vw, 1.4rem);
+    --layout-card-gap: clamp(0.75rem, 1.2vw, 1rem);
+}
+
+html[data-layout-density="compact"] {
+    --layout-page-max: 1080px;
+    --layout-section-max: 940px;
+    --layout-hero-card-max: 760px;
+    --layout-inline-pad: clamp(0.85rem, 1.8vw, 1.25rem);
+    --layout-page-top-extra: 0.35rem;
+    --layout-safe-bottom: clamp(5.5rem, 11vh, 8rem);
+    --layout-panel-padding: clamp(0.86rem, 1.2vw, 1.1rem);
+    --layout-card-gap: clamp(0.62rem, 1vw, 0.85rem);
+}
+
+html[data-layout-density="wide"] {
+    --layout-page-max: 1320px;
+    --layout-section-max: 1120px;
+    --layout-hero-card-max: 900px;
+    --layout-inline-pad: clamp(1.2rem, 2.2vw, 2rem);
+    --layout-page-top-extra: 0.7rem;
+    --layout-safe-bottom: clamp(10rem, 16vh, 14rem);
+    --layout-panel-padding: clamp(1.15rem, 1.45vw, 1.65rem);
+    --layout-card-gap: clamp(0.9rem, 1.25vw, 1.2rem);
+}
+
+html[data-layout-fit="site"] {
+    --layout-page-max: 1020px;
+    --layout-section-max: 900px;
+    --layout-hero-card-max: 700px;
+    --layout-inline-pad: clamp(0.75rem, 1.6vw, 1.05rem);
+    --layout-safe-bottom: clamp(4rem, 9vh, 6.5rem);
+    --layout-panel-padding: clamp(0.78rem, 1vw, 1rem);
 }
 
 /* Source: css/src/base/reset-base.css */
@@ -49,7 +92,7 @@
 
 html {
     scroll-behavior: smooth;
-    font-size: 81.25%; /* establish a stronger desktop reading scale across the full site */
+    font-size: var(--adaptive-root-font-size, 81.25%); /* establish a stronger desktop reading scale across the full site */
 }
 
 body {
@@ -278,7 +321,7 @@ a {
     border: 1px solid var(--glass-border);
     border-radius: 14px;
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.01), var(--glass-shadow);
-    padding: clamp(1rem, 1.5vw, 1.4rem);
+    padding: var(--layout-panel-padding, clamp(1rem, 1.5vw, 1.4rem));
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     position: relative;
     overflow: hidden;
@@ -1085,8 +1128,8 @@ a {
 
 #about .section-header {
     display: block;
-    width: min(100%, 1020px);
-    max-width: 1020px;
+    width: min(100%, var(--layout-section-max, 1020px));
+    max-width: var(--layout-section-max, 1020px);
     margin: 0 auto clamp(1rem, 1.8vw, 1.8rem);
 }
 
@@ -1094,7 +1137,7 @@ a {
     display: flex;
     flex-direction: column;
     gap: clamp(0.75rem, 1.25vw, 1rem);
-    width: min(100%, 1020px);
+    width: min(100%, var(--layout-section-max, 1020px));
     margin: 0 auto;
 }
 
@@ -1102,7 +1145,7 @@ a {
     background: var(--surface-bg);
     border: 1px solid var(--surface-border);
     border-radius: 12px;
-    padding: clamp(1.15rem, 1.7vw, 1.55rem);
+    padding: var(--layout-panel-padding, clamp(1.15rem, 1.7vw, 1.55rem));
     box-shadow: none;
 }
 
@@ -1177,7 +1220,7 @@ a {
     display: grid;
     --grid-min: 18rem;
     --grid-max: 26rem;
-    --grid-gap: clamp(0.75rem, 1.2vw, 1rem);
+    --grid-gap: var(--layout-card-gap, clamp(0.75rem, 1.2vw, 1rem));
     grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min)), min(100%, var(--grid-max))));
     justify-content: center;
     gap: var(--grid-gap);
@@ -1219,7 +1262,16 @@ a {
 /* Generous bottom breathing room for scrollable section pages.
    Excluded from .page-center pages (contact) which use flex centering. */
 .page.section .page-inner:not(.page-center) {
-    --page-safe-bottom: clamp(10rem, 18vh, 14rem);
+    --page-safe-bottom: var(--layout-safe-bottom, clamp(10rem, 18vh, 14rem));
+}
+
+html[data-layout-density="compact"] #about .about-card-inner {
+    grid-template-columns: minmax(12.5rem, 14.5rem) minmax(0, 1fr);
+    gap: var(--layout-card-gap);
+}
+
+html[data-layout-density="compact"] #about .about-card-title {
+    font-size: clamp(1.35rem, 1.8vw, 1.6rem);
 }
 
 /* Subtle end-of-page termination line — signals "this page is done".
@@ -1386,7 +1438,7 @@ a {
 /* ========== EXPERIENCE GRID (SPLIT COLUMNS) ========== */
 .exp-grid {
     display: block;
-    width: min(100%, 1020px);
+    width: min(100%, var(--layout-section-max, 1020px));
     margin: 0 auto;
 }
 
@@ -1528,7 +1580,7 @@ a {
     margin-top: 1.5rem;
     padding-top: 1rem;
     border-top: 1px solid var(--surface-border);
-    width: min(100%, 1020px);
+    width: min(100%, var(--layout-section-max, 1020px));
     margin-left: auto;
     margin-right: auto;
 }
@@ -1560,7 +1612,7 @@ a {
     margin-top: 1.5rem;
     padding-top: 1rem;
     border-top: 1px solid var(--surface-border);
-    width: min(100%, 1020px);
+    width: min(100%, var(--layout-section-max, 1020px));
     margin-left: auto;
     margin-right: auto;
 }
@@ -1633,8 +1685,8 @@ a {
 
 #experience .section-header {
     display: block;
-    width: min(100%, 1020px);
-    max-width: 1020px;
+    width: min(100%, var(--layout-section-max, 1020px));
+    max-width: var(--layout-section-max, 1020px);
     margin: 0 auto clamp(1rem, 1.8vw, 1.8rem);
 }
 
@@ -1846,7 +1898,7 @@ a {
     display: flex;
     flex-direction: column;
     gap: clamp(0.5rem, 0.8vw, 0.75rem);
-    width: min(100%, 1020px);
+    width: min(100%, var(--layout-section-max, 1020px));
     margin-left: auto;
     margin-right: auto;
 }
@@ -2011,7 +2063,7 @@ a {
     color: var(--text-muted);
     margin-bottom: 0.75rem;
     margin-top: 1.6rem;
-    width: min(100%, 1020px);
+    width: min(100%, var(--layout-section-max, 1020px));
     margin-left: auto;
     margin-right: auto;
 }
@@ -2153,6 +2205,23 @@ a {
     width: 100%;
     height: 72vh;
     border: none;
+}
+
+html[data-layout-density="compact"] .research-cards {
+    gap: var(--layout-card-gap);
+}
+
+html[data-layout-density="compact"] .rc-body {
+    padding: 0.75rem 1rem;
+}
+
+html[data-layout-density="compact"] .rc-title {
+    font-size: clamp(1.12rem, 1.55vw, 1.35rem);
+}
+
+html[data-layout-density="compact"] .rc-desc,
+html[data-layout-density="compact"] .rc-meta-line {
+    line-height: 1.55;
 }
 
 /* Source: css/src/sections/philosophy.css */
@@ -2390,6 +2459,7 @@ a {
     background: var(--surface-bg-hover);
     position: relative;
     overflow: hidden;
+    width: min(100%, var(--layout-contact-max, 748px));
 }
 
 .contact-panel::before {
@@ -2606,6 +2676,74 @@ body.local-preview .local-preview-action {
 .local-preview-stop:hover {
     border-color: rgba(248, 113, 113, 0.54);
     color: #fecaca;
+}
+
+.layout-health-toast {
+    position: fixed;
+    right: clamp(1rem, 2vw, 1.5rem);
+    bottom: clamp(1rem, 2vw, 1.5rem);
+    z-index: 9998;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.85rem;
+    align-items: center;
+    max-width: min(34rem, calc(100vw - 2rem));
+    padding: 0.82rem 0.9rem;
+    border: 1px solid color-mix(in srgb, var(--accent-1) 28%, var(--surface-border));
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--bg-main) 92%, black 8%);
+    color: var(--text-main);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.38);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(0.5rem);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.layout-health-toast.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.layout-health-toast__text {
+    display: grid;
+    gap: 0.15rem;
+    min-width: 0;
+    font-size: 0.82rem;
+    line-height: 1.35;
+}
+
+.layout-health-toast__text strong {
+    color: var(--accent-1);
+    font-family: var(--font-heading);
+    font-size: 0.86rem;
+}
+
+.layout-health-toast__text span {
+    color: var(--text-muted);
+}
+
+.layout-health-toast__actions {
+    display: flex;
+    gap: 0.45rem;
+}
+
+.layout-health-toast button {
+    min-height: 2rem;
+    padding: 0.42rem 0.68rem;
+    border: 1px solid color-mix(in srgb, var(--accent-1) 24%, var(--surface-border));
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-main);
+    font-family: var(--font-heading);
+    font-size: 0.72rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.layout-health-toast button:hover {
+    border-color: color-mix(in srgb, var(--accent-1) 46%, var(--surface-border));
 }
 
 @media (max-width: 992px) {
@@ -3282,6 +3420,7 @@ body {
 .page {
     position: relative;
     height: 100vh;
+    height: 100dvh;
     overflow-y: auto;
     overflow-x: hidden;
     overscroll-behavior: contain;
@@ -3337,10 +3476,10 @@ body {
 
 /* --- Page inner layout --- */
 .page-inner {
-    --page-safe-bottom: clamp(8rem, 18vh, 13rem);
+    --page-safe-bottom: var(--layout-safe-bottom, clamp(8rem, 18vh, 13rem));
     min-height: 100%;
-    padding: calc(var(--nav-height, 70px) + 0.5rem) clamp(1rem, 2vw, 1.5rem) var(--page-safe-bottom);
-    max-width: 1200px;
+    padding: calc(var(--nav-height, 70px) + var(--layout-page-top-extra, 0.5rem)) var(--layout-inline-pad, clamp(1rem, 2vw, 1.5rem)) var(--page-safe-bottom);
+    max-width: var(--layout-page-max, 1200px);
     margin: 0 auto;
     width: 100%;
     box-sizing: border-box;
@@ -3351,6 +3490,7 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    min-height: 100dvh;
     padding-top: var(--nav-height, 70px);
 }
 
@@ -3358,7 +3498,7 @@ body {
     display: grid;
     --grid-min: 20rem;
     --grid-max: 30rem;
-    --grid-gap: clamp(1rem, 1.8vw, 1.5rem);
+    --grid-gap: var(--layout-card-gap, clamp(1rem, 1.8vw, 1.5rem));
     grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min)), min(100%, var(--grid-max))));
     justify-content: center;
     gap: var(--grid-gap);
@@ -3410,7 +3550,7 @@ body {
 
 @media (max-height: 760px) {
     .page-inner {
-        --page-safe-bottom: 8rem;
+        --page-safe-bottom: min(var(--layout-safe-bottom, 8rem), 8rem);
     }
 
     .page.section .page-inner {
@@ -3436,6 +3576,13 @@ body {
     .project-card {
         min-height: 0;
     }
+}
+
+html[data-layout-density="compact"] .page-cols,
+html[data-layout-density="compact"] .grid-2,
+html[data-layout-density="compact"] .exp-grid,
+html[data-layout-density="compact"] .philosophy-grid {
+    --grid-gap: var(--layout-card-gap);
 }
 
 @media (max-width: 1280px) and (max-height: 760px) {
@@ -3626,13 +3773,13 @@ body {
 /* Source: css/src/sections/hero-card-redesign.css */
 /* ========== HERO CARD — SINGLE CENTERED CARD ========== */
 .hero-page .hero-content {
-    max-width: min(810px, 92vw);
+    max-width: min(var(--layout-hero-card-max, 810px), 92vw);
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: clamp(1.35rem, 2vw, 1.9rem);
+    padding: var(--layout-panel-padding, clamp(1.35rem, 2vw, 1.9rem));
 }
 
 /* Badge centred */
@@ -3730,6 +3877,50 @@ body {
     width: clamp(138px, 16vw, 188px);
     height: clamp(138px, 16vw, 188px);
     margin-bottom: 0;
+}
+
+html[data-layout-density="compact"] .hero-page .hero-content .badge {
+    margin-bottom: 0.9rem;
+    padding: 0.44rem 1rem;
+}
+
+html[data-layout-density="compact"] .hero-visual-row {
+    margin-bottom: 0.95rem;
+}
+
+html[data-layout-density="compact"] .hero-page .hero-avatar {
+    width: clamp(124px, 14vw, 166px);
+    height: clamp(124px, 14vw, 166px);
+}
+
+html[data-layout-density="compact"] .hero-page .hero-content .hero-title {
+    margin-bottom: 0.65rem;
+    padding-top: 0.95rem;
+    font-size: clamp(2.45rem, 4.2vw, 3.55rem);
+}
+
+html[data-layout-density="compact"] .hero-page .hero-subtitle {
+    margin-bottom: 0.7rem;
+}
+
+html[data-layout-density="compact"] .hero-page .hero-desc {
+    margin-bottom: 1.05rem;
+    padding-top: 0.72rem;
+    line-height: 1.58;
+}
+
+html[data-layout-density="compact"] .hero-page .hero-actions .btn {
+    min-width: 11.5rem;
+    padding: 0.82rem 1.25rem;
+}
+
+html[data-layout-density="wide"] .hero-page .hero-avatar {
+    width: clamp(176px, 10vw, 214px);
+    height: clamp(176px, 10vw, 214px);
+}
+
+html[data-layout-density="wide"] .hero-page .hero-content .hero-title {
+    font-size: clamp(3.25rem, 3.2vw, 4.55rem);
 }
 
 /* Slightly smaller atom scene inside the card */
@@ -5522,6 +5713,27 @@ body {
         padding-right: 0.85rem;
     }
 
+}
+
+@media (max-width: 900px) and (pointer: fine) {
+    html[data-layout-input="fine"] {
+        font-size: var(--adaptive-root-font-size, 78%);
+    }
+
+    html[data-layout-fit="site"][data-layout-input="fine"] {
+        font-size: 72%;
+    }
+
+    .layout-health-toast {
+        left: 0.9rem;
+        right: 0.9rem;
+        bottom: 0.9rem;
+        grid-template-columns: 1fr;
+    }
+
+    .layout-health-toast__actions {
+        justify-content: flex-start;
+    }
 }
 
 @media (max-width: 900px) and (prefers-reduced-motion: reduce) {

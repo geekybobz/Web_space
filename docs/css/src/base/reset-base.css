@@ -7,7 +7,7 @@
 
 html {
     scroll-behavior: smooth;
-    font-size: 81.25%; /* establish a stronger desktop reading scale across the full site */
+    font-size: var(--adaptive-root-font-size, 81.25%); /* establish a stronger desktop reading scale across the full site */
 }
 
 body {

@@ -33,3 +33,20 @@ document.addEventListener('visibilitychange', () => {
         if (typeof startPhilosophyReveal === 'function') startPhilosophyReveal();
     }
 });
+
+requestAnimationFrame(() => {
+    const activeIdx = typeof PageEngine !== 'undefined' && typeof PageEngine.current === 'function'
+        ? PageEngine.current()
+        : Array.from(document.querySelectorAll('.page')).findIndex(page => page.classList.contains('active'));
+    _lifecyclePage = activeIdx > -1 ? activeIdx : 0;
+    if (_lifecyclePage === 0) {
+        startTypewriter();
+        if (typeof _crtResume === 'function') _crtResume();
+    } else {
+        stopTypewriter();
+        if (typeof _crtPause === 'function') _crtPause();
+    }
+    if (_lifecyclePage === 1 && typeof startPhilosophyReveal === 'function') {
+        startPhilosophyReveal();
+    }
+});

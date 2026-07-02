@@ -683,6 +683,27 @@
 
 }
 
+@media (max-width: 900px) and (pointer: fine) {
+    html[data-layout-input="fine"] {
+        font-size: var(--adaptive-root-font-size, 78%);
+    }
+
+    html[data-layout-fit="site"][data-layout-input="fine"] {
+        font-size: 72%;
+    }
+
+    .layout-health-toast {
+        left: 0.9rem;
+        right: 0.9rem;
+        bottom: 0.9rem;
+        grid-template-columns: 1fr;
+    }
+
+    .layout-health-toast__actions {
+        justify-content: flex-start;
+    }
+}
+
 @media (max-width: 900px) and (prefers-reduced-motion: reduce) {
     *,
     *::before,

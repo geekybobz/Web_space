@@ -14,6 +14,7 @@
 .page {
     position: relative;
     height: 100vh;
+    height: 100dvh;
     overflow-y: auto;
     overflow-x: hidden;
     overscroll-behavior: contain;
@@ -69,10 +70,10 @@
 
 /* --- Page inner layout --- */
 .page-inner {
-    --page-safe-bottom: clamp(8rem, 18vh, 13rem);
+    --page-safe-bottom: var(--layout-safe-bottom, clamp(8rem, 18vh, 13rem));
     min-height: 100%;
-    padding: calc(var(--nav-height, 70px) + 0.5rem) clamp(1rem, 2vw, 1.5rem) var(--page-safe-bottom);
-    max-width: 1200px;
+    padding: calc(var(--nav-height, 70px) + var(--layout-page-top-extra, 0.5rem)) var(--layout-inline-pad, clamp(1rem, 2vw, 1.5rem)) var(--page-safe-bottom);
+    max-width: var(--layout-page-max, 1200px);
     margin: 0 auto;
     width: 100%;
     box-sizing: border-box;
@@ -83,6 +84,7 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    min-height: 100dvh;
     padding-top: var(--nav-height, 70px);
 }
 
@@ -90,7 +92,7 @@
     display: grid;
     --grid-min: 20rem;
     --grid-max: 30rem;
-    --grid-gap: clamp(1rem, 1.8vw, 1.5rem);
+    --grid-gap: var(--layout-card-gap, clamp(1rem, 1.8vw, 1.5rem));
     grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--grid-min)), min(100%, var(--grid-max))));
     justify-content: center;
     gap: var(--grid-gap);
@@ -142,7 +144,7 @@
 
 @media (max-height: 760px) {
     .page-inner {
-        --page-safe-bottom: 8rem;
+        --page-safe-bottom: min(var(--layout-safe-bottom, 8rem), 8rem);
     }
 
     .page.section .page-inner {
@@ -168,6 +170,13 @@
     .project-card {
         min-height: 0;
     }
+}
+
+html[data-layout-density="compact"] .page-cols,
+html[data-layout-density="compact"] .grid-2,
+html[data-layout-density="compact"] .exp-grid,
+html[data-layout-density="compact"] .philosophy-grid {
+    --grid-gap: var(--layout-card-gap);
 }
 
 @media (max-width: 1280px) and (max-height: 760px) {

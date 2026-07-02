@@ -146,6 +146,74 @@ body.local-preview .local-preview-action {
     color: #fecaca;
 }
 
+.layout-health-toast {
+    position: fixed;
+    right: clamp(1rem, 2vw, 1.5rem);
+    bottom: clamp(1rem, 2vw, 1.5rem);
+    z-index: 9998;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.85rem;
+    align-items: center;
+    max-width: min(34rem, calc(100vw - 2rem));
+    padding: 0.82rem 0.9rem;
+    border: 1px solid color-mix(in srgb, var(--accent-1) 28%, var(--surface-border));
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--bg-main) 92%, black 8%);
+    color: var(--text-main);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.38);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(0.5rem);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.layout-health-toast.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.layout-health-toast__text {
+    display: grid;
+    gap: 0.15rem;
+    min-width: 0;
+    font-size: 0.82rem;
+    line-height: 1.35;
+}
+
+.layout-health-toast__text strong {
+    color: var(--accent-1);
+    font-family: var(--font-heading);
+    font-size: 0.86rem;
+}
+
+.layout-health-toast__text span {
+    color: var(--text-muted);
+}
+
+.layout-health-toast__actions {
+    display: flex;
+    gap: 0.45rem;
+}
+
+.layout-health-toast button {
+    min-height: 2rem;
+    padding: 0.42rem 0.68rem;
+    border: 1px solid color-mix(in srgb, var(--accent-1) 24%, var(--surface-border));
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-main);
+    font-family: var(--font-heading);
+    font-size: 0.72rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.layout-health-toast button:hover {
+    border-color: color-mix(in srgb, var(--accent-1) 46%, var(--surface-border));
+}
+
 @media (max-width: 992px) {
     .hero, .section-grid, .grid-2 {
         grid-template-columns: 1fr;

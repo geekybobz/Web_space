@@ -1,12 +1,12 @@
 /* ========== HERO CARD — SINGLE CENTERED CARD ========== */
 .hero-page .hero-content {
-    max-width: min(810px, 92vw);
+    max-width: min(var(--layout-hero-card-max, 810px), 92vw);
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: clamp(1.35rem, 2vw, 1.9rem);
+    padding: var(--layout-panel-padding, clamp(1.35rem, 2vw, 1.9rem));
 }
 
 /* Badge centred */
@@ -104,6 +104,50 @@
     width: clamp(138px, 16vw, 188px);
     height: clamp(138px, 16vw, 188px);
     margin-bottom: 0;
+}
+
+html[data-layout-density="compact"] .hero-page .hero-content .badge {
+    margin-bottom: 0.9rem;
+    padding: 0.44rem 1rem;
+}
+
+html[data-layout-density="compact"] .hero-visual-row {
+    margin-bottom: 0.95rem;
+}
+
+html[data-layout-density="compact"] .hero-page .hero-avatar {
+    width: clamp(124px, 14vw, 166px);
+    height: clamp(124px, 14vw, 166px);
+}
+
+html[data-layout-density="compact"] .hero-page .hero-content .hero-title {
+    margin-bottom: 0.65rem;
+    padding-top: 0.95rem;
+    font-size: clamp(2.45rem, 4.2vw, 3.55rem);
+}
+
+html[data-layout-density="compact"] .hero-page .hero-subtitle {
+    margin-bottom: 0.7rem;
+}
+
+html[data-layout-density="compact"] .hero-page .hero-desc {
+    margin-bottom: 1.05rem;
+    padding-top: 0.72rem;
+    line-height: 1.58;
+}
+
+html[data-layout-density="compact"] .hero-page .hero-actions .btn {
+    min-width: 11.5rem;
+    padding: 0.82rem 1.25rem;
+}
+
+html[data-layout-density="wide"] .hero-page .hero-avatar {
+    width: clamp(176px, 10vw, 214px);
+    height: clamp(176px, 10vw, 214px);
+}
+
+html[data-layout-density="wide"] .hero-page .hero-content .hero-title {
+    font-size: clamp(3.25rem, 3.2vw, 4.55rem);
 }
 
 /* Slightly smaller atom scene inside the card */

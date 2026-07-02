@@ -4,6 +4,7 @@
     background: var(--surface-bg-hover);
     position: relative;
     overflow: hidden;
+    width: min(100%, var(--layout-contact-max, 748px));
 }
 
 .contact-panel::before {

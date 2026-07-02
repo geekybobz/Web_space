@@ -34,4 +34,47 @@
     --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-medium: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Adaptive layout scale */
+    --adaptive-root-font-size: 81.25%;
+    --layout-scale: 1;
+    --layout-page-max: 1200px;
+    --layout-section-max: 1020px;
+    --layout-hero-card-max: 810px;
+    --layout-inline-pad: clamp(1rem, 2vw, 1.5rem);
+    --layout-page-top-extra: 0.5rem;
+    --layout-safe-bottom: clamp(8rem, 18vh, 13rem);
+    --layout-panel-padding: clamp(1rem, 1.5vw, 1.4rem);
+    --layout-card-gap: clamp(0.75rem, 1.2vw, 1rem);
+}
+
+html[data-layout-density="compact"] {
+    --layout-page-max: 1080px;
+    --layout-section-max: 940px;
+    --layout-hero-card-max: 760px;
+    --layout-inline-pad: clamp(0.85rem, 1.8vw, 1.25rem);
+    --layout-page-top-extra: 0.35rem;
+    --layout-safe-bottom: clamp(5.5rem, 11vh, 8rem);
+    --layout-panel-padding: clamp(0.86rem, 1.2vw, 1.1rem);
+    --layout-card-gap: clamp(0.62rem, 1vw, 0.85rem);
+}
+
+html[data-layout-density="wide"] {
+    --layout-page-max: 1320px;
+    --layout-section-max: 1120px;
+    --layout-hero-card-max: 900px;
+    --layout-inline-pad: clamp(1.2rem, 2.2vw, 2rem);
+    --layout-page-top-extra: 0.7rem;
+    --layout-safe-bottom: clamp(10rem, 16vh, 14rem);
+    --layout-panel-padding: clamp(1.15rem, 1.45vw, 1.65rem);
+    --layout-card-gap: clamp(0.9rem, 1.25vw, 1.2rem);
+}
+
+html[data-layout-fit="site"] {
+    --layout-page-max: 1020px;
+    --layout-section-max: 900px;
+    --layout-hero-card-max: 700px;
+    --layout-inline-pad: clamp(0.75rem, 1.6vw, 1.05rem);
+    --layout-safe-bottom: clamp(4rem, 9vh, 6.5rem);
+    --layout-panel-padding: clamp(0.78rem, 1vw, 1rem);
 }

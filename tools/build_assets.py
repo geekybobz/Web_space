@@ -63,6 +63,7 @@ MAIN_JS_MODULES = [
     "js/src/custom-cursor.js",
     "js/src/navbar-mobile.js",
     "js/src/mobile-scroll.js",
+    "js/src/layout-health.js",
     "js/src/page-engine.js",
     "js/src/crt-terminal.js",
     "js/src/analytics-toast.js",

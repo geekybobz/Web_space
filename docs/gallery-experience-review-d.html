@@ -13,29 +13,29 @@
     <link rel="preload" as="image" href="assets/images/experience-review/iiser-group.jpg">
     <link rel="preload" as="image" href="assets/images/experience-review/victor-group.jpg">
     <style>
-        .er-shell { display: grid; gap: 28px; }
+        .er-shell { display: grid; gap: var(--experience-shell-gap, 28px); }
                 .er-hero {
-                    padding: 32px 34px 30px;
+                    padding: var(--experience-hero-padding, 32px 34px 30px);
                     background: var(--gallery-surface);
                     border: 1px solid var(--gallery-border);
-                    border-radius: 28px;
+                    border-radius: var(--experience-radius-lg, 28px);
                     box-shadow: var(--gallery-shadow);
                     backdrop-filter: blur(18px);
                 }
                 .er-hero-title {
                     margin: 0;
                     font-family: var(--gallery-heading);
-                    font-size: clamp(36px, 6vw, 72px);
+                    font-size: var(--experience-hero-title-size, clamp(36px, 6vw, 72px));
                     line-height: 0.96;
-                    letter-spacing: -0.05em;
+                    letter-spacing: 0;
                 }
                 .er-hero-title span {
                     display: block;
                     color: var(--gallery-text-muted);
-                    font-size: clamp(18px, 2.6vw, 28px);
+                    font-size: var(--experience-hero-subtitle-size, clamp(18px, 2.6vw, 28px));
                     margin-top: 10px;
                     line-height: 1.15;
-                    letter-spacing: -0.03em;
+                    letter-spacing: 0;
                 }
                 .er-hero-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
                 .er-hero-links a {
@@ -53,16 +53,16 @@
                 .er-chapter {
                     background: var(--gallery-surface);
                     border: 1px solid var(--gallery-border);
-                    border-radius: 28px;
+                    border-radius: var(--experience-radius-lg, 28px);
                     box-shadow: var(--gallery-shadow);
                     backdrop-filter: blur(18px);
                     overflow: hidden;
                 }
                 .er-chapter-main {
                     display: grid;
-                    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-                    gap: 20px;
-                    padding: 20px;
+                    grid-template-columns: var(--experience-chapter-columns, minmax(0, 1fr) minmax(0, 1fr));
+                    gap: var(--experience-chapter-gap, 20px);
+                    padding: var(--experience-chapter-padding, 20px);
                     align-items: start;
                 }
                 .er-photo-frame { display: grid; gap: 10px; }
@@ -70,7 +70,7 @@
                     position: relative;
                     aspect-ratio: 4 / 3;
                     overflow: hidden;
-                    border-radius: 16px;
+                    border-radius: var(--experience-radius-md, 16px);
                     background: #101824;
                 }
                 .er-stage-img {
@@ -138,7 +138,7 @@
                     transition: background 200ms;
                 }
                 .er-dot.is-active { background: var(--gallery-cyan); }
-                .er-chapter-copy { display: flex; flex-direction: column; gap: 14px; padding: 4px 0; }
+                .er-chapter-copy { display: flex; flex-direction: column; gap: var(--experience-copy-gap, 14px); padding: 4px 0; }
                 .er-kicker {
                     color: var(--gallery-cyan);
                     font-family: var(--gallery-mono);
@@ -149,9 +149,9 @@
                 .er-chapter-title {
                     margin: 0;
                     font-family: var(--gallery-heading);
-                    font-size: clamp(26px, 3vw, 40px);
+                    font-size: var(--experience-chapter-title-size, clamp(26px, 3vw, 40px));
                     line-height: 1;
-                    letter-spacing: -0.04em;
+                    letter-spacing: 0;
                 }
                 .er-role { color: #dce8f3; font-size: 16px; font-weight: 600; }
                 .er-org { color: var(--gallery-text-muted); font-size: 13px; }
@@ -223,7 +223,7 @@
                 }
                 .er-photo-stage .er-group-close-btn { display: none; }
                 .er-chapter-main.is-blend-open .er-photo-stage .er-group-close-btn { display: flex; z-index: 3; }
-                .er-section { display: grid; gap: 18px; }
+                .er-section { display: grid; gap: var(--experience-section-gap, 18px); }
                 .er-section-header { display: grid; gap: 4px; }
                 .er-section-label {
                     margin: 0;
@@ -236,13 +236,13 @@
                 .er-section-title {
                     margin: 0;
                     font-family: var(--gallery-heading);
-                    font-size: clamp(22px, 2.8vw, 34px);
-                    letter-spacing: -0.04em;
+                    font-size: var(--experience-section-title-size, clamp(22px, 2.8vw, 34px));
+                    letter-spacing: 0;
                 }
                 .er-event-grid {
                     display: grid;
-                    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-                    gap: 18px;
+                    grid-template-columns: repeat(auto-fill, minmax(var(--experience-event-min, 300px), 1fr));
+                    gap: var(--experience-section-gap, 18px);
                     align-items: stretch;
                 }
                 .er-event-card, .er-role-card {
@@ -250,23 +250,61 @@
                     flex-direction: column;
                     background: var(--gallery-surface);
                     border: 1px solid var(--gallery-border);
-                    border-radius: 24px;
+                    border-radius: var(--experience-radius-card, 24px);
                     box-shadow: var(--gallery-shadow);
                     backdrop-filter: blur(18px);
                     overflow: hidden;
                 }
-                .er-event-photo, .er-role-photo { position: relative; flex: 1 1 0; min-height: 200px; overflow: hidden; }
-                .er-event-copy { flex: 0 0 auto; display: grid; gap: 8px; padding: 16px 18px 20px; }
-                .er-event-copy h3, .er-role-copy h3 { margin: 0; font-family: var(--gallery-heading); font-size: 20px; letter-spacing: -0.03em; }
+                .er-event-photo, .er-role-photo { position: relative; flex: 1 1 0; min-height: var(--experience-photo-min, 200px); overflow: hidden; }
+                .er-event-copy { flex: 0 0 auto; display: grid; gap: 8px; padding: var(--experience-card-copy-padding, 16px 18px 20px); }
+                .er-event-copy h3, .er-role-copy h3 { margin: 0; font-family: var(--gallery-heading); font-size: var(--experience-card-title-size, 20px); letter-spacing: 0; }
                 .er-event-copy p, .er-role-copy p { margin: 0; color: var(--gallery-text-muted); font-size: 13px; line-height: 1.7; }
                 .er-event-copy a { display: inline-block; color: var(--gallery-cyan); font-size: 13px; font-weight: 600; }
                 .er-role-grid {
                     display: grid;
-                    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-                    gap: 18px;
+                    grid-template-columns: repeat(auto-fill, minmax(var(--experience-role-min, 280px), 1fr));
+                    gap: var(--experience-section-gap, 18px);
                     align-items: stretch;
                 }
-                .er-role-copy { flex: 0 0 auto; display: grid; gap: 6px; padding: 16px 18px 18px; }
+                .er-role-copy { flex: 0 0 auto; display: grid; gap: 6px; padding: var(--experience-role-copy-padding, 16px 18px 18px); }
+                html[data-layout-density="compact"] #experience {
+                    --experience-shell-gap: 20px;
+                    --experience-hero-padding: 22px 24px;
+                    --experience-hero-title-size: clamp(30px, 5vw, 54px);
+                    --experience-hero-subtitle-size: clamp(16px, 2vw, 22px);
+                    --experience-chapter-gap: 16px;
+                    --experience-chapter-padding: 16px;
+                    --experience-copy-gap: 10px;
+                    --experience-chapter-title-size: clamp(24px, 2.6vw, 34px);
+                    --experience-section-gap: 14px;
+                    --experience-section-title-size: clamp(21px, 2.35vw, 30px);
+                    --experience-event-min: min(260px, 100%);
+                    --experience-role-min: min(250px, 100%);
+                    --experience-photo-min: 160px;
+                    --experience-card-title-size: 18px;
+                    --experience-card-copy-padding: 13px 15px 16px;
+                    --experience-role-copy-padding: 13px 15px 15px;
+                    --experience-radius-lg: 20px;
+                    --experience-radius-card: 18px;
+                    --experience-radius-md: 12px;
+                }
+                html[data-layout-density="wide"] #experience {
+                    --experience-shell-gap: 32px;
+                    --experience-hero-padding: 36px 40px 34px;
+                    --experience-hero-title-size: clamp(54px, 3.4vw, 82px);
+                    --experience-hero-subtitle-size: clamp(22px, 1.55vw, 30px);
+                    --experience-event-min: 330px;
+                    --experience-role-min: 300px;
+                    --experience-photo-min: 220px;
+                }
+                html[data-layout-fit="site"] #experience {
+                    --experience-shell-gap: 16px;
+                    --experience-hero-padding: 18px 20px;
+                    --experience-chapter-gap: 14px;
+                    --experience-chapter-padding: 14px;
+                    --experience-section-gap: 12px;
+                    --experience-photo-min: 140px;
+                }
                 @media (max-width: 860px) { .er-chapter-main { grid-template-columns: 1fr; } }
                 @media (max-width: 600px) {
                     .er-hero { padding: 22px 20px; }

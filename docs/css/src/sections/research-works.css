@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     gap: clamp(0.5rem, 0.8vw, 0.75rem);
-    width: min(100%, 1020px);
+    width: min(100%, var(--layout-section-max, 1020px));
     margin-left: auto;
     margin-right: auto;
 }
@@ -168,7 +168,7 @@
     color: var(--text-muted);
     margin-bottom: 0.75rem;
     margin-top: 1.6rem;
-    width: min(100%, 1020px);
+    width: min(100%, var(--layout-section-max, 1020px));
     margin-left: auto;
     margin-right: auto;
 }
@@ -310,4 +310,21 @@
     width: 100%;
     height: 72vh;
     border: none;
+}
+
+html[data-layout-density="compact"] .research-cards {
+    gap: var(--layout-card-gap);
+}
+
+html[data-layout-density="compact"] .rc-body {
+    padding: 0.75rem 1rem;
+}
+
+html[data-layout-density="compact"] .rc-title {
+    font-size: clamp(1.12rem, 1.55vw, 1.35rem);
+}
+
+html[data-layout-density="compact"] .rc-desc,
+html[data-layout-density="compact"] .rc-meta-line {
+    line-height: 1.55;
 }

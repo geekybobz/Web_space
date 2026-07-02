@@ -94,7 +94,7 @@
 /* ========== EXPERIENCE GRID (SPLIT COLUMNS) ========== */
 .exp-grid {
     display: block;
-    width: min(100%, 1020px);
+    width: min(100%, var(--layout-section-max, 1020px));
     margin: 0 auto;
 }
 
@@ -236,7 +236,7 @@
     margin-top: 1.5rem;
     padding-top: 1rem;
     border-top: 1px solid var(--surface-border);
-    width: min(100%, 1020px);
+    width: min(100%, var(--layout-section-max, 1020px));
     margin-left: auto;
     margin-right: auto;
 }
@@ -268,7 +268,7 @@
     margin-top: 1.5rem;
     padding-top: 1rem;
     border-top: 1px solid var(--surface-border);
-    width: min(100%, 1020px);
+    width: min(100%, var(--layout-section-max, 1020px));
     margin-left: auto;
     margin-right: auto;
 }
@@ -341,8 +341,8 @@
 
 #experience .section-header {
     display: block;
-    width: min(100%, 1020px);
-    max-width: 1020px;
+    width: min(100%, var(--layout-section-max, 1020px));
+    max-width: var(--layout-section-max, 1020px);
     margin: 0 auto clamp(1rem, 1.8vw, 1.8rem);
 }
 

@@ -9,8 +9,8 @@
 
 @media (max-width: 900px) {
     .page.section {
-        content-visibility: auto;
-        contain-intrinsic-size: 900px;
+        content-visibility: visible;
+        contain-intrinsic-size: none;
     }
 
     .hero-page .hero-subtitle {

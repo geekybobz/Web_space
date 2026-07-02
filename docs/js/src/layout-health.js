@@ -30,7 +30,7 @@
         const stackedWidth = vp.width <= 900;
         const wide = finePointer && vp.width >= 1900 && vp.height >= 1000;
         const compact = finePointer && !stackedWidth && (vp.width < 1180 || vp.height < 740);
-        const attention = finePointer && (vp.width < 980 || vp.height < 560 || vp.scale > 1.15);
+        const attention = finePointer && !stackedWidth && (vp.width < 980 || vp.height < 560 || vp.scale > 1.15);
 
         let density = 'normal';
         if (stackedWidth) density = 'mobile';
@@ -46,7 +46,7 @@
     }
 
     function rootScale(vp, state) {
-        if (!state.finePointer) return null;
+        if (!state.finePointer || state.density === 'mobile') return null;
         let scale = clamp(0.94, Math.sqrt((vp.width * vp.height) / REF_AREA), 1.08);
 
         if (state.density === 'compact') scale = Math.min(scale, vp.height < 620 ? 0.92 : 0.96);
@@ -89,6 +89,10 @@
     }
 
     function syncToast(state) {
+        if (state.density === 'mobile') {
+            toast?.classList.remove('is-visible');
+            return;
+        }
         const node = ensureToast();
         const dismissed = sessionStorage.getItem(STORAGE_DISMISS) === '1';
         node.classList.toggle('is-visible', state.attention && !dismissed);
@@ -98,7 +102,7 @@
         const vp = viewport();
         const state = classify(vp);
         const scale = rootScale(vp, state);
-        const fitSite = sessionStorage.getItem(STORAGE_FIT) === '1';
+        const fitSite = state.density !== 'mobile' && sessionStorage.getItem(STORAGE_FIT) === '1';
 
         root.dataset.layoutDensity = state.density;
         root.dataset.layoutHealth = state.attention ? 'attention' : 'good';

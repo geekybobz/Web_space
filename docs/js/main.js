@@ -12,7 +12,7 @@
             l.style.transition = 'opacity 0.22s ease, visibility 0.22s ease';
             l.classList.add('q-loader--hidden');
         }
-        document.documentElement.setAttribute('data-theme', 'crimson');
+        document.documentElement.setAttribute('data-theme', 'dark');
         setTimeout(triggerHeroFadeIn, 0);
         sessionStorage.setItem('q-intro-seen', '1');
         return;
@@ -236,7 +236,7 @@ const MODE_STORAGE_KEY = 'selectedThemeMode';
 const DARK_INDEX_STORAGE_KEY = 'darkThemeIndex';
 const LOCAL_PREVIEW_STORAGE_KEY = 'localPreviewEnabled';
 const MOBILE_VIEWPORT_BREAKPOINT = 900;
-const MOBILE_THEME_ID = 'mid-atmosphere';
+const MOBILE_THEME_ID = 'dark';
 const DESKTOP_DEFAULT_THEME_ID = 'crimson';
 
 const htmlEl = document.documentElement;
@@ -259,10 +259,11 @@ function syncMobileDeviceBlock() {
     bodyEl?.setAttribute('data-device-blocked', 'false');
     bodyEl?.setAttribute('data-mobile-mode', mobile ? 'true' : 'false');
     if (mobile) {
+        const mobileMode = inferModeFromTheme(MOBILE_THEME_ID);
         htmlEl.setAttribute('data-theme', MOBILE_THEME_ID);
         localStorage.setItem('selectedTheme', MOBILE_THEME_ID);
-        localStorage.setItem(MODE_STORAGE_KEY, 'mid');
-        syncModeButtons('mid');
+        localStorage.setItem(MODE_STORAGE_KEY, mobileMode);
+        syncModeButtons(mobileMode);
     }
     mobileBlockedState = mobile;
     return mobile;
@@ -765,7 +766,7 @@ const MobileScrollMode = { init() {}, goTo() {} };
         const stackedWidth = vp.width <= 900;
         const wide = finePointer && vp.width >= 1900 && vp.height >= 1000;
         const compact = finePointer && !stackedWidth && (vp.width < 1180 || vp.height < 740);
-        const attention = finePointer && (vp.width < 980 || vp.height < 560 || vp.scale > 1.15);
+        const attention = finePointer && !stackedWidth && (vp.width < 980 || vp.height < 560 || vp.scale > 1.15);
 
         let density = 'normal';
         if (stackedWidth) density = 'mobile';
@@ -781,7 +782,7 @@ const MobileScrollMode = { init() {}, goTo() {} };
     }
 
     function rootScale(vp, state) {
-        if (!state.finePointer) return null;
+        if (!state.finePointer || state.density === 'mobile') return null;
         let scale = clamp(0.94, Math.sqrt((vp.width * vp.height) / REF_AREA), 1.08);
 
         if (state.density === 'compact') scale = Math.min(scale, vp.height < 620 ? 0.92 : 0.96);
@@ -824,6 +825,10 @@ const MobileScrollMode = { init() {}, goTo() {} };
     }
 
     function syncToast(state) {
+        if (state.density === 'mobile') {
+            toast?.classList.remove('is-visible');
+            return;
+        }
         const node = ensureToast();
         const dismissed = sessionStorage.getItem(STORAGE_DISMISS) === '1';
         node.classList.toggle('is-visible', state.attention && !dismissed);
@@ -833,7 +838,7 @@ const MobileScrollMode = { init() {}, goTo() {} };
         const vp = viewport();
         const state = classify(vp);
         const scale = rootScale(vp, state);
-        const fitSite = sessionStorage.getItem(STORAGE_FIT) === '1';
+        const fitSite = state.density !== 'mobile' && sessionStorage.getItem(STORAGE_FIT) === '1';
 
         root.dataset.layoutDensity = state.density;
         root.dataset.layoutHealth = state.attention ? 'attention' : 'good';
@@ -912,6 +917,19 @@ const PageEngine = (() => {
         history.replaceState?.(null, '', url);
     }
 
+    function closeMobileNav() {
+        navLinksEl?.classList.remove('active');
+        const icon = mobileToggle?.querySelector('i');
+        if (icon) { icon.classList.remove('fa-times'); icon.classList.add('fa-bars'); }
+        mobileToggle?.setAttribute('aria-expanded', 'false');
+    }
+
+    function mobileTargetTop(page) {
+        const navHeight = navbarEl?.offsetHeight || 0;
+        const top = page.getBoundingClientRect().top + window.scrollY - navHeight - 8;
+        return Math.max(0, top);
+    }
+
     function updateChrome(idx) {
         dots.forEach((d, i) => d.classList.toggle('active', i === idx));
         document.querySelectorAll('[data-page-link]').forEach(a => {
@@ -924,20 +942,21 @@ const PageEngine = (() => {
     function setActive(idx, options = {}) {
         if (idx < 0 || idx >= pages.length) return;
         const notifyLifecycle = options.notifyLifecycle !== false;
+        const resetScroll = options.resetScroll !== false && !isMobileViewport();
+        const shouldFocus = options.focus !== false && !isMobileViewport();
+        const shouldSyncHash = options.syncHash !== false;
+        const shouldCloseMenu = options.closeMenu !== false;
         const old = current;
         current = idx;
         pages.forEach((p, i) => {
             p.classList.toggle('active', i === idx);
-            if (i !== idx) p.scrollTop = 0;
+            if (resetScroll && i !== idx) p.scrollTop = 0;
         });
         updateChrome(idx);
-        syncHash(idx);
-        pages[idx].focus({ preventScroll: true });
+        if (shouldSyncHash) syncHash(idx);
+        if (shouldFocus) pages[idx].focus({ preventScroll: true });
         if (notifyLifecycle && old !== current && typeof _onPageChange === 'function') _onPageChange(current, old);
-        navLinksEl?.classList.remove('active');
-        const icon = mobileToggle?.querySelector('i');
-        if (icon) { icon.classList.remove('fa-times'); icon.classList.add('fa-bars'); }
-        mobileToggle?.setAttribute('aria-expanded', 'false');
+        if (shouldCloseMenu) closeMobileNav();
     }
 
     function goTo(idx) {
@@ -946,8 +965,13 @@ const PageEngine = (() => {
         hideEdgeCues();
         clearDotBlink();
         inZone = null;
-        engine.scrollTo({ top: pages[idx].offsetTop, behavior: 'smooth' });
-        setActive(idx);
+        if (isMobileViewport()) {
+            window.scrollTo({ top: mobileTargetTop(pages[idx]), behavior: 'smooth' });
+            setActive(idx, { focus: false, resetScroll: false });
+        } else {
+            engine.scrollTo({ top: pages[idx].offsetTop, behavior: 'smooth' });
+            setActive(idx);
+        }
         window.setTimeout(() => { isPaging = false; }, PAGE_LOCK_MS);
     }
 
@@ -1093,6 +1117,43 @@ const PageEngine = (() => {
         }, { passive: true });
     });
 
+    function mobileActiveIndex() {
+        const navHeight = navbarEl?.offsetHeight || 0;
+        const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+        if (window.scrollY >= maxScroll - 4) return pages.length - 1;
+
+        const marker = navHeight + Math.min(window.innerHeight * 0.35, 240);
+        let fallback = 0;
+        let fallbackDistance = Infinity;
+
+        for (let i = 0; i < pages.length; i += 1) {
+            const rect = pages[i].getBoundingClientRect();
+            if (rect.top <= marker && rect.bottom > marker) return i;
+            const distance = Math.abs(rect.top - marker);
+            if (distance < fallbackDistance) {
+                fallback = i;
+                fallbackDistance = distance;
+            }
+        }
+
+        return fallback;
+    }
+
+    let mobileActiveRaf = null;
+    function scheduleMobileActiveSync() {
+        if (!isMobileViewport() || mobileActiveRaf) return;
+        mobileActiveRaf = requestAnimationFrame(() => {
+            mobileActiveRaf = null;
+            const idx = mobileActiveIndex();
+            if (idx !== current) {
+                setActive(idx, { focus: false, resetScroll: false, closeMenu: false });
+            }
+        });
+    }
+
+    window.addEventListener('scroll', scheduleMobileActiveSync, { passive: true });
+    window.addEventListener('resize', scheduleMobileActiveSync, { passive: true });
+
     document.addEventListener('keydown', (e) => {
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
         if (e.key === 'PageDown') { e.preventDefault(); goTo(current + 1); }
@@ -1113,7 +1174,11 @@ const PageEngine = (() => {
 
     if (current > 0) {
         requestAnimationFrame(() => {
-            engine?.scrollTo({ top: pages[current].offsetTop, behavior: 'auto' });
+            if (isMobileViewport()) {
+                window.scrollTo({ top: mobileTargetTop(pages[current]), behavior: 'auto' });
+            } else {
+                engine?.scrollTo({ top: pages[current].offsetTop, behavior: 'auto' });
+            }
         });
     }
 

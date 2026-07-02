@@ -9,7 +9,7 @@
             l.style.transition = 'opacity 0.22s ease, visibility 0.22s ease';
             l.classList.add('q-loader--hidden');
         }
-        document.documentElement.setAttribute('data-theme', 'crimson');
+        document.documentElement.setAttribute('data-theme', 'dark');
         setTimeout(triggerHeroFadeIn, 0);
         sessionStorage.setItem('q-intro-seen', '1');
         return;

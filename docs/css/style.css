@@ -4980,8 +4980,8 @@ html[data-layout-density="wide"] .hero-page .hero-content .hero-title {
 
 @media (max-width: 900px) {
     .page.section {
-        content-visibility: auto;
-        contain-intrinsic-size: 900px;
+        content-visibility: visible;
+        contain-intrinsic-size: none;
     }
 
     .hero-page .hero-subtitle {
@@ -5191,6 +5191,7 @@ html[data-layout-density="wide"] .hero-page .hero-content .hero-title {
         flex-direction: column;
         overflow: visible;
         padding-top: var(--nav-height);
+        min-height: 100dvh;
     }
 
     #page-engine::before,
@@ -5202,7 +5203,8 @@ html[data-layout-density="wide"] .hero-page .hero-content .hero-title {
         position: relative;
         inset: auto;
         order: 10;
-        min-height: auto;
+        height: auto;
+        min-height: 0;
         overflow: visible;
         opacity: 1;
         pointer-events: auto;
@@ -5211,22 +5213,57 @@ html[data-layout-density="wide"] .hero-page .hero-content .hero-title {
         scroll-margin-top: calc(var(--nav-height) + 0.75rem);
     }
 
+    .page + .page {
+        margin-top: clamp(1rem, 5vw, 1.85rem);
+    }
+
+    .page + .page::before {
+        content: "";
+        display: block;
+        width: min(11rem, 42vw);
+        height: 1px;
+        margin: 0 auto clamp(0.95rem, 4.5vw, 1.45rem);
+        background: linear-gradient(
+            90deg,
+            transparent,
+            color-mix(in srgb, var(--accent-1) 44%, var(--surface-border)) 28%,
+            color-mix(in srgb, var(--accent-2) 36%, var(--surface-border)) 72%,
+            transparent
+        );
+        opacity: 0.55;
+        box-shadow: 0 0 14px color-mix(in srgb, var(--accent-1) 14%, transparent);
+    }
+
+    [data-theme="mid-atmosphere"] .page + .page::before {
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(47, 102, 112, 0.34),
+            rgba(122, 78, 46, 0.28),
+            transparent
+        );
+        box-shadow: none;
+    }
+
     .page.active {
         opacity: 1 !important;
         transform: none !important;
         pointer-events: auto !important;
     }
 
-    #page-hero { order: 1; }
-    #research { order: 2; }
+    #page-hero {
+        order: 1;
+        min-height: calc(100dvh - var(--nav-height));
+    }
+    #about { order: 2; }
     #experience { order: 3; }
-    #about { order: 4; }
+    #research { order: 4; }
     #contact { order: 5; }
 
     .page-inner {
         width: min(100%, 47rem);
         min-height: auto;
-        padding: clamp(1.15rem, 4vw, 1.7rem) clamp(1rem, 4.4vw, 1.35rem) clamp(2.2rem, 8vw, 3.1rem);
+        padding: clamp(1.25rem, 4.6vw, 1.9rem) clamp(1rem, 4.4vw, 1.35rem) clamp(2.55rem, 8.5vw, 3.45rem);
         margin: 0 auto;
     }
 
@@ -5238,6 +5275,11 @@ html[data-layout-density="wide"] .hero-page .hero-content .hero-title {
         align-items: stretch;
         min-height: auto;
         padding-top: clamp(1.1rem, 4vw, 1.8rem);
+    }
+
+    .hero-page .page-inner {
+        min-height: calc(100dvh - var(--nav-height));
+        justify-content: center;
     }
 
     #about .page-inner {
@@ -5689,6 +5731,10 @@ html[data-layout-density="wide"] .hero-page .hero-content .hero-title {
     }
 
     #gc-toast {
+        display: none !important;
+    }
+
+    .layout-health-toast {
         display: none !important;
     }
 

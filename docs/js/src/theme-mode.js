@@ -18,7 +18,7 @@ const MODE_STORAGE_KEY = 'selectedThemeMode';
 const DARK_INDEX_STORAGE_KEY = 'darkThemeIndex';
 const LOCAL_PREVIEW_STORAGE_KEY = 'localPreviewEnabled';
 const MOBILE_VIEWPORT_BREAKPOINT = 900;
-const MOBILE_THEME_ID = 'mid-atmosphere';
+const MOBILE_THEME_ID = 'dark';
 const DESKTOP_DEFAULT_THEME_ID = 'crimson';
 
 const htmlEl = document.documentElement;
@@ -41,10 +41,11 @@ function syncMobileDeviceBlock() {
     bodyEl?.setAttribute('data-device-blocked', 'false');
     bodyEl?.setAttribute('data-mobile-mode', mobile ? 'true' : 'false');
     if (mobile) {
+        const mobileMode = inferModeFromTheme(MOBILE_THEME_ID);
         htmlEl.setAttribute('data-theme', MOBILE_THEME_ID);
         localStorage.setItem('selectedTheme', MOBILE_THEME_ID);
-        localStorage.setItem(MODE_STORAGE_KEY, 'mid');
-        syncModeButtons('mid');
+        localStorage.setItem(MODE_STORAGE_KEY, mobileMode);
+        syncModeButtons(mobileMode);
     }
     mobileBlockedState = mobile;
     return mobile;

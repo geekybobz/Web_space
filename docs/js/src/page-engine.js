@@ -42,6 +42,19 @@ const PageEngine = (() => {
         history.replaceState?.(null, '', url);
     }
 
+    function closeMobileNav() {
+        navLinksEl?.classList.remove('active');
+        const icon = mobileToggle?.querySelector('i');
+        if (icon) { icon.classList.remove('fa-times'); icon.classList.add('fa-bars'); }
+        mobileToggle?.setAttribute('aria-expanded', 'false');
+    }
+
+    function mobileTargetTop(page) {
+        const navHeight = navbarEl?.offsetHeight || 0;
+        const top = page.getBoundingClientRect().top + window.scrollY - navHeight - 8;
+        return Math.max(0, top);
+    }
+
     function updateChrome(idx) {
         dots.forEach((d, i) => d.classList.toggle('active', i === idx));
         document.querySelectorAll('[data-page-link]').forEach(a => {
@@ -54,20 +67,21 @@ const PageEngine = (() => {
     function setActive(idx, options = {}) {
         if (idx < 0 || idx >= pages.length) return;
         const notifyLifecycle = options.notifyLifecycle !== false;
+        const resetScroll = options.resetScroll !== false && !isMobileViewport();
+        const shouldFocus = options.focus !== false && !isMobileViewport();
+        const shouldSyncHash = options.syncHash !== false;
+        const shouldCloseMenu = options.closeMenu !== false;
         const old = current;
         current = idx;
         pages.forEach((p, i) => {
             p.classList.toggle('active', i === idx);
-            if (i !== idx) p.scrollTop = 0;
+            if (resetScroll && i !== idx) p.scrollTop = 0;
         });
         updateChrome(idx);
-        syncHash(idx);
-        pages[idx].focus({ preventScroll: true });
+        if (shouldSyncHash) syncHash(idx);
+        if (shouldFocus) pages[idx].focus({ preventScroll: true });
         if (notifyLifecycle && old !== current && typeof _onPageChange === 'function') _onPageChange(current, old);
-        navLinksEl?.classList.remove('active');
-        const icon = mobileToggle?.querySelector('i');
-        if (icon) { icon.classList.remove('fa-times'); icon.classList.add('fa-bars'); }
-        mobileToggle?.setAttribute('aria-expanded', 'false');
+        if (shouldCloseMenu) closeMobileNav();
     }
 
     function goTo(idx) {
@@ -76,8 +90,13 @@ const PageEngine = (() => {
         hideEdgeCues();
         clearDotBlink();
         inZone = null;
-        engine.scrollTo({ top: pages[idx].offsetTop, behavior: 'smooth' });
-        setActive(idx);
+        if (isMobileViewport()) {
+            window.scrollTo({ top: mobileTargetTop(pages[idx]), behavior: 'smooth' });
+            setActive(idx, { focus: false, resetScroll: false });
+        } else {
+            engine.scrollTo({ top: pages[idx].offsetTop, behavior: 'smooth' });
+            setActive(idx);
+        }
         window.setTimeout(() => { isPaging = false; }, PAGE_LOCK_MS);
     }
 
@@ -223,6 +242,43 @@ const PageEngine = (() => {
         }, { passive: true });
     });
 
+    function mobileActiveIndex() {
+        const navHeight = navbarEl?.offsetHeight || 0;
+        const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+        if (window.scrollY >= maxScroll - 4) return pages.length - 1;
+
+        const marker = navHeight + Math.min(window.innerHeight * 0.35, 240);
+        let fallback = 0;
+        let fallbackDistance = Infinity;
+
+        for (let i = 0; i < pages.length; i += 1) {
+            const rect = pages[i].getBoundingClientRect();
+            if (rect.top <= marker && rect.bottom > marker) return i;
+            const distance = Math.abs(rect.top - marker);
+            if (distance < fallbackDistance) {
+                fallback = i;
+                fallbackDistance = distance;
+            }
+        }
+
+        return fallback;
+    }
+
+    let mobileActiveRaf = null;
+    function scheduleMobileActiveSync() {
+        if (!isMobileViewport() || mobileActiveRaf) return;
+        mobileActiveRaf = requestAnimationFrame(() => {
+            mobileActiveRaf = null;
+            const idx = mobileActiveIndex();
+            if (idx !== current) {
+                setActive(idx, { focus: false, resetScroll: false, closeMenu: false });
+            }
+        });
+    }
+
+    window.addEventListener('scroll', scheduleMobileActiveSync, { passive: true });
+    window.addEventListener('resize', scheduleMobileActiveSync, { passive: true });
+
     document.addEventListener('keydown', (e) => {
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
         if (e.key === 'PageDown') { e.preventDefault(); goTo(current + 1); }
@@ -243,7 +299,11 @@ const PageEngine = (() => {
 
     if (current > 0) {
         requestAnimationFrame(() => {
-            engine?.scrollTo({ top: pages[current].offsetTop, behavior: 'auto' });
+            if (isMobileViewport()) {
+                window.scrollTo({ top: mobileTargetTop(pages[current]), behavior: 'auto' });
+            } else {
+                engine?.scrollTo({ top: pages[current].offsetTop, behavior: 'auto' });
+            }
         });
     }
 

@@ -3295,6 +3295,46 @@ body {
     outline: none;
 }
 
+/* --- Edge-of-page warning glow — transient viewport-edge cue --- */
+.edge-glow {
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: clamp(70px, 12vh, 120px);
+    z-index: 90; /* under navbar (100) and dot rail (200) */
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.edge-glow--top {
+    top: 0;
+    background: linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--edge-glow-color, var(--accent-1)) 26%, transparent),
+        transparent
+    );
+}
+
+.edge-glow--bottom {
+    bottom: 0;
+    background: linear-gradient(
+        to top,
+        color-mix(in srgb, var(--edge-glow-color, var(--accent-1)) 26%, transparent),
+        transparent
+    );
+}
+
+.edge-glow.visible {
+    opacity: 1;
+}
+
+@media (max-width: 900px) {
+    .edge-glow {
+        display: none;
+    }
+}
+
 /* --- Page inner layout --- */
 .page-inner {
     --page-safe-bottom: clamp(8rem, 18vh, 13rem);
@@ -4141,10 +4181,13 @@ body {
 }
 
 .page-dot {
-    /* Dock-style magnifier: JS sets an inline --s per dot while hovering */
+    /* Dock-style magnifier: JS sets an inline --s per dot while hovering.
+       Margin grows with the zoom so magnified dots push neighbors apart
+       and the rail stretches instead of crowding. */
     --s: 1;
     width: calc(7px * var(--s));
     height: calc(7px * var(--s));
+    margin: calc(5px * (var(--s) - 1)) 0;
     border-radius: 999px;
     background: var(--surface-border-hover);
     border: none;
@@ -4154,6 +4197,7 @@ body {
     transition:
         width  0.18s ease-out,
         height 0.18s ease-out,
+        margin 0.18s ease-out,
         background 0.25s ease,
         box-shadow 0.25s ease;
     position: relative;
@@ -4212,6 +4256,26 @@ body {
 
 .page-dot:hover {
     background: color-mix(in srgb, var(--accent-1) 60%, var(--surface-border-hover));
+}
+
+/* Edge-cue blink — finite double-pulse ring on the DESTINATION dot
+   (next page's dot at the bottom edge, previous page's at the top),
+   in the destination page's identity color. Uses ::before (::after is
+   the tooltip); no size change so it never fights the dock magnifier. */
+.page-dot.dot-edge-blink::before {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    border-radius: 999px;
+    border: 2px solid var(--edge-glow-color, var(--accent-1));
+    animation: dot-edge-blink 0.45s ease-out 2;
+    pointer-events: none;
+}
+
+@keyframes dot-edge-blink {
+    0%   { opacity: 0;   transform: scale(0.9);  }
+    40%  { opacity: 0.9; transform: scale(1.25); }
+    100% { opacity: 0;   transform: scale(1.5);  }
 }
 
 /* --- Prev / Next arrows — hidden (scroll-snap handles navigation) --- */

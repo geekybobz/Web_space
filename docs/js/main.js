@@ -807,6 +807,9 @@ const PageEngine = (() => {
     function goTo(idx) {
         if (!engine || idx < 0 || idx >= pages.length) return;
         isPaging = true;
+        hideEdgeCues();
+        clearDotBlink();
+        inZone = null;
         engine.scrollTo({ top: pages[idx].offsetTop, behavior: 'smooth' });
         setActive(idx);
         window.setTimeout(() => { isPaging = false; }, PAGE_LOCK_MS);
@@ -855,6 +858,103 @@ const PageEngine = (() => {
     dotsNav?.addEventListener('mouseleave', () => {
         if (dockRaf) { cancelAnimationFrame(dockRaf); dockRaf = null; }
         dots.forEach(dot => dot.style.removeProperty('--s'));
+    });
+
+    // --- Edge-of-page warning cues: transient glow + active-dot blink ---
+    const EDGE_ZONE   = 48;  // px from a hard edge that counts as "at the edge"
+    const HARD_EDGE   = 3;   // px tolerance for the absolute scroll limit
+    const CUE_FADE_MS = 950;
+
+    const glowTop    = document.createElement('div');
+    const glowBottom = document.createElement('div');
+    glowTop.className    = 'edge-glow edge-glow--top';
+    glowBottom.className = 'edge-glow edge-glow--bottom';
+    document.body.append(glowTop, glowBottom);
+
+    let cueTimer = null;
+    let inZone = null;
+    let blinkDot = null;
+    let blinkTimer = null;
+    const lastScrollTop = pages.map(p => p.scrollTop);
+
+    function pageIsScrollable(p) {
+        return p.scrollHeight > p.clientHeight + 4;
+    }
+
+    function pageColor(idx) {
+        const key = pages[idx]?.querySelector('.page-avatar')?.dataset.color || 'accent-1';
+        const rootStyle = getComputedStyle(document.documentElement);
+        return rootStyle.getPropertyValue(`--${key}`).trim()
+            || rootStyle.getPropertyValue('--accent-1').trim();
+    }
+
+    function hideEdgeCues() {
+        glowTop.classList.remove('visible');
+        glowBottom.classList.remove('visible');
+    }
+
+    function clearDotBlink() {
+        if (blinkTimer) { clearTimeout(blinkTimer); blinkTimer = null; }
+        if (blinkDot) {
+            blinkDot.classList.remove('dot-edge-blink', 'show-label');
+            blinkDot.style.removeProperty('--edge-glow-color');
+            blinkDot = null;
+        }
+    }
+
+    // Blink the DESTINATION dot — "press or rail-scroll here" —
+    // in that page's own identity color, with its label shown.
+    function blinkDestinationDot(idx) {
+        const dot = dots[idx];
+        if (!dot) return;
+        if (dot.classList.contains('dot-edge-blink')) return; // let a running blink finish
+        clearDotBlink();
+        blinkDot = dot;
+        dot.style.setProperty('--edge-glow-color', pageColor(idx));
+        dot.classList.add('dot-edge-blink', 'show-label');
+        blinkTimer = setTimeout(clearDotBlink, 1200);
+    }
+
+    function showEdgeCue(which) {
+        if (isMobileViewport()) return;
+        document.body.style.setProperty('--edge-glow-color', pageColor(current));
+        (which === 'top' ? glowTop : glowBottom).classList.add('visible');
+        blinkDestinationDot(current + (which === 'bottom' ? 1 : -1));
+        if (cueTimer) clearTimeout(cueTimer);
+        cueTimer = setTimeout(hideEdgeCues, CUE_FADE_MS);
+    }
+
+    pages.forEach((page, i) => {
+        let edgeRaf = null;
+
+        page.addEventListener('scroll', () => {
+            if (i !== current) { lastScrollTop[i] = page.scrollTop; return; }
+            if (isPaging || edgeRaf) return;
+            edgeRaf = requestAnimationFrame(() => {
+                edgeRaf = null;
+                if (i !== current || !pageIsScrollable(page) || isMobileViewport()) return;
+                const dyDir = page.scrollTop - lastScrollTop[i];
+                lastScrollTop[i] = page.scrollTop;
+                const atBottom = page.scrollTop + page.clientHeight >= page.scrollHeight - EDGE_ZONE;
+                const atTop    = page.scrollTop <= EDGE_ZONE;
+                const zone = atBottom ? 'bottom' : (atTop ? 'top' : null);
+                if (zone === 'bottom' && inZone !== 'bottom' && dyDir > 0) showEdgeCue('bottom');
+                else if (zone === 'top' && inZone !== 'top' && dyDir < 0) showEdgeCue('top');
+                else if (!zone && inZone) hideEdgeCues();
+                inZone = zone;
+            });
+        }, { passive: true });
+
+        // Attempted overscroll at a hard edge re-triggers the cue.
+        // Passive on purpose — must never be able to block or lag scrolling.
+        page.addEventListener('wheel', (e) => {
+            if (i !== current || isPaging || isMobileViewport() || !pageIsScrollable(page)) return;
+            const dy = normalizedWheelDeltaY(e);
+            const atHardBottom = page.scrollTop + page.clientHeight >= page.scrollHeight - HARD_EDGE;
+            const atHardTop    = page.scrollTop <= HARD_EDGE;
+            if (dy > 0 && atHardBottom) showEdgeCue('bottom');
+            else if (dy < 0 && atHardTop) showEdgeCue('top');
+        }, { passive: true });
     });
 
     document.addEventListener('keydown', (e) => {

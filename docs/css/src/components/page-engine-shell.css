@@ -27,6 +27,46 @@
     outline: none;
 }
 
+/* --- Edge-of-page warning glow — transient viewport-edge cue --- */
+.edge-glow {
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: clamp(70px, 12vh, 120px);
+    z-index: 90; /* under navbar (100) and dot rail (200) */
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.edge-glow--top {
+    top: 0;
+    background: linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--edge-glow-color, var(--accent-1)) 26%, transparent),
+        transparent
+    );
+}
+
+.edge-glow--bottom {
+    bottom: 0;
+    background: linear-gradient(
+        to top,
+        color-mix(in srgb, var(--edge-glow-color, var(--accent-1)) 26%, transparent),
+        transparent
+    );
+}
+
+.edge-glow.visible {
+    opacity: 1;
+}
+
+@media (max-width: 900px) {
+    .edge-glow {
+        display: none;
+    }
+}
+
 /* --- Page inner layout --- */
 .page-inner {
     --page-safe-bottom: clamp(8rem, 18vh, 13rem);

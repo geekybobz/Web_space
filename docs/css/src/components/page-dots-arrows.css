@@ -21,10 +21,13 @@
 }
 
 .page-dot {
-    /* Dock-style magnifier: JS sets an inline --s per dot while hovering */
+    /* Dock-style magnifier: JS sets an inline --s per dot while hovering.
+       Margin grows with the zoom so magnified dots push neighbors apart
+       and the rail stretches instead of crowding. */
     --s: 1;
     width: calc(7px * var(--s));
     height: calc(7px * var(--s));
+    margin: calc(5px * (var(--s) - 1)) 0;
     border-radius: 999px;
     background: var(--surface-border-hover);
     border: none;
@@ -34,6 +37,7 @@
     transition:
         width  0.18s ease-out,
         height 0.18s ease-out,
+        margin 0.18s ease-out,
         background 0.25s ease,
         box-shadow 0.25s ease;
     position: relative;
@@ -92,6 +96,26 @@
 
 .page-dot:hover {
     background: color-mix(in srgb, var(--accent-1) 60%, var(--surface-border-hover));
+}
+
+/* Edge-cue blink — finite double-pulse ring on the DESTINATION dot
+   (next page's dot at the bottom edge, previous page's at the top),
+   in the destination page's identity color. Uses ::before (::after is
+   the tooltip); no size change so it never fights the dock magnifier. */
+.page-dot.dot-edge-blink::before {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    border-radius: 999px;
+    border: 2px solid var(--edge-glow-color, var(--accent-1));
+    animation: dot-edge-blink 0.45s ease-out 2;
+    pointer-events: none;
+}
+
+@keyframes dot-edge-blink {
+    0%   { opacity: 0;   transform: scale(0.9);  }
+    40%  { opacity: 0.9; transform: scale(1.25); }
+    100% { opacity: 0;   transform: scale(1.5);  }
 }
 
 /* --- Prev / Next arrows — hidden (scroll-snap handles navigation) --- */

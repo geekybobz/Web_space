@@ -11,15 +11,6 @@
         }
         document.documentElement.setAttribute('data-theme', 'dark');
         setTimeout(triggerHeroFadeIn, 0);
-        sessionStorage.setItem('q-intro-seen', '1');
-        return;
-    }
-
-    if (sessionStorage.getItem('q-intro-seen')) {
-        const l = document.getElementById('q-loader');
-        if (l) { l.style.transition = 'none'; l.classList.add('q-loader--hidden'); }
-        document.documentElement.setAttribute('data-theme', localStorage.getItem('selectedTheme') || 'dark');
-        setTimeout(triggerHeroFadeIn, 0);
         return;
     }
 
@@ -131,6 +122,8 @@
     }, 700);
 
     // ── progress bar ───────────────────────────────────────────────────────────
+    const loaderStartedAt = Date.now();
+    const minimumVisibleMs = 2200;
     let p = 0;
     const progTimer = setInterval(() => {
         let inc;
@@ -151,8 +144,7 @@
                 html.setAttribute('data-theme', localStorage.getItem('selectedTheme') || 'dark');
                 loader.classList.add('q-loader--hidden');
                 triggerHeroFadeIn();
-                sessionStorage.setItem('q-intro-seen', '1');
-            }, 180);
+            }, Math.max(180, minimumVisibleMs - (Date.now() - loaderStartedAt)));
         }
     }, 70);
 })();

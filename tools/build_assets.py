@@ -31,6 +31,8 @@ MAIN_CSS_MODULES = [
     "css/src/effects/intro-typewriter.css",
     "css/src/effects/performance-budget.css",
     "css/src/mobile.css",
+    "css/src/themes/professional-dark.css",
+    "css/src/themes/semi-bright.css",
 ]
 
 GALLERY_CSS_MODULES = [

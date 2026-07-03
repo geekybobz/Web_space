@@ -13,10 +13,11 @@ const FIXED_AVATAR = 'assets/images/optimized/avatar_1-320.webp';
     syncModeButtons('dark');
 })();
 
-modeButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-        applyThemeMode(button.dataset.themeMode, { advanceDark: false });
-    });
-});
+// Theme toggle temporarily disabled while bright mode is being redesigned.
+// modeButtons.forEach((button) => {
+//     button.addEventListener('click', () => {
+//         applyThemeMode(button.dataset.themeMode, { advanceDark: false });
+//     });
+// });
 
 initLocalPreviewControls();

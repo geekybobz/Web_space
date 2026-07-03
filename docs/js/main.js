@@ -218,26 +218,28 @@ function stopTypewriter() {
 /* Source: js/src/theme-mode.js */
 // All themes available for all avatars — no grouping.
 const THEMES = [
+    { id: 'dark',    label: 'Research Dark', icon: '◐' },
     { id: 'crimson', label: 'Crimson', icon: '🌹' },
-    { id: 'dark',    label: 'Quantum', icon: '🌌' },
     { id: 'carbon',  label: 'Carbon',  icon: '🔥' },
     { id: 'dusk',    label: 'Dusk',    icon: '🌇' },
     { id: 'volt',    label: 'Volt',    icon: '⚡'  },
     { id: 'light-editorial', label: 'Light Editorial', icon: '1' },
-    { id: 'mid-atmosphere', label: 'Mid Atmosphere', icon: '2' },
+    // Temporarily disabled while the bright theme is being redesigned.
+    // { id: 'mid-atmosphere', label: 'Semi Bright', icon: '◯' },
 ];
 
 const avatarPool = ['assets/images/optimized/avatar_1-320.webp'];
 const THEME_MODES = {
-    dark: ['dark', 'crimson', 'carbon', 'dusk', 'volt'],
-    mid: ['mid-atmosphere'],
+    dark: ['dark'],
+    // Temporarily disabled while the bright theme is being redesigned.
+    // mid: ['mid-atmosphere'],
 };
 const MODE_STORAGE_KEY = 'selectedThemeMode';
 const DARK_INDEX_STORAGE_KEY = 'darkThemeIndex';
 const LOCAL_PREVIEW_STORAGE_KEY = 'localPreviewEnabled';
 const MOBILE_VIEWPORT_BREAKPOINT = 900;
 const MOBILE_THEME_ID = 'dark';
-const DESKTOP_DEFAULT_THEME_ID = 'crimson';
+const DESKTOP_DEFAULT_THEME_ID = 'dark';
 
 const htmlEl = document.documentElement;
 const bodyEl = document.body;
@@ -289,7 +291,7 @@ function syncModeButtons(modeId) {
 }
 
 function inferModeFromTheme(themeId) {
-    if (THEME_MODES.mid.includes(themeId)) return 'mid';
+    if (THEME_MODES.mid?.includes(themeId)) return 'mid';
     return 'dark';
 }
 
@@ -547,11 +549,12 @@ const FIXED_AVATAR = 'assets/images/optimized/avatar_1-320.webp';
     syncModeButtons('dark');
 })();
 
-modeButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-        applyThemeMode(button.dataset.themeMode, { advanceDark: false });
-    });
-});
+// Theme toggle temporarily disabled while bright mode is being redesigned.
+// modeButtons.forEach((button) => {
+//     button.addEventListener('click', () => {
+//         applyThemeMode(button.dataset.themeMode, { advanceDark: false });
+//     });
+// });
 
 initLocalPreviewControls();
 

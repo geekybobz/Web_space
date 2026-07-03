@@ -30,6 +30,7 @@ def render_under_construction(asset_version: str) -> None:
         <i class="fa-solid fa-arrow-left"></i> MBPS. Home
     </a>
 
+    <!-- Theme toggle temporarily disabled while bright mode is being redesigned.
     <div class="mode-toggle" aria-label="Theme mode toggle" role="group">
         <button class="mode-toggle-btn" data-theme-mode="dark" aria-label="Select dark mode">
             <span class="mode-state" aria-hidden="true">◐</span>
@@ -38,6 +39,7 @@ def render_under_construction(asset_version: str) -> None:
             <span class="mode-state" aria-hidden="true">◯</span>
         </button>
     </div>
+    -->
 
     <main class="uc-card" role="main">
         <div class="uc-header">

@@ -57,7 +57,8 @@ requestAnimationFrame(() => requestAnimationFrame(() => {
 const themesByMode = {
     dark: ['dark', 'crimson', 'carbon', 'dusk', 'volt'],
     light: ['light-editorial'],
-    mid: ['mid-atmosphere'],
+    // Temporarily disabled while the bright theme is being redesigned.
+    // mid: ['mid-atmosphere'],
 };
 const modeButtons = Array.from(document.querySelectorAll('[data-theme-mode]'));
 const modeStorageKey = 'selectedThemeMode';
@@ -69,7 +70,7 @@ function syncModeButtons(modeId) {
 
 function inferMode(themeId) {
     if (themesByMode.light.includes(themeId)) return 'light';
-    if (themesByMode.mid.includes(themeId)) return 'mid';
+    if (themesByMode.mid?.includes(themeId)) return 'mid';
     return 'dark';
 }
 
@@ -153,4 +154,5 @@ function applyMode(modeId, advanceDark = false) {
 
 const mode = initialMode();
 applyMode(mode, mode === 'dark');
-modeButtons.forEach(button => button.addEventListener('click', () => applyMode(button.dataset.themeMode, false)));
+// Theme toggle temporarily disabled while bright mode is being redesigned.
+// modeButtons.forEach(button => button.addEventListener('click', () => applyMode(button.dataset.themeMode, false)));

@@ -3,7 +3,8 @@
 // =====================================================
 (function initLoader() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (window.innerWidth <= 900 || prefersReducedMotion) {
+    const isMobileViewport = window.innerWidth <= 900;
+    if (isMobileViewport) {
         const l = document.getElementById('q-loader');
         if (l) {
             l.style.transition = 'opacity 0.22s ease, visibility 0.22s ease';
@@ -28,26 +29,28 @@
     // ── drift field (built once, runs forever) ──────────────────────────────────────
     const PHYS = ['ψ','α','β','∂','ℏ','∑','∇','ω','λ','σ','ε','ρ'];
     const CODE = ['0','1','{','}','f','x','→','n','i','[',']','*'];
-    for (let i = 0; i < 28; i++) {
-        const phys = Math.random() > 0.5;
-        const pool = phys ? PHYS : CODE;
-        const s    = document.createElement('span');
-        s.textContent = pool[Math.floor(Math.random() * pool.length)];
-        const op  = (0.03 + Math.random() * 0.045).toFixed(3);
-        const dur = (11  + Math.random() * 16).toFixed(1);
-        const del = (-Math.random() * 27).toFixed(1);
-        const sz  = (0.46 + Math.random() * 0.52).toFixed(2);
-        s.style.cssText =
-            'position:absolute;' +
-            `left:${(Math.random() * 100).toFixed(1)}%;` +
-            'bottom:-6%;' +
-            'font-family:monospace;' +
-            `font-size:${sz}rem;` +
-            `color:${phys ? 'var(--accent-2)' : 'var(--accent-1)'};` +
-            `opacity:${op};` +
-            `animation:sym-drift ${dur}s linear ${del}s infinite;` +
-            'pointer-events:none;will-change:transform;';
-        driftEl.appendChild(s);
+    if (!prefersReducedMotion) {
+        for (let i = 0; i < 28; i++) {
+            const phys = Math.random() > 0.5;
+            const pool = phys ? PHYS : CODE;
+            const s    = document.createElement('span');
+            s.textContent = pool[Math.floor(Math.random() * pool.length)];
+            const op  = (0.03 + Math.random() * 0.045).toFixed(3);
+            const dur = (11  + Math.random() * 16).toFixed(1);
+            const del = (-Math.random() * 27).toFixed(1);
+            const sz  = (0.46 + Math.random() * 0.52).toFixed(2);
+            s.style.cssText =
+                'position:absolute;' +
+                `left:${(Math.random() * 100).toFixed(1)}%;` +
+                'bottom:-6%;' +
+                'font-family:monospace;' +
+                `font-size:${sz}rem;` +
+                `color:${phys ? 'var(--accent-2)' : 'var(--accent-1)'};` +
+                `opacity:${op};` +
+                `animation:sym-drift ${dur}s linear ${del}s infinite;` +
+                'pointer-events:none;will-change:transform;';
+            driftEl.appendChild(s);
+        }
     }
 
     // ── waveforms ────────────────────────────────────────────────────
@@ -71,12 +74,16 @@
         return d;
     }
     let wPhase = 0, waveActive = true;
-    (function tickWaves() {
-        if (!waveActive) return;
+    function drawWaves() {
         const W = window.innerWidth, H = window.innerHeight;
         const amp = 18 + 7 * Math.sin(Date.now() / 2300);
         sinePath.setAttribute('d', buildSinePath(W, H, H * 0.2, amp, 2.5, wPhase));
         stepPath.setAttribute('d', buildStepPath(W, H, H * 0.8, amp * 0.85, 2.5, 20));
+    }
+    (function tickWaves() {
+        if (!waveActive) return;
+        drawWaves();
+        if (prefersReducedMotion) return;
         wPhase += 0.004;
         requestAnimationFrame(tickWaves);
     })();
@@ -86,30 +93,34 @@
     const TARGET = 'MOHAMMED BILAL P S';
     const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZαβψ∇∂∑∫0123456789';
 
-    let wordIdx = 0;
-    nameEl.textContent = WORDS[0];
-    const wordTimer = setInterval(() => {
-        wordIdx++;
-        nameEl.textContent = WORDS[wordIdx % WORDS.length];
-    }, 160);
+    if (prefersReducedMotion) {
+        nameEl.textContent = TARGET;
+    } else {
+        let wordIdx = 0;
+        nameEl.textContent = WORDS[0];
+        const wordTimer = setInterval(() => {
+            wordIdx++;
+            nameEl.textContent = WORDS[wordIdx % WORDS.length];
+        }, 160);
 
-    setTimeout(() => {
-        clearInterval(wordTimer);
-        const locked = new Array(TARGET.length).fill(null);
-        const scrambleInterval = setInterval(() => {
-            nameEl.textContent = TARGET.split('').map((ch, i) => {
-                if (locked[i] !== null) return locked[i];
-                if (ch === ' ') return ' ';
-                return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-            }).join('');
-        }, 55);
-        let lockPos = 0;
-        const lockTimer = setInterval(() => {
-            if (lockPos >= TARGET.length) { clearInterval(lockTimer); clearInterval(scrambleInterval); return; }
-            while (lockPos < TARGET.length && TARGET[lockPos] === ' ') { locked[lockPos] = ' '; lockPos++; }
-            if (lockPos < TARGET.length) { locked[lockPos] = TARGET[lockPos]; lockPos++; }
-        }, 72);
-    }, 620);
+        setTimeout(() => {
+            clearInterval(wordTimer);
+            const locked = new Array(TARGET.length).fill(null);
+            const scrambleInterval = setInterval(() => {
+                nameEl.textContent = TARGET.split('').map((ch, i) => {
+                    if (locked[i] !== null) return locked[i];
+                    if (ch === ' ') return ' ';
+                    return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+                }).join('');
+            }, 55);
+            let lockPos = 0;
+            const lockTimer = setInterval(() => {
+                if (lockPos >= TARGET.length) { clearInterval(lockTimer); clearInterval(scrambleInterval); return; }
+                while (lockPos < TARGET.length && TARGET[lockPos] === ' ') { locked[lockPos] = ' '; lockPos++; }
+                if (lockPos < TARGET.length) { locked[lockPos] = TARGET[lockPos]; lockPos++; }
+            }, 72);
+        }, 620);
+    }
 
     // ── status cycling ───────────────────────────────────────────────────
     const statuses = ['reading the system...','iterating...','propagating...','refining...','stable.','converged.'];

@@ -5,11 +5,35 @@
     from { opacity: 0; transform: translateY(22px); }
     to   { opacity: 1; transform: translateY(0); }
 }
+@keyframes heroCardHandoff {
+    0% {
+        opacity: 0.38;
+        transform: translateY(24px) scale(0.975);
+        filter: blur(6px);
+    }
+    55% {
+        opacity: 0.9;
+        transform: translateY(5px) scale(0.997);
+        filter: blur(0.8px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
 .intro-fade {
     opacity: 0;
 }
 .intro-fade.intro-visible {
     animation: fadeUp 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+html.q-loader-handoff .hero-page .hero-content {
+    transform-origin: center center;
+    animation: heroCardHandoff 1.02s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+html.q-loader-handoff .intro-fade.intro-visible {
+    animation-duration: 0.82s;
 }
 
 /* ========================================

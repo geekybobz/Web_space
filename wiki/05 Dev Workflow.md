@@ -42,6 +42,34 @@ git stash
 webspace branch <name>
 ```
 
+## Choosing the Right Preview Command
+
+Always return the `webspace` command that matches the actual preview situation. Do not default to `webspace current` unless the work should be previewed from the current checkout.
+
+| Situation | Command to return |
+|---|---|
+| Preview the current checkout, including local uncommitted changes | `webspace current` |
+| Preview `main` from a clean worktree | `webspace main` |
+| Preview an existing clean branch from another clean checkout | `webspace branch <branch-name>` |
+| A new branch was created and is already checked out | `webspace current` |
+| A new branch should be opened from a clean checkout before work starts | create/switch branch first, then return `webspace current` while on it |
+| User wants to inspect preview/server state | `webspace status` |
+| User wants to stop the preview server | `webspace stop` |
+
+If the user asks for branch-based work, prefer a `codex/<short-slug>` branch name unless they specify another branch. If the worktree is dirty, do not switch branches silently. Report the dirty state and either keep working on the current checkout or ask whether to commit/stash/switch.
+
+Every final response for a website change should include:
+
+```bash
+webspace <correct-mode>
+```
+
+and the preview URL:
+
+```text
+http://localhost:2026/docs/index.html?localPreview=1
+```
+
 ## Phone / LAN Preview
 
 1. Start `webspace` normally (desktop on port 2026)
@@ -60,3 +88,4 @@ Port 2032 runs in parallel and does not interfere with the 2026 desktop preview.
 
 - [[04 Build System]] — what gets rebuilt and why
 - [[03 Web Layer]] — local preview panel endpoints and phone testing details
+- [[08 Change Preview Protocol]] — intake, design gate, preview, and validation protocol for site changes

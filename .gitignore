@@ -7,8 +7,16 @@
 .DS_Store
 local_run.sh
 cv_assets/
+profile.tex
 
 tools/__pycache__/
+
+# Browser/test automation local logs
+.playwright-mcp/
+
+# Local scratch/source dumps and generated notes
+images_cargese/
+quantum_control_platform_notes/
 
 # Obsidian config
 .obsidian/
@@ -16,8 +24,12 @@ tools/__pycache__/
 # Local-only preview/report files
 docs/*-preview.html
 profilereport.txt
+perf-reports/*
+PERFORMANCE_REVIEW.md
+tools/perf_audit.js
 
-# Claude Code local config (skills/ is tracked, the rest is local)
-.claude/launch.json
-.claude/settings.local.json
-.claude/worktrees/
+# Local agent/editor config
+.claude/
+.codex/
+.agents/
+.vscode/

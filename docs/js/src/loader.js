@@ -2,8 +2,29 @@
 // INTRO LOADER — waves + drift
 // =====================================================
 (function initLoader() {
+    const INTRO_SEEN_KEY = 'q-intro-seen';
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isMobileViewport = window.innerWidth <= 900;
+    const getStoredValue = key => {
+        try { return sessionStorage.getItem(key); }
+        catch (_) { return null; }
+    };
+    const setStoredValue = (key, value) => {
+        try { sessionStorage.setItem(key, value); }
+        catch (_) {}
+    };
+
+    if (getStoredValue(INTRO_SEEN_KEY) === '1') {
+        const l = document.getElementById('q-loader');
+        if (l) {
+            l.style.transition = 'none';
+            l.classList.add('q-loader--hidden');
+        }
+        document.documentElement.setAttribute('data-theme', localStorage.getItem('selectedTheme') || 'dark');
+        setTimeout(() => triggerHeroFadeIn({ skipLoader: true }), 0);
+        return;
+    }
+
     if (isMobileViewport) {
         const l = document.getElementById('q-loader');
         if (l) {
@@ -88,84 +109,138 @@
         requestAnimationFrame(tickWaves);
     })();
 
-    // ── Zone 1: word cycle → scramble → name lock ──────────────────────────────
-    const WORDS  = ['PHYSICIST','PROGRAMMER','OPTIMIZER','THEORIST','CODER','RESEARCHER','BUILDER'];
+    // ── Zone 1: progress-locked fixed-width name resolver ──────────────
     const TARGET = 'MOHAMMED BILAL P S';
-    const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZαβψ∇∂∑∫0123456789';
+    const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const WORD_LOCKS = [
+        { start: 0,  end: 8,  from: 6,  to: 42 },
+        { start: 9,  end: 14, from: 42, to: 70 },
+        { start: 15, end: 16, from: 70, to: 82 },
+        { start: 17, end: 18, from: 82, to: 92 },
+    ];
+    let alphabetTick = 0;
 
-    if (prefersReducedMotion) {
-        nameEl.textContent = TARGET;
-    } else {
-        let wordIdx = 0;
-        nameEl.textContent = WORDS[0];
-        const wordTimer = setInterval(() => {
-            wordIdx++;
-            nameEl.textContent = WORDS[wordIdx % WORDS.length];
-        }, 160);
-
-        setTimeout(() => {
-            clearInterval(wordTimer);
-            const locked = new Array(TARGET.length).fill(null);
-            const scrambleInterval = setInterval(() => {
-                nameEl.textContent = TARGET.split('').map((ch, i) => {
-                    if (locked[i] !== null) return locked[i];
-                    if (ch === ' ') return ' ';
-                    return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-                }).join('');
-            }, 55);
-            let lockPos = 0;
-            const lockTimer = setInterval(() => {
-                if (lockPos >= TARGET.length) { clearInterval(lockTimer); clearInterval(scrambleInterval); return; }
-                while (lockPos < TARGET.length && TARGET[lockPos] === ' ') { locked[lockPos] = ' '; lockPos++; }
-                if (lockPos < TARGET.length) { locked[lockPos] = TARGET[lockPos]; lockPos++; }
-            }, 72);
-        }, 620);
+    function renderNameSlots(chars, activeIndex = -1) {
+        nameEl.replaceChildren(...chars.map((ch, index) => {
+            const span = document.createElement('span');
+            span.className = 'q-loader-char';
+            if (TARGET[index] === ' ') {
+                span.classList.add('q-loader-char-space');
+                span.textContent = '\u00a0';
+                return span;
+            }
+            span.textContent = ch || ALPHABET[(index + alphabetTick) % ALPHABET.length];
+            if (ch === TARGET[index]) span.classList.add('q-loader-char-locked');
+            if (index === activeIndex) span.classList.add('q-loader-char-active');
+            return span;
+        }));
     }
 
-    // ── status cycling ───────────────────────────────────────────────────
-    const statuses = ['reading the system...','iterating...','propagating...','refining...','stable.','converged.'];
+    function renderNameForProgress(progress) {
+        const slots = TARGET.split('').map(ch => ch === ' ' ? ' ' : null);
+        let activeIndex = -1;
+
+        WORD_LOCKS.forEach(word => {
+            const wordLength = word.end - word.start;
+            const span = word.to - word.from;
+            const wordProgress = Math.min(Math.max((progress - word.from) / span, 0), 1);
+            const lockedCount = progress >= word.to
+                ? wordLength
+                : Math.floor(wordProgress * (wordLength + 0.01));
+
+            for (let i = 0; i < lockedCount; i++) {
+                slots[word.start + i] = TARGET[word.start + i];
+            }
+
+            if (activeIndex === -1 && lockedCount < wordLength && progress >= word.from && progress < word.to) {
+                activeIndex = word.start + lockedCount;
+            }
+        });
+
+        if (progress >= 92) {
+            renderNameSlots(TARGET.split(''));
+            return;
+        }
+
+        renderNameSlots(slots, activeIndex);
+    }
+
+    renderNameForProgress(prefersReducedMotion ? 100 : 0);
+
+    // ── progress-aware status ───────────────────────────────────────────
+    const statuses = [
+        { at: 0,  text: 'reading the system...' },
+        { at: 18, text: 'checking alphabet...' },
+        { at: 42, text: 'locking mohammed...' },
+        { at: 70, text: 'locking bilal...' },
+        { at: 82, text: 'locking initials...' },
+        { at: 92, text: 'identity converged.' },
+        { at: 100, text: 'ready.' },
+    ];
     let sIdx = 0;
-    statusEl.textContent = statuses[0];
-    const statusTimer = setInterval(() => {
-        sIdx = (sIdx + 1) % statuses.length;
+    statusEl.textContent = statuses[0].text;
+
+    function updateStatusForProgress(progress) {
+        let nextIdx = 0;
+        statuses.forEach((status, index) => {
+            if (progress >= status.at) nextIdx = index;
+        });
+        if (nextIdx === sIdx) return;
+        sIdx = nextIdx;
         statusEl.style.opacity = '0';
-        setTimeout(() => { statusEl.textContent = statuses[sIdx]; statusEl.style.opacity = '1'; }, 200);
-    }, 700);
+        setTimeout(() => {
+            statusEl.textContent = statuses[sIdx].text;
+            statusEl.style.opacity = '1';
+        }, 180);
+    }
 
     // ── progress bar ───────────────────────────────────────────────────────────
     const loaderStartedAt = Date.now();
-    const minimumVisibleMs = 2200;
-    let p = 0;
+    const loaderDurationMs = prefersReducedMotion ? 2800 : 4800;
+    let loaderDone = false;
+    const easeOutCubic = t => 1 - Math.pow(1 - t, 3);
     const progTimer = setInterval(() => {
-        let inc;
-        if      (p < 70) inc = Math.random() * 14 + 8;
-        else             inc = Math.random() * 9 + 5;
-        p = Math.min(p + inc, 100);
-        barEl.style.width = Math.floor(p) + '%';
+        const elapsed = Date.now() - loaderStartedAt;
+        const progress = Math.min(easeOutCubic(elapsed / loaderDurationMs) * 100, 100);
+        alphabetTick = (alphabetTick + 1) % ALPHABET.length;
+        renderNameForProgress(progress);
+        updateStatusForProgress(progress);
+        barEl.style.width = Math.floor(progress) + '%';
 
-        if (p >= 100) {
+        if (progress >= 100 && !loaderDone) {
+            loaderDone = true;
             clearInterval(progTimer);
-            clearInterval(statusTimer);
-            statusEl.style.opacity = '0';
+            statusEl.textContent = 'ready.';
+            statusEl.style.opacity = '1';
             const barWrap = barEl.parentElement;
             if (barWrap) barWrap.style.opacity = '0';
+            loader.classList.add('q-loader--converged');
+            setStoredValue(INTRO_SEEN_KEY, '1');
             setTimeout(() => {
                 waveActive = false;
                 if (driftEl) driftEl.innerHTML = '';
                 html.setAttribute('data-theme', localStorage.getItem('selectedTheme') || 'dark');
-                loader.classList.add('q-loader--hidden');
-                triggerHeroFadeIn();
-            }, Math.max(180, minimumVisibleMs - (Date.now() - loaderStartedAt)));
+                html.classList.add('q-loader-handoff');
+                loader.classList.add('q-loader--exiting');
+                triggerHeroFadeIn({ handoff: true });
+                setTimeout(() => {
+                    loader.classList.add('q-loader--hidden');
+                    html.classList.remove('q-loader-handoff');
+                }, prefersReducedMotion ? 260 : 760);
+            }, prefersReducedMotion ? 120 : 360);
         }
-    }, 70);
+    }, 90);
 })();
 
-function triggerHeroFadeIn() {
+function triggerHeroFadeIn(options = {}) {
     const fastIntro = window.innerWidth <= 900 || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const delayScale = options.handoff ? 0.46 : 1;
     document.querySelectorAll('.intro-fade').forEach(el => {
-        const delay = fastIntro ? 0 : (el.dataset.delay ? parseFloat(el.dataset.delay) : 0);
+        const baseDelay = el.dataset.delay ? parseFloat(el.dataset.delay) : 0;
+        const delay = fastIntro || options.skipLoader ? 0 : baseDelay * delayScale;
         el.style.animationDelay = delay + 's';
         el.classList.add('intro-visible');
     });
-    setTimeout(startTypewriter, fastIntro ? 80 : 420);
+    if (typeof stopTypewriter === 'function') stopTypewriter();
+    setTimeout(startTypewriter, fastIntro || options.skipLoader ? 80 : (options.handoff ? 520 : 420));
 }

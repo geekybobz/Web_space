@@ -48,6 +48,57 @@
     visibility: hidden;
     pointer-events: none;
 }
+#q-loader.q-loader--converged .q-loader-name-display {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.02);
+    text-shadow:
+        0 0 18px color-mix(in srgb, var(--accent-1) 28%, transparent),
+        0 0 46px color-mix(in srgb, var(--accent-2) 18%, transparent);
+    transition:
+        opacity 0.3s ease,
+        transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+        text-shadow 0.42s ease;
+}
+#q-loader.q-loader--exiting {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+        opacity 0.86s cubic-bezier(0.22, 1, 0.36, 1),
+        visibility 0.86s step-end;
+}
+#q-loader.q-loader--exiting::before {
+    opacity: 0.08;
+    transform: scale(1.08);
+    transition:
+        opacity 0.78s ease,
+        transform 0.84s cubic-bezier(0.22, 1, 0.36, 1);
+}
+#q-loader.q-loader--exiting::after {
+    opacity: 0;
+    transform: translateY(0) scaleX(1.22);
+    transition:
+        opacity 0.44s ease,
+        transform 0.74s cubic-bezier(0.22, 1, 0.36, 1);
+}
+#q-loader.q-loader--exiting .q-loader-zone1,
+#q-loader.q-loader--exiting .q-loader-zone2 {
+    opacity: 0;
+    transform: translateY(-16px) scale(0.982);
+    filter: blur(10px);
+    transition:
+        opacity 0.5s ease,
+        transform 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.62s ease;
+}
+#q-loader.q-loader--exiting .q-wave-svg,
+#q-loader.q-loader--exiting .q-drift-field {
+    opacity: 0;
+    transform: scale(1.03);
+    transition:
+        opacity 0.62s ease,
+        transform 0.78s cubic-bezier(0.22, 1, 0.36, 1);
+}
 
 /* background layers */
 .q-wave-svg {
@@ -92,12 +143,46 @@
     font-family: monospace;
     font-size: clamp(0.95rem, 2vw, 1.6rem);
     font-weight: 400;
-    letter-spacing: 0.28em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.12em;
+    min-width: min(86vw, 25ch);
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--text-muted);
     text-align: center;
     min-height: 1.5em;
     opacity: 0.75;
+    transform: translateY(0) scale(1);
+}
+.q-loader-char {
+    display: inline-block;
+    width: 1ch;
+    color: color-mix(in srgb, var(--text-muted) 68%, transparent);
+    opacity: 0.42;
+    text-align: center;
+    transform: translateY(0);
+    transition:
+        color 0.32s ease,
+        opacity 0.32s ease,
+        transform 0.32s ease,
+        text-shadow 0.32s ease;
+}
+.q-loader-char-space {
+    width: 0.62ch;
+}
+.q-loader-char-locked {
+    color: var(--text-main);
+    opacity: 0.82;
+}
+.q-loader-char-active {
+    color: var(--accent-1);
+    opacity: 1;
+    transform: translateY(-1px);
+    text-shadow:
+        0 0 14px color-mix(in srgb, var(--accent-1) 36%, transparent),
+        0 0 28px color-mix(in srgb, var(--accent-2) 22%, transparent);
 }
 .q-loader-zone2 {
     position: relative;

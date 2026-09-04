@@ -1,0 +1,47 @@
+{
+  "$schema": "../schemas/education.schema.json",
+  "items": [
+    {
+      "id": "education.phd-ube",
+      "institution": "Université de Bourgogne",
+      "degree": "PhD",
+      "field": "Theoretical Physics and Quantum Control Theory",
+      "organization": "Institut Carnot de Bourgogne (ICB)",
+      "location": {"city": "Dijon", "country": "France"},
+      "start": "2024-11",
+      "end": "2027-11",
+      "status": "ongoing",
+      "funding": "Three-year doctoral fellowship",
+      "supervisors": [
+        {"name": "Camille Latune", "url": "https://scholar.google.com/citations?hl=en&user=edRgNRMAAAAJ&view_op=list_works&sortby=pubdate"},
+        {"name": "Dominique Sugny", "url": "https://scholar.google.com/citations?hl=en&user=38DyMEIAAAAJ&view_op=list_works&sortby=pubdate"}
+      ],
+      "visibility": "public"
+    },
+    {
+      "id": "education.bsms-iiser",
+      "institution": "IISER Berhampur",
+      "degree": "BS-MS Integrated",
+      "field": "Physics",
+      "location": {"city": "Berhampur", "country": "India"},
+      "start": "2019",
+      "end": "2024",
+      "status": "completed",
+      "result": "CPI 7.9 / 10",
+      "admission": "Admitted via JEE Advanced",
+      "thesis_project_ref": "project.quantum-battery-rl",
+      "award_refs": ["award.chanakya-fellowship"],
+      "supervisors": [
+        {"name": "Victor Mukherjee", "url": "https://scholar.google.com/citations?hl=en&user=Dzl9Z64AAAAJ&view_op=list_works&sortby=pubdate"},
+        {"name": "Paolo Andrea Erdman", "url": "https://scholar.google.com/citations?user=lvShgyQAAAAJ&hl=it"}
+      ],
+      "summary": "Five years of integrated physics covering quantum mechanics, statistical mechanics, classical mechanics, electrodynamics, condensed matter, and mathematical methods.",
+      "highlights": [
+        "For the MS thesis, joined Victor Mukherjee's group working on RL-based optimal control for quantum batteries:\n· Objective: maximize ergotropy in spin-½ chain systems\n· Approach: Soft Actor-Critic learning charging protocols from scratch\n· Scope: single-qubit to multi-qubit (2–5 qubits), ordered and disordered dynamics\n· Outcome: RL protocols outperform greedy strategies in relevant charging regimes",
+        "Awarded the Chanakya Fellowship (iHub-QTF, IISER Pune) in the final year for this work."
+      ],
+      "skill_refs": ["skill.quantum-mechanics", "skill.statistical-mechanics", "skill.quantum-batteries", "skill.reinforcement-learning", "skill.optimal-control"],
+      "visibility": "public"
+    }
+  ]
+}

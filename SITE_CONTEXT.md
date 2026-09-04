@@ -1,11 +1,14 @@
 # Site Context
 
-Fast handoff for any LLM working this repo. Read `wiki/00 Home.md` for full project knowledge.
+Fast handoff for work in this repository. Read `wiki/00 Home.md` for the map.
 
-## Key Rules
+## Key rules
 
-1. **Never edit generated files** — always edit the source and rebuild. See `wiki/04 Build System.md` for the source-of-truth table.
-2. **Use `webspace` alias** to rebuild and serve. Never spin up manual servers or use preview tools.
-3. **Commit messages** — use only the user's message verbatim. No Co-Authored-By or attribution lines.
-4. **CV work** — use the `/tailor-cv` skill. Never write or compile LaTeX until the user explicitly approves all sections.
-5. **Change preview protocol** — for Web_space UI/content/design changes, follow `wiki/08 Change Preview Protocol.md`: intake, design gate, source-only edits, rebuild, preview with the correct `webspace` command, and return that exact command to the user.
+1. `profile/` owns public biographical facts. Load resources through its manifest; do not assume every category has the same fields.
+2. `website/` owns templates, styling, behavior, display configuration, experiments, and public downloadable assets.
+3. `dist/` is generated and ignored. Never edit it directly.
+4. Build with `python3 tools/build_index.py`; validate profile, local links, and tests before staging.
+5. `v1` names a stable schema contract, not a frozen person snapshot. Profile records remain editable and dynamic within that contract. `/current/` is the consumer-friendly moving channel.
+6. CV-authoring material is temporarily consolidated in ignored `cv_workspace/`; only the public downloadable PDF remains a website asset.
+7. Do not commit unless the user explicitly approves the staged patch and commit message.
+8. For UI/design changes, follow `wiki/08 Change Preview Protocol.md` and return the correct `webspace` preview command.

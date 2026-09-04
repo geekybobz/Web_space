@@ -2,121 +2,103 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent.parent
-DOCS = ROOT / "docs"
+SOURCE = ROOT / "website" / "src"
+DIST = ROOT / "dist"
 
 
 MAIN_CSS_MODULES = [
-    "css/src/base/root-variables.css",
-    "css/src/base/reset-base.css",
-    "css/src/components/cursor.css",
-    "css/src/components/background-shapes.css",
-    "css/src/base/typography-utils.css",
-    "css/src/components/ui-components.css",
-    "css/src/components/navbar.css",
-    "css/src/sections/hero-visuals.css",
-    "css/src/sections/sections-structure.css",
-    "css/src/sections/skills-tech.css",
-    "css/src/sections/experience.css",
-    "css/src/sections/cards-projects.css",
-    "css/src/sections/research-works.css",
-    "css/src/sections/philosophy.css",
-    "css/src/sections/contact-footer.css",
-    "css/src/base/responsive.css",
-    "css/src/components/theme-toggle.css",
-    "css/src/themes/all-themes.css",
-    "css/src/components/page-engine-shell.css",
-    "css/src/sections/hero-card-redesign.css",
-    "css/src/components/page-dots-arrows.css",
-    "css/src/effects/loader.css",
-    "css/src/effects/intro-typewriter.css",
-    "css/src/effects/performance-budget.css",
-    "css/src/mobile.css",
-    "css/src/themes/professional-dark.css",
-    "css/src/themes/semi-bright.css",
+    "styles/base/root-variables.css",
+    "styles/base/reset-base.css",
+    "styles/components/cursor.css",
+    "styles/components/background-shapes.css",
+    "styles/base/typography-utils.css",
+    "styles/components/ui-components.css",
+    "styles/components/navbar.css",
+    "styles/sections/hero-visuals.css",
+    "styles/sections/sections-structure.css",
+    "styles/sections/skills-tech.css",
+    "styles/sections/experience.css",
+    "styles/sections/cards-projects.css",
+    "styles/sections/research-works.css",
+    "styles/sections/philosophy.css",
+    "styles/sections/contact-footer.css",
+    "styles/base/responsive.css",
+    "styles/components/theme-toggle.css",
+    "styles/themes/all-themes.css",
+    "styles/components/page-engine-shell.css",
+    "styles/sections/hero-card-redesign.css",
+    "styles/components/page-dots-arrows.css",
+    "styles/effects/loader.css",
+    "styles/effects/intro-typewriter.css",
+    "styles/effects/performance-budget.css",
+    "styles/mobile.css",
+    "styles/themes/professional-dark.css",
+    "styles/themes/semi-bright.css",
 ]
 
 GALLERY_CSS_MODULES = [
-    "css/src/gallery/base.css",
-    "css/src/gallery/git.css",
-    "css/src/gallery/museum.css",
-    "css/src/gallery/journey.css",
-    "css/src/gallery/hybrid.css",
-    "css/src/gallery/responsive.css",
+    "styles/gallery/base.css",
+    "styles/gallery/git.css",
+    "styles/gallery/museum.css",
+    "styles/gallery/journey.css",
+    "styles/gallery/hybrid.css",
+    "styles/gallery/responsive.css",
 ]
 
 UNDER_CONSTRUCTION_CSS_MODULES = [
-    "css/src/under-construction/base.css",
-    "css/src/under-construction/blobs.css",
-    "css/src/under-construction/topbar.css",
-    "css/src/under-construction/card.css",
-    "css/src/under-construction/content.css",
-    "css/src/under-construction/cursor.css",
-    "css/src/under-construction/responsive.css",
+    "styles/under-construction/base.css",
+    "styles/under-construction/blobs.css",
+    "styles/under-construction/topbar.css",
+    "styles/under-construction/card.css",
+    "styles/under-construction/content.css",
+    "styles/under-construction/cursor.css",
+    "styles/under-construction/responsive.css",
 ]
 
 MAIN_JS_MODULES = [
-    "js/src/loader.js",
-    "js/src/hero-typewriter.js",
-    "js/src/theme-mode.js",
-    "js/src/avatar-theme-init.js",
-    "js/src/project-toggles.js",
-    "js/src/poster-toggles.js",
-    "js/src/avatar-tilt.js",
-    "js/src/custom-cursor.js",
-    "js/src/navbar-mobile.js",
-    "js/src/mobile-scroll.js",
-    "js/src/layout-health.js",
-    "js/src/page-engine.js",
-    "js/src/crt-terminal.js",
-    "js/src/analytics-toast.js",
-    "js/src/page-avatars.js",
-    "js/src/philosophy-reveal.js",
-    "js/src/page-lifecycle.js"
+    "scripts/loader.js",
+    "scripts/hero-typewriter.js",
+    "scripts/theme-mode.js",
+    "scripts/avatar-theme-init.js",
+    "scripts/project-toggles.js",
+    "scripts/poster-toggles.js",
+    "scripts/avatar-tilt.js",
+    "scripts/custom-cursor.js",
+    "scripts/navbar-mobile.js",
+    "scripts/mobile-scroll.js",
+    "scripts/layout-health.js",
+    "scripts/page-engine.js",
+    "scripts/crt-terminal.js",
+    "scripts/analytics-toast.js",
+    "scripts/page-avatars.js",
+    "scripts/philosophy-reveal.js",
+    "scripts/page-lifecycle.js",
 ]
 
 UNDER_CONSTRUCTION_JS_MODULES = [
-    "js/src/under-construction/cursor.js",
-    "js/src/under-construction/progress.js",
-    "js/src/under-construction/entrance.js",
-    "js/src/under-construction/theme-local-preview.js",
+    "scripts/under-construction/cursor.js",
+    "scripts/under-construction/progress.js",
+    "scripts/under-construction/entrance.js",
+    "scripts/under-construction/theme-local-preview.js",
 ]
 
 
 def _bundle(module_paths: list[str], output: Path, header: str) -> None:
     chunks = []
-    for rel in module_paths:
-        path = DOCS / rel
-        text = path.read_text(encoding="utf-8").rstrip()
-        chunks.append(f"/* Source: {rel} */\n{text}")
+    for relative_path in module_paths:
+        source_path = SOURCE / relative_path
+        source_text = source_path.read_text(encoding="utf-8").rstrip()
+        chunks.append(f"/* Source: website/src/{relative_path} */\n{source_text}")
+    output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(f"{header}\n\n" + "\n\n".join(chunks) + "\n", encoding="utf-8")
 
 
 def build_assets() -> None:
-    _bundle(
-        MAIN_CSS_MODULES,
-        DOCS / "css" / "style.css",
-        "/* Generated file. Edit docs/css/src/**, not docs/css/style.css. */",
-    )
-    _bundle(
-        GALLERY_CSS_MODULES,
-        DOCS / "css" / "gallery.css",
-        "/* Generated file. Edit docs/css/src/gallery/**, not docs/css/gallery.css. */",
-    )
-    _bundle(
-        UNDER_CONSTRUCTION_CSS_MODULES,
-        DOCS / "css" / "under-construction.css",
-        "/* Generated file. Edit docs/css/src/under-construction/**, not docs/css/under-construction.css. */",
-    )
-    _bundle(
-        MAIN_JS_MODULES,
-        DOCS / "js" / "main.js",
-        "/* Generated file. Edit docs/js/src/**, not docs/js/main.js. */",
-    )
-    _bundle(
-        UNDER_CONSTRUCTION_JS_MODULES,
-        DOCS / "js" / "under-construction.js",
-        "/* Generated file. Edit docs/js/src/under-construction/**, not docs/js/under-construction.js. */",
-    )
+    _bundle(MAIN_CSS_MODULES, DIST / "css" / "style.css", "/* Generated file. Edit website/src/styles/**, not dist/css/style.css. */")
+    _bundle(GALLERY_CSS_MODULES, DIST / "css" / "gallery.css", "/* Generated file. Edit website/src/styles/gallery/**, not dist/css/gallery.css. */")
+    _bundle(UNDER_CONSTRUCTION_CSS_MODULES, DIST / "css" / "under-construction.css", "/* Generated file. Edit website/src/styles/under-construction/**, not dist/css/under-construction.css. */")
+    _bundle(MAIN_JS_MODULES, DIST / "js" / "main.js", "/* Generated file. Edit website/src/scripts/**, not dist/js/main.js. */")
+    _bundle(UNDER_CONSTRUCTION_JS_MODULES, DIST / "js" / "under-construction.js", "/* Generated file. Edit website/src/scripts/under-construction/**, not dist/js/under-construction.js. */")
 
 
 if __name__ == "__main__":

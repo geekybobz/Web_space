@@ -11,7 +11,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent.parent
-PREVIEW_PATH = "/docs/index.html?localPreview=1"
+PREVIEW_PATH = "/dist/index.html?localPreview=1"
 
 
 class PreviewServerManager:

@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://geekybobz.github.io/Web_space/api/profile/v1/schemas/manifest.schema.json",
+  "title": "Profile resource manifest",
+  "type": "object",
+  "required": ["schema_version", "profile_id", "resources"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "schema_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "profile_id": {"type": "string", "minLength": 1},
+    "resources": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": ["path", "schema", "cardinality"],
+        "properties": {
+          "path": {"type": "string", "pattern": "^data/[^/]+\\.json$"},
+          "schema": {"type": "string", "pattern": "^schemas/[^/]+\\.schema\\.json$"},
+          "cardinality": {"enum": ["one", "many"]}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

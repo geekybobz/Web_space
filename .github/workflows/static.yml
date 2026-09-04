@@ -31,10 +31,16 @@ jobs:
       - name: Build static assets
         run: python3 tools/build_index.py --asset-version "$GITHUB_SHA"
 
+      - name: Validate profile and generated site
+        run: |
+          python3 tools/validate_profile.py
+          python3 tools/validate_site.py
+          python3 -m unittest discover -s tests -v
+
       - name: Upload static site artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ./docs
+          path: ./dist
 
       - name: Deploy to GitHub Pages
         id: deployment

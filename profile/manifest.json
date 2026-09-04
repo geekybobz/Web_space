@@ -1,0 +1,15 @@
+{
+  "$schema": "schemas/manifest.schema.json",
+  "schema_version": "1.0.0",
+  "profile_id": "mohammed-bilal-ps",
+  "resources": {
+    "person": {"path": "data/person.json", "schema": "schemas/person.schema.json", "cardinality": "one"},
+    "education": {"path": "data/education.json", "schema": "schemas/education.schema.json", "cardinality": "many"},
+    "experience": {"path": "data/experience.json", "schema": "schemas/experience.schema.json", "cardinality": "many"},
+    "projects": {"path": "data/projects.json", "schema": "schemas/projects.schema.json", "cardinality": "many"},
+    "publications": {"path": "data/publications.json", "schema": "schemas/publications.schema.json", "cardinality": "many"},
+    "presentations": {"path": "data/presentations.json", "schema": "schemas/presentations.schema.json", "cardinality": "many"},
+    "awards": {"path": "data/awards.json", "schema": "schemas/awards.schema.json", "cardinality": "many"},
+    "skills": {"path": "data/skills.json", "schema": "schemas/skills.schema.json", "cardinality": "many"}
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "../schemas/experience.schema.json",
+  "items": [
+    {
+      "id": "experience.research-icb",
+      "role": "PhD Candidate · Theoretical Physics",
+      "organization": "Institut Carnot de Bourgogne (ICB)",
+      "location": {"city": "Dijon", "country": "France"},
+      "start": "2024",
+      "end": "2027",
+      "status": "ongoing",
+      "summary": "Working on quantum control theory at ICB Dijon. The central question is how fast, cheap, and robust a quantum gate can be made.",
+      "highlights": [
+        "The work uses the Pontryagin Maximum Principle and GRAPE to design energy-efficient protocols with timing constraints and bounded work fluctuations. A separate thread extends this to open quantum systems, where noise and dissipation are part of the problem from the start."
+      ],
+      "skill_refs": ["skill.quantum-control", "skill.pmp", "skill.grape", "skill.quantum-thermodynamics", "skill.open-quantum-systems", "skill.robust-control"],
+      "visibility": "public"
+    },
+    {
+      "id": "experience.math-teacher-revamp24",
+      "role": "Math Teacher",
+      "organization": "revamp24",
+      "location": {"city": "Bangalore", "country": "India"},
+      "start": "2020",
+      "end": "2024",
+      "status": "completed",
+      "summary": "Teaching role that sharpened explanation, pacing, and mathematical clarity across varied student levels.",
+      "visibility": "public"
+    },
+    {
+      "id": "experience.sme-six-red-marbles",
+      "role": "Subject Matter Expert",
+      "organization": "Six Red Marbles",
+      "location": {"city": "Chennai", "country": "India"},
+      "start": "2019",
+      "end": "2021",
+      "status": "completed",
+      "specialism": "Calculus",
+      "summary": "Mathematics-focused content and curriculum work, developing materials for structured learning pathways.",
+      "visibility": "public"
+    }
+  ]
+}

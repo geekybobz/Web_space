@@ -2,12 +2,12 @@ import json
 from html import escape
 from pathlib import Path
 
+from profile_site import build_experience_view, load_experience_config, load_profile
+
 
 ROOT = Path(__file__).resolve().parent.parent
-DOCS = ROOT / "docs"
-DATA = DOCS / "data"
-GALLERIES = DATA / "galleries"
-EXPERIENCE = DATA / "experience.json"
+DIST = ROOT / "dist"
+GALLERIES = ROOT / "website" / "experiments" / "galleries"
 
 
 EXPERIENCE_SCRIPT = """
@@ -733,7 +733,7 @@ def _render_experience_body(data: dict, include_topbar: bool) -> str:
 
 
 def render_experience_section() -> str:
-    data = _load_json(EXPERIENCE)
+    data = build_experience_view(load_profile(), load_experience_config())
     body = _render_experience_body(data, include_topbar=False)
     # Keep the standalone experience selectors unchanged here.
     # Naive selector prefixing broke nested blend-mode rules in the main site.
@@ -813,7 +813,7 @@ def render_experience_section() -> str:
     style = section_root + "\n" + style
     script = EXPERIENCE_SCRIPT.replace("document.querySelectorAll('.er-photo-frame')", "document.querySelectorAll('#experience .er-photo-frame')")
     script = script.replace("document.querySelectorAll('.er-event-card[data-srcs]')", "document.querySelectorAll('#experience .er-event-card[data-srcs]')")
-    return f"""<!-- Generated from docs/data/experience.json via tools/build_index.py -->
+    return f"""<!-- Generated from profile data and website/content/experience.json -->
 <section class="page section" id="experience" data-page="2" data-label="Experience">
     <div class="page-avatar" data-page-avatar="2" data-icon="fa-code-branch" data-color="accent-3" aria-hidden="true">
         <div class="page-avatar-ring"></div>
@@ -834,7 +834,7 @@ def render_experience_section() -> str:
 
 
 def render_experience_standalone() -> str:
-    data = _load_json(EXPERIENCE)
+    data = build_experience_view(load_profile(), load_experience_config())
     body = _render_experience_body(data, include_topbar=True)
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -855,7 +855,7 @@ def render_experience_standalone() -> str:
     </style>
 </head>
 <body class="gallery-body">
-    <!-- Generated from docs/data/experience.json via tools/build_index.py -->
+    <!-- Generated from profile data and website/content/experience.json -->
     <main class="gallery-shell er-shell">
 {_indent(body, 8)}
     </main>
@@ -901,7 +901,7 @@ def _render_gallery_shell(data: dict, main_body: str, footer_note: str) -> str:
     <link rel="stylesheet" href="css/gallery.css">
 </head>
 <body class="gallery-body">
-    <!-- Generated from docs/data/galleries/{escape(Path(data['filename']).stem)}.json via tools/build_index.py -->
+    <!-- Generated from website/experiments/galleries/{escape(Path(data['filename']).stem)}.json -->
     <main class="gallery-shell">
         <div class="gallery-topbar">
             <a class="gallery-back" href="index.html">← Back To Main Site</a>
@@ -1155,8 +1155,9 @@ def render_gallery_page(path: Path) -> str:
 
 
 def render_generated_pages() -> None:
-    (DOCS / "sections" / "experience.html").write_text(render_experience_section(), encoding="utf-8")
-    (DOCS / "gallery-experience-review-d.html").write_text(render_experience_standalone(), encoding="utf-8")
+    experiments = DIST / "experiments"
+    experiments.mkdir(parents=True, exist_ok=True)
+    (experiments / "experience-review.html").write_text(render_experience_standalone(), encoding="utf-8")
     for config in sorted(GALLERIES.glob("gallery-*.json")):
         data = _load_json(config)
-        (DOCS / data["filename"]).write_text(render_gallery_page(config), encoding="utf-8")
+        (experiments / data["filename"]).write_text(render_gallery_page(config), encoding="utf-8")

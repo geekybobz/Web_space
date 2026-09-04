@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{META_DESCRIPTION}}">
+    <title>{{TITLE}}</title>
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css?v={{ASSET_VERSION}}">
+</head>
+<body data-profile-name="{{PROFILE_NAME}}">
+    <!-- Intro Loader -->
+    <div id="q-loader" aria-hidden="true">
+        <svg class="q-wave-svg" id="q-wave-svg" aria-hidden="true">
+            <path class="q-wave-smooth" id="q-wave-sine"/>
+            <path class="q-wave-step"   id="q-wave-step"/>
+        </svg>
+        <div class="q-drift-field" id="q-drift-field" aria-hidden="true"></div>
+        <div class="q-loader-zone1">
+            <div class="q-loader-name-display" id="q-name-display"></div>
+        </div>
+        <div class="q-loader-zone2">
+            <div class="q-expr">
+                <span class="q-expr-l">min⟨ψ|</span><span class="q-expr-m">H</span><span class="q-expr-r">|ψ⟩</span>
+            </div>
+            <div class="q-loader-status" id="q-loader-status"></div>
+            <div class="q-loader-bar-wrap">
+                <div class="q-loader-bar" id="q-loader-bar"></div>
+            </div>
+        </div>
+    </div>
+    <noscript><style>#q-loader{display:none!important}.intro-fade{opacity:1!important}</style></noscript>
+
+    <!-- Background Elements -->
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+    <div class="bg-shape shape-3"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="#" class="brand" data-page-link="0">{{BRAND}}</a>
+            <div class="nav-links" id="primary-nav-links">
+                <a href="#research" class="nav-link" data-page-link="3"><i class="fa-solid fa-microchip" style="margin-right:4px;"></i> Works</a>
+                <a href="#experience" class="nav-link" data-page-link="2"><i class="fa-solid fa-code-branch" style="margin-right:4px;"></i> Experience</a>
+                <a href="#about" class="nav-link" data-page-link="1"><i class="fa-solid fa-terminal" style="margin-right:4px;"></i> About</a>
+                <a href="assets/pdfs/mohammed-bilal-ps-cv.pdf" class="nav-link" target="_blank" rel="noopener noreferrer" download><i class="fa-solid fa-file-arrow-down" style="margin-right:4px;"></i> CV</a>
+                <a href="#contact" class="nav-link btn-contact" data-page-link="4"><i class="fa-solid fa-paper-plane" style="margin-right:4px;"></i> Contact</a>
+            </div>
+            <div class="nav-right">
+                <!-- Theme toggle temporarily disabled while bright mode is being redesigned.
+                <div class="mode-toggle" aria-label="Theme mode toggle" role="group">
+                    <button class="mode-toggle-btn" data-theme-mode="dark" aria-label="Select dark mode">
+                        <span class="mode-state" aria-hidden="true">◐</span>
+                    </button>
+                    <button class="mode-toggle-btn" data-theme-mode="mid" aria-label="Select bright mode">
+                        <span class="mode-state" aria-hidden="true">◯</span>
+                    </button>
+                </div>
+                -->
+                <a href="{{SCHOLAR_URL}}" target="_blank" rel="noopener noreferrer" class="nav-scholar">
+                    <i class="fa-solid fa-graduation-cap"></i> Google Scholar
+                </a>
+                <button class="mobile-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-nav-links"><i class="fas fa-bars"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Side dot navigator — injected by JS -->
+    <nav class="page-dots" aria-label="Page navigation"></nav>
+
+    <!-- ========== PAGE ENGINE ========== -->
+    <div id="page-engine">
+{{SECTIONS}}
+    </div>
+
+    <!-- =========================================================
+         ANALYTICS — GoatCounter (privacy-first, no cookies)
+         SETUP: replace YOUR_CODE with your goatcounter.com site code
+    ========================================================== -->
+    <script
+        data-goatcounter="https://billabobz.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js">
+    </script>
+
+    <!-- Quirky first-visit analytics notice -->
+    <div id="gc-toast" role="status" aria-live="polite">
+        <div class="gc-toast-icon">🔬</div>
+        <div class="gc-toast-text">
+            <strong>Psst —</strong> this site quietly counts heads.<br>
+            <span class="gc-toast-sub">No cookies, no creepy tracking. Bilal just wants to know you exist 👋</span>
+        </div>
+        <button class="gc-toast-close" id="gc-toast-close" aria-label="Dismiss">Got it ✓</button>
+    </div>
+
+    <script src="js/main.js?v={{ASSET_VERSION}}"></script>
+</body>
+</html>

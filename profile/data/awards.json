@@ -1,0 +1,13 @@
+{
+  "$schema": "../schemas/awards.schema.json",
+  "items": [
+    {
+      "id": "award.chanakya-fellowship",
+      "name": "Chanakya Fellowship",
+      "issuer": "iHub Quantum Technology Foundation, IISER Pune",
+      "year": 2024,
+      "context": "Awarded in the final year of the BS-MS programme for the quantum-battery reinforcement-learning work.",
+      "visibility": "public"
+    }
+  ]
+}

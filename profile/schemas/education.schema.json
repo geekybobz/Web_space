@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://geekybobz.github.io/Web_space/api/profile/v1/schemas/education.schema.json",
+  "title": "Education collection",
+  "type": "object",
+  "required": ["items"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "institution", "degree", "field", "start", "status", "visibility"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^education\\."},
+          "institution": {"type": "string"},
+          "degree": {"type": "string"},
+          "field": {"type": "string"},
+          "organization": {"type": "string"},
+          "location": {"$ref": "#/$defs/location"},
+          "start": {"$ref": "#/$defs/date"},
+          "end": {"$ref": "#/$defs/date"},
+          "status": {"enum": ["ongoing", "completed", "paused"]},
+          "funding": {"type": "string"},
+          "result": {"type": "string"},
+          "admission": {"type": "string"},
+          "thesis_project_ref": {"type": "string", "pattern": "^project\\."},
+          "award_refs": {"type": "array", "items": {"type": "string", "pattern": "^award\\."}, "uniqueItems": true},
+          "supervisors": {"type": "array", "items": {"$ref": "#/$defs/personLink"}},
+          "summary": {"type": "string"},
+          "highlights": {"type": "array", "items": {"type": "string"}},
+          "skill_refs": {"type": "array", "items": {"type": "string", "pattern": "^skill\\."}, "uniqueItems": true},
+          "visibility": {"const": "public"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": {
+    "date": {"type": "string", "pattern": "^[0-9]{4}(-[0-9]{2})?$"},
+    "location": {
+      "type": "object",
+      "required": ["city", "country"],
+      "properties": {"city": {"type": "string"}, "country": {"type": "string"}},
+      "additionalProperties": false
+    },
+    "personLink": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {"name": {"type": "string"}, "url": {"type": "string", "format": "uri"}},
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

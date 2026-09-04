@@ -3,10 +3,10 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent.parent
-DOCS = ROOT / "docs"
-TEMPLATE = DOCS / "templates" / "under_construction.template.html"
-DATA = DOCS / "data" / "under_construction.json"
-OUTPUT = DOCS / "under_construction.html"
+WEBSITE = ROOT / "website"
+TEMPLATE = WEBSITE / "src" / "templates" / "under_construction.html"
+DATA = WEBSITE / "content" / "under_construction.json"
+OUTPUT = ROOT / "dist" / "under_construction.html"
 
 
 def render_under_construction(asset_version: str) -> None:
@@ -18,7 +18,7 @@ def render_under_construction(asset_version: str) -> None:
                     </li>"""
         for item in data["status_items"]
     )
-    body = f"""    <!-- Generated from docs/data/under_construction.json -->
+    body = f"""    <!-- Generated from website/content/under_construction.json -->
     <div class="bg-blob blob-1"></div>
     <div class="bg-blob blob-2"></div>
     <div class="bg-blob blob-3"></div>
@@ -93,6 +93,7 @@ def render_under_construction(asset_version: str) -> None:
     output = output.replace("{{TITLE}}", data["title"])
     output = output.replace("{{BODY}}", body)
     output = output.replace("{{ASSET_VERSION}}", asset_version)
+    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(output, encoding="utf-8")
 
 

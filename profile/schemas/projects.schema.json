@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://geekybobz.github.io/Web_space/api/profile/v1/schemas/projects.schema.json",
+  "title": "Project collection",
+  "type": "object",
+  "required": ["items"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "status", "summary", "visibility"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^project\\."},
+          "name": {"type": "string"},
+          "short_name": {"type": "string"},
+          "status": {"enum": ["planned", "ongoing", "completed", "submitted", "published"]},
+          "period": {"type": "string"},
+          "contributors": {"type": "array", "items": {"type": "string"}},
+          "summary": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "highlights": {"type": "array", "items": {"type": "string"}},
+          "skill_refs": {"type": "array", "items": {"type": "string", "pattern": "^skill\\."}, "uniqueItems": true},
+          "publication_refs": {"type": "array", "items": {"type": "string", "pattern": "^publication\\."}, "uniqueItems": true},
+          "artifact": {"$ref": "#/$defs/artifact"},
+          "visibility": {"const": "public"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "required": ["kind", "url", "label"],
+      "properties": {"kind": {"type": "string"}, "url": {"type": "string", "format": "uri"}, "label": {"type": "string"}},
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

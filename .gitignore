@@ -5,11 +5,10 @@
 *.out
 *.synctex.gz
 .DS_Store
-local_run.sh
-cv_assets/
-profile.tex
+/dist/
+/cv_workspace/
 
-tools/__pycache__/
+__pycache__/
 
 # Browser/test automation local logs
 .playwright-mcp/
@@ -22,7 +21,7 @@ quantum_control_platform_notes/
 .obsidian/
 
 # Local-only preview/report files
-docs/*-preview.html
+website/experiments/previews/*.local.html
 profilereport.txt
 perf-reports/*
 PERFORMANCE_REVIEW.md

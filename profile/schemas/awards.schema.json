@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://geekybobz.github.io/Web_space/api/profile/v1/schemas/awards.schema.json",
+  "title": "Award collection",
+  "type": "object",
+  "required": ["items"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "issuer", "year", "visibility"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^award\\."},
+          "name": {"type": "string"},
+          "issuer": {"type": "string"},
+          "year": {"type": "integer", "minimum": 1900},
+          "context": {"type": "string"},
+          "visibility": {"const": "public"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

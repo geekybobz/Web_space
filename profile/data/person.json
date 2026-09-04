@@ -1,0 +1,15 @@
+{
+  "$schema": "../schemas/person.schema.json",
+  "display_name": "Mohammed Bilal P S",
+  "full_name": "Mohammed Bilal Puthuveedu Shebeek",
+  "headline": "PhD Candidate @ ICB",
+  "professional_title": "PhD Researcher, Quantum Control Theory",
+  "location": {"city": "Dijon", "country": "France", "country_code": "FR"},
+  "public_contacts": {
+    "email": "billabobz.official@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/mohammedbilalps",
+    "google_scholar": "https://scholar.google.com/citations?user=Yo9U7rIAAAAJ&hl=en",
+    "website": "https://geekybobz.github.io/Web_space/"
+  },
+  "visibility": "public"
+}

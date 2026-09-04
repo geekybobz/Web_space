@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBPS Loader Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=loader-preview">
+    <style>
+        html,
+        body {
+            min-height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        #q-loader {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="q-loader" aria-hidden="true">
+        <svg class="q-wave-svg" id="q-wave-svg" aria-hidden="true">
+            <path class="q-wave-smooth" id="q-wave-sine"></path>
+            <path class="q-wave-step" id="q-wave-step"></path>
+        </svg>
+        <div class="q-drift-field" id="q-drift-field" aria-hidden="true"></div>
+        <div class="q-loader-zone1">
+            <div class="q-loader-name-display" id="q-name-display"></div>
+        </div>
+        <div class="q-loader-zone2">
+            <div class="q-expr">
+                <span class="q-expr-l">min&#10216;ψ|</span><span class="q-expr-m">H</span><span class="q-expr-r">|ψ&#10217;</span>
+            </div>
+            <div class="q-loader-status" id="q-loader-status"></div>
+            <div class="q-loader-bar-wrap">
+                <div class="q-loader-bar" id="q-loader-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function initLoaderPreview() {
+            const nameEl = document.getElementById('q-name-display');
+            const statusEl = document.getElementById('q-loader-status');
+            const barEl = document.getElementById('q-loader-bar');
+            const sinePath = document.getElementById('q-wave-sine');
+            const stepPath = document.getElementById('q-wave-step');
+            const driftEl = document.getElementById('q-drift-field');
+            const phys = ['ψ', 'α', 'β', '∂', 'ℏ', '∑', '∇', 'ω', 'λ', 'σ', 'ε', 'ρ'];
+            const code = ['0', '1', '{', '}', 'f', 'x', '→', 'n', 'i', '[', ']', '*'];
+            const words = ['PHYSICIST', 'PROGRAMMER', 'OPTIMIZER', 'THEORIST', 'CODER', 'RESEARCHER', 'BUILDER'];
+            const target = 'MOHAMMED BILAL P S';
+            const glyphs = 'ABCDEFGHIJKLMNOPQRSTUVWXYZαβψ∇∂∑∫0123456789';
+            const statuses = ['reading the system...', 'iterating...', 'propagating...', 'refining...', 'stable.', 'converged.'];
+
+            for (let i = 0; i < 28; i += 1) {
+                const isPhys = Math.random() > 0.5;
+                const pool = isPhys ? phys : code;
+                const span = document.createElement('span');
+                span.textContent = pool[Math.floor(Math.random() * pool.length)];
+                span.style.cssText = [
+                    'position:absolute',
+                    `left:${(Math.random() * 100).toFixed(1)}%`,
+                    'bottom:-6%',
+                    'font-family:monospace',
+                    `font-size:${(0.46 + Math.random() * 0.52).toFixed(2)}rem`,
+                    `color:${isPhys ? 'var(--accent-2)' : 'var(--accent-1)'}`,
+                    `opacity:${(0.03 + Math.random() * 0.045).toFixed(3)}`,
+                    `animation:sym-drift ${(11 + Math.random() * 16).toFixed(1)}s linear ${(-Math.random() * 27).toFixed(1)}s infinite`,
+                    'pointer-events:none',
+                    'will-change:transform'
+                ].join(';');
+                driftEl.appendChild(span);
+            }
+
+            function buildSinePath(width, height, centerY, amp, freq, phase) {
+                let d = '';
+                for (let x = 0; x <= width; x += 10) {
+                    const y = centerY + amp * Math.sin(freq * (x / width) * 2 * Math.PI + phase);
+                    d += `${d ? 'L' : 'M'}${x.toFixed(0)},${y.toFixed(1)} `;
+                }
+                return d;
+            }
+
+            function buildStepPath(width, height, centerY, amp, freq, steps) {
+                let d = '';
+                let previousY = 0;
+                for (let i = 0; i <= steps; i += 1) {
+                    const x = (i / steps) * width;
+                    const y = centerY + amp * Math.sin(freq * (i / steps) * 2 * Math.PI);
+                    if (!d) {
+                        d = `M${x.toFixed(0)},${y.toFixed(1)} `;
+                        previousY = y;
+                    } else {
+                        d += `L${x.toFixed(0)},${previousY.toFixed(1)} L${x.toFixed(0)},${y.toFixed(1)} `;
+                        previousY = y;
+                    }
+                }
+                return d;
+            }
+
+            let wavePhase = 0;
+            function tickWaves() {
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+                const amp = 18 + 7 * Math.sin(Date.now() / 2300);
+                sinePath.setAttribute('d', buildSinePath(width, height, height * 0.2, amp, 2.5, wavePhase));
+                stepPath.setAttribute('d', buildStepPath(width, height, height * 0.8, amp * 0.85, 2.5, 20));
+                wavePhase += 0.004;
+                requestAnimationFrame(tickWaves);
+            }
+
+            function runNameSequence() {
+                let wordIndex = 0;
+                nameEl.textContent = words[0];
+                const wordTimer = window.setInterval(() => {
+                    wordIndex += 1;
+                    nameEl.textContent = words[wordIndex % words.length];
+                }, 160);
+
+                window.setTimeout(() => {
+                    window.clearInterval(wordTimer);
+                    const locked = new Array(target.length).fill(null);
+                    const scrambleTimer = window.setInterval(() => {
+                        nameEl.textContent = target.split('').map((char, index) => {
+                            if (locked[index] !== null) return locked[index];
+                            if (char === ' ') return ' ';
+                            return glyphs[Math.floor(Math.random() * glyphs.length)];
+                        }).join('');
+                    }, 55);
+
+                    let lockIndex = 0;
+                    const lockTimer = window.setInterval(() => {
+                        if (lockIndex >= target.length) {
+                            window.clearInterval(lockTimer);
+                            window.clearInterval(scrambleTimer);
+                            window.setTimeout(runNameSequence, 1600);
+                            return;
+                        }
+                        while (lockIndex < target.length && target[lockIndex] === ' ') {
+                            locked[lockIndex] = ' ';
+                            lockIndex += 1;
+                        }
+                        if (lockIndex < target.length) {
+                            locked[lockIndex] = target[lockIndex];
+                            lockIndex += 1;
+                        }
+                    }, 72);
+                }, 620);
+            }
+
+            let statusIndex = 0;
+            let progress = 0;
+            statusEl.textContent = statuses[0];
+
+            window.setInterval(() => {
+                statusIndex = (statusIndex + 1) % statuses.length;
+                statusEl.textContent = statuses[statusIndex];
+            }, 900);
+
+            window.setInterval(() => {
+                progress = progress >= 100 ? 0 : Math.min(progress + 4.5, 100);
+                barEl.style.width = `${Math.floor(progress)}%`;
+            }, 90);
+
+            runNameSequence();
+            tickWaves();
+        })();
+    </script>
+</body>
+</html>

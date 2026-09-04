@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://geekybobz.github.io/Web_space/api/profile/v1/schemas/skills.schema.json",
+  "title": "Skill collection",
+  "type": "object",
+  "required": ["items"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "category", "usage"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^skill\\."},
+          "name": {"type": "string"},
+          "category": {"enum": ["research", "method", "software", "foundation", "language", "other"]},
+          "usage": {"enum": ["active", "practiced", "learning", "interest"]},
+          "evidence_refs": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

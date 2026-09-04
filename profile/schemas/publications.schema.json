@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://geekybobz.github.io/Web_space/api/profile/v1/schemas/publications.schema.json",
+  "title": "Publication collection",
+  "type": "object",
+  "required": ["items"],
+  "properties": {
+    "$schema": {"type": "string"},
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "authors", "year", "status", "visibility"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^publication\\."},
+          "title": {"type": "string"},
+          "authors": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+          "year": {"type": "integer", "minimum": 1900},
+          "status": {"enum": ["draft", "preprint", "submitted", "accepted", "published"]},
+          "submitted_to": {"type": "string"},
+          "identifiers": {"type": "object", "additionalProperties": {"type": "string"}},
+          "url": {"type": "string", "format": "uri"},
+          "visibility": {"const": "public"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -2,46 +2,26 @@
 
 ← [[00 Home]]
 
-Known pending work. Check here before asking "what's left?"
+## Move the CV builder to a separate repository
 
----
+After the profile contract has been used for a while, move `cv_workspace/` into
+its own project. Replace its temporary local path with a configurable profile
+source that accepts either the hosted `/api/profile/current/` URL or a read-only
+local profile checkout. Add its own private-data and generated-output rules.
 
-## 1. research.html → data-driven
+## Add contract evolution checks
 
-**Priority: high — this is the main architecture gap.**
+Before introducing a breaking profile change, add a compatibility comparison so
+CI can distinguish ordinary content updates from changes that require `v2`.
 
-`projects.json` and `posters.json` exist and are well-structured, but `docs/sections/research.html` is hand-authored HTML that duplicates them. Adding a new project or poster requires editing both the JSON and the HTML by hand.
+## Optional package adapter
 
-**Fix:** extend `tools/site_builder.py` to render `research.html` from these two files, using the same pattern as `experience.html`. Add `"status": "published" | "in_progress"` to the `projects.json` schema to replace the hardcoded in-progress block in the current HTML.
+If Python consumers become common, add a tiny read-only loader package. The JSON
+manifest remains the language-neutral primary interface; a package must not
+become a second source of truth.
 
-**Unblocks:** once done, update `cv_assets/cv_tailor_core.md` Phase 1 to read `projects.json` and `posters.json` directly instead of parsing `research.html`. This removes HTML noise from the CV skill's profile fetch.
+## Browser regression coverage
 
----
-
-## 2. Codex overhead for /tailor-cv
-
-`.vscode/tailor-cv.md` (VS Code Copilot / Codex overhead) not yet written.
-
-**Blocked on:** confirming whether VS Code Copilot `@workspace` is the correct invocation method.
-
-**Fix:** once confirmed, write `.vscode/tailor-cv.md` using the same thin-wrapper pattern as `.claude/skills/tailor-cv.md` — just tool mapping + pointer to `cv_assets/cv_tailor_core.md`.
-
----
-
-## 3. CV PDF not wired to site
-
-CV button in hero section links to `under_construction.html`.
-
-**Decision needed:** a canonical single-page CV (not application-specific) needs to be committed to `docs/assets/pdfs/` and linked from the hero. Application-specific CVs in `cv_assets/cv/` are gitignored and stay local.
-
----
-
-## 4. profile.tex at root is legacy
-
-`profile.tex` at the repo root is an old standalone LaTeX file. The active CV workflow is now `/tailor-cv` + `cv_assets/`. Can be deleted when no longer useful as a reference.
-
----
-
-## 5. Works review items (from previous session)
-
-Flagged in a previous session: "Works review, commit, orphaned files, group photos, CV PDF." Some may be resolved. Verify against current state.
+The current checks validate generated files, local links, IDs, profile references,
+and representative content. A later change can add browser interaction tests for
+page navigation, expand/collapse controls, and the preview panel.

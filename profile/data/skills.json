@@ -1,0 +1,19 @@
+{
+  "$schema": "../schemas/skills.schema.json",
+  "items": [
+    {"id": "skill.quantum-control", "name": "Quantum Control", "category": "research", "usage": "active", "evidence_refs": ["experience.research-icb"]},
+    {"id": "skill.robust-control", "name": "Robust Control", "category": "research", "usage": "active", "evidence_refs": ["project.qoste", "project.universal-robust-control"]},
+    {"id": "skill.optimal-control", "name": "Optimal Control", "category": "research", "usage": "practiced", "evidence_refs": ["project.qoste", "project.quantum-battery-rl"]},
+    {"id": "skill.pmp", "name": "Pontryagin Maximum Principle", "category": "method", "usage": "active", "evidence_refs": ["experience.research-icb", "project.universal-robust-control"]},
+    {"id": "skill.grape", "name": "GRAPE", "category": "method", "usage": "active", "evidence_refs": ["experience.research-icb", "project.qoste"]},
+    {"id": "skill.reinforcement-learning", "name": "Reinforcement Learning", "category": "method", "usage": "practiced", "evidence_refs": ["project.quantum-battery-rl"]},
+    {"id": "skill.open-quantum-systems", "name": "Open Quantum Systems", "category": "research", "usage": "active", "evidence_refs": ["experience.research-icb"]},
+    {"id": "skill.quantum-thermodynamics", "name": "Quantum Thermodynamics", "category": "research", "usage": "practiced", "evidence_refs": ["project.qoste", "project.quantum-battery-rl"]},
+    {"id": "skill.quantum-batteries", "name": "Quantum Batteries", "category": "research", "usage": "practiced", "evidence_refs": ["project.quantum-battery-rl"]},
+    {"id": "skill.quantum-mechanics", "name": "Quantum Mechanics", "category": "foundation", "usage": "practiced", "evidence_refs": ["education.bsms-iiser"]},
+    {"id": "skill.statistical-mechanics", "name": "Statistical Mechanics", "category": "foundation", "usage": "practiced", "evidence_refs": ["education.bsms-iiser"]},
+    {"id": "skill.python", "name": "Python", "category": "software", "usage": "practiced", "evidence_refs": ["project.quantum-battery-rl"]},
+    {"id": "skill.qutip", "name": "QuTiP", "category": "software", "usage": "practiced", "evidence_refs": ["experience.research-icb"]},
+    {"id": "skill.pytorch", "name": "PyTorch", "category": "software", "usage": "practiced", "evidence_refs": ["project.quantum-battery-rl"]}
+  ]
+}

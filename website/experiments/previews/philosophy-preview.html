@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <title>Philosophy · Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+
+    body {
+      background: #0B0E14;
+      color: #F3F4F6;
+      font-family: 'Inter', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Grid texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.016) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.016) 1px, transparent 1px);
+      background-size: 44px 44px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Preview bar ────────────────────────────────────── */
+    .preview-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 28px;
+      background: rgba(0, 0, 0, 0.6);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.1rem;
+      z-index: 100;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.67rem;
+      letter-spacing: 0.06em;
+      color: rgba(156, 163, 175, 0.4);
+    }
+
+    .preview-bar-left { display: flex; align-items: center; gap: 0.45rem; }
+    .preview-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: #B026FF;
+      box-shadow: 0 0 6px rgba(176, 38, 255, 0.55);
+      flex-shrink: 0;
+    }
+    .preview-bar-right { color: rgba(156, 163, 175, 0.28); }
+
+    @media (max-width: 580px) { .preview-bar-right { display: none; } }
+
+    /* ── Page shell ─────────────────────────────────────── */
+    .phil-wrapper {
+      position: relative;
+      z-index: 1;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3.2rem 1.5rem 1.5rem; /* top clears preview bar */
+    }
+
+    /* ── Inner column ───────────────────────────────────── */
+    .phil-inner {
+      width: 100%;
+      max-width: 840px;
+      /* fill the available vertical space so the stage can grow */
+      height: 100%;
+      max-height: 760px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+      animation: fade-up 0.5s ease forwards;
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Section header ─────────────────────────────────── */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.76rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #B026FF;
+      margin-bottom: 0.38rem;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 1.4rem;
+      height: 1px;
+      background: linear-gradient(90deg, #B026FF, transparent);
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.85rem, 3.5vw, 2.45rem);
+      font-weight: 700;
+      color: #F3F4F6;
+      line-height: 1.18;
+      letter-spacing: -0.022em;
+    }
+
+    /* ── Thought nav ────────────────────────────────────── */
+    .phil-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.42rem;
+    }
+
+    .phil-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 9px;
+      background: rgba(18, 24, 34, 0.3);
+      color: rgba(156, 163, 175, 0.75);
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-family: 'Inter', sans-serif;
+      transition:
+        border-color 0.2s ease,
+        background   0.2s ease,
+        color        0.2s ease,
+        transform    0.16s ease,
+        box-shadow   0.2s ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      user-select: none;
+    }
+
+    .phil-btn:hover:not(.active) {
+      border-color: rgba(255, 255, 255, 0.14);
+      color: #F3F4F6;
+      transform: translateY(-2px);
+    }
+
+    .phil-btn-symbol {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.82rem;
+      opacity: 0.5;
+      transition: opacity 0.2s ease, color 0.2s ease;
+      line-height: 1;
+    }
+
+    /* Active states */
+    .phil-btn[data-accent="1"].active {
+      border-color: rgba(0, 240, 255, 0.32);
+      background: rgba(0, 240, 255, 0.045);
+      color: #F3F4F6;
+      box-shadow: 0 0 18px rgba(0, 240, 255, 0.06);
+    }
+    .phil-btn[data-accent="1"].active .phil-btn-symbol { color: #00F0FF; opacity: 1; }
+
+    .phil-btn[data-accent="2"].active {
+      border-color: rgba(176, 38, 255, 0.32);
+      background: rgba(176, 38, 255, 0.045);
+      color: #F3F4F6;
+      box-shadow: 0 0 18px rgba(176, 38, 255, 0.06);
+    }
+    .phil-btn[data-accent="2"].active .phil-btn-symbol { color: #B026FF; opacity: 1; }
+
+    .phil-btn[data-accent="3"].active {
+      border-color: rgba(16, 185, 129, 0.32);
+      background: rgba(16, 185, 129, 0.045);
+      color: #F3F4F6;
+      box-shadow: 0 0 18px rgba(16, 185, 129, 0.06);
+    }
+    .phil-btn[data-accent="3"].active .phil-btn-symbol { color: #10B981; opacity: 1; }
+
+    /* ── Stage ──────────────────────────────────────────── */
+    .phil-stage {
+      flex: 1;              /* grows to fill remaining height */
+      min-height: 280px;
+      position: relative;
+      background: rgba(11, 16, 26, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.055);
+      border-left-width: 2px;
+      border-radius: 16px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: clamp(1.5rem, 2.8vw, 2.2rem);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      /* glass top-edge highlight + depth shadow */
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 32px 60px rgba(0, 0, 0, 0.35);
+      transition:
+        border-left-color 0.38s ease,
+        box-shadow        0.38s ease;
+    }
+
+    /* Radial aura inside stage */
+    .phil-stage::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      transition: background 0.45s ease;
+    }
+
+    /* Cyan */
+    .phil-stage[data-accent="1"] {
+      border-left-color: rgba(0, 240, 255, 0.40);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.08),
+        0 32px 60px rgba(0,0,0,0.35),
+        -4px 0 28px rgba(0, 240, 255, 0.09);
+    }
+    .phil-stage[data-accent="1"]::after {
+      background:
+        radial-gradient(ellipse at 6% 0%, rgba(0,240,255,0.09), transparent 35%),
+        radial-gradient(ellipse at 94% 100%, rgba(176,38,255,0.05), transparent 28%);
+    }
+    .phil-stage[data-accent="1"] .stage-symbol  { color: rgba(0, 240, 255, 0.58); }
+    .phil-stage[data-accent="1"] .phil-cursor   { color: #00F0FF; }
+    .phil-stage[data-accent="1"] .progress-fill {
+      background: rgba(0, 240, 255, 0.80);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.45);
+    }
+
+    /* Purple */
+    .phil-stage[data-accent="2"] {
+      border-left-color: rgba(176, 38, 255, 0.40);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.08),
+        0 32px 60px rgba(0,0,0,0.35),
+        -4px 0 28px rgba(176, 38, 255, 0.09);
+    }
+    .phil-stage[data-accent="2"]::after {
+      background:
+        radial-gradient(ellipse at 6% 0%, rgba(176,38,255,0.09), transparent 35%),
+        radial-gradient(ellipse at 94% 100%, rgba(0,240,255,0.04), transparent 28%);
+    }
+    .phil-stage[data-accent="2"] .stage-symbol  { color: rgba(176, 38, 255, 0.58); }
+    .phil-stage[data-accent="2"] .phil-cursor   { color: #B026FF; }
+    .phil-stage[data-accent="2"] .progress-fill {
+      background: rgba(176, 38, 255, 0.80);
+      box-shadow: 0 0 10px rgba(176, 38, 255, 0.45);
+    }
+
+    /* Emerald */
+    .phil-stage[data-accent="3"] {
+      border-left-color: rgba(16, 185, 129, 0.40);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.08),
+        0 32px 60px rgba(0,0,0,0.35),
+        -4px 0 28px rgba(16, 185, 129, 0.09);
+    }
+    .phil-stage[data-accent="3"]::after {
+      background:
+        radial-gradient(ellipse at 6% 0%, rgba(16,185,129,0.09), transparent 35%),
+        radial-gradient(ellipse at 94% 100%, rgba(176,38,255,0.04), transparent 28%);
+    }
+    .phil-stage[data-accent="3"] .stage-symbol  { color: rgba(16, 185, 129, 0.58); }
+    .phil-stage[data-accent="3"] .phil-cursor   { color: #10B981; }
+    .phil-stage[data-accent="3"] .progress-fill {
+      background: rgba(16, 185, 129, 0.80);
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.45);
+    }
+
+    /* ── Stage internals ────────────────────────────────── */
+
+    /* Symbol: own row, prominent */
+    .stage-symbol {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.05rem;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+      transition: color 0.38s ease;
+    }
+
+    /* Title */
+    .stage-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.12rem, 2vw, 1.38rem);
+      font-weight: 700;
+      color: #F3F4F6;
+      line-height: 1.28;
+      margin-bottom: 1.1rem;
+      position: relative;
+      z-index: 1;
+      transition: opacity 0.28s ease;
+    }
+
+    /* Body text: grows to fill stage */
+    .stage-body-wrap {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 1.2rem;
+    }
+
+    .stage-body {
+      font-size: clamp(0.97rem, 1.5vw, 1.05rem);
+      line-height: 1.82;
+      color: #9CA3AF;
+      transition: opacity 0.16s ease;
+    }
+
+    /* Blinking cursor */
+    .phil-cursor {
+      display: inline-block;
+      font-size: 0.82em;
+      line-height: 1;
+      margin-left: 1px;
+      vertical-align: middle;
+      animation: blink 1.05s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    /* Footer: progress bar + counter in one row */
+    .stage-footer {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 1px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 1px;
+      transition: width 0.09s linear;
+    }
+
+    .stage-counter {
+      flex-shrink: 0;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.71rem;
+      color: rgba(156, 163, 175, 0.35);
+      letter-spacing: 0.1em;
+    }
+
+    /* ── Keyboard hint ──────────────────────────────────── */
+    .phil-hint {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.67rem;
+      color: rgba(156, 163, 175, 0.25);
+      letter-spacing: 0.07em;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    /* ── Responsive ─────────────────────────────────────── */
+    @media (max-width: 580px) {
+      .phil-wrapper { padding: 3rem 1rem 1.2rem; }
+      body { height: auto; overflow: auto; }
+      .phil-inner { height: auto; max-height: none; }
+      .phil-stage { min-height: 300px; flex: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Preview bar -->
+  <div class="preview-bar">
+    <div class="preview-bar-left">
+      <span class="preview-dot"></span>
+      Philosophy · Standalone Preview
+    </div>
+    <div class="preview-bar-right">← → navigate &nbsp;·&nbsp; 1–5 jump</div>
+  </div>
+
+  <!-- Page content -->
+  <div class="phil-wrapper">
+    <div class="phil-inner">
+
+      <!-- Section header -->
+      <header>
+        <div class="section-label">Mindset</div>
+        <h2 class="section-title">My Philosophy</h2>
+      </header>
+
+      <!-- Thought nav -->
+      <nav class="phil-nav" aria-label="Navigate thoughts">
+        <button class="phil-btn" data-idx="0" data-accent="2">
+          <span class="phil-btn-symbol">◈</span>
+          <span>Origin</span>
+        </button>
+        <button class="phil-btn" data-idx="1" data-accent="1">
+          <span class="phil-btn-symbol">{H, ·}</span>
+          <span>Structure</span>
+        </button>
+        <button class="phil-btn" data-idx="2" data-accent="1">
+          <span class="phil-btn-symbol">∇L</span>
+          <span>Learning</span>
+        </button>
+        <button class="phil-btn" data-idx="3" data-accent="3">
+          <span class="phil-btn-symbol">≅</span>
+          <span>Fields</span>
+        </button>
+        <button class="phil-btn" data-idx="4" data-accent="2">
+          <span class="phil-btn-symbol">⌨</span>
+          <span>Code</span>
+        </button>
+      </nav>
+
+      <!-- Stage -->
+      <div class="phil-stage" id="philStage" data-accent="2">
+        <span class="stage-symbol" id="philSymbol"></span>
+        <h3 class="stage-title" id="philTitle"></h3>
+        <div class="stage-body-wrap">
+          <p class="stage-body">
+            <span id="philText"></span><span class="phil-cursor" id="philCursor">█</span>
+          </p>
+        </div>
+        <div class="stage-footer">
+          <div class="progress-track">
+            <div class="progress-fill" id="philProgress"></div>
+          </div>
+          <span class="stage-counter" id="philCounter">1 / 5</span>
+        </div>
+      </div>
+
+      <!-- Keyboard hint -->
+      <p class="phil-hint">← → arrow keys &nbsp;·&nbsp; 1–5 to jump</p>
+
+    </div>
+  </div>
+
+  <script>
+    const THOUGHTS = [
+      {
+        symbol : '◈',
+        accent : '2',
+        title  : 'Where My Curiosity Begins',
+        body   : 'What has stayed with me across different problems is a certain kind of curiosity: the wish to understand why something works before deciding how to work with it. That is part of what draws me to quantum control. I like problems where physical intuition, mathematical structure, and constructive method have to stay in conversation with each other: not only to find a solution, but to understand what kind of solution is even meaningful.'
+      },
+      {
+        symbol : '{H, ·}',
+        accent : '1',
+        title  : 'Starting from Structure',
+        body   : 'Before reaching for a technique, I want to understand the structure of the problem: what is constrained, what is preserved, and what solutions are actually possible. A method chosen too early can work in a limited setting and still miss the deeper logic.'
+      },
+      {
+        symbol : '∇L',
+        accent : '1',
+        title  : 'Why Learning Interests Me',
+        body   : 'Machine learning interests me beyond the toolkit it provides. The deeper question is how a system exposed to examples begins to extract structure it was never shown. What gets represented, what gets compressed, what generalizes. That feels genuinely open.'
+      },
+      {
+        symbol : '≅',
+        accent : '3',
+        title  : 'Following Ideas Across Fields',
+        body   : 'The same pattern tends to reappear across fields: a variational argument, a notion of robustness, a constrained optimization picture. When an idea resurfaces in a different language, I take it seriously. It usually points to something deeper underneath.'
+      },
+      {
+        symbol : '⌨',
+        accent : '2',
+        title  : 'Programming and Clarity',
+        body   : 'I tend to trust an idea more after I have built it. Programming exposes vague understanding quickly. It forces assumptions into the open and makes it hard to hide behind elegant language. Moving across ideas, for me, is not a way of leaving a field behind, but a way of seeing it more clearly.'
+      }
+    ];
+
+    const stage      = document.getElementById('philStage');
+    const elSymbol   = document.getElementById('philSymbol');
+    const elCounter  = document.getElementById('philCounter');
+    const elTitle    = document.getElementById('philTitle');
+    const elText     = document.getElementById('philText');
+    const elCursor   = document.getElementById('philCursor');
+    const elProgress = document.getElementById('philProgress');
+    const buttons    = Array.from(document.querySelectorAll('.phil-btn'));
+
+    let currentIdx = -1;
+    let typeTimer  = null;
+
+    function clearTyping() {
+      clearTimeout(typeTimer);
+      typeTimer = null;
+    }
+
+    function setActiveBtn(idx) {
+      buttons.forEach((b, i) => b.classList.toggle('active', i === idx));
+    }
+
+    function showThought(idx) {
+      if (idx < 0 || idx >= THOUGHTS.length) return;
+      clearTyping();
+      currentIdx = idx;
+
+      const t = THOUGHTS[idx];
+
+      setActiveBtn(idx);
+      stage.dataset.accent   = t.accent;
+      elSymbol.textContent   = t.symbol;
+      elCounter.textContent  = `${idx + 1} / ${THOUGHTS.length}`;
+      elProgress.style.width = '0%';
+
+      /* Fade body out, swap content */
+      elText.style.opacity = '0';
+      elText.textContent   = '';
+
+      elTitle.style.opacity = '0';
+      elTitle.textContent   = t.title;
+      setTimeout(() => { elTitle.style.opacity = '1'; }, 20);
+
+      /* Begin typing after settle */
+      setTimeout(() => {
+        elText.style.opacity = '1';
+        typeWords(t.body, idx);
+      }, 300);
+    }
+
+    function typeWords(text, forIdx) {
+      const words = text.split(' ');
+      const total = words.length;
+      let i = 0;
+
+      function step() {
+        if (currentIdx !== forIdx) return;
+
+        if (i >= total) {
+          elProgress.style.width = '100%';
+          /* cursor keeps blinking — no state change */
+          return;
+        }
+
+        elText.textContent     += (i === 0 ? '' : ' ') + words[i];
+        elProgress.style.width  = `${((i + 1) / total) * 100}%`;
+        i++;
+
+        typeTimer = setTimeout(step, 64 + Math.random() * 52);
+      }
+
+      step();
+    }
+
+    buttons.forEach((btn, idx) => {
+      btn.addEventListener('click', () => showThought(idx));
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); showThought(currentIdx + 1); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); showThought(currentIdx - 1); }
+      const n = parseInt(e.key, 10);
+      if (n >= 1 && n <= 5) showThought(n - 1);
+    });
+
+    setTimeout(() => showThought(0), 460);
+  </script>
+
+</body>
+</html>

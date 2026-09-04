@@ -1,0 +1,52 @@
+{
+  "$schema": "../schemas/projects.schema.json",
+  "items": [
+    {
+      "id": "project.qoste",
+      "name": "Energy Shortcut of N-Level Quantum Protocols by Optimal Control",
+      "short_name": "QOSTE",
+      "status": "submitted",
+      "period": "2025",
+      "contributors": ["C. L. Latune", "M. B. Puthuveedu Shebeek", "D. Sugny", "S. Guérin"],
+      "summary": [
+        "This work introduces QOSTE, a framework for designing quantum control protocols that achieve the same state transformations as Shortcut-To-Adiabaticity methods but at the lowest possible energy cost. The minimal energy cost is governed by a geodesic length in the rotating frame defined by the original protocol.",
+        "The framework is developed for general N-level quantum systems using geometric and optimal control techniques and is benchmarked against Landau-Zener and STIRAP protocols.",
+        "The optimization exposes an adjustable trade-off between energy efficiency and robustness."
+      ],
+      "skill_refs": ["skill.optimal-control", "skill.grape", "skill.robust-control"],
+      "publication_refs": ["publication.qoste-2025"],
+      "visibility": "public"
+    },
+    {
+      "id": "project.quantum-battery-rl",
+      "name": "Quantum Battery Charging via Reinforcement Learning",
+      "status": "completed",
+      "period": "2024",
+      "contributors": ["M. B. Puthuveedu Shebeek", "V. Mukherjee", "P. A. Erdman"],
+      "summary": [
+        "This project studies efficient charging protocols for spin-chain quantum batteries by maximizing ergotropy.",
+        "The charging problem was solved using Soft Actor-Critic for systems with two to five qubits and extended to disordered dynamics.",
+        "The learned protocols outperform greedy approaches in relevant charging regimes."
+      ],
+      "skill_refs": ["skill.reinforcement-learning", "skill.quantum-batteries", "skill.optimal-control", "skill.pytorch"],
+      "artifact": {"kind": "thesis", "url": "https://geekybobz.github.io/Web_space/assets/pdfs/quantum-battery-rl-thesis.pdf", "label": "Read Thesis PDF"},
+      "visibility": "public"
+    },
+    {
+      "id": "project.universal-robust-control",
+      "name": "Universally Robust Quantum Control for State-to-State Transfer and Gate Synthesis",
+      "status": "ongoing",
+      "period": "2025-present",
+      "summary": [
+        "Developing universally robust control strategies for state-to-state transfer and quantum gate synthesis by combining Pontryagin Maximum Principle analytical design with GRAPE numerical optimization."
+      ],
+      "highlights": [
+        "PMP-based analytical protocols for state transfer.",
+        "Second- and fourth-order robustness conditions.",
+        "Extensions to open quantum systems and Lindblad dynamics."
+      ],
+      "skill_refs": ["skill.pmp", "skill.grape", "skill.robust-control", "skill.open-quantum-systems"],
+      "visibility": "public"
+    }
+  ]
+}

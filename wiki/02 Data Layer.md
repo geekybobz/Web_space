@@ -1,110 +1,47 @@
-# Data Layer
+# Profile Data Contract
 
 ← [[00 Home]]
 
-The JSON files in `docs/data/` are the canonical source of content that changes over time. Edit these to add projects, experience entries, posters, or gallery items — then rebuild.
+## Entry point
 
----
+Always read `profile/manifest.json` first. It declares the contract version and
+the path, schema, and cardinality of every resource.
 
-## experience.json
-
-**Drives:** `docs/sections/experience.html` + `docs/gallery-experience-review-d.html`
-**Renderer:** `tools/site_builder.py`
-
-Top-level structure:
 ```json
 {
-  "hero": { "title": "...", "subtitle": "..." },
-  "chapters": [ ...experience entries... ],
-  "poster_section": { "label": "...", "title": "...", "events": [...] },
-  "roles_section": { "label": "...", "title": "...", "roles": [...] }
+  "schema_version": "1.0.0",
+  "profile_id": "mohammed-bilal-ps",
+  "resources": {
+    "person": {"path": "data/person.json", "schema": "schemas/person.schema.json", "cardinality": "one"},
+    "projects": {"path": "data/projects.json", "schema": "schemas/projects.schema.json", "cardinality": "many"}
+  }
 }
 ```
 
-Each chapter:
-```json
-{
-  "year": "2024 – 2027",
-  "title": "Institution name",
-  "role": "Role description",
-  "org": "Organisation detail",
-  "copy": ["paragraph 1", "paragraph 2"],
-  "tags": ["Tag1", "Tag2"],
-  "links": [{ "href": "#section", "label": "Label ↗", "page_link": 3 }],
-  "frame": { ...photo frame config... }
-}
-```
+The resources are intentionally heterogeneous. `person` contains names and
+contacts; projects contain summaries and statuses; presentations contain event
+metadata; skills contain evidence references. Consumers should use the declared
+schema for each category rather than forcing a universal record shape.
 
-`copy` can be a string (one paragraph) or an array of strings (multiple paragraphs). Newlines within a string render as `<br>`.
+## Update workflow
 
----
+1. Edit or add the relevant file under `profile/data/`.
+2. Preserve stable IDs for existing referenced records.
+3. Add or update that category's schema when its structure changes.
+4. Run `python3 tools/validate_profile.py`.
+5. Run `python3 tools/build_index.py` and the site validation/tests.
 
-## projects.json
+`profile/` is public and committed. Do not place phone numbers, addresses,
+passport/visa data, private emails, application letters, or private notes here.
+Website styling and photo-layout details belong under `website/`.
 
-**Should drive:** Projects block of `docs/sections/research.html`
-**Currently:** JSON exists but research.html is hand-authored — see [[07 Open Items]]
+## Static API
 
-Each project:
-```json
-{
-  "id": "qoste",
-  "title": "Full paper title",
-  "status_tag": { "label": "PRL ⏳", "cls": "rc-status-tag--prl" },
-  "meta": "Authors · venue · year",
-  "tags": ["Tag1", "Tag2"],
-  "abstract": ["paragraph 1", "paragraph 2", "paragraph 3"],
-  "link": { "href": "https://arxiv.org/abs/...", "label": "arXiv:..." }
-}
-```
+The build publishes exact copies plus an aggregate `profile.json` at:
 
-No `"status"` field yet. When research.html is converted, add `"status": "published" | "in_progress"` to replace the hardcoded in-progress block in the HTML.
+- `/api/profile/current/` - moving channel for consumers that want current data.
+- `/api/profile/v1/` - same current data under the stable v1 contract.
 
----
-
-## posters.json
-
-**Should drive:** Posters & Abstracts block of `docs/sections/research.html`
-**Currently:** JSON exists but research.html is hand-authored
-
-Each poster:
-```json
-{
-  "id": "jed-2025",
-  "conf": "JED",
-  "year": "2025",
-  "title": "Poster title",
-  "meta": "Authors · Affiliation · event",
-  "tags": ["Poster", "Tag2"],
-  "abstract": ["paragraph 1", "paragraph 2"],
-  "ref": "Context note (conference, arXiv, etc.)",
-  "ref_arxiv": "2503.20130",
-  "pdf": "assets/pdfs/filename.pdf",
-  "pdf_title": "Label for PDF link"
-}
-```
-
----
-
-## galleries/gallery-*.json
-
-**Drives:** `docs/gallery-git.html`, `docs/gallery-hybrid.html`, `docs/gallery-journey.html`, `docs/gallery-museum.html`
-**Renderer:** `tools/site_builder.py`
-
-Four layout variants. Each file is a standalone gallery definition. Schema varies by type.
-
----
-
-## under_construction.json
-
-**Drives:** `docs/under_construction.html`
-**Renderer:** `tools/render_under_construction.py` + `docs/templates/under_construction.template.html`
-
-Content for the placeholder page shown for sections not yet live on site.
-
----
-
-## Related
-
-- [[01 Architecture]] — how data feeds the web and CV layers
-- [[04 Build System]] — which renderer reads which file
-- [[07 Open Items]] — projects.json and posters.json not yet wired to the build
+Each channel includes `index.json`, `manifest.json`, category files, schemas, and
+the aggregate. This is static read-only JSON; no server process or write API is
+required.

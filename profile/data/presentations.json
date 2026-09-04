@@ -1,0 +1,54 @@
+{
+  "$schema": "../schemas/presentations.schema.json",
+  "items": [
+    {
+      "id": "presentation.jed-2025",
+      "kind": "poster",
+      "event": "JED 2025",
+      "date": "2025-06",
+      "location": "Dijon, France",
+      "title": "Robust and Energy-Efficient Controls for a Two-Level System",
+      "authors": ["Mohammed Bilal", "C. L. Latune", "D. Sugny"],
+      "project_ref": "project.qoste",
+      "teaser": "Robust and Energy-Efficient Controls for a Two-Level System — linked to arXiv:2503.20130.",
+      "summary": [
+        "A two-level Landau-Zener control problem balancing energy cost, transfer fidelity, and robustness against calibration errors.",
+        "The energy-minimizing solution is derived with the Pontryagin Maximum Principle and robust controls are optimized with GRAPE."
+      ],
+      "artifact": {"url": "https://geekybobz.github.io/Web_space/assets/pdfs/Bilal_poster_JED.pdf", "label": "JED 2025 Poster"},
+      "visibility": "public"
+    },
+    {
+      "id": "presentation.gdrteq-2025",
+      "kind": "poster",
+      "event": "3rd GdR TeQ Colloquium",
+      "date": "2025-11-12/2025-11-14",
+      "location": "Grenoble, France",
+      "title": "Robust Optimal Control for a Two-Level System using GRAPE",
+      "authors": ["Mohammed Bilal", "C. L. Latune", "D. Sugny"],
+      "project_ref": "project.qoste",
+      "teaser": "3rd GdR TeQ colloquium and poster session — robust optimal control using GRAPE and research discussions with the community.",
+      "summary": [
+        "Robust and energy-efficient state-transfer controls for an ensemble of two-level systems with Hamiltonian uncertainty."
+      ],
+      "visibility": "public"
+    },
+    {
+      "id": "presentation.cargese-2026",
+      "kind": "poster",
+      "event": "Quantum Technologies for Computation and Communication Summer School",
+      "date": "2026-06-08/2026-06-20",
+      "location": "Cargèse, France",
+      "title": "Universally Robust Control for a Qubit under an Unknown Perturbation",
+      "authors": ["Mohammed Bilal P. S.", "C. L. Latune", "D. Sugny"],
+      "project_ref": "project.universal-robust-control",
+      "teaser": "Presented “Universally Robust Control for a Qubit under an Unknown Perturbation” at the Quantum Technologies for Computation and Communication summer school at IESC.",
+      "summary": [
+        "Control protocols that retain high fidelity under an unknown static Hamiltonian perturbation for state transfer and gate synthesis.",
+        "Robustness is imposed through perturbative cancellation conditions on the Dyson expansion."
+      ],
+      "artifact": {"url": "https://geekybobz.github.io/Web_space/assets/pdfs/universal-robust-control-poster.pdf", "label": "Cargèse 2026 Poster"},
+      "visibility": "public"
+    }
+  ]
+}

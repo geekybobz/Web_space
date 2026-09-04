@@ -1,0 +1,96 @@
+{
+  "hero": {
+    "title": "Experience",
+    "subtitle": "Physics Trained · Passion Driven · Mathematically Guided"
+  },
+  "chapters": [
+    {
+      "profile_ref": "experience.research-icb",
+      "year_label": "2024 – 2027",
+      "title": "Université de Bourgogne",
+      "org_label": "Institut Carnot de Bourgogne (ICB) · Dijon, France · 3-year doctoral fellowship",
+      "links": [{"href": "#research", "label": "Works ↗", "page_link": 3}],
+      "frame": {
+        "blend_position": "center 52%",
+        "blend_position_mobile": "center 46%",
+        "srcs": ["assets/images/optimized/experience-review/camille-group-1-900.webp", "assets/images/optimized/experience-review/camille-group-2-900.webp"],
+        "labels": ["Research environment", "Board work"],
+        "group_srcs": ["assets/images/optimized/experience-review/icb-group-panoramic-1000.webp"],
+        "group_labels": ["ICB Dijon · full group"],
+        "default_src": "assets/images/optimized/experience-review/camille-group-1-900.webp",
+        "default_alt": "Research environment at ICB Dijon",
+        "default_label": "Research environment",
+        "peek_title": "View full group photo"
+      }
+    },
+    {
+      "profile_ref": "education.bsms-iiser",
+      "year_label": "2019 – 2024",
+      "title": "IISER Berhampur",
+      "role_label": "BS-MS Integrated Physics · CPI 7.9 / 10",
+      "org_label": "Admitted via JEE Advanced · IISER Berhampur, India",
+      "links": [{"href": "#research", "label": "Works ↗", "page_link": 3}],
+      "frame": {
+        "blend_position": "center 36%",
+        "blend_position_mobile": "center 34%",
+        "stage_position": "center 38%",
+        "srcs": ["assets/images/optimized/experience-review/degree-900.webp", "assets/images/optimized/experience-review/iiser2-900.webp"],
+        "labels": ["BSMS degree ceremony", "With thesis supervisor"],
+        "group_srcs": ["assets/images/optimized/experience-review/iiser-group-1000.webp", "assets/images/optimized/experience-review/victor-group-1000.webp"],
+        "group_labels": ["Convocation batch", "Thesis research group"],
+        "default_src": "assets/images/optimized/experience-review/degree-900.webp",
+        "default_alt": "BSMS degree ceremony at IISER Berhampur",
+        "default_label": "BSMS degree ceremony",
+        "peek_title": "View group and team photos"
+      }
+    }
+  ],
+  "poster_section": {
+    "label": "Conferences & Posters",
+    "title": "Poster Presentations",
+    "events": [
+      {
+        "profile_ref": "presentation.jed-2025",
+        "type": "static",
+        "kicker": "June 2025 · Dijon",
+        "display_title": "JED 2025",
+        "image": "assets/images/optimized/experience-review/jed-900.webp",
+        "alt": "JED 2025 poster session",
+        "label": "JED 2025"
+      },
+      {
+        "profile_ref": "presentation.gdrteq-2025",
+        "type": "cycler",
+        "kicker": "2025 · Grenoble",
+        "display_title": "GdR TeQ 2025",
+        "srcs": ["assets/images/optimized/experience-review/gdr-welcome-900.webp", "assets/images/optimized/experience-review/poster-gdr-1-900.webp", "assets/images/optimized/experience-review/poster-gdr-2-900.webp"],
+        "labels": ["GdR TeQ 2025", "Poster discussion", "Another poster moment"],
+        "default_src": "assets/images/optimized/experience-review/gdr-welcome-900.webp",
+        "default_alt": "GdR TeQ 2025 colloquium",
+        "default_label": "GdR TeQ 2025",
+        "link": {"href": "#research", "label": "View works ↗", "page_link": 3}
+      },
+      {
+        "profile_ref": "presentation.cargese-2026",
+        "type": "cycler",
+        "kicker": "June 8–20, 2026 · Cargese, Corsica",
+        "display_title": "Cargese Summer School",
+        "srcs": ["assets/images/optimized/experience-review/cargese-group-1200.webp", "assets/images/optimized/experience-review/cargese-me-poster-900.webp", "assets/images/optimized/experience-review/cargese-poster-context-900.webp"],
+        "labels": ["Cargese summer school group", "Poster presentation", "Poster session"],
+        "positions": ["center 50%", "center 42%", "center 44%"],
+        "default_src": "assets/images/optimized/experience-review/cargese-group-1200.webp",
+        "default_alt": "Cargese summer school group photo",
+        "default_label": "Cargese · 2026",
+        "default_position": "center 50%"
+      }
+    ]
+  },
+  "roles_section": {
+    "label": "Teaching & Mathematics",
+    "title": "Supporting Roles",
+    "roles": [
+      {"profile_ref": "experience.math-teacher-revamp24", "org_label": "revamp24, Bangalore · 2020–2024", "image": "assets/images/optimized/experience-review/other-mathteacher-700.webp", "alt": "Math teaching"},
+      {"profile_ref": "experience.sme-six-red-marbles", "org_label": "Calculus · Six Red Marbles, Chennai · 2019–2021", "image": "assets/images/optimized/experience-review/srm-700.webp", "alt": "Six Red Marbles"}
+    ]
+  }
+}

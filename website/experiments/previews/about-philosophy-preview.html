@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <title>About · Philosophy + Profile Preview</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* ── Static preview ───────────────────────────────────────── */
+    #page-engine { position: static; overflow: visible; }
+    .page        { position: static !important; opacity: 1 !important;
+                   pointer-events: auto !important; transform: none !important; }
+    body         { overflow-y: auto; height: auto; padding-top: 26px; }
+
+    /* ── Preview bar ──────────────────────────────────────────── */
+    .preview-bar {
+      position: fixed; top: 0; left: 0; right: 0; height: 26px; z-index: 9999;
+      background: rgba(0,0,0,0.7); border-bottom: 1px solid rgba(255,255,255,0.055);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1rem;
+      font-family: monospace; font-size: 0.68rem; letter-spacing: 0.06em;
+      color: rgba(156,163,175,0.38);
+    }
+    .pb-l { display: flex; align-items: center; gap: 0.45rem; }
+    .pb-dot { width: 5px; height: 5px; border-radius: 50%;
+              background: #B026FF; box-shadow: 0 0 5px rgba(176,38,255,0.6); }
+    @media (max-width: 640px) { .pb-r { display: none; } }
+
+    /* ══════════════════════════════════════════════════════════
+       PHILOSOPHY PANEL — standalone, top of page
+       Uses .panel directly (NOT .about-card) so it gets the
+       full glass treatment: blur, glass-bg, panel::before top
+       highlight. About-card subdued styles don't apply here.
+    ══════════════════════════════════════════════════════════ */
+
+    /* ── 1. Entry animation ──────────────────────────────── */
+    @keyframes phil-entry {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    #phil-card {
+      /* Constrain to same width as about-rows below */
+      width: min(100%, 1020px);
+      margin: 0 auto clamp(1.4rem, 2.5vw, 2rem); /* reduced — sep fills remaining gap */
+
+      /* Accent left border — echoes .philosophy-note */
+      border-left-width: 2px;
+      transition: border-left-color 0.38s ease;
+
+      animation: phil-entry 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 0.25s both;
+    }
+    #phil-card:hover { transform: none; }
+
+    #phil-card[data-accent="1"] { border-left-color: rgba(0,240,255,0.32); }
+    #phil-card[data-accent="2"] { border-left-color: rgba(176,38,255,0.32); }
+    #phil-card[data-accent="3"] { border-left-color: rgba(16,185,129,0.32); }
+
+    /* Shift the panel::before top-edge highlight with active accent */
+    #phil-card[data-accent="1"]::before { background: linear-gradient(90deg, transparent, rgba(0,240,255,0.16), transparent); }
+    #phil-card[data-accent="2"]::before { background: linear-gradient(90deg, transparent, rgba(176,38,255,0.16), transparent); }
+    #phil-card[data-accent="3"]::before { background: linear-gradient(90deg, transparent, rgba(16,185,129,0.16), transparent); }
+
+    /* ── Card header: label + title on left, counter on right ── */
+    .phil-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 1rem;
+      margin-bottom: 1.15rem;
+    }
+
+    /* Use the real section-label class but tighten spacing inside card */
+    #phil-card .section-label { margin-bottom: 0.3rem; }
+
+    .phil-card-title {
+      font-family: var(--font-heading); font-weight: 700;
+      font-size: clamp(1.5rem, 2.05vw, 1.8rem);
+      color: var(--text-main); line-height: 1.1; margin: 0;
+    }
+
+    .phil-count {
+      font-family: monospace; font-size: 0.7rem;
+      color: rgba(156,163,175,0.3); letter-spacing: 0.08em;
+      flex-shrink: 0; padding-top: 0.3rem;
+    }
+
+    /* ── Horizontal tab-bar nav ─────────────────────────────── */
+    .phil-nav {
+      display: flex; flex-wrap: wrap; gap: 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 1.2rem;
+    }
+
+    .phil-btn {
+      display: inline-flex; align-items: center; gap: 0.44rem;
+      padding: 0.5rem 0.9rem;
+      border: none; border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      border-radius: 7px 7px 0 0;
+      background: transparent; color: var(--text-muted);
+      font-size: 0.88rem; font-family: var(--font-sans);
+      cursor: pointer; user-select: none;
+      transition: border-bottom-color 0.2s ease, color 0.18s ease, background 0.18s ease;
+    }
+    .phil-btn:hover:not(.active) {
+      color: var(--text-main); background: rgba(255,255,255,0.025);
+    }
+
+    .phil-sym {
+      font-family: monospace; font-size: 0.8rem; opacity: 0.42;
+      transition: opacity 0.2s ease, color 0.2s ease, text-shadow 0.2s ease;
+    }
+
+    .phil-btn[data-accent="1"].active { border-bottom-color: var(--accent-1); color: var(--text-main); }
+    /* ── 5. Symbol glow on active tab ───────────────────────── */
+    .phil-btn[data-accent="1"].active .phil-sym { color: var(--accent-1); opacity: 1; text-shadow: 0 0 10px rgba(0,240,255,0.75); }
+
+    .phil-btn[data-accent="2"].active { border-bottom-color: var(--accent-2); color: var(--text-main); }
+    .phil-btn[data-accent="2"].active .phil-sym { color: var(--accent-2); opacity: 1; text-shadow: 0 0 10px rgba(176,38,255,0.75); }
+
+    .phil-btn[data-accent="3"].active { border-bottom-color: var(--accent-3); color: var(--text-main); }
+    .phil-btn[data-accent="3"].active .phil-sym { color: var(--accent-3); opacity: 1; text-shadow: 0 0 10px rgba(16,185,129,0.75); }
+
+    /* ── Typing stage ───────────────────────────────────────── */
+    .phil-stage {
+      position: relative; overflow: hidden;
+      min-height: 130px;
+      display: flex; flex-direction: column;
+    }
+
+    /* Ghost watermark */
+    .phil-ghost {
+      position: absolute; bottom: -1rem; right: 0.5rem;
+      font-family: monospace; font-size: 7rem; line-height: 1;
+      color: var(--text-main); opacity: 0.03;
+      pointer-events: none; user-select: none;
+      letter-spacing: -0.03em;
+      transition: opacity 0.28s ease;
+    }
+
+    /* Kicker — echoes .philosophy-kicker */
+    .phil-kicker {
+      display: inline-flex; align-items: center; gap: 0.52rem;
+      font-family: monospace; font-size: 0.88rem; font-weight: 600;
+      letter-spacing: 0.1em; margin-bottom: 0.65rem;
+      position: relative; z-index: 1;
+      transition: color 0.35s ease;
+    }
+    .phil-kicker::before {
+      content: '';
+      width: 1.4rem; height: 1px; flex-shrink: 0;
+      background: linear-gradient(90deg, currentColor, transparent);
+    }
+    #phil-card[data-accent="1"] .phil-kicker { color: var(--accent-1); }
+    #phil-card[data-accent="2"] .phil-kicker { color: var(--accent-2); }
+    #phil-card[data-accent="3"] .phil-kicker { color: var(--accent-3); }
+
+    /* Thought title */
+    .phil-thought-title {
+      font-family: var(--font-heading); font-weight: 700;
+      font-size: clamp(1.12rem, 1.8vw, 1.42rem);
+      color: var(--text-main); line-height: 1.25;
+      letter-spacing: -0.015em; margin-bottom: 0.72rem;
+      transition: opacity 0.25s ease;
+      position: relative; z-index: 1;
+    }
+
+    /* Body text */
+    .phil-text-wrap { flex: 1; min-height: 0; position: relative; z-index: 1; }
+    .phil-text      { font-size: 0.98rem; line-height: 1.8; color: var(--text-muted); transition: opacity 0.14s ease; }
+
+    /* Cursor */
+    .phil-cursor {
+      display: inline-block; font-size: 0.8em;
+      vertical-align: middle; margin-left: 1px;
+      animation: pcblink 1.05s step-end infinite;
+    }
+    #phil-card[data-accent="1"] .phil-cursor { color: var(--accent-1); }
+    #phil-card[data-accent="2"] .phil-cursor { color: var(--accent-2); }
+    #phil-card[data-accent="3"] .phil-cursor { color: var(--accent-3); }
+    @keyframes pcblink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* ── 3. Word reveal micro-fade ───────────────────────────── */
+    @keyframes word-in {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    .phil-word {
+      display: inline;
+      animation: word-in 0.12s ease forwards;
+    }
+
+    /* ── 4. Gradient separator between zones ─────────────────── */
+    .phil-section-sep {
+      width: min(100%, 1020px);
+      margin: 0 auto clamp(1.6rem, 2.8vw, 2.2rem);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
+    }
+
+    /* Progress bar */
+    .phil-footer { margin-top: 1rem; position: relative; z-index: 1; }
+    .phil-track  { height: 2px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: hidden; }
+    .phil-fill   { height: 100%; width: 0%; border-radius: 2px; transition: width 0.09s linear; }
+
+    #phil-card[data-accent="1"] .phil-fill { background: var(--accent-1); box-shadow: 0 0 8px rgba(0,240,255,0.45); }
+    #phil-card[data-accent="2"] .phil-fill { background: var(--accent-2); box-shadow: 0 0 8px rgba(176,38,255,0.45); }
+    #phil-card[data-accent="3"] .phil-fill { background: var(--accent-3); box-shadow: 0 0 8px rgba(16,185,129,0.45); }
+  </style>
+</head>
+<body>
+
+  <div class="preview-bar">
+    <div class="pb-l"><span class="pb-dot"></span>About page · philosophy top, profile below</div>
+    <div class="pb-r">← → navigate &nbsp;·&nbsp; 1–5 jump</div>
+  </div>
+
+  <div class="bg-shape shape-1"></div>
+  <div class="bg-shape shape-2"></div>
+  <div class="bg-shape shape-3"></div>
+
+  <nav class="navbar">
+    <div class="nav-content">
+      <a href="#" class="brand">MBPS.</a>
+      <div class="nav-links">
+        <a href="#" class="nav-link active"><i class="fa-solid fa-terminal" style="margin-right:4px;"></i> About</a>
+        <a href="#" class="nav-link"><i class="fa-solid fa-lightbulb" style="margin-right:4px;"></i> Philosophy</a>
+        <a href="#" class="nav-link"><i class="fa-solid fa-code-branch" style="margin-right:4px;"></i> Experience</a>
+        <a href="#" class="nav-link"><i class="fa-solid fa-microchip" style="margin-right:4px;"></i> Works</a>
+        <a href="#" class="nav-link btn-contact"><i class="fa-solid fa-paper-plane" style="margin-right:4px;"></i> Contact</a>
+      </div>
+      <div class="nav-right">
+        <div class="mode-toggle" role="group">
+          <button class="mode-toggle-btn active" data-theme-mode="dark"><span class="mode-state">|0&gt;</span></button>
+          <button class="mode-toggle-btn" data-theme-mode="mid"><span class="mode-state">|0&gt;+|1&gt;</span></button>
+          <button class="mode-toggle-btn" data-theme-mode="light"><span class="mode-state">|1&gt;</span></button>
+        </div>
+        <a href="#" class="nav-scholar"><i class="fa-solid fa-graduation-cap"></i> Google Scholar</a>
+      </div>
+    </div>
+  </nav>
+
+  <div id="page-engine">
+    <section class="page section" id="about" data-page="1" data-label="About">
+      <div class="page-inner">
+
+        <!-- ════════════════════════════════════════════════════════
+             PHILOSOPHY PANEL — first thing user sees, standalone
+             Uses .panel directly; not inside about-rows.
+        ════════════════════════════════════════════════════════ -->
+        <div class="panel" id="phil-card" data-accent="2">
+
+          <div class="phil-header">
+            <div>
+              <div class="section-label">Mindset</div>
+              <h3 class="phil-card-title">My Philosophy</h3>
+            </div>
+            <span class="phil-count" id="philCount">1 / 5</span>
+          </div>
+
+          <nav class="phil-nav" aria-label="Select a thought">
+            <button class="phil-btn" data-idx="0" data-accent="2">
+              <span class="phil-sym">◈</span>Origin
+            </button>
+            <button class="phil-btn" data-idx="1" data-accent="1">
+              <span class="phil-sym">{H, ·}</span>Structure
+            </button>
+            <button class="phil-btn" data-idx="2" data-accent="1">
+              <span class="phil-sym">∇L</span>Learning
+            </button>
+            <button class="phil-btn" data-idx="3" data-accent="3">
+              <span class="phil-sym">≅</span>Fields
+            </button>
+            <button class="phil-btn" data-idx="4" data-accent="2">
+              <span class="phil-sym">⌨</span>Code
+            </button>
+          </nav>
+
+          <div class="phil-stage">
+            <span class="phil-ghost" id="philGhost" aria-hidden="true"></span>
+            <div class="phil-kicker" id="philKicker"></div>
+            <h4 class="phil-thought-title" id="philTitle"></h4>
+            <div class="phil-text-wrap">
+              <p class="phil-text">
+                <span id="philText"></span><span class="phil-cursor" id="philCursor">█</span>
+              </p>
+            </div>
+            <div class="phil-footer">
+              <div class="phil-track"><div class="phil-fill" id="philFill"></div></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ── 4. Gradient separator ───────────────────────────── -->
+        <div class="phil-section-sep" aria-hidden="true"></div>
+
+        <!-- ════════════════════════════════════════════════════════
+             ABOUT SECTION — separate, begins fresh below
+             Uses the real section-header + about-rows structure
+             so all existing site CSS applies without overrides.
+        ════════════════════════════════════════════════════════ -->
+
+        <div class="section-header">
+          <div class="section-label">Profile</div>
+          <h2 class="section-title">About</h2>
+        </div>
+
+        <div class="about-rows">
+
+          <div class="panel about-card">
+            <div class="about-card-inner">
+              <div class="about-card-meta">
+                <div class="section-label">Background</div>
+                <h3 class="about-card-title">Who I Am</h3>
+              </div>
+              <div class="about-card-body">
+                <p class="text-muted" style="margin-bottom:1.1em;">
+                  I completed my BS-MS in Physics at IISER Berhampur, supported by the Chanakya Fellowship. My master's thesis, supervised by
+                  <a class="inline-link" href="#" target="_blank" rel="noopener noreferrer">Victor Mukherjee</a> and
+                  <a class="inline-link" href="#" target="_blank" rel="noopener noreferrer">Paolo Andrea Erdman</a>,
+                  focused on quantum batteries via reinforcement learning, which drew me toward control, optimization, and the deeper questions around how algorithms learn and generalize.
+                </p>
+                <p class="text-muted">
+                  I am now a PhD candidate at ICB Dijon, working with
+                  <a class="inline-link" href="#" target="_blank" rel="noopener noreferrer">Dominique Sugny</a> and
+                  <a class="inline-link" href="#" target="_blank" rel="noopener noreferrer">Camille</a>
+                  on optimal and robust quantum control. The long-term aim is control methods and computational tools that hold up under noise, realistic constraints, and contact with implementation.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel about-card">
+            <div class="about-card-inner">
+              <div class="about-card-meta">
+                <div class="section-label">Toolkit</div>
+                <h3 class="about-card-title">What I Work With</h3>
+              </div>
+              <div class="about-card-body">
+                <div class="skills-container">
+                  <span class="skill-tag">Quantum Control</span>
+                  <span class="skill-tag">Robust Control</span>
+                  <span class="skill-tag">GRAPE</span>
+                  <span class="skill-tag">Pontryagin Maximum Principle</span>
+                  <span class="skill-tag">Reinforcement Learning</span>
+                  <span class="skill-tag">Open Quantum Systems</span>
+                  <span class="skill-tag">Python</span>
+                  <span class="skill-tag">QuTiP</span>
+                  <span class="skill-tag">PyTorch</span>
+                </div>
+                <div class="mt-4">
+                  <h3 class="subsection-title">Focus</h3>
+                  <ul class="clean-list text-muted">
+                    <li>Pontryagin and gradient-based methods for robust, energy-efficient quantum control</li>
+                    <li>RL and physics-informed neural networks (PINNs) as control tools for quantum systems</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /about-rows -->
+
+      </div><!-- /page-inner -->
+    </section>
+  </div>
+
+  <script>
+    const THOUGHTS = [
+      {
+        symbol : '◈',
+        accent : '2',
+        title  : 'Where My Curiosity Begins',
+        body   : 'What has stayed with me across different problems is a certain kind of curiosity: the wish to understand why something works before deciding how to work with it. That is part of what draws me to quantum control. I like problems where physical intuition, mathematical structure, and constructive method have to stay in conversation with each other: not only to find a solution, but to understand what kind of solution is even meaningful.'
+      },
+      {
+        symbol : '{H, ·}',
+        accent : '1',
+        title  : 'Starting from Structure',
+        body   : 'Before reaching for a technique, I want to understand the structure of the problem: what is constrained, what is preserved, and what solutions are actually possible. A method chosen too early can work in a limited setting and still miss the deeper logic.'
+      },
+      {
+        symbol : '∇L',
+        accent : '1',
+        title  : 'Why Learning Interests Me',
+        body   : 'Machine learning interests me beyond the toolkit it provides. The deeper question is how a system exposed to examples begins to extract structure it was never shown. What gets represented, what gets compressed, what generalizes. That feels genuinely open.'
+      },
+      {
+        symbol : '≅',
+        accent : '3',
+        title  : 'Following Ideas Across Fields',
+        body   : 'The same pattern tends to reappear across fields: a variational argument, a notion of robustness, a constrained optimization picture. When an idea resurfaces in a different language, I take it seriously. It usually points to something deeper underneath.'
+      },
+      {
+        symbol : '⌨',
+        accent : '2',
+        title  : 'Programming and Clarity',
+        body   : 'I tend to trust an idea more after I have built it. Programming exposes vague understanding quickly. It forces assumptions into the open and makes it hard to hide behind elegant language. Moving across ideas, for me, is not a way of leaving a field behind, but a way of seeing it more clearly.'
+      }
+    ];
+
+    const philCard = document.getElementById('phil-card');
+    const elGhost  = document.getElementById('philGhost');
+    const elKicker = document.getElementById('philKicker');
+    const elTitle  = document.getElementById('philTitle');
+    const elText   = document.getElementById('philText');
+    const elFill   = document.getElementById('philFill');
+    const elCount  = document.getElementById('philCount');
+    const buttons  = Array.from(document.querySelectorAll('.phil-btn'));
+
+    let currentIdx = -1;
+    let typeTimer  = null;
+
+    function clearTyping() { clearTimeout(typeTimer); typeTimer = null; }
+    function setActive(idx) { buttons.forEach((b, i) => b.classList.toggle('active', i === idx)); }
+
+    function showThought(idx) {
+      if (idx < 0 || idx >= THOUGHTS.length) return;
+      clearTyping();
+      currentIdx = idx;
+      const t = THOUGHTS[idx];
+
+      setActive(idx);
+      philCard.dataset.accent = t.accent;
+      elCount.textContent     = `${idx + 1} / ${THOUGHTS.length}`;
+      elFill.style.width      = '0%';
+      elKicker.textContent    = t.symbol;
+
+      elGhost.style.opacity = '0';
+      setTimeout(() => { elGhost.textContent = t.symbol; elGhost.style.opacity = ''; }, 220);
+
+      elTitle.style.opacity = '0';
+      elTitle.textContent   = t.title;
+      setTimeout(() => { elTitle.style.opacity = '1'; }, 20);
+
+      elText.style.opacity = '0';
+      elText.textContent   = '';
+      setTimeout(() => { elText.style.opacity = '1'; typeWords(t.body, idx); }, 300);
+    }
+
+    function typeWords(text, forIdx) {
+      const words = text.split(' ');
+      const total = words.length;
+      let i = 0;
+
+      function step() {
+        if (currentIdx !== forIdx) return;
+        if (i >= total) { elFill.style.width = '100%'; return; }
+        /* ── 3. Wrap each word in a span for micro-fade ───────── */
+        const word = document.createElement('span');
+        word.className   = 'phil-word';
+        word.textContent = (i === 0 ? '' : ' ') + words[i];
+        elText.appendChild(word);
+        elFill.style.width = `${((i + 1) / total) * 100}%`;
+        i++;
+        typeTimer = setTimeout(step, 64 + Math.random() * 52);
+      }
+      step();
+    }
+
+    buttons.forEach((btn, idx) => btn.addEventListener('click', () => showThought(idx)));
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); showThought(currentIdx + 1); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); showThought(currentIdx - 1); }
+      const n = parseInt(e.key, 10);
+      if (n >= 1 && n <= 5) showThought(n - 1);
+    });
+
+    setTimeout(() => showThought(0), 500);
+  </script>
+
+</body>
+</html>

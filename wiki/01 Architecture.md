@@ -2,57 +2,55 @@
 
 ← [[00 Home]]
 
-## Overview
+## Ownership boundaries
 
-Two domains, one data spine:
+```text
+profile/ (public facts and schemas)
+  ├── website/ adapter ──> dist/index.html
+  ├── static API exporter ──> dist/api/profile/{current,v1}/
+  ├── future external CV builder (read only)
+  └── other projects and tools (read only)
 
-```
-┌─────────────────────────────────────────────────────────┐
-│  DATA LAYER  (JSON — edit here to add content)          │
-│  docs/data/experience.json                              │
-│  docs/data/projects.json                                │
-│  docs/data/posters.json                                 │
-│  docs/data/galleries/*.json                             │
-│  docs/data/under_construction.json                      │
-└──────────────┬──────────────────────────────────────────┘
-               │  python3 tools/build_index.py
-               ▼
-┌─────────────────────────────────────────────────────────┐
-│  WEB LAYER  (generated + static HTML → GitHub Pages)    │
-│  docs/sections/experience.html  ← generated from JSON  │
-│  docs/sections/research.html    ← SHOULD be generated  │
-│  docs/sections/about.html       ← static (personal prose) │
-│  docs/sections/hero.html        ← static               │
-│  docs/sections/contact.html     ← static               │
-│  docs/index.html                ← assembled             │
-└──────────────┬──────────────────────────────────────────┘
-               │  /tailor-cv reads data + about prose
-               ▼
-┌─────────────────────────────────────────────────────────┐
-│  CV LAYER  (local only, gitignored)                     │
-│  cv_assets/templates/cv_base_*.tex  ← base templates   │
-│  cv_assets/cv/<company>_cv.pdf      ← built output     │
-└─────────────────────────────────────────────────────────┘
+website/ (presentation and behavior)
+  ├── src/templates, styles, scripts
+  ├── content/ (site-only copy and display configuration)
+  ├── public/ (images and downloadable PDFs)
+  └── experiments/ (non-production prototypes)
 ```
 
-## Design Principle
+`profile/` never imports website or CV concerns. Consumers adapt profile records
+to their own views. A photo crop, CSS class, card order, or typewriter sentence
+belongs to `website/`, while a degree, project, publication, or public contact
+belongs to `profile/`.
 
-JSON is the single source of truth for content that changes over time. HTML is always generated from JSON or is static personal prose — never a manual duplicate of JSON. The CV layer consumes the same data the website uses; no facts are maintained in two places.
+## Data flow
 
-## Current State vs Target
+```text
+profile/manifest.json
+        │
+        ├─ validate schemas, IDs, references, and public boundary
+        │
+        ├─ profile_site.py + website/content/*.json
+        │          └─ render website sections
+        │
+        └─ export_profile.py
+                   └─ static read-only JSON API
 
-| Section | Now | Target |
-|---|---|---|
-| Experience | JSON → generated ✓ | done |
-| Research / Works | Hand-authored HTML | JSON → generated |
-| Posters | Hand-authored HTML (inside research.html) | JSON → generated |
-| About, Hero, Contact | Static prose | static (correct — rarely changes) |
-| CV builder data source | reads research.html (messy HTML) | reads projects.json + posters.json |
+website/src + website/public + rendered sections
+        └─ build_index.py ──> dist/
+```
 
-See [[07 Open Items]] for the conversion plan.
+## Why `v1` exists
 
-## Related
+`v1` is the compatibility generation of the contract. It does not mean the
+profile is frozen. Records can be added, edited, or removed whenever needed as
+long as the v1 field meanings remain compatible. Breaking field changes should
+create a future `v2`; ordinary profile updates appear immediately in both
+`/current/` and `/v1/` after the next build.
 
-- [[02 Data Layer]] — JSON file schemas
-- [[03 Web Layer]] — section partials and generated pages
-- [[06 CV Skill]] — how the CV layer works
+## Future consumers
+
+Consumers must begin with `manifest.json`, follow each declared resource path,
+and respect its `cardinality`. They must not require all categories to expose a
+shared `title`, `type`, or other uniform fields. Stable IDs exist where records
+need cross-references, while each category has its own schema and vocabulary.

@@ -1,0 +1,16 @@
+{
+  "$schema": "../schemas/publications.schema.json",
+  "items": [
+    {
+      "id": "publication.qoste-2025",
+      "title": "Energy Shortcut of N-Level Quantum Protocols by Optimal Control",
+      "authors": ["C. L. Latune", "M. B. Puthuveedu Shebeek", "D. Sugny", "S. Guérin"],
+      "year": 2025,
+      "status": "submitted",
+      "submitted_to": "Physical Review Letters",
+      "identifiers": {"arxiv": "2503.20130"},
+      "url": "https://arxiv.org/abs/2503.20130",
+      "visibility": "public"
+    }
+  ]
+}

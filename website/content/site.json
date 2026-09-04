@@ -1,0 +1,47 @@
+{
+  "metadata": {
+    "title": "Mohammed Bilal P S | Quantum Control Research",
+    "description": "Portfolio of Mohammed Bilal P S — PhD researcher in quantum control, robust optimization, and machine learning for quantum systems."
+  },
+  "brand": "MBPS.",
+  "hero": {
+    "description": "A good part of my research is, in essence, quantum babysitting: using optimal control to gently steer quantum systems, and robust control to keep things on track when they become predictably uncooperative.",
+    "typewriter_phrases": [
+      "Physicist by obsession",
+      "Control engineer by necessity",
+      "ML researcher by curiosity",
+      "Quantum babysitter by reputation"
+    ],
+    "ticker": ["CONTROL THEORY", "QUANTUM TECHNOLOGY", "QUANTUM ALGORITHM", "QUANTUM ERROR CORRECTION", "MACHINE LEARNING", "OPEN QUANTUM SYSTEMS"],
+    "avatar": "assets/images/optimized/avatar_1-320.webp"
+  },
+  "about": {
+    "selected_skill_refs": [
+      "skill.quantum-control",
+      "skill.robust-control",
+      "skill.grape",
+      "skill.pmp",
+      "skill.reinforcement-learning",
+      "skill.open-quantum-systems",
+      "skill.python",
+      "skill.qutip",
+      "skill.pytorch"
+    ],
+    "focus": [
+      "Pontryagin and gradient-based methods for robust, energy-efficient quantum control",
+      "RL and physics-informed neural networks (PINNs) as control tools for quantum systems"
+    ]
+  },
+  "contact": {
+    "title": "Let's Discuss Quantum Control & Computation",
+    "description": "I'm always open to discussing quantum control, machine learning applications in physics, or potential collaborations.",
+    "last_updated": "2026-05-25",
+    "last_updated_label": "May 25, 2026"
+  },
+  "research": {
+    "project_order": ["project.qoste", "project.quantum-battery-rl", "project.universal-robust-control"],
+    "presentation_order": ["presentation.jed-2025", "presentation.cargese-2026"],
+    "presentation_badges": {"presentation.jed-2025": "JED", "presentation.cargese-2026": "Cargese"},
+    "status_labels": {"submitted": "PRL ⏳"}
+  }
+}
